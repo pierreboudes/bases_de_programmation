@@ -1,0 +1,36 @@
+% -*- coding: utf-8 -*-
+
+Vous allez mettre tous vos programmes écrits dans ce TP dans le
+répertoire \TPshortName. 
+
+\begin{newenu}
+\item À partir du début de votre arborescence, créez le répertoire
+\TPshortName : \C{mkdir \TPshortName} 
+\item Allez dans ce répertoire pour y mettre des fichiers : 
+  \C{cd \TPshortName}
+\end{newenu}
+
+L'étape suivante est à répéter pour chaque nouveau programme (exo1, exo2 etc..) :
+\begin{lastenu}
+\item Créez un nouveau fichier source pour le langage C ou une nouvelle copie d'un programme existant.
+  \begin{description}
+  \item[Création]   \verb|gedit exo1.c &| (vous pouvez utiliser
+    \C{emacs} ou \C{kwrite} au lieu de \C{gedit})
+\item[Copie] Il est plus rapide de repartir d'une copie de votre programme \C{bonjour.c} du TP2 pour éviter de retaper tout le squelette. Dans le terminal : \\ \C{cp ../TP2/bonjour.c exo1.c} \\ \verb|gedit exo1.c &|\\ Vous pouvez-aussi ouvrir \verb+bonjour.c+ et utiliser la fonction \emph{Enregistrer sous...} de votre éditeur mais attention à enregistrer la nouvelle copie dans le bon répertoire. 
+\end{description}
+\end{lastenu}
+
+Vous pouvez utiliser à tout moment la commande \C{ls} (list directory)
+pour voir la liste des fichiers d'un répertoire. 
+
+
+Les trois étapes suivantes seront à répéter autant de fois que nécessaire pour la mise au point de chaque programme (apprenez à utiliser les raccourcis clavier). 
+\begin{lastenu}
+\item Après avoir fini d'écrire votre programme, enregistrez le.
+\item Créez un programme exécutable à partir de votre fichier source :\\
+  \verb|gcc -Wall exo1.c -o exo1.exe|
+\item Quand l'étape précédente a réussi (il faut lire attentivement les
+  messages affichés), exécutez le programme pour
+  vérifier qu'il fonctionne : \verb|exo1.exe| (ou
+  \verb|./exo1.exe|).
+\end{lastenu}

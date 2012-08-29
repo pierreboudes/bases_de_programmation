@@ -1,0 +1,17 @@
+lecture 15 r0 # a
+lecture 16 r1 # b
+soustr r1 r0  # r0 vaut a - b
+sautpos r0 8  # si a - b >= 0 (cad a >= b) on saute sur le alors
+lecture 16 r0 #  sinon ecrire b a l'adresse 17
+ecriture r0 17
+saut 10
+lecture 15 r0 # alors ecrire a a l'adresse 17
+ecriture r0 17
+stop
+?
+?
+?
+?
+23 # a
+45 # b
+?  # <-- valeur de sortie

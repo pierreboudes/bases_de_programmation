@@ -1,0 +1,454 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+\entete{Travaux dirigés 10 : types composées \C{struct}}
+
+%\vspace{-1.5cm}
+
+% \begin{correction}
+%   Note aux chargés de TD : blabla.
+% \end{correction}
+
+% \begin{newenu}
+% \item  Faire la trace du programme suivant.
+% \end{newenu}
+{
+\footnotesize
+\listinginput{1}{duree1.c}
+}
+\section{Enregistrements (\C{struct})}
+
+%\subsection{Variations sur la durée : avec le temps...}
+
+  \begin{newenu}
+\item Faire la trace du programme précédent.
+
+\begin{correction}
+
+  \paragraph{Trace.}
+
+  Voir le tableau~\ref{simulation} page~\pageref{simulation} pour
+  trace éclatée.
+
+%   \begin{table}[h]
+% %      \begin{center}
+%         \begin{tabular}[t]{|r|c|c|c|c|c|c|c|l|}
+%           \multicolumn{9}{l}{\C{main()}}\\ \hline
+%           ligne & \multicolumn{3}{|c|}{duree\_unitaire} & seances 
+%                 & \multicolumn{3}{|c|}{duree\_totale}& Affichage (sortie écran) \\ \hline
+%              & h & m & s &  & h & m & s &  \\ \hline
+%           initialisation  & 1 & 32 & 14 & 100 & ? & ? & ? & \\ \hline
+%           32 &  &  &  &  &  &  &  & Duree d'une seance :  \\ \hline
+%           33 &  &  &  &  &  &  &  & 1 heures 32 minutes 14 secondes  \\ \hline
+%           34 &  &  &  &  &  &  &  & <retour ligne> \\ \hline 
+%           36 &  &  &  &  & 153 & 43 & 20 &  \\ \hline
+%           39 &  &  &  &  &  &  &  & Duree d'une seance :  \\ \hline
+%           40 &  &  &  &  &  &  &  & 153 heures 43 minutes 20 secondes  \\ \hline
+%           41 &  &  &  &  &  &  &  & <retour ligne> \\ \hline 
+%           44 &\multicolumn{8}{|l|}{SORTIE AVEC SUCCÈS}\\ \hline
+%         \end{tabular}
+% \medskip
+
+%         \begin{tabular}[t]{|r|c|c|c|l|}
+%           \multicolumn{5}{l}{\C{afficher\_duree(\{1, 32, 14\})}}\\ \hline
+%           ligne & \multicolumn{3}{|c|}{d} & Affichage \\ \hline
+%            & h & m & s & \\ \hline 
+%           initialisation  & 1 & 32 & 14 & \\ \hline
+%           76 & & & & 1 heures 32 minutes 14 secondes \\ \hline
+%           77 &\multicolumn{4}{|l|}{ne renvoie rien}\\ \hline
+%         \end{tabular}
+% \medskip
+
+%         \begin{tabular}[t]{|r|c|c|c|c|c|c|c|l|}
+%           \multicolumn{9}{l}{\C{multiplier\_duree(100, \{1, 32, 14\})}}\\ \hline
+%           ligne & facteur & \multicolumn{3}{|c|}{d} & \multicolumn{3}{|c|}{res}  & Affichage \\ \hline
+%           & & h & m & s  & h & m & s & \\ \hline 
+%           initialisation  & 100 & 1 & 32 & 14 & ? & ? & ? & \\ \hline
+%           52 & & & & & 100 & & & \\ \hline
+%           53 & & & & &  & 3200 & & \\ \hline
+%           54 & & & & &  & & 1400 & \\ \hline
+%           56 & & & & & 153 & 43 & 20 & \\ \hline
+%           58 &\multicolumn{8}{|l|}{renvoie \{153, 43, 20\}}\\ \hline
+%         \end{tabular}
+% \medskip
+
+%         \begin{tabular}[t]{|r|c|c|c|c|c|c|l|}
+%           \multicolumn{8}{l}{\C{normaliser\_duree(\{100, 3200, 1400\})}}\\ \hline
+%           ligne & \multicolumn{3}{|c|}{d} & \multicolumn{3}{|c|}{res}  &    Affichage \\ \hline
+%           & h & m & s  & h & m & s & \\ \hline 
+%           initialisation  & 100 & 3200 & 1400 & ? & ? & ? & \\ \hline
+%           65 & & & & & 3223 &  & \\ \hline
+%           66 & & & & & & 20 & \\ \hline
+%           68 & & & & 153 & &  & \\ \hline
+%           69 & & & & & 43 &  & \\ \hline
+%           71 &\multicolumn{7}{|l|}{renvoie \{153, 43, 20\}}\\ \hline
+%         \end{tabular}
+% \medskip
+
+%         \begin{tabular}[t]{|r|c|c|c|l|}
+%           \multicolumn{5}{l}{\C{afficher\_duree(\{153, 43, 20\})}}\\ \hline
+%           ligne & \multicolumn{3}{|c|}{d} & Affichage \\ \hline
+%            & h & m & s & \\ \hline 
+%           initialisation  & 153 & 43 & 20 & \\ \hline
+%           76 & & & & 153 heures 43 minutes 20 secondes \\ \hline
+%           77 &\multicolumn{4}{|l|}{ne renvoie rien}\\ \hline
+%         \end{tabular}
+%         \caption{Trace du programme de l'exercice 1.}
+%         \label{simulation}
+% %      \end{center}
+%     \end{table}                 
+
+
+
+  \begin{sidewaystable}[h]
+      \scriptsize
+        \setlength{\unitlength}{\tabcolsep}
+       \begin{tabular}[t]{|r|c|c|c|c|c|c|c|l|}
+          \multicolumn{9}{l}{\C{main()}}\\ \hline
+          ligne & \multicolumn{3}{|c|}{duree\_unitaire} & seances 
+                & \multicolumn{3}{|c|}{duree\_totale}& Affichage\\ \hline
+             & h & m & s &  & h & m & s &  \\ \hline
+          ini.  & 1 & 32 & 14 & 100 & ? & ? & ? & \\ \hline
+          32 &  &  &  &  &  &  &  & Duree d'une seance :  \\ \hline
+%          33 &  &  &  &  &  &  &  & 1 heures 32 minutes 14 secondes
+%          \\ \hline
+        33 &  &  &  &  &  &  &  &\multicolumn{1}{r|}{
+            \put(1,0){\noindent
+        \begin{tabular}[t]{|r|c|c|c|l|}
+          \multicolumn{5}{l}{\C{afficher\_duree(\{1, 32, 14\})}}\\ \hline
+          ligne & \multicolumn{3}{|c|}{d} & Affichage \\ \hline
+           & h & m & s & \\ \hline 
+          ini.  & 1 & 32 & 14 & \\ \hline
+          76 & & & & 1 heures 32 minutes 14 secondes \\ \hline
+          77 &\multicolumn{4}{|l|}{ne renvoie rien}\\ \hline
+        \end{tabular}}} \\ \hline
+          34 &  &  &  &  &  &  &  & <retour ligne> \\ \hline 
+         36 &  &  &  &  &  &  &  &
+        \multicolumn{1}{r|}{
+            \put(1,0){\noindent
+        \begin{tabular}[t]{|r|c|c|c|c|c|c|c|l|}
+          \multicolumn{9}{l}{\C{multiplier\_duree(100, \{1, 32, 14\})}}\\ \hline
+          ligne & facteur & \multicolumn{3}{|c|}{d} & \multicolumn{3}{|c|}{res}  & Aff. \\ \hline
+          & & h & m & s  & h & m & s & \\ \hline 
+          ini.  & 100 & 1 & 32 & 14 & ? & ? & ? & \\ \hline
+          52 & & & & & 100 & & & \\ \hline
+          53 & & & & &  & 3200 & & \\ \hline
+          54 & & & & &  & & 1400 & \\ \hline
+          56 & & & & &  & &  & 
+        \multicolumn{1}{r|}{
+            \put(1,0){\noindent
+        \begin{tabular}[t]{|r|c|c|c|c|c|c|l|}
+          \multicolumn{8}{l}{\C{normaliser\_duree(\{100, 3200, 1400\})}}\\ \hline
+          ligne & \multicolumn{3}{|c|}{d} & \multicolumn{3}{|c|}{res}  &    Aff. \\ \hline
+          & h & m & s  & h & m & s & \\ \hline 
+          ini.  & 100 & 3200 & 1400 & ? & ? & ? & \\ \hline
+          65 & & & & & 3223 &  & \\ \hline
+          66 & & & & & & 20 & \\ \hline
+          68 & & & & 153 & &  & \\ \hline
+          69 & & & & & 43 &  & \\ \hline
+          71 &\multicolumn{7}{|l|}{renvoie \{153, 43, 20\}}\\ \hline
+        \end{tabular}
+           }}\\ \hline
+          56 & & & & & 153 & 43 & 20 & \\ \hline
+          58 &\multicolumn{8}{|l|}{renvoie \{153, 43, 20\}}\\ \hline
+       \end{tabular}}} \\ \hline
+          36 &  &  &  &  & 153 & 43 & 20 &  \\ \hline
+          39 &  &  &  &  &  &  &  & Duree d'une seance :  \\ \hline
+          40 &  &  &  &  &  &  &  &\multicolumn{1}{r|}{
+            \put(1,0){\noindent
+        \begin{tabular}[t]{|r|c|c|c|l|}
+          \multicolumn{5}{l}{\C{afficher\_duree(\{153, 43, 20\})}}\\ \hline
+          ligne & \multicolumn{3}{|c|}{d} & Affichage \\ \hline
+           & h & m & s & \\ \hline 
+          ini.  & 153 & 43 & 20 & \\ \hline
+          76 & & & & 153 heures 43 minutes 20 secondes \\ \hline
+          77 &\multicolumn{4}{|l|}{ne renvoie rien}\\ \hline
+        \end{tabular}
+           }} \\ \hline
+         41 &  &  &  &  &  &  &  & <retour ligne> \\ \hline 
+          44 &\multicolumn{8}{|l|}{SORTIE AVEC SUCCÈS}\\ \hline
+        \end{tabular}
+
+        \caption{Trace du programme de l'exercice 1.}
+        \label{simulation}
+%      \end{center}
+    \end{sidewaystable}                 
+
+  \end{correction}
+
+
+  \item Modifier le programme précédent (notamment le \C{struct
+      duree\_s}) de manière à ce que les durées intégrent un nombre de
+    jours et que les heures soient dans l'intervalle $[0, 23]$.
+
+    \begin{correction}
+Juste le diff avec le programme précédent.
+
+{
+\footnotesize
+\begin{verbatim}
+8a9
+>     int j; /* jours    */
+27c28
+<     struct duree_s duree_unitaire = {1, 32, 14}; /* Duree unitaire */
+---
+>     struct duree_s duree_unitaire = {0, 1, 32, 14}; /* Duree unitaire */
+51a53
+>     res.j = d.j * facteur;
+69a72,74
+>     /* Normalisation heures */
+>     res.j = d.j + res.h / 24;
+>     res.h = res.h % 24;
+76c81
+<     printf("%d heures %d minutes %d secondes", d.h, d.m, d.s);
+---
+>     printf("%d jours %d heures %d minutes %d secondes", d.j, d.h, d.m, d.s);
+\end{verbatim}
+}
+    
+
+\end{correction}
+
+\item Écrire une fonction réalisant la somme de deux durées. 
+  \begin{correction}
+    Direct. (On n'utilise pas ici de variable res pour le résultat :
+    ce serait sans doute mieux, surtout que finalement on ne fait pas
+    la trace de cette fonction).
+\begin{verbatim}
+struct duree_s somme_duree(struct duree_s d1, struct duree_s d2)
+{
+    /* Calcul */
+    d1.s = d1.s + d2.s;
+    d1.m = d1.m + d2.m;
+    d1.h = d1.h + d2.h;
+    d1.j = d1.j + d2.j;
+    /* Normalisation */
+    d1 = normaliser_duree(d1);
+    /* Retour resultat */
+    return d1;
+}
+\end{verbatim}
+  \end{correction}
+\item Changer de \C{main}. Déclarer un tableau \C{durees} de cinq
+  durées initialisé avec les durées: 1h30, 3h, 1h30, 3h, 1h30; et un
+  tableau \C{seances} de cinq entiers initialisé avec $12$,
+  $12$, $12$, $2$, $1$. Le tableau \C{durees} représente les durées
+  des cours, TD, TP, partiels et prérentrée de l'UE éléments
+  d'informatique et le second tableau le nombre d'occurrences de ces
+  séances durant le semestre. Compléter le \C{main} pour qu'il
+  calcule le temps total consacrée à l'UE,
+  hors révisions.
+
+  \begin{correction}
+Le main devient :
+{\footnotesize
+\begin{verbatim}
+int main()
+{
+   /* Declaration et initialisation des variables */
+    struct duree_s durees[N] =  /* durees des differentes seances */
+        {
+            {0, 1, 30, 0}, /* cours */
+            {0, 3, 0, 0},  /* TD */
+            {0, 1, 30, 0}, /* TP */
+            {0, 3, 0, 0},  /* partiel */
+            {0, 1, 30, 0} /* prerentree */
+       };
+    int seances[N] = {12, 12, 12, 2, 1}; /* nombre de seances */
+    struct duree_s duree_totale = {0, 0, 0, 0}; /* Duree totale */
+    int i; /* var de boucle */
+    /* Calcul */
+    for (i = 0; i < N; i = i + 1)
+    {
+        duree_totale = somme_duree(duree_totale, 
+                                   multiplier_duree(seances[i], durees[i]));
+    }
+
+    printf("Duree totale : ");
+    afficher_duree(duree_totale);
+    printf("\n");
+    /* Valeur fonction */
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+}
+
+(Ce n'est pas demandé.) L'exécution donne l'affichage :
+{\footnotesize
+\begin{verbatim}
+P0:TD11$ ./duree 
+Duree totale : 3 jours 7 heures 30 minutes 0 secondes
+\end{verbatim}
+}
+\end{correction}
+
+\item Comment faire en sorte que les données initiales (durées des
+  séances, nombre de séances) soient renseignées dans un seul et même
+  tableau, sans modifier \C{struct duree\_s} ?
+  \begin{correction}
+    Il faut créer un nouveau struct contenant une durée et un facteur
+    entier.
+\begin{verbatim}
+struct cours_s
+{
+  int            n; /* nombre de seances */ 
+  struct duree_s d; /* duree de chaque seance */
+};
+\end{verbatim}
+Le main devient :
+{\footnotesize
+\begin{verbatim}
+int main()
+{
+   /* Declaration et initialisation des variables */
+    struct cours_s ei[N] =  /* durees des differentes seances */
+        {
+            {12, {0, 1, 30, 0}}, /* cours */
+            {12, {0, 3, 0, 0}},  /* TD */
+            {12, {0, 1, 30, 0}}, /* TP */
+            {2, {0, 3, 0, 0}},  /* partiel */
+            {1, {0, 1, 30, 0}}  /* colles */
+        };
+    struct duree_s duree_totale = {0, 0, 0, 0}; /* Duree totale */
+    int i; /* var de boucle */
+    /* Calcul */
+    for (i = 0; i < N; i = i + 1)
+    {
+        duree_totale = somme_duree(duree_totale, 
+                                   multiplier_duree(ei[i].n, ei[i].d));
+    }
+
+    printf("Duree totale : ");
+    afficher_duree(duree_totale);
+    printf("\n");
+    /* Valeur fonction */
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+}
+  \end{correction}
+  \end{newenu}
+
+\subsection*{Les \C{struct} ne sont pas si complexes et point difficiles}
+
+\begin{lastenu}
+\item Proposer un type utilisateur pour les nombres complexes en
+  notation algébrique ($a + \mathrm{i} b$, $a,b\in\mathbb{R}$).
+
+  \begin{correction}
+\begin{verbatim}
+struct complexe_s
+{
+    double re; /* partie reelle */
+    double im; /* partie imaginaire */
+}
+\end{verbatim}
+  \end{correction}
+
+\item Donner une fonction d'addition et une fonction de multiplication
+  entre ces nombres complexes.
+
+  \begin{correction}
+\begin{verbatim}
+struct complexe_s addition_complexe(struct complexe_s z1, struct complexe_s z2)
+{
+    z1.re = z1.re + z2.re;
+    z1.im = z1.im + z2.im;
+    return z1;
+}
+
+struct complexe_s multiplication_complexe(struct complexe_s z1, struct complexe_s z2)
+{
+    struct complexe_s res;
+    res.re = z1.re * z2.re - z1.im * z2.im;
+    res.im = z2.re * z1.im + z1.re * z2.im;
+    return res;
+}
+\end{verbatim}
+  \end{correction}
+\end{lastenu}
+
+%\subsection{Point}
+
+\begin{lastenu}
+\item Proposer un type utilisateur pour les points de l'espace
+  en coordonnées réelles : $\mathbb{R}^3$.
+  \begin{correction}
+\begin{verbatim}
+struct point_s
+{
+    double x; /* abscisses */
+    double y; /* ordonnees */
+    double z; /* hauteur */
+}
+\end{verbatim}
+\end{correction}
+
+\item Écrire une fonction \C{est\_dans\_sphere} prenant en argument un
+  point $c$, un réel $r$, et un point $p$, qui
+  renvoie vrai si le point $p$ appartient à la sphère de centre $c$ et
+  de rayon $r$, faux sinon.
+  \begin{correction}
+\begin{verbatim}
+est_dans_sphere(struct point_s c, double r, struct point_s p)
+{
+    return ((p.x - c.x)*(p.x - c.x) 
+          + (p.y - c.y)*(p.y - c.y)  
+          + (p.z - c.z)*(p.z - c.z)) 
+         <= r*r;
+}
+\end{verbatim}
+
+\end{correction}
+\item Définir une fonction \C{distance} qui retourne la distance entre
+  deux points de l'espace passés en arguments. Simplifier la fonction
+  \verb|est_dans_sphere| en faisant appel à cette fonction distance.
+\begin{correction}
+\begin{verbatim}
+#include <math.h> /* pour sqrt() */
+
+double distance(struct point_s p1, struct point_s p2)
+{
+   return sqrt((p1.x - p2.x)*(p1.x - p2.x) 
+             + (p1.y - p2.y)*(p1.y - p2.y)  
+             + (p1.z - p2.z)*(p1.z - p2.z));
+}
+
+
+est_dans_sphere(struct point_s c, double r, struct point_s p)
+{
+    return distance(c, p) <= r;
+}
+\end{verbatim}
+\end{correction}
+
+\item Proposer un type utilisateur pour représenter une sphère dans
+  l'espace.
+  \begin{correction}
+Une sphère est donnée par son centre (un point) et son rayon. Le type serait donc le suivant :
+\begin{verbatim}
+struct sphere_s
+{
+    struct point_s centre; /* centre */
+    double          rayon; /* rayon  */
+}
+\end{verbatim}
+\end{correction}
+\item Définir une fonction \verb+collision_spheres+ qui prend en
+  entrée deux sphères et retourne \C{TRUE} si les deux sphères ont une
+  intersection non vide, \C{FALSE} sinon.
+  \begin{correction}
+\begin{verbatim}
+int collision_spheres(struct sphere_s s1, struct sphere_s s2)
+{
+    return distance(s1.centre, s2.centre) <= (s1.rayon + s2.rayon);
+}
+\end{verbatim}
+\end{correction}
+\end{lastenu}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td10"
+%%% End: 

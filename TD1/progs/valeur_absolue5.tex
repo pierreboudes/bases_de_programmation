@@ -1,0 +1,19 @@
+\begin{tabular}[c]{l||c|c|c|c|c|}
+\hline
+ \emph{Instructions} & Cycles & CP& r0& 15& 16\\ \hline
+\hfill Initialisation & 0 & 1 & ? & 5
+ & ?
+ \\ \hline \commentaire{Lecture de la donnée d'adresse 15 dans le registre 0
+} \C{lecture 15 r0
+} & 1 & 2  & 5 & &\\ \hline
+ \commentaire{Si la valeur (5) du registre 0 est positive, saute à l'adresse 6
+} \C{sautpos r0 6
+} & 2 & \textbf{6} & & &\\ \hline
+ \commentaire{Écriture du registre 0 à l'adresse 16
+} \C{ecriture r0 16
+} & 3 & 7  & & & 5
+\\ \hline
+ \commentaire{Fin du processus.
+} \C{stop
+} & 4 & 8  & & &\\ \hline
+\end{tabular}

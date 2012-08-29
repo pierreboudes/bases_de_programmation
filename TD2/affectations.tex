@@ -1,0 +1,23 @@
+\begin{tabular}[c]{l||c|c|c|c|c|}
+\hline
+ \emph{Instructions} & Cycles & CP& r0& 10& 11\\ \hline
+\hfill Initialisation & 0 & 1 & ? & 5
+ & ?
+ \\ \hline \commentaire{Initialisation du registre 0 à 2
+} \C{valeur 2 r0
+} & 1 & 2  & 2 & &\\ \hline
+ \commentaire{Écriture du registre 0 à l'adresse 11
+} \C{ecriture r0 11
+} & 2 & 3  & & & 2
+\\ \hline
+ \commentaire{Lecture de la donnée d'adresse 11 dans le registre 0
+} \C{lecture 11 r0
+} & 3 & 4  & 2 & &\\ \hline
+ \commentaire{Écriture du registre 0 à l'adresse 10
+} \C{ecriture r0 10
+} & 4 & 5  & & 2
+ &\\ \hline
+ \commentaire{Fin du processus.
+} \C{stop
+} & 5 & 6  & & &\\ \hline
+\end{tabular}

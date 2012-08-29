@@ -1,0 +1,54 @@
+% -*- coding: utf-8 -*-
+
+\renewcommand{\labelitemi}{$\bullet$}
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 2 : premiers pas en langage C}
+
+\vspace{-1em}
+\begin{correction}
+  C'est leur premiere manip. de shell pour utiliser gcc, lancer le
+  prog etc. On donne les points à suivre mais il vaut mieux les leur
+  expliquer.
+\end{correction}
+
+Vous allez mettre tous vos programmes écrits dans ce TP dans le
+répertoire TP2~: 
+
+\begin{newenu}
+\item À partir du début de votre arborescence, créez le répertoire
+  TP2~: \verb|mkdir TP2|  
+\item Allez dans ce répertoire pour y mettre des fichiers : 
+  \verb|cd TP2| 
+\item Créez un nouveau fichier source pour le langage C : 
+  \verb|gedit bonjour.c &|
+\end{newenu}
+
+
+Ce premier programme devra afficher \C{Bonjour !}, vous le composerez en recopiant le programme donné en exemple dans le TD, sauf les lignes 12 à 16. Gardez tous les commentaires vous en aurez besoin plus tard. Votre éditeur de texte vous assistera en colorisant automatiquement le code saisi. 
+
+Pour réaliser l'affichage vous utiliserez l'instruction :\\
+\verb+printf("Bonjour !\n");+, dans votre fonction principale. Le \C{printf} est une \emph{fonctionnalité supplémentaire} d'entrée sortie, pour qu'il fonctionne il faut  insérer la ligne suivante après la ligne 2 : \\
+\verb+#include <stdio.h> /* pour printf */+
+
+Le \verb+\n+ représente un saut de ligne. 
+
+\begin{lastenu}
+\item Après avoir fini d'écrire votre programme, enregistrez le.
+\item Créez un programme exécutable à partir de votre fichier source, cette étape, dite de compilation, sera expliquée au prochain cours :
+  \verb|gcc -Wall bonjour.c -o bonjour.exe|
+\item Quand l'étape précédente a réussi, exécutez le programme pour
+  vérifier qu'il fonctionne : \verb|bonjour.exe| (ou
+  \verb|./bonjour.exe|).
+\end{lastenu}
+
+Vous répéterez ces trois dernières étapes (écrire/sauvegarder/compiler exécuter), très souvent ce semestre et le suivant. Exercez-vous à tout faire avec les raccourcis clavier \emph{sans utiliser la souris}.  
+
+
+\begin{lastenu} 
+\item Modifiez le programme de manière à ce qu'il affiche
+  votre prénom après le <<Bonjour>> (compiler/exécuter).
+\end{lastenu}
+
+

@@ -1,0 +1,625 @@
+% -*- coding: utf-8 -*-
+
+
+\newcounter{questioncount}
+\setcounter{questioncount}{0}
+\newcommand{\question}{\addtocounter{questioncount}{1}\paragraph{Question \Alph{questioncount}.}}
+\newcommand{\commentaire}[1]{}
+\newcommand{\pt}[1]{\fbox{$#1 \operatorname{pt}$}}
+
+
+\setlength{\abovecaptionskip}{-10pt}
+
+
+
+\entete{Éléments d'informatique, rattrapage}
+\vspace{-1cm}
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à
+titre indicatif afin de vous permettre de gérer votre temps. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+
+\section{Étude de programmes et questions de cours}
+
+
+\subsection{Minimum des éléments d'un tableau}
+
+Nous voulons écrire un programme qui calcule le minimum des éléments
+d'un tableau d'entiers. Une partie du programme est déjà écrite, figure~\ref{fig:min}, et
+Pippo pense qu'il ne
+reste plus qu'à écrire la partie qui calcule effectivement le
+minimum. 
+\begin{figure}[htbp]
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define TAILLE 3
+
+/* Fonction principale */
+int main()
+{
+  int t[TAILLE] = {12,10,15}; /* tableau */
+
+
+
+  /* calcul du minimum (À FAIRE) */
+
+
+
+
+
+  /* affichage du résultat */
+  printf("Le minimum est %d\n", minimum);
+
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+\end{small}
+  \caption{Minimum à compléter}
+  \label{fig:min}
+\end{figure}
+
+\question La compilation échoue. Expliquer pourquoi, quelle étape de la
+  compilation échoue précisément et ce qu'il manque pour que la compilation réussisse. \bareme{1}
+\question Expliquer le fonctionnement de l'instruction \C{\#define}. \bareme{1}
+\question Compléter le programme pour qu'il calcule effectivement le minimum
+  des éléments du tableau (pour une taille de tableau arbitraire). \bareme{2.5}
+
+\paragraph{Exemple d'exécution} pour le tableau donné dans le code :
+
+\begin{small}
+\begin{verbatim}
+Le minimum est 10
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+Mêmes question qu'au partiel de mi-semestre.
+\begin{baremeenv}
+  \begin{enumerate}
+\item \pt{1.5} (barème augmenté) dont \pt{1} pour ``déclaration de la variable \C{minimum}'' + \pt{0.5} pour ``analyse
+  sémantique'' ou \pt{0.25} si ``avant la génération du code objet'' et/ou
+  ``avant l'édition de lien''.
+\item \pt{1} si constante symbolique, préprocesseur,  TAILLE remplacé
+  par 3. \pt{0.5} si seulement notion de constantes et pas de mise en
+  relation avec la substitution au moment de la compilation.
+\item \pt{2.5} pour le code juste (compilation correction quel que soit
+  TAILLE). Sinon, maxi \pt{2} :
+  \begin{itemize}
+  \item pas de boucle -> \pt{zéro}
+  \item \pt{0.5} une (et une seule) boucle (for, while accepté)
+  \item \pt{0.5} la boucle parcours effectivement un tableau de taille TAILLE
+  \item pas de points en moins ou en plus pour la déclaration de la
+    variable de boucle (redite sous une autre forme de la première
+    question) ou pour l'initialisation de minimum à zéro.
+\item \pt{0.5} pour un if imbriqué dans la boucle.
+\item \pt{0.5} si le if est correct, c'est à dire s'il réalise le bon test (comparaison avec le minimum
+  courant) et change la valeur du minimum courant en conséquent.
+  \end{itemize}
+\end{enumerate}
+\end{baremeenv}
+\end{correction}
+
+\subsection{Trace d'un programme avec fonctions}
+
+\question Simulez l'exécution du programme figure~\ref{fig:prog}, en réalisant sa
+\textbf{trace}, comme cela a été vu en TD et en cours. \bareme{4}
+
+\begin{figure}[htbp]
+  \centering
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+int foo(int n);
+void bar(int n);
+
+/* fonction principale */
+int main()
+{
+    int x = 3;
+    int res;
+
+    res = foo(x);
+    printf("foo(%d) = %d\n", x, res);
+    
+    bar(x);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+int foo(int n)
+{
+    int i;
+    int reponse = 42;
+    for (i = n; i > 0; i = i - 2)
+    {
+        printf("%d ", i);
+    }
+    printf("\n");
+    return reponse;
+}
+
+void bar(int n)
+{
+    if (n > 1) 
+    {
+        printf("%d ", n);
+        bar(n - 2);
+    }
+    else
+    {
+        printf("%d\n", n);
+    }
+}
+\end{listing}
+\end{small} 
+  \caption{Programme pour la trace}
+  \label{fig:prog}
+\end{figure}
+
+\begin{correction}
+  Table~\ref{trace} page~\pageref{trace}.
+  \setlength{\abovecaptionskip}{10pt}
+
+  \begin{table}
+  \begin{small} 
+   \setlength{\unitlength}{\tabcolsep}
+    \begin{tabular}[t]{|r|c|c|l|}
+      \multicolumn{4}{l}{\C{main()}}\\ \hline
+      ligne & x & res & Affichage\\ \hline
+      initialisation  & 3 & ? & \\ \hline
+      16 &\multicolumn{3}{r|}{
+        \put(1,0){\noindent
+          \begin{tabular}[t]{|r|c|c|c|c|}
+            \multicolumn{5}{l}{\C{foo(3)}}\\ \hline
+            ligne & n & i & reponse & Affichage \\ \hline
+            initialisation & 3 & ? & 42 &  \\ \hline
+            29 & & 3 &  & \\ \hline
+            31 & & & & 3 \\ \hline
+            32 & & 1 & & \\ \hline
+            31 & & & & 1 \\ \hline
+            32 & & -1 & & \\ \hline 
+            33 & &  & & \carriagereturn \\ \hline 
+            36 & \multicolumn{4}{l|}{renvoie 42} \\ \hline
+          \end{tabular}
+        }}\\ \hline
+      16 & & 42 & \\ \hline
+      17 & & &   foo(3) = 42\carriagereturn \\ \hline
+      19 &\multicolumn{3}{r|}{
+        \put(1,0){\noindent
+          \begin{tabular}[t]{|r|c|c|}
+            \multicolumn{3}{l}{\C{bar(3)}}\\ \hline
+            ligne & n  & Aff. \\ \hline
+            init. & 3 &  \\ \hline
+            41 &  &  3 \\ \hline
+            42 &\multicolumn{2}{r|}{
+              \put(1,0){\noindent
+                \begin{tabular}[t]{|r|c|c|}
+                  \multicolumn{3}{l}{\C{bar(1)}}\\ \hline
+                  ligne & n  & Aff.\\ \hline
+                  init. & 1 & \\ \hline
+                  46 &  & 1\carriagereturn\\ \hline
+               \end{tabular}
+              }}\\ \hline
+         \end{tabular}
+        }}\\ \hline
+     22 & \multicolumn{3}{l|}{renvoie \C{EXIT\_SUCCESS}} \\ \hline
+     \end{tabular}
+        \caption{Trace du programme de l'exercice 2.}
+        \label{trace}
+\end{small}
+  \end{table}
+\end{correction}
+
+\begin{baremeenv}
+ Maximum \pt{4}. Si des erreurs, maximum \pt{3,75}.
+  \begin{enumerate}[(a)]
+\item \pt{+1} deux premières lignes de la trace du main sont correctes
+  (identification des variables et leurs initialisations).
+  \begin{enumerate}[$\ast$]
+  \item \pt{-0,5} par variable manquante ou en trop
+  \item \pt{-0,5} par initialisation manquante ou en trop
+  \end{enumerate}
+\item \pt{+1,25} Pour l'appel à foo :
+  \begin{enumerate}[$\ast$]
+  \item \pt{+0,25} pour foo(3) ligne 16 
+\item \pt{+0,25} une colonne pour le paramètre formel n bien
+  initialisé à 3 
+\item \pt{+0,5} pour le déroulement correct de la boucle (deux tours, i
+  = -1), 0 si une erreur.
+\item \pt{+0,25} pour le retour de 42 et l'affectation ligne 16.
+ \end{enumerate}
+\item \pt{+1,25}  pour l'appel récursif à bar :
+  \begin{enumerate}[$\ast$]
+  \item \pt{+0,25} pour bar(3) ligne 19 
+\item \pt{+0,5} pour le déclenchement du second appel ligne 42.
+\item \pt{+0,25} une colonne pour le paramètre formel n bien
+  initialisé à 3 et à 1 dans le second appel.
+  \item \pt{+0,25} pour une profondeur de exactement 2 (pas plus). 
+\end{enumerate}
+\item \pt{+0,25} pour au moins l'un des deux affichages (3 1
+  \carriagereturn) de foo ou de bar correct. 
+\end{enumerate}
+\end{baremeenv}
+
+\section{Sans fonctions, for ou while, if, structures}
+
+Il est demandé de résoudre les trois problèmes suivants sans définir de
+fonctions utilisateurs.  L'ensemble du code sera à écrire dans la
+fonction principale \verb|main|.
+
+\subsection{Factorielle}
+
+\question Écrire le programme qui : demande à l'utilisateur d'entrer
+un entier; calcule la factorielle de l'entier saisi; affiche le
+résultat du calcul, comme dans l'exemple suivant. \bareme{2}
+
+On supposera que l'entier saisi est toujours supérieur ou égal à zéro
+(on ne teste pas la saisie de l'utilisateur). Rappel : la factorielle
+d'un entier $n$, notée habituellement $n!$, vaut le produit de tous
+les entiers de $1$ à $n$ : $n! = 1\times 2\times \ldots\times n$.
+
+\paragraph{Exemple d'exécution :}
+\begin{small}
+\begin{verbatim}
+Saisissez un entier : 5
+factorielle de 5 = 120
+\end{verbatim}
+\end{small}
+
+
+\begin{correction}
+  \begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+
+/* fonction principale */
+int main()
+{
+    int n = 0;       /* saisie utilisateur */
+    int produit = 1; /* accumulateur pour le produit */
+    int i;           /* var de boucle */
+
+    printf("Saisissez un entier : ");
+    scanf("%d", &n);
+
+    for (i = 1; i <= n; i = i + 1)
+    {
+        produit = produit * i;
+    }
+
+    printf("factorielle de %d = %d\n", n , produit);
+    
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+  \end{small}
+  
+  \begin{baremeenv}
+Si tout juste à l'aide d'un for : \pt{2} sinon maxi \pt{1,75}.
+    \begin{itemize}
+      \item \pt{0.25}  déclaration (avec ou sans initialisation) d'une variable
+        entière pour la saisie
+      \item \pt{0.25} saisie à l'aide d'un scanf avec ou sans 
+      \item \pt{0.5} boucle for pas de point en moins si oublie de
+        déclaration de la variable de boucle
+      \item \pt{0.25} bloc de boucle exécuté $n$ ou  $n - 1$ fois
+      \item \pt{0.25} déclaration d'un accumulateur pour stocker le
+      produit
+    \item \pt{0.25} initialisation à 1 de l'accumulateur
+    \item \pt{0.25} affichage du résultat du calcul avec les deux
+      conversions (faux ou juste)
+    \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+\subsection{Halte à la dette}
+
+Pippo emprunte 100 brouzoufs à 6\% d'intérêts annuel. Il rembourse
+par versements de 25 brouzoufs chaque année, en commençant un an après
+la date d'emprunt. Combien d'années devra t'il rembourser son emprunt
+?  Chaque année, on calcule d'abord les intérêts à ajouter à la dette
+actuelle, puis on soustrait le montant du versement annuel.
+
+\question Écrire un programme qui affiche le plan de remboursement de
+Pippo, c'est à dire, pour chaque année : les intérêts de l'année, le
+versement, la dette restant à rembourser.\bareme{2.5}
+
+Votre programme doit pouvoir être exécuté pour n'importe quelle autre
+initialisation des données du prêt.
+
+
+
+\paragraph{Exemple d'exécution :}
+\begin{small}
+\begin{verbatim}
+annee 1, interets : 6, versement : 25, dette : 81
+annee 2, interets : 4.86, versement : 25, dette : 60.86
+annee 3, interets : 3.6516, versement : 25, dette : 39.5116
+annee 4, interets : 2.3707, versement : 25, dette : 16.8823
+annee 5, interets : 1.01294, versement : 25, dette : -7.10477
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+  \begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    double dette = 100.0;
+    double versement = 25.0;
+    double tauxa = 0.06;
+    int annee = 0;
+    double interets;
+    double total = 0.0;
+
+    while (dette > 0)
+    {
+        interets = dette * tauxa;
+        dette = dette + interets - versement;
+        annee = annee + 1;
+        printf("annee %d, interets : %g, versement : %g, dette : %g\n", 
+                annee, interets, versement, dette);
+        total = total + versement;
+    }   
+
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+  \end{small}
+  
+  \begin{baremeenv}
+Si tout juste à l'aide d'un while: \pt{2.5} sinon maxi \pt{2,25}.
+    \begin{itemize}
+      \item \pt{0.25}  déclaration et initialisation de la dette et
+        du taux comme des double (on ne regarde pas versement).
+      \item \pt{0.5} une et une seule boucle while.
+      \item \pt{0.5} modification de la valeur de la dette dans la
+        boucle (\pt{0.25} si mauvaise modification)
+      \item \pt{0.25} déclaration et initialisation du compteur
+        d'années (une erreur de 1 est acceptée)
+      \item \pt{0.25} incrément du compteur d'année à chaque tour de boucle
+  \item \pt{0.25} affichage dans la boucle
+    \item \pt{0.25} affichage des bonnes valeurs avec les bonnes conversions
+    \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+\question Le dernier versement est trop important. Comment modifier
+votre programme de manière à  ne rembourser que le reste à payer,
+dernière année ?\bareme{1} La dernière ligne affichée sera alors :
+\begin{small}
+\begin{verbatim}
+annee 5, interets : 1.01294, versement : 17.8952, dette : 0
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+juste avant affichage dans le while on insère :
+  \begin{small}
+\begin{verbatim}
+        if (dette < 0)
+        {
+            versement = versement + dette; /* on supprime le trop vers'e */
+            dette = 0;
+        }
+\end{verbatim}
+  \end{small}
+  
+  \begin{baremeenv}
+Si tout juste : \pt{1} sinon maxi \pt{0.75}.
+    \begin{itemize}
+\item \pt{0.25} pour un if dans le while (ou après si condition du while
+  modifiée)
+\item \pt{0.25} pour un pour dette mise à zéro avant affichage
+\item \pt{0.25} pour un versement égal au reste à percevoir avant affichage
+\end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+
+\question Si le versement est inférieur aux intérêts, que dire de
+l'exécution de ce programme ?\bareme{0.5}
+
+\begin{correction}
+  Si le versement est inférieur aux intérêts la première année, la
+  dette va augmenter et elle ne sera jamais nulle (ou négative). Donc
+  le programme va boucler et la dette atteindre une valeur
+  représentant l'infinie.
+
+  \begin{baremeenv}
+    \pt{0.5} si mention du fait que le programme ne s'arrête jamais.
+  \end{baremeenv}
+\end{correction}
+
+\subsection{Deux jours avant}
+\begin{figure}
+\small
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+  int nbjours[13] = {31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  /* nombre de jours de chaque mois, de decembre 2010 a decembre 2011 */
+    
+  struct date_s demain = {1, 6, 2011}; /* exemple */
+  struct date_s hier;
+
+  /* calcul de la date d'hier */
+   
+  /* affichage du résultat */
+
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+  \caption{Deux jours avant (à compléter)}
+  \label{fig:deuxj}
+\end{figure}
+
+\question 
+Compléter le programme de la figure~\ref{fig:deuxj} :
+\begin{itemize}
+\item définir le type utilisateur \verb+struct date_s+, pour stocker
+  une date sous la forme numéro du jour, numéro du mois et année, de
+  manière à ce que la valeur initiale de la variable \C{demain}
+  corresponde à la date du premier juin 2011;\bareme{1}
+\item à partir de la date de demain, calculer la date d'hier (deux
+  jours avant demain). Vous supposerez que la date de demain
+  appartient à l'année 2011. Pour connaître le nombre de jours de
+  chaque mois, vous utiliserez le tableau \C{nbjours}. Ce tableau
+  contient à chaque indice $i$ entre $1$ et $12$ le nombre de jours du
+  $i$ème mois de l'année 2011 et à l'indice $0$ le nombre de jours du
+  mois de décembre 2010;\bareme{2}
+\item afficher le résultat comme dans les exemples suivants.\bareme{0.5}
+\end{itemize}
+
+Votre programme doit fonctionner et calculer la date correcte pour
+n'importe quelle autre initialisation de la variable \C{demain} par
+une date de l'année 2011.
+
+\paragraph{Exemple d'exécution :}
+\begin{small}
+\begin{verbatim}
+Demain : 1/6/2011
+Hier : 30/5/2011
+\end{verbatim}
+\end{small}
+
+\paragraph{Autres exemples} (en modifiant l'initialisation de
+la variable \C{demain}) :
+\begin{small}
+\begin{verbatim}
+Demain : 2/1/2011
+Hier : 31/12/2010
+
+Demain : 12/5/2011
+Hier : 10/5/2011
+\end{verbatim}
+\end{small}
+\begin{correction}
+  \begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+struct date_s 
+{
+    int j; /* jour */
+    int m; /* mois */
+    int a; /* annee */
+};
+/* Fonction principale */
+int main()
+{
+  int nbjours[13] = {31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  /* nombre de jours de chaque mois, de decembre 2010 a decembre 2011 */
+    
+  struct date_s demain = {2, 1, 2011}; /* exemple */
+  struct date_s hier;
+
+  /* calcul de la date d'hier */
+  hier = demain;
+  hier.j = demain.j - 2;
+  if (hier.j < 1) 
+  {
+      hier.m = demain.m - 1;
+      hier.j = nbjours[hier.m] + hier.j;
+  }
+  if (0 == hier.m) 
+  {
+      hier.m = 12;
+      hier.a = 2010;
+  }
+
+  /* affichage du résultat */
+  printf("Demain : %d/%d/%d\n", demain.j, demain.m, demain.a);
+  printf("Hier :   %d/%d/%d\n", hier.j, hier.m, hier.a);
+
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{verbatim}
+  \end{small}
+  
+  \begin{baremeenv}
+Si tout juste: \pt{3.5} sinon maxi \pt{2,25}.
+    \begin{itemize}
+      \item \pt{0.5} déclaration correcte syntaxiquement d'une structure
+      contenant au moins trois champs (entiers, double ou char).
+      \item \pt{0.5} la déclaration de la structure est en accord avec son usage
+dans la suite.
+      \item \pt{2} calcul exact sinon maxi \pt{1.75} 
+        \begin{itemize}
+        \item \pt{0.5}  si utilisation d'un ou plusieurs if pour distinguer plusieurs
+          cas pour les jours (cas du premier et deuxième jours du mois
+          \emph{vs} autres jours du mois).
+        \item \pt{0.5} on compte\pt{0.25} si utilisation de exactement une case  du
+            tableau (pour les cas de début de mois) et \pt{+0.25} s'il s'agit de la case du mois précédent le
+            mois courant 
+\item \pt{0.25} Si calcul du jour toujours correct
+\item \pt{0.25} Si calcul du mois toujours correct
+\item \pt{0.25} Si calcul de l'année toujours correct, 
+        \end{itemize}
+      \item \pt{0.5} Affichage au bon format de demain et hier
+        (décomposition en affichage de trois valeurs
+        chacune).\pt{zéro} sinon.
+   \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+\section{Écriture de fonctions}
+\begin{enumerate}
+\item Déclarer et définir la procédure \verb|menu| qui n'a pas d'entrée et
+  affiche :\label{item:menu}\bareme{1}
+\begin{small}
+\begin{verbatim}
+********
+* MENU *
+********
+\end{verbatim}
+\end{small}
+\item Déclarer et définir une fonction qui calcule la valeur absolue d'un réel.\label{valeurabsolue}\bareme{1}
+\end{enumerate}
+
+\begin{correction}
+Difficultées diverses mais c'est voulu, on compte :
+0.5 pt déclaration correcte et 0.5 pt code correct.
+
+\end{correction}
+
+\newpage
+\thetotalpointsint

@@ -1,0 +1,17 @@
+lecture 15 r0
+lecture 15 r1
+add 1 r1
+mult r0 r1
+div 2 r1 
+ecriture r1 16
+stop
+
+
+
+
+
+
+
+3
+?
+?

@@ -1,0 +1,50 @@
+\usepackage{latexsym,amssymb,amsmath,stmaryrd}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,patterns,plotmarks,shapes,snakes,er,3d,automata,%
+backgrounds,topaths,trees,petri,mindmap}
+\usepackage{pgfbaseimage}
+\usepackage{ifpdf}
+\ifpdf
+\usepackage{graphicx}
+\else
+%\usepackage[dvips]{graphicx}
+\usepackage{pstricks,pst-tree,pst-node}
+\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=6pt}
+\fi
+\usepackage{moreverb}
+\usepackage[normalem]{ulem}
+\usepackage{version}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{listings}
+\lstset{
+  language=[ANSI]C, 
+%  gobble=2, 
+%  escapeinside="", 
+  basicstyle=\ttfamily, 
+%  directivestyle=\color{Fuchsia},
+  identifierstyle = \color{DarkOrange},
+  keywordstyle=\color{DarkGreen}, 
+  commentstyle=\color{red}, 
+%  numbers=left, 
+%  numbersep=5pt, 
+%  numberstyle=\scriptsize, 
+%  moredelim=[is][\color{gray}\itshape]{/*}{*/}, 
+%  moredelim=[is][\alert]{/+}{+/}, 
+%  morecomment=[is]{/=}{=/}, 
+%  morecomment=[in]{comment=}{,} 
+%  fancyvrb=true 
+} 
+
+\newcommand{\binaire}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\C}[1]{\texttt{#1}}
+\newcommand{\bbbn}{\ensuremath{\mathbb{N}}}
+\input{communs/cc_beamer}
+\usetheme{classic}
+\newcommand{\nowrite}{\put(10,-4){\includegraphics[scale=.05]{creative_commons/nopencil}}}
+\newcommand{\youwrite}{\put(10,-4){\includegraphics[scale=.05]{creative_commons/pencil}}}
+\newcommand{\aemporter}{\put(10,-6){\includegraphics[scale=.05]{creative_commons/szymonraj_Shopping_bag}}}

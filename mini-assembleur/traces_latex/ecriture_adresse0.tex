@@ -1,0 +1,15 @@
+\begin{tabular}[c]{|c|c|c|c|c|c|c|}
+\hline
+Cycles & CP & instruction & r0& r1& 5& 6\\ \hline
+INIT & 1 & & ? & ? & 123
+ & 0
+ \\ \hline1 & 2 & \commentaire{Lecture de la donnée d'adresse 5 dans le registre 0
+} lecture 5 r0
+ & 123 & & & \\ \hline
+2 & 3 & \commentaire{Lecture de la donnée d'adresse 6 dans le registre 1
+} lecture 6 r1
+ & & 0 & & \\ \hline
+3 & 4 & \commentaire{lecture 6 r1
+} ecriture r0 *r1
+ & & 0 & & \\ \hline
+\end{tabular}

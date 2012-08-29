@@ -1,0 +1,377 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+\entete{Travaux dirigés 7 : lecture de données au clavier.}
+\vspace{-1cm}
+\begin{correction}
+  Note aux chargés de TD.
+  \begin{itemize}
+ \item Les traces ne définissent pas une colonne supplémentaire pour les entrées, ce qui ne permet pas de présenter les subtilités de conversion de scanf. Cela sera fait en S2. 
+  \item Bien insister sur la procédure permettant d'attaquer un problème de programmation. Il semble qu'ils ne savent toujours pas l'appliquer. La procédure :
+    \begin{itemize}
+    \item on se donne des exemples
+    \item on trouve un algorithme en francais
+    \item on traduit l'algorithme en C en s'aidant de commentaires
+    \item on test sur les exemples qu'on s'est donnes
+    \end{itemize}
+
+  \item L'algorithmique des tableaux parle de cases, et un parcours se présente de la façon suivante :
+\begin{verbatim}
+- pour chaque case du tableau :
+    - affecter 2 a la case
+    - afficher la case
+    - ...
+\end{verbatim}
+    En C, on peut être plus tenté par : pour chaque indice de
+    case. Cependant, la plupart des langages modernes (Java, Python
+    etc.) ont introduit des conteneurs avec des parcours qui font
+    référence aux éléments. On reste sur les cases pour l'instant et
+    il faut sans doute expliquer la subtilité.
+
+  \item N.B. : le ``programme vide'' voit son écriture simplifiée en n'indiquant plus dans le main la déclaration des variables, ni la valeur de retour. Si certains ont encore des problèmes avec ça, il faut repousser.
+  \end{itemize}
+\end{correction}
+
+% \section{Calcul dans un espace vectoriel}
+% \label{intro}
+
+% Nous souhaitons faire un certain nombre d'opérations dans un espace vectoriel. Pour cela, nous utilisons des tableaux pour représenter les vecteurs. Un squelette de programme est le suivant :
+% \begin{small}
+% \begin{verbatim}
+% /* declaration de fonctionnalites supplementaires */
+% #include <stdlib.h> /* EXIT_SUCCESS */
+% #include <stdio.h> /* printf */
+
+% /* declarations des constantes et types utilisateurs */
+% #define DIM 5 /* dimension de l'espace vectoriel */
+
+% /* declarations des fonctions utilisateurs */
+
+% /* fonction principale */
+% int main()
+% {
+%     /* soient 3 vecteurs x,y et z */
+%     double x[DIM] = {1.0,-2.3,2.0,2.2,-0.3};
+%     double y[DIM] = {-1.0,-0.1,1.5,0.4,-0.3};
+%     double z[DIM];
+%     int i; /* var. de boucle */
+
+%     for(i = 0;i < DIM;i = i + 1) /* chaque composante */
+%     {
+%         /* affichage de la composante */
+%         printf("%g ",x[i]);
+%     }
+%     /* i >= DIM */
+%     printf("\n");
+
+%     /* multiplication de x par le scalaire 2.0 */
+
+%     /* initialisation de z avec la somme de x et y */
+
+%     /* recopie de z dans y */
+
+%     /* calcul et affichage du produit scalaire de x et y */
+
+%     return EXIT_SUCCESS;
+% }
+
+% /* definitions des fonctions utilisateurs */
+% \end{verbatim}
+% \end{small}
+
+% \begin{enumerate}
+% \item Que veut dire la directive du pré-processeur : \verb|#define DIM 5| ?
+%   \begin{correction}
+%     À partir de ce point, fais un ``chercher/remplacer'' de toutes les occurrences de la chaîne de caractères ``DIM'' par la chaîne de caractères ``5''. Cette directive est utilisée en C pour définir des constantes symboliques. Par convention, ces constantes sont écrites en majuscules pour les repérer facilement dans le texte. EXIT\_SUCCESS en est une autre définie dans le fichier ``stdlib.h'', cad, ce fichier contient la directive ``\#define EXIT\_SUCCESS 0''.
+%   \end{correction}
+% \item Quel est le code de la fonction \verb|main| que traite le compilateur ?
+%   \begin{correction}
+% Rappel : le pré-processeur est avant le compilateur. Il exécute toutes les directives commencant par ``\#''. Ces directives ne sont plus dans le fichier résultat.
+% \begin{verbatim}
+% int main()
+% {
+%     double x[5] = {1.0,-2.3,2.0,2.2,-0.3};
+%     double y[5] = {-1.0,-0.1,1.5,0.4,-0.3};
+%     double z[5];
+%     int i;
+
+%     for(i = 0;i < 5;i = i + 1)
+%     {
+%         printf("%g ",x[i]);
+%     }
+%     printf("\n");
+
+%     return 0;
+% }
+% \end{verbatim}
+%   \end{correction}
+% \item Quel est l'intérêt d'utiliser des constantes symboliques dans un programme ?
+%   \begin{correction}
+%     L'intérêt de nommer ces constantes est :
+%     \begin{itemize}
+%     \item d'expliciter leur sémantique : quelle est leur signification, quel est leur contexte d'utilisation, etc.
+%     \item de pouvoir laisser le pré-processeur modifier la valeur de la constante partout dans le programme => pas de risque d'oubli.
+%     \end{itemize}
+% Par exemple PI...
+%   \end{correction}
+% \item Que fait le programme ? Donner son affichage.
+%   \begin{correction}
+%     Le programme :
+%     \begin{itemize}
+%     \item déclare et initialise 2 tableaux de rationnels (double en C) de taille 5, x et y, respectivement avec les valeurs...;
+%     \item déclare le tableau z de rationnels de taille 5;
+%     \item déclare un entier i;
+%     \item parcours chaque case du tableau x et l'affiche (écrit dans le TD5 comme : affiche les valeurs des variables du tableau; par abus de langage, on parle de cases d'un tableau).
+%     \end{itemize}
+%     Affichage : 1 -2.3 2 2.2 -0.3 (voir doc sur \verb|%g|)
+%   \end{correction}
+% \item Compléter le programme en implantant les problèmes donnés en commentaires dans le code.
+% \begin{correction}
+%   \begin{verbatim}
+% /* declaration de fonctionnalites supplementaires */
+% #include <stdlib.h> /* EXIT_SUCCESS */
+% #include <stdio.h> /* printf */
+
+% /* declaration des constantes et types utilisateurs */
+% #define DIM 5 /* dimension de l'espace vectoriel */
+
+% /* declarations des fonctions utilisateurs */
+
+% /* fonction principale */
+% int main()
+% {
+%     /* soient 3 vecteurs x,y et z */
+%     double x[DIM] = {1.0,-2.3,2.0,2.2,-0.3};
+%     double y[DIM] = {-1.0,-0.1,1.5,0.4,-0.3};
+%     double z[DIM];
+%     int i; /* var. de boucle */
+%     double produit_scalaire; /* le produit scalaire de 2 vecteurs */
+
+%     for(i = 0;i < DIM;i = i + 1) /* chaque composante */
+%     {
+%         /* affichage de la composante */
+%         printf("%g ",x[i]);
+%     }
+%     /* i >= DIM */
+%     printf("\n");
+
+%     /* multiplication de x par le scalaire 2.0 */
+%     for(i = 0;i < DIM;i = i + 1) /* chaque composante */
+%     {
+%         /* multiplication par 2.0 */
+%         x[i] = x[i] * 2.0;
+%     }
+%     /* i >= DIM */
+
+%     /* initialisation de z avec la somme de x et y */
+%     for(i = 0;i < DIM;i = i + 1) /* chaque composante */
+%     {
+%         /* somme des composantes */
+%         z[i] = x[i] + y[i];
+%     }
+%     /* i >= DIM */
+
+%     /* recopie de z dans y */
+%     for(i = 0;i < DIM;i = i + 1) /* chaque composante */
+%     {
+%         /* recopie */
+%         y[i] = z[i];
+%     }
+%     /* i >= DIM */
+
+%     /* calcul et affichage du produit scalaire de x et y */
+%     produit_scalaire = 0.0; /* elt neutre pour l'addition */
+
+%     for(i = 0;i < DIM;i = i + 1) /* chaque composante */
+%     {
+%         /* multiplication deux à deux */
+%         produit_scalaire = produit_scalaire + (x[i] * y[i]);
+%     }
+%     /* i >= DIM */
+%     printf("le produit scalaire de x et y est : %g\n",produit_scalaire);
+
+%     return EXIT_SUCCESS;
+% }
+
+% /* definitions des fonctions utilisateurs */
+% \end{verbatim}
+% \end{correction}
+% \end{enumerate}
+
+\section{Lecture de données utilisateur entrées au clavier}
+
+% La fonction \verb|scanf|, déclarée dans la bibliothèque \verb|stdio|
+% permet d'affecter à des variables des valeurs saisies au clavier par
+% l'utilisateur du programme. Les types de données à lire sont
+% précisés avec les mêmes chaînes de format que pour \verb|printf|, à
+% quelques exceptions près (par exemple ``\%g'' pour afficher un
+% double et ``\%lg'' pour lire un double).
+
+\begin{enumerate}
+\item Que fait le programme suivant ?
+\begin{small}
+\begin{listing}{1}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations des constantes et types utilisateurs */
+
+/* declarations des fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int a;
+    double b;
+    char c;
+
+    printf("Entrez un nombre entier puis un nombre réel puis un caractère : ");
+
+    scanf("%d",&a);
+    scanf("%lg",&b);
+    scanf(" %c",&c);
+
+    printf("Vous avez saisi %d puis %g puis %c.\n",a,b,c);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{listing}
+\end{small}
+  \begin{correction}
+    Le programme :
+    \begin{itemize}
+    \item déclare 3 variables a,b et c, respectivement de type entier, réel (rationnel) et caractère;
+    \item demande à l'utilisateur de saisir 3 valeurs, respectivement de type entier, réel (rationnel) et caractère;
+    \item affecte la valeur entière saisie à la variable entière a (même type sinon quelle est la signification ? le compilateur détecte cette erreur sémantique lors de l'analyse sémantique mais il acceptera de compiler en faisant une conversion automatique de type => source de bugs difficiles à détecter)
+    \item affecte la valeur réelle saisie à la variable réelle/rationnelle b;
+    \item affecte le caractère saisie à la variable caractère c;
+    \item affiche les valeurs pour montrer les affectations réalisées (vous pouvez utiliser un tel programme pour vérifier que les représentations sont bornées, cf. cours et TP)
+    \end{itemize}
+  \end{correction}
+\item Faire la trace du programme en considérant que l'utilisateur saisit au clavier : 1 puis ``entrée'', 12.2 puis ``entrée'' et 'c' puis ``entrée'' .
+\begin{correction}
+\begin{verbatim}
+ligne          | a      | b      | c      | affichage (sortie/écriture à l'écran)
+-----------------------------------------------------------------------------
+initialisation | ?      | ?      | ?      |
+16             |        |        |        | Entrez un nombre entier puis un nombre réel puis un caractère :  
+18             | 1      |        |        |
+19             |        | 12.2   |        |
+20             |        |        | 'c'    |
+22             |        |        |        | Vous avez saisi 1 puis 12.2 puis c.
+\end{verbatim}
+
+Ils l'ont vu en cours : vous pouvez leur faire remarquer que si la lecture du caractère s'était faite avec \verb|"%c"|, la var c contiendrait \verb|'\n'|, caractère qui suit la chaîne "12.2" (due à la mémoire tampon + scanf).
+\end{correction}
+\end{enumerate}
+
+\subsection{Moyenne d'une série d'entiers saisie par l'utilisateur}
+
+Écrire un programme qui demande à l'utilisateur combien d'entiers composent sa série, lit la série d'entiers et affiche la moyenne des valeurs de la série. L'ensemble de la série ne doit pas être stockée en mémoire. 
+
+\begin{correction}
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int n; /* taille de la serie a saisir par l'utilisateur*/
+    int elt; /* un element de la serie a saisir par l'utilsateur */
+    double somme = 0.0; /* somme de la serie a calculer pour afficher la moyenne 
+                           c'est un double car sinon le C fait une division entiere */
+    int i; /* var. de boucle */
+
+    /* demande la taille de la serie a l'utilisateur */
+    printf("Combien d'elements dans la série ? ");
+    scanf("%d",&n);
+
+    /* saisie serie (n entiers) et calcul incremental de la somme */
+    for(i = 0;i < n;i = i + 1) /* chaque entier de la serie */
+    {
+        /* saisir sa valeur */
+        scanf("%d",&elt);
+
+        /* l'ajoute a la somme partielle */
+        somme = somme + elt;
+    }
+    /* i >= n */
+
+    /* somme contient la somme des elements de la serie.
+       la moyenne est somme / n */
+    printf("La moyenne des valeurs de cette serie est : %g\n",somme / n); /* ce n'est pas une division entiere */
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\subsection{Initialisation d'un tableau par l'utilisateur}
+
+Écrire un programme qui déclare un tableau d'entiers de taille arbitraire TAILLE (une constante symbolique) et qui demande à l'utilisateur de saisir au clavier les valeurs des cases du tableau. Afficher le tableau.
+
+\begin{correction}
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declaration constantes et types utilisateurs */
+#define TAILLE 4 /* taille du tableau utilisateur */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int tab[TAILLE]; /* tableau a initialiser par l'utilisateur */
+    int i; /* var. de boucle */
+
+    /* demande a l'utilisateur de saisir TAILLE entiers*/
+    printf("Saisissez %d entiers : ",TAILLE);
+
+    /* saisie des elts du tableau (TAILLE entiers) */
+    for(i = 0;i < TAILLE;i = i + 1) /* chaque case du tableau */
+    {
+        /* saisir sa valeur */
+        scanf("%d",&tab[i]);
+    }
+    /* i >= TAILLE */
+
+    /* affichage du tableau */
+    printf("Vous avez saisi le tableau suivant : ");
+
+    for(i = 0;i < TAILLE;i = i + 1) /* chaque case du tableau */
+    {
+        /* afficher sa valeur */
+        printf("%d ",tab[i]);
+    }
+    /* i >= TAILLE */
+    printf("\n");
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+
+Faire la trace, en donnant à l'avance les valeurs saisies. On considère, pour simplifier dans un premier temps (S1), que "entrée'' est utilisée après chaque entier.
+\end{correction}
+
+
+%%%%%%% TP
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td7"
+%%% End: 

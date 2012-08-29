@@ -1,0 +1,45 @@
+Memento.txt
+*******Un petit memento du langage AssEI.****************
+(pseudo)-assembleur pour le cours 'éléments d'informatique'.
+
+L'adressage et les données.
+
+
+On note simplement 69, -15,... les valeurs,
+comme dans "par -15 il fait bon être sous la couette".
+
+Parmi les valeurs, les entiers positifs (1, 2, ...) peuvent être des
+adresses mémoire.
+
+À l'adresse 0 se trouve toujours un noop (c'est moche).
+
+On note r0, r1, ..., r31 les registres et *r0, *r1, ... sont les
+adresses mémoires contenues respectivement dans r0, r1, ...
+
+Les instructions :
+
+Opération d'arité 0
+noop          la non-opération
+stop          met fin à l'exécution
+
+Opération d'arité 1
+inverse ri    inverse le signe du contenu du registre i.
+saut i        saut à l'adresse i.
+
+Opérations d'arité 2
+valeur x ri       initialise le registre ri avec la valeur x
+lecture i rj    charge la donnée d'adresse mémoire i dans le registre j.
+ecriture ri j   écrit la donnée du registre i à l'adresse j.
+lecture *ri rj  lit l'adresse contenue dans ri et charge son contenu dans rj
+ecriture ri *rj ecrit le contenu de ri à l'adresse mémoire contenue dans rj
+sautpos ri j     si la valeur de ri est positive ou nulle, saut à l'adresse j
+add ri rj       additionne la valeur de ri à celle de rj dans le registre j
+mult ri rj      multiplie rj par ri, le résultat va dans rj
+div ri rj       divise rj par ri (division entière), le résultat va dans rj
+et ri rj        et bit à bit de ri et rj, le résultat est stocké dans rj
+
+
+Notes :
+On peut actuellement faire 'add x ri' ou x est une valeur de même pour
+'et', 'mult' et 'div'.
+

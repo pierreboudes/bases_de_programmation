@@ -1,0 +1,24 @@
+\begin{tabular}[c]{|c|c|c|c|c|c|c|c|}
+\hline
+Cycles & CP & instruction & r0& r1& 6& 7& 8\\ \hline
+INIT & 1 & & ? & ? & -32
+ & 10
+ & 6
+ \\ \hline1 & 2 & \commentaire{Lecture de la donnée d'adresse 8 dans le registre 0
+} lecture 8 r0
+ & 6 & & & & \\ \hline
+2 & 3 & \commentaire{Lecture de la donnée d'adresse 6 dans le registre 1
+} lecture *r0 r1
+ & & -32 & & & \\ \hline
+3 & 4 & \commentaire{Écriture du registre 1 à l'adresse 7
+} ecriture r1 7
+ & & & & -32
+ & \\ \hline
+4 & 5 & \commentaire{Écriture du registre 1 à l'adresse 6
+} ecriture r1 *r0
+ & & & -32
+ & & \\ \hline
+5 & 6 & \commentaire{Fin du processus.
+} stop
+ & & & & & \\ \hline
+\end{tabular}

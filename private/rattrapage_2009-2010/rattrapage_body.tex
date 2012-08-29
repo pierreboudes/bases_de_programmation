@@ -1,0 +1,543 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Éléments d'informatique, rattrapage}
+
+
+\begin{correction}
+  \textbf{IMPORTANT dans 2.2 ``bientôt l'été'': indiquer aux étudiants
+    dans les salles d'examen qu'ils doivent définir une variable
+    entière \C{saison} dont les constantes symboliques PRINTEMPS, ETE,
+    AUTRE représentent les valeurs possibles.}
+
+RDV salle C102 pour remettre les copies à la fin de l'examen puis
+salle C213 pour les corrections de copies.
+
+\end{correction}
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à
+titre indicatif afin de vous permettre de gérer votre temps. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est fortement recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+\section{Somme des éléments d'un tableau (\textit{4 points})}
+
+Nous voulons écrire un programme qui calcule la somme des éléments
+d'un tableau d'entiers. Une partie du programme est déjà écrite, et
+Pippo pense qu'il ne
+reste plus qu'à écrire la partie qui calcule effectivement la
+somme. Voici son programme :
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define TAILLE 3
+
+/* Fonction principale */
+int main()
+{
+  int t[TAILLE] = {12,10,15}; /* tableau à sommer */
+
+
+
+  /* calcul de la somme (À FAIRE) */
+
+
+
+
+
+  /* affichage du résultat */
+  printf("La somme est %d\n", somme);
+
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+
+\begin{enumerate}
+\item La compilation échoue. Expliquer pourquoi, quelle étape de la
+  compilation échoue précisément et ce qu'il manque pour que la compilation réussisse. 
+\item Expliquer le fonctionnement de l'instruction \C{\#define}.
+\item Compléter le programme pour qu'il calcule effectivement la somme
+  des éléments du tableau (pour une taille de tableau arbitraire).
+\end{enumerate}
+
+Un exemple de sortie du programme pour le tableau donné dans le code est :
+\begin{verbatim}
+La somme est 37
+\end{verbatim}
+
+\begin{correction}
+\begin{enumerate}
+\item (1.5pt) dont 1 pt pour ``déclaration de la variable \C{somme}'' + 0.5 pt pour ``analyse
+  sémantique'' ou 0.25 pt si ``avant la génération du code objet'' et/ou
+  ``avant l'édition de lien''.
+\item 1 pt si juste. 0.5 pt si seulement notion de constantes et pas de mise en
+  relation avec la substitution au moment de la compilation.
+\item 1.5pt pour le code juste (compilation correction quel que soit
+  TAILLE). Sinon, maxi 1 pt :
+  \begin{itemize}
+  \item pas de boucle -> 0
+  \item 0.5pt une (et une seule) boucle (for, while accepté)
+  \item 0,5pt la boucle parcours effectivement un tableau de taille TAILLE
+  \item pas de points en moins ou en plus pour la déclaration de la
+    variable de boucle (redite sous une autre forme de la première
+    question) ou pour l'initialisation de somme à zéro.
+  \end{itemize}
+\end{enumerate}
+\end{correction}
+
+\section{Sans fonctions}
+
+Il est demandé de résoudre les deux problèmes suivants sans définir de
+fonctions utilisateurs.  L'ensemble du code sera à écrire dans la
+fonction principale \verb|main|.
+
+\subsection{ For ou while (\textit{4 points})}
+
+Écrire le programme qui :
+\begin{itemize}
+\item demande à l'utilisateur d'entrer les valeurs d'un tableau
+  d'entiers de taille \C{N} (une constante symbolique)
+\item puis cherche si le tableau contient l'entier zéro et affiche
+  l'indice de la première case nulle s'il y en a une ou \C{Pas de case
+    nulle} sinon.
+\end{itemize}
+Deux exemples d'exécution sont les suivants (pour \verb|N| valant 4) :
+\begin{small}
+\begin{verbatim}
+Saisissez 4 entiers : 8 31 1 -12
+Pas de case nulle
+
+Saisissez 4 entiers : 2 -5 4 0
+Case nulle d'indice 3
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+  \begin{itemize}
+\item 1 point. pour la saisie correcte on ne compte pas faux si pas de
+  \&.  Constante symbolique comptée à part.
+\item 2.5pt. Deux structures admises pour la seconde partie : soit utiliser un
+booleen ``trouve'' comme dans d'autres exercices du meme type, soit
+utiliser le depassement de borne de boucle comme test. Dans les deux
+cas while puis if -> 1pt. Si ils se debrouillent pour ça fonctionne
+correctement avec un for au lieu du while ok. Ensuite 0.5 pour une
+boucle qui termine. 1pt pour l'affichage correct : 0.5 point pour le
+cas sans zéro, 0.5 point pour les cas avec zéro. Compter faux les cas
+où il y a plusieurs affichages.
+\item 0.5pt si définit et utilise correctement la constante symbolique
+  (si elle n'est que définie et qu'ils ne traitent pas les boucles
+  compter juste quand même par contre si les boucles sont là et que la
+  taille du tableau n'est pas donnée par N compter faux !).
+\end{itemize}
+\begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define N 4 /* taille du tableau utilisateur */
+
+/* déclaration de fonctions utilisateurs */
+
+int main()
+{
+    int tab[N]; /* tableau à initialiser par l'utilisateur */
+   int i; /* var. de boucle */
+
+    /* demande saisie de N entiers*/
+    printf("Saisissez %d entiers : ", N);
+
+    /* saisie des elts du tableau (N entiers) */
+    for(i = 0; i < N; i = i + 1) /* chaque case du tableau */
+    {
+        /* saisie valeur */
+        scanf("%d",&tab[i]);
+    }
+    /* i >= N */
+
+    /* recherche zero */
+    i = 0;
+    while ((i < N) && (tab[i] != 0)) 
+    {
+       i = i + 1;
+    }
+    /* i >= N  ou bien tab[i] == 0 */
+    if (i < N)
+    {
+        printf("Cas nulle d'indice %d\n", i);
+    }
+    else
+    {
+        printf("Pas de case nulle\n");
+    }
+
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+\end{small}
+\end{correction}
+
+\subsection{Bientôt l'été (\textit{5 points})}
+
+Écrire un programme qui demande à l'utilisateur de saisir une date dans l'année et affiche :
+\begin{itemize}
+\item \C{C'est le printemps}, si la date est au printemps;
+%  et que l'été ne
+% viendra pas avant la fin du mois courant;
+% \item \C{C'est le printemps et ce sera l'été dans x jours} où \{x} est une
+% valeur numérique valant le nombre de jours avant l'été si l'été
+% arrivera dans le mois courant;
+\item \C{Déjà l'été} si la date du jour est en été:
+\item \C{Ce n'est ni le printemps, ni l'été}, si la date n'est ni au printemps ni en été;
+\end{itemize}
+
+Vous utiliserez trois constantes symboliques pour représenter les
+trois périodes différentes de l'année : \C{PRINTEMPS}, \C{ETE},
+\C{AUTRE}. 
+
+Vous séparerez clairement la partie saisie, la partie
+calcul de la saison et la partie affichage.
+
+La date sera saisie sous la forme de deux entiers : l'un entre 1 et 31
+(inclus) pour le jour dans le mois et l'autre entre 1 et 12 (inclus)
+pour le numéro du mois. On suppose que la saisie est une date
+correcte.
+
+Le printemps commence le 20 mars, l'été le 21 juin, l'automne le 22
+septembre.
+
+Exemples d'exécutions :
+\begin{small}
+\begin{verbatim}
+Date : 21 10
+Ce n'est ni le printemps, ni l'ete
+
+Date : 11 6
+C'est le printemps
+
+Date : 21 6
+C'est l'ete
+\end{verbatim}
+\end{small}
+  \begin{correction}
+   \begin{itemize}
+    \item 1pt saisie (sur-récompensé).
+    \item 4 points pour calcul et affichage en simulant le programme de l'etudiant. Si ce
+      programme est trop compliqué (des boucles ou autre) c'est zéro à
+      cette partie.
+      \begin{itemize}
+      \item 0.5pt si fonctionne pour mois < 3  (jour quelconque)
+        \item 0.5pt si fonctionne pour mois > 9  (jour quelconque)
+      \item 0.5pt si mois 4,5 au printemps  (jour quelconque)
+      \item 0.5pt si mois 7,8 en été  (jour quelconque)
+        \item 1.5pt : 0,5 point par traitement correct, à un jour près, des
+          jours de transition dans les mois 3,6,9.  (1-19 mars autre et 21-31
+          mars printemps etc...)
+\item 0.5 point si chacun des trois jours de début de saison sont bien
+  dans la saison (20 mars an printemps, 21 juin été, 22 septembre).
+      \end{itemize}
+    \item Si correct mais affichage au milieu des tests ou saisie au
+      milieu des tests enlever 0.5 pt.
+      \item 0.5 pt en moins si il y a des variables non declarées, pas
+        de points en moins pour les scanf, 0.5 point en moins si pas
+        de constantes symboliques.
+    \end{itemize}
+\begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define TAILLE 3
+#define PRINTEMPS 1
+#define ETE 2
+#define AUTRE 42
+
+/* Fonction principale */
+int main()
+{
+    int jour = 0;
+    int mois = 0;
+    int saison = AUTRE;
+    
+    /* saisie */
+    printf("Saisir la date : ");
+    scanf("%d", &jour);
+    scanf("%d", &mois);
+
+
+    /* calcul de la saison (on peut faire plus cours en initialisant saison a AUTRE) */
+    if (mois < 3)
+    {
+        saison = AUTRE;
+    }
+    if (mois == 3) {
+        if (jour < 20) {
+            saison = AUTRE;
+        }
+        else 
+        {
+            saison = PRINTEMPS;
+        }
+    }
+    if ((mois > 3) && (mois < 5))
+    {
+        saison = PRINTEMPS;
+    }
+    if (mois == 6) 
+    {
+        if (jour < 21) 
+        {
+            saison = PRINTEMPS;     
+        }
+        else
+        {
+            saison = ETE;
+        }
+    }
+    if ((mois > 6) && (mois < 9)) 
+    {
+        saison = ETE;
+    }
+    if (mois == 9)
+    {
+        if (jour < 22) {
+            saison = ETE;
+        }
+        saison = AUTRE;
+    }
+    if (mois > 9) 
+    {
+        saison = AUTRE;
+    }
+
+
+    /* affichage */
+    if (saison == AUTRE)
+    {
+        printf("Ce n'est ni le printemps, ni l'ete\n");
+    }
+    if (saison == PRINTEMPS)
+    {
+        printf("C'est le printemps\n");
+    }
+    if (saison == ETE)
+    {
+        printf("C'est l'ete\n");
+    }
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+\end{small}
+  \end{correction}
+
+\section{Trace d'un programme avec fonctions (\textit{3 points})}
+
+Simulez l'exécution du programme suivant, en réalisant sa \textbf{trace}, comme cela a été vu en TD et en cours.
+
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+int mystere(int n);
+
+int main()
+{
+    int x = 2;
+    int res;
+    
+    res = mystere(x);
+    printf("mystere(%d) = %d\n", x, res);
+    
+    return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+int mystere(int n)
+{
+   if (n > 1) 
+   {
+       return n * mystere(n - 1);
+   }
+   return 1;
+}
+\end{listing}
+\end{small}
+
+\begin{correction}
+
+  \begin{itemize}
+  \item 0.5pt pour l'identification des variables du main et leur
+    initialisation
+  \item 0.5pt pour le premier appel de fonction (avec ou sans titre)
+    ligne 14 et identification de l'unique variable (n).
+  \item 0.5 pt pour le passage par valeur (colonne n initialisée à 2)
+    dans cet appel.
+  \item 0.5pt pour la hauteur de pile (appel imbriqué).
+  \item 0.5 pt si le if est correctement suivi dans les deux cas (faux
+    si un seul appel).
+  \item 0.5 pt si res est affecté après l'appel initial a mystere
+    (effet de l'affectaction), même si pas le bon entier (si pas
+    valeur entière c'est zéro). 
+  \item 0.5 pt si l'affichage est correct (et donc res vaut bien 2).
+  \end{itemize}
+    \paragraph{Trace.}
+ \begin{table}[h]
+      %\begin{center}
+\small
+        \setlength{\unitlength}{\tabcolsep}
+          \begin{tabular}[t]{|c|c|c|l|}
+          \multicolumn{4}{l}{\C{main()}}\\ \hline
+          ligne & x & res &  Affichage\\ \hline
+          initialisation  & 2 & ? & \\ \hline
+          14 & & & 
+          \multicolumn{1}{r|}{
+            \put(1,0){\noindent
+              \begin{tabular}[t]{|c|c|l|}
+                \multicolumn{3}{l}{\C{mystere(2)}}\\ \hline
+                ligne & n & Affichage \\ \hline
+                initialisation  & 2 & \\ \hline
+                25 &  & \multicolumn{1}{r|}{
+                  \put(1,0){\noindent
+                    \begin{tabular}[t]{|c|c|l|}
+                      \multicolumn{3}{l}{\C{mystere(1)}}\\ \hline
+                      ligne & n & Affichage \\ \hline
+                      initialisation  & 1 & \\ \hline
+                     27  &\multicolumn{2}{|l|}{renvoie 1}\\ \hline                
+                    \end{tabular}
+                  }
+                }\\ \hline 
+                25  &\multicolumn{2}{|l|}{renvoie 2}\\ \hline                
+              \end{tabular}
+            }
+          }\\ \hline 
+          14 & & 2 &  \\ \hline
+          15 & &  &  mystere(2) = 2\\ \hline
+          17 &\multicolumn{3}{|l|}{renvoie EXIT\_SUCCESS}\\ \hline
+        \end{tabular}
+      %\end{center}
+  \end{table}
+\end{correction}
+
+\section{Écriture de fonctions (\textit{4 $\times$ 1 point})}
+
+\begin{enumerate}
+\item Écrire une fonction qui prend en entrée un entier $n$ et calcule
+  la somme :\label{item:somme}
+  \begin{gather*}
+    \sum^n_{k = 1} \frac{1}{k^2}
+  \end{gather*}
+
+\item Écrire la procédure \verb|rect| qui n'a pas d'entrée et
+  affiche le motif suivant :\label{item:rect}
+\begin{verbatim}
+*****
+*   *
+*****
+\end{verbatim}
+\item Écrire la procédure \verb|rectangle| qui prend en entrée un
+  entier \C{largeur} et un entier \C{hauteur} et affiche un rectangle plein
+  d'étoiles de \C{hauteur} lignes sur \C{largeur} colonnes. \label{item:rectangle}
+
+\item Écrire une fonction \verb|volume_cylindre| qui prend en entrée
+  un rayon réel \C{r} et une hauteur réelle \C{h} et renvoie le volume du cylindre
+  de rayon \C{r}  et de hauteur \C{h}. vous ferez appel à une
+  fonction \C{calcul\_surface}, supposée déjà définie, qui calcule la
+  surface d'un cercle à partir de son rayon.
+\end{enumerate}
+
+\paragraph{Bonus.}
+Écrire une procédure \C{boite} qui affiche un rectangle de \C{hauteur}
+lignes sur \C{largeur} colonnes, comme la fonction \C{rectangle}
+(question~3), mais creux, comme dans l'exemple de la question~2.
+
+\begin{correction}
+Difficultées diverses mais c'est voulu, on compte :
+0.5 pt prototype correct et 0.5 pt code correct (ou 0.25 si
+quasi-correct ie boucles dans questions \ref{item:somme} et \ref{item:rectangle}).
+\begin{verbatim}
+double sommation(int n)
+{
+  int k;
+  double somme = 0;
+  for (i = 1; i <= n; i = i + 1)
+  {
+    somme = somme + 1.0 / (k*k); /* Attention au double : 1.0 */
+  }
+  return somme;
+}
+
+void rect()
+{
+  printf("*****\n");
+  printf("*   *\n");
+  printf("*****\n");
+}
+
+void rectangle(int hauteur, int largeur)
+{
+  int i; /* variable de boucle ligne */
+  int j; /* variable de boucle colonne */
+
+  for (i = 0; i < hauteur; i = i + 1)/* pour chaque ligne */
+  { 
+    /* afficher une ligne d'etoiles */     
+    for (j = 0; j < largeur; j = j + 1) /* pour chaque colonne */
+    {
+      printf("*"); /* afficher etoile */
+    }
+    printf("\n"); /* fin de la ligne */
+  }
+}
+
+double volume_cylindre(double r, double h)
+{
+  return h * calcul_surface(r);
+}
+\end{verbatim}
+
+Pour la question bonus on compte 2 points si rigoureusement
+juste. Sinon rien.
+
+\begin{verbatim}
+void boite(int hauteur, int largeur)
+{
+  int i; /* variable de boucle ligne */
+  int j; /* variable de boucle colonne */
+
+  for (i = 0; i < hauteur; i = i + 1)/* pour chaque ligne */
+  { 
+    for (j = 0; j < largeur; j = j + 1) /* pour chaque colonne */
+    {
+      if ((0 == i) 
+          || (hauteur - 1 == i) 
+          || (0 == j)
+          || (largeur - 1 == j))
+      {
+         printf("*"); /* bord : etoile */
+      }
+      else
+      {
+        printf(" "); /* centre : espace */
+      }
+    }
+    printf("\n"); /* fin de la ligne */
+  }
+}
+\end{verbatim}
+
+\end{correction}

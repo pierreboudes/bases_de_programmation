@@ -1,0 +1,183 @@
+\documentclass[xcolor=svgnames]{beamer}
+\input{communs/slides_style}
+
+%%% Titre -- Cours 1
+\title{Éléments d'informatique -- Cours 2. Éléments de systèmes
+  d'exploitation. Premier programme C}
+\author{Pierre Boudes}
+\date{\today}
+
+\begin{document}
+
+%% Page de titre et licence CC.
+\begin{frame}
+	\titlepage
+	\vfill
+	\begin{center}
+		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+		{\tiny\CcNote{\CcLongnameByNcSa}}
+		\vspace*{-2.5ex}
+	\end{center}
+\end{frame}
+
+  \section*{Contenu du cours}
+\begin{frame}
+  \frametitle{Contenu du cours (rappel)}
+  \begin{itemize}
+  \item Éléments d'architecture des ordinateurs (+mini-assembleur)
+  \item \alert{Éléments de systèmes d'exploitation}
+\item Programmation structurée impérative (éléments de langage C)
+\begin{itemize}
+  \item Structure d'un programme C
+  \item Variables : déclaration (et initialisation), affectaction
+  \item Évaluation d'expressions
+  \item Instructions de contrôle : if, for, while
+  \item Types de données : entiers, caractères,
+    réels, tableaux, enregistrements
+  \item Fonctions d'entrées/sorties (scanf/printf)
+  \item Écriture et appel de fonctions
+  \item Débogage
+\end{itemize}
+\item Notions de compilation
+  \begin{itemize}
+  \item Analyse lexicale, analyse syntaxique, analyse sémantique
+  \item préprocesseur du compilateur C (include, define)
+   \item Édition de lien
+  \end{itemize}
+\item Algorithmes élémentaires
+\item Méthodologie de résolution, manipulation sous linux
+\end{itemize}
+\end{frame}
+
+\section[Plan]{}
+\frame[label=plan]{\tableofcontents%[pausesections]
+}
+
+\section{Le(s) système(s) d'exploitation}
+\begin{frame}
+\frametitle{Le(s) système(s) d'exploitation}
+
+Il n'y a pas de définition précise.\pause
+\begin{definition}[système d'exploitation]
+  Un \alert{système d'exploitation} est un ensemble de programmes qui
+  servent d'interface entre le matériel et les logiciels applicatifs. 
+\end{definition}
+\pause
+Nous distinguerons trois rôles endossés par le SE :
+\pause
+  \begin{itemize}
+  \item Pilotage et abstraction du matériel\pause
+  \item Gestionnaire et ordonnanceur de processus\pause
+  \item Environnement de travail
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Abstraction du matériel}
+\begin{frame}
+  \frametitle{Abstraction du matériel} 
+Un système d'exploitation contient un ensemble de programmes dont le
+rôle est de piloter les périphériques matériels. \pause 
+
+Le système d'exploitation sert d'intermédiaire entre le
+matériel et les autres applications pour :\pause
+\begin{itemize}
+  \item simplifier l'utilisation  du matériel\pause
+  \item réglementer et protéger l'accès au matériel (intégrité)\pause
+  \item donner corps aux abstractions utiles (le \alert{système de
+    fichiers}, ou la notion d'utilisateur).\pause
+\end{itemize}
+Au tout début de la séquence de démarrage, le programme
+\alert{d'amorçage} ou \emph{bootstrap}, un programme résidant dans un
+mémoire spécifique, déclenche le chargement du système
+d'exploitation en mémoire.
+\end{frame}
+
+\subsection{Gestionnaire de processus}
+\begin{frame}
+\frametitle{Gestionnaire de processus}
+
+On appelle \alert{processus} un programme informatique en cours d'exécution. 
+
+\pause
+Le système d'exploitation assure la gestion des processus. Notamment:
+\begin{itemize}
+\item Le chargement des programmes à partir d'une mémoire de masse vers
+  la mémoire de travail (et saut sur le point d'entrée du programme). \pause
+\item Le partage du temps processeur. \pause
+\item Le partage de la mémoire. \pause
+\item Le système gère également les interruptions matérielles, la
+  communication entre les processus etc.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Temps partagé, ordonnancement}
+\pause
+\begin{itemize}
+\item  Sur un système multitâches, il y a un seul processeur (ou un petit
+    nombre de processeurs) et de nombreux processus.
+\pause
+\item Chaque processus est exécuté tour à tour, pendant un intervalle de
+    temps court, de l'ordre de 10 à 100 ms, après quoi il retourne en
+    attente (jusqu'à ce que son tour revienne).  
+\pause
+ \item Ceci donne une illusion de simultanéité et de parallélisme.
+\pause
+\item Le temps partagé peut être \alert{coopératif} (c'est le programme du
+  processus qui prévoit de rendre temporairement le processeur), ou
+  \alert{préemptif} (le processus est interrompu par le système).
+\pause
+  \item  \alert{Algorithme d'ordonnancement}. C'est le système d'exploitation qui fixe l'ordre dans lequel ces
+    processus sont exécutés. 
+\pause
+  \item Exemple d'ordonnancement : le tourniquet.
+\pause
+  \item Un peu de temps est perdu à la \alert{commutation de
+      contexte}.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Mémoire partagée, mémoire virtuelle}
+  \begin{itemize}
+\item La mémoire est en général virtualisée. \pause
+\item Cela signifie que les applications n'ont pas d'accès direct à la
+  mémoire physique. Les adresses mémoires manipulées par les processus
+  ne sont pas directement les adresses physiques, elles sont
+  virtuelles.\pause
+  \item Un calcul d'adresse est effectué par le système pour passer
+    des adresses virtuelles aux adresses physiques et
+    réciproquement.\pause 
+  \item Ceci permet de faire comme si chaque programme était seul
+    résidant en mémoire et simplifie le travail de programmation.\pause
+  \item Certaines portions inactives de mémoire de travail peuvent
+    également être stockée sur une mémoire de masse (disque dur), de
+    manière à étendre la quantité de mémoire de
+    travail disponible (attention aux \alert{temps d'accès} !).
+  \end{itemize}
+\end{frame}
+
+\subsection{Environnement de travail}
+\begin{frame}
+  \frametitle{Environnement de travail}
+  Selon un point de vue extensif, le système est vu comme un ensemble
+  de logiciels (navigateur web, éditeur de texte, etc.)  qui
+  accompagnent le matériel et sont installés en même temps que le
+  système d'exploitation proprement dit.\pause
+\begin{itemize}
+\item Environnement graphique (fenêtres, bureau, corbeille) \pause
+\item Services inter-applications (correction orthographique, annuaire, etc.)\pause
+\item Multi-utilisateurs.\pause 
+\end{itemize}
+
+\structure{Remarque :} les mots de passe ne sont pas stockés, un chiffrement irréversible suffit.
+\end{frame}
+
+
+\section[Démos]{Démos et fin}
+\begin{frame}
+  \frametitle{Démos et fin}
+\end{frame}
+\end{document}

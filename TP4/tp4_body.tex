@@ -1,0 +1,236 @@
+% -*- coding: utf-8 -*-
+
+% \renewcommand{\labelitemi}{$\bullet$}
+
+% \newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 4 : la structure de contrôle ``for''}
+
+\vspace{-1em}L'objectif de ce TP est de vous familiariser avec les notions d'itération et de boucles imbriquées.
+
+\begin{correction}
+  Il y a deux exos type qu'il faut corriger au tableau.
+  Le dernier exo du TD4 (Affichage de n fois ``Bonjour'') peut être fait en intro si pas fini pendant le TD.
+\end{correction}
+
+\newcommand{\TPshortName}{TP4}
+\input{../communs/preambule_tp.tex}
+
+\section{Affichage de figures géométriques}
+
+Les exercices suivants utilisent le caractère \verb|*| (étoile) pour dessiner des figures géométriques simples, appelées figures d'étoiles.
+
+\subsection{Exercice type : affichage d'un rectangle d'étoiles}
+
+Écrire un programme qui, étant données deux variables,
+\verb|longueur| et \verb|largeur|, initialisées à des valeurs
+strictement positives quelconques,affiche  un rectangle d'étoiles ayant pour
+longueur \verb|longueur| étoiles et largeur \verb|largeur|
+étoiles. Deux exemples d'exécution, avec deux initialisations
+différentes, sont les suivants :
+\begin{verbatim}
+Affichage d'un rectangle d'etoiles de longueur 10 et largeur 5.
+**********
+**********
+**********
+**********
+**********
+
+Affichage d'un rectangle d'etoiles de longueur 6 et largeur 3.
+******
+******
+******
+\end{verbatim}
+
+\begin{correction}
+Durée 3/4 d'heure ?
+
+Les algos sont à faire (les extraire du code).
+
+Vous pouvez dans un premier temps supprimer la boucle la plus imbriquée en leur demandant d'afficher un rectangle de longueur exactement ``************''.
+
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* declaration et initialisation variables */
+    int largeur = 3; /* largeur du rectangle en nb d'etoiles */
+    int longueur = 6; /* longueur du rectangle en nb d'etoiles */
+    int i; /* var. de boucle */
+    int j; /* var. de boucle */
+
+    printf("Affichage d'un rectangle d'etoiles de longueur %d et largeur %d.\n",longueur,largeur);
+
+    for(i = 0;i < largeur;i = i + 1) /* chaque ligne d'étoiles */
+    {
+        /* affiche longueur etoiles */
+        for(j = 0;j < longueur;j = j + 1) /* chaque colonne d'etoiles */
+        {
+            /* affiche une etoile */
+            printf("*");
+        }
+        /* j >= longueur */
+
+        /* passe a la ligne suivante */
+        printf("\n");
+    }
+    /* i >= largeur */
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\subsection{Exercice type : affichage d'un demi-carré d'étoiles}
+
+Écrire un programme qui affiche, étant donnée la variable,
+\verb|cote|, initialisée à une valeur quelconque, un demi-carré d'étoiles (triangle rectangle isocèle) ayant pour
+longueur de côté \verb|cote| étoiles. Deux exemples d'exécution, avec deux initialisations
+différentes, sont les suivants :
+\begin{verbatim}
+Affichage d'un demi-carre d'etoiles de cote 6.
+*
+**
+***
+****
+*****
+******
+
+Affichage d'un demi-carre d'etoiles de cote 2.
+*
+**
+\end{verbatim}
+
+\begin{correction}
+Durée 3/4 d'heure ?
+
+Les algos sont à faire (les extraire du code).
+
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* declaration et initialisation variables */
+    int cote = 2; /* cote du demi-carré en nb d'etoiles */
+    int i; /* var. de boucle */
+    int j; /* var. de boucle */
+
+    printf("Affichage d'un demi-carre d'etoiles de cote %d.\n",cote);
+
+    for(i = 1;i <= cote;i = i + 1) /* chaque numero de ligne d'étoiles */
+    {
+        /* affiche autant d'etoiles que le numero de ligne */
+        for(j = 0;j < i;j = j + 1) /* chaque colonne d'etoiles */
+        {
+            /* affiche une etoile */
+            printf("*");
+        }
+        /* j >= i */
+
+        /* passe a la ligne suivante */
+        printf("\n");
+    }
+    /* i > cote */
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+
+\subsection{Affichage d'un demi-carré droit d'étoiles (optionnel)}
+
+
+Écrire un programme qui affiche un demi-carré droit d'étoiles de côté spécifié par l'utilisateur. Exemple d'exécution :
+\begin{small}
+\begin{verbatim}
+Entrer la taille du demi-carré :
+5
+Affichage d'un demi-carre droit d'etoiles de cote 5.
+    *
+   **
+  ***
+ ****
+*****
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int cote; /* cote du demi-carré droit en nb d'etoiles a saisir par l'utilisateur*/
+    int i; /* var. de boucle */
+    int j; /* var. de boucle */
+
+    /* saisie cote */
+    printf("Entrer la taille du demi-carré :\n");
+    scanf("%d",&cote);
+
+    /* affichage du demi-carre droit */
+    printf("Affichage d'un demi-carre droit d'etoiles de cote %d.\n",cote);
+
+    for(i = 1;i <= cote;i = i + 1) /* chaque numero de ligne d'étoiles */
+    {
+        /* affiche les blancs */
+        for(j = 0;j < cote - i;j = j + 1) /* chaque colonne de blancs */
+        {
+            /* affiche un blanc */
+            printf(" ");
+        }
+        /* j >= cote - i */
+
+        /* affiche autant d'etoiles que le numero de ligne */
+        for(j = 0;j < i;j = j + 1) /* chaque colonne d'etoiles */
+        {
+            /* affiche une etoile */
+            printf("*");
+        }
+        /* j >= i */
+
+        /* passe a la ligne suivante */
+        printf("\n");
+    }
+    /* i > cote */
+
+    return EXIT_SUCCESS;
+}
+
+/* definition de fonctions utilisateurs */
+
+\end{verbatim}
+\end{correction}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tp4"
+%%% End: 

@@ -1,0 +1,27 @@
+;;  Positionner  la variable  `my-lisp-directory'  sur  une chaine  de
+;; caractères contenant le  chemin complet du repertoire contenant les
+;; fichiers lisp.
+(setq my-lisp-directory (expand-file-name "~/emacs/"))
+
+;;  Ajouter ce  répertoire à  la liste  des répertoires  contenant les
+;; bibliothèques :
+(add-to-list 'load-path my-lisp-directory)
+
+(require 'linum)
+
+(global-set-key [f11] 'linum-mode)
+
+
+;; ***************************************************************************
+;; General
+;; ***************************************************************************
+
+(transient-mark-mode 1)
+;; (standard-display-european t) marche mal avec MULE
+(global-font-lock-mode t)
+(delete-selection-mode 1)
+(add-hook 'text-mode-hook 
+             (function (lambda () (set-fill-column 80))))
+
+
+

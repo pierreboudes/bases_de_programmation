@@ -1,0 +1,42 @@
+Générateur automatique de QCM.
+Jean-Yves Moyen, novembre 2008.
+
+
+Ceci est un programme qui génère automatiquement des QCM. À partir d'un
+ensemble de questions, le programme génère un certain nombre de
+QCM. Pour chaque QCM, on tire au hasard un certain nombre de questions
+dans le lot de toutes les questions possibles et pour chaque question,
+les réponses sont présentées dans un ordre aléatoire. Ceci ayant pour
+effet de limiter fortement les possibilité de copier sur le voisin...
+
+
+Le programme est pas tout à fait fini, en particulier l'interface pour
+l'utilsier directement en ligne de commande est inexistante. Il faut
+donc à chaque QCM modifier le fichier .ml avant de l'exécuter... :-(
+
+Éditer le fichier qcm.ml et modifier à votre convenance :
+* les variables globales au début du programme (nombre de QCM et nombre
+  de questions par QCM).
+* Les grosses chaîne de caractères "headers" et "footers" qui
+  contiennent les débuts et fin de chaque QCM.
+
+
+Le fichier questions.txt comporte un exemple de QCM qui explique la
+syntaxe à utiliser.
+
+
+Pour lancer la génération de QCM, il faut :
+1/ lancer ocaml (depuis un terminal)
+2/ taper #use "qcm.ml";;
+   (attention, le '#' est bien à taper en plus du '#' qui sert de prompt
+   à Ocaml...)
+
+
+ceci génère un fichier .tex par QCM. Pour compiler tous les fichiers
+d'un coup, on peut utiliser le Makefile ici présent (en le recopiant
+dans le bon répertoire puis "make" devrait faire tout le boulot).
+
+
+
+En cas de problèmes :
+mailto:Jean-Yves.Moyen@lipn.univ-paris13.fr

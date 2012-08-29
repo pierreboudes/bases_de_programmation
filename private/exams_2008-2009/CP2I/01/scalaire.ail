@@ -1,0 +1,132 @@
+init 0 r0           # r0 : indice courant i
+init 0 r1           # r1 : produit scalaire partiel
+lecture 100 r2      # calcul de i-n
+inverse r2          #
+add r0 r2           #
+sisaut r2 17        # si i>=n, saut vers l'ecriture du resultat
+add 1 r0            # incrementation de i
+init 100 r2         # calcul de 100+i
+add r0 r2           #
+lecture *r2 r3      # lecture de u_i dans r3
+lecture 100 r4      # lecture de n dans r4
+add r4 r2           # calcul de 100+n+i
+lecture *r2 r4      # lecture de v_i dans r4
+mult r4 r3          # calcul de u_i * v_i
+add r3 r1           # ajout au produit partiel
+saut 3              # et on recommence
+ecriture r1 99      # ecriture du resultat en 99
+stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3
+5
+3
+1
+-3
+5
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+\begin{tabular}[c]{l||c|c|c|c|c|c|c|}
+\hline
+ \emph{Instructions} & Cycles & CP& r0& r1& 100& 102& 103\\ \hline
+\hfill INIT & 0 & 1 & ? & ? & 7
+ & 1
+ & ?
+ \\ \hline \commentaire{Lecture de la donnée d'adresse 100 dans le registre 0
+} \C{lecture 100 r0
+} & 1 & 2  & 7 & & & &\\ \hline
+ \commentaire{Inversion du signe de la valeur du registre 0
+} \C{inverse r0
+} & 2 & 3  & -7 & & & &\\ \hline
+ \commentaire{Lecture de la donnée d'adresse 102 dans le registre 1
+} \C{lecture 102 r1
+} & 3 & 4  & & 1 & & &\\ \hline
+ \commentaire{Ajout de la valeur du registre 1 au registre 0
+} \C{add r1 r0
+} & 4 & 5  & -6 & & & &\\ \hline
+ \commentaire{Si la valeur (-6) du registre 0 est positive, saute à l'adresse 7
+} \C{sisaut r0 7
+} & 5 & 6  & & & & &\\ \hline
+ \commentaire{Saut à l'adresse 13
+} \C{saut 13
+} & 6 & \textbf{13} & & & & &\\ \hline
+ \commentaire{Initialisation du registre 0 à 1
+} \C{init 1 r0
+} & 7 & 14  & 1 & & & &\\ \hline
+ \commentaire{Écriture du registre 0 à l'adresse 103
+} \C{ecriture r0 103
+} & 8 & 15  & & & & & 1
+\\ \hline
+ \commentaire{Fin du processus.
+} \C{stop
+} & 9 & 16  & & & & &\\ \hline
+\end{tabular}

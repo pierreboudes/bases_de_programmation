@@ -1,0 +1,16 @@
+lecture 15 r0    
+sautpos r0 6   <-- saute sur le sinon
+inverse r0       :: <alors>
+ecriture r0 16   :: </alors>
+saut 7        <-- saute a la fin 
+ecriture r0 16   :: <sinon/>
+stop  
+?
+?
+?
+?
+?
+?
+?
+-5       <-- x
+?        <-- résultat

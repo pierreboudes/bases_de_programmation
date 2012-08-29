@@ -1,0 +1,649 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{latexsym,amssymb,amsmath}
+%\usepackage{xltxtra} % charge aussi fontspec et xunicode,
+                     % nécessaires...
+% \usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+
+\usepackage{listings} \lstset{language=C, showstringspaces=false}
+\usepackage{graphicx}
+\usepackage{pst-tree}
+
+\topmargin -1cm 
+\oddsidemargin -10mm 
+%\evensidemargin 0mm 
+\textheight 27cm 
+\textwidth 18cm 
+\columnsep 4.1mm
+
+\parindent 1.0em 
+\headsep 0mm 
+\headheight 0pt 
+\lineskip 0pt
+\parskip 0.33em
+
+\normallineskip 0pt 
+\def\baselinestretch{1}
+
+\sloppy \hbadness=10000
+
+% arbres
+\newcommand{\n}[2]{
+  \pstree{\Tr{#1}}{#2}}
+\newcommand{\f}[1]{\TR{#1}}
+\newcommand{\x}[1]{\pstree[linestyle=none,arrows=-,levelsep=1ex]
+  {\Tfan}{\f{#1}}}
+\psset{treemode=R,levelsep=20ex,treesep=1em,nodesep=1em}
+
+
+\begin{document}
+\input{enteteAnnee}
+\entete{Linux et la console}
+
+\newcommand{\puis}{\ensuremath{\rightarrow\ }}
+
+
+\paragraph{Objectif de TP :\\}
+
+Familiarisation avec la console, l'interpréteur de commandes, les processus.
+
+\section{Les commandes}
+
+   On a vu comment manipuler (création, copie, déplacement) les
+   fichiers et les répertoires, lancer des applications, ... avec le
+   gestionnaire de fichiers Konqueror. Si vous êtes arrivés jusque là,
+   vous avez pu constater que la souris seule ne suffit pas toujours,
+   même pour se déplacer dans les répertoires.
+
+   Sous Linux, le clavier a longtemps eu une place prépondérente, et
+   de fait, toutes ces opérations peuvent
+   aussi s'effectuer par l'intermédiaire de commandes qui sont
+   interprétées au fur et à mesure par un \emph{interpréteur de commande} que
+   l'on nomme aussi \emph{ligne de commande} ou \emph{shell}. Il existe
+   plusieurs types de shells pour lesquels les commandes peuvent
+   varier. Nous utilisons ici le shell BASH, qui devrait être votre
+   shell par défaut.
+
+
+
+   \paragraph{Définitions :\\}
+
+   \begin{itemize}
+   \item Une {\bf commande} est un programme exécutable.
+
+   \item L'{\bf interpréteur de commandes} permet d'exécuter les
+     différentes commandes tapées par l'utilisateur.
+   \end{itemize}
+
+
+\subsection{L'interpréteur de commandes}
+   Lorsque vous lancez un shell, l'ordinateur affiche un prompt qui
+   vous invite à taper une commande. Ici, le prompt est de la forme :
+   ``login@machine:repertoire\_courant\$''. Pour les personnes qui
+   connaissent, le Shell Linux est l'équivalent du mode Ms-Dos sous
+   Windows. Évidemment, les possibilités offertes par le Shell BASH
+   sont sans commune mesure avec celles du DOS.
+
+\paragraph{Exercice :} lancement d'un interpréteur de commandes (Shell)
+
+\begin{enumerate}
+\item passer en mode console (touches CTRL+ALT+F1) ;
+\item Tapez votre login et votre mot de passe à l'invite ;
+\item C'est fait : vous êtes sur l'interpréteur de commandes
+\item Pour terminer l'interpréteur de commandes, utilisez la
+  combinaison de touches CTRL+D.
+\end{enumerate}
+
+Vous pouvez utiliser jusqu'à 6 consoles à la fois, en passant de
+l'une à l'autre avec les touches CTRL+ALT+F1 à CTRL+ALT+F6.
+
+Vous pouvez également ouvrir des consoles à l'intérieur de KDE. Pour
+retourner à l'écran graphique de KDE~: CTRL+ALT+F7. Ensuite, trouvez
+un programme nommé {\tt konsole}, ou encore {\tt xterm} dans le
+menu~K, et lancez-le !
+
+
+
+
+\subsection{Les commandes}
+
+Les commandes ont la forme générique suivante :\\
+\mbox{}\hspace{10em}{\bf commande [-option(s)] [paramètre(s)]}
+
+Pour exécuter une commande, on tape le nom de la commande, suivie de
+ses options (les crochets signalent que ces options sont facultatives)
+et de ses paramètres (facultatifs). Le nombre d'options disponibles et
+de paramètres possibles pour une commande dépend de la commande. Les
+options commencent par le signe {\bf \tt -}, parfois doublé ({\bf \verb+--+}). 
+
+
+Il existe deux types de commandes :
+\begin{itemize}
+\item des commandes internes (qui font partie du shell) : {\bf cd},
+  {\bf fg}, {\bf echo}, {\bf kill}, etc.
+
+\item des commandes externes (ce sont des programmes exécutables, qui
+  se trouvent dans la hiérarchie des répertoires)~:
+  {\bf ls}, {\bf rm}, etc.
+\end{itemize}
+
+
+
+
+\subsection{Deux compagnons indispensables~: man et internet}
+
+\subsubsection{man (manual)}
+Sous ces 3 lettres se cache une commande qui sera votre première source d'informations durant ces TPs. Cette commande permet d'afficher le manuel de la commande dont le nom est passé en paramètre.
+
+Pour savoir comment fonctionne \verb+man+, affichez son manuel~:
+\begin{lstlisting}[frame=single]
+ 	man man
+\end{lstlisting}
+
+Appuyez sur \verb+espace+ pour allez à la page suivante et sur la
+touche \verb+q+ pour quitter le manuel et retourner sur le
+terminal. Prenez l'habitude de regarder le manuel des commandes que
+vous ne connaissez pas avant d'appeler le prof~! Cette commande est
+très importante pour retrouver comment utiliser une commande qu'on a
+pas utilisé depuis longtemps et/ou retrouver l'option de cette
+commande qui nous intéresse. 
+
+\subsubsection{Internet}
+
+Prenez également l'habitude d'utiliser votre moteur de recherche
+internet favori (\emph{firefox}~!)et \emph{wikipédia} pour trouver une
+information. Lancez une recherche sur \og \textit{les commandes unix}
+\fg{}, cherchez une page web qui explique briévement comment utiliser
+les commandes unix et gardez cette page précieusement pour la suite. 
+
+Pour lancer \emph{firefox} depuis la ligne de commande, tapez juste
+{\tt firefox} suivi de la touche {\tt Entrée}.
+
+
+
+\subsection{Quelques astuces}
+
+\subsubsection{L'esperluette ou ``et commercial''}
+
+Vous avez lancé firefox depuis la ligne de commande, vous
+pouvez remarquer. Que se passe t'il dans la \textit{konsole}~? 
+Essayez d'ouvrir un nouveau firefox à partir du terminal. Fermez le
+premier que vous avez lancé, puis entrez~: \verb+firefox &+ dans
+\textit{konsole}. L’esperluette 
+(\verb+&+) permet de lancer une application en tâche de fond et de
+laisser la main sur le terminal à l'utilisateur. Vous pouvez entrer de
+nouveau \verb+firefox &+ dans le terminal pour ouvrir un deuxième
+navigateur. 
+
+\subsection{Complétion automatique}
+
+Dans une console, la touche de tabulation est magique. Elle permet de
+compléter automatiquement la commande ou le chemin que vous êtes en
+train de taper au clavier. Elle vous fera gagner énormément de temps
+et vous évitera de trop user vos doigts~! (habituez vous à
+l'utiliser).
+
+\subsection{Historique des commandes}
+
+Dans un terminal, on peut voir les dernières commandes entrées en
+appuyant sur la flèche haut (la flèche bas permet d'aller en sens
+inverse dans l'historique). Cette astuce est très pratique pour ne pas
+avoir à retaper une commande ou un chemin lorsqu'on a fait une faute
+de frappe (ce qui ne devrait pas arriver très souvent si vous utilisez
+la complétion automatique~!). Pour voir le contenu de l'historique,
+utilisez la commande {\tt history}.
+
+
+
+
+\subsection{Quelques commandes utiles}
+\begin{itemize}
+\item \textbf{man} \textit{nom\_commande} : affiche le manuel d'utilisation de la
+  commande \textit{nom\_commande}.
+\item \textbf{info} \textit{nom\_commande} : affiche une version plus complète du manuel
+  d'utilisation.
+\item \textbf{which} \textit{ nom\_de\_commande} : affiche le répertoire dans lequel se
+  trouve l'application ou la commande \textit{ nom\_commande}.
+\item \textbf{pwd} : affiche le répertoire courant.
+\item \textbf{ls} : affiche la liste des fichiers et répertoires contenus dans
+  le répertoire courant. Cette commande possède des options et accepte
+  des paramètres.  
+  Ex:
+  \begin{itemize}
+  \item \texttt{ls -l} : liste détaillée des fichiers
+
+  \item \texttt{ls -a} : affiche les fichiers « cachés » (ceux dont le
+    nom commence par un point)
+  \item \texttt{ls -l a*} : affichage détaillé de la liste
+    des fichiers commençant par la lettre {\tt a}
+  \end{itemize}
+\end{itemize}
+
+Exercice :
+Avec la ligne de commande faire les opérations suivantes :
+\begin{itemize}
+\item trouver les options possibles pour la commande
+  \texttt{date} ;
+\item trouver le répertoire courant (dans lequel on se trouve) ;
+\item trouver l'emplacement des commandes \textit{which},
+  \textit{man}, \textit{ls}, et \textit{date} ;
+\item afficher la liste détaillée des fichiers ;
+\item en utilisant le manuel : afficher la liste détaillée des
+  fichiers et répertoires (y compris les fichiers cachés) triée en
+  fonction de leur date de création (du plus ancien au plus récent).
+\end{itemize}
+
+\subsection{Commandes sur les fichiers et les répertoires}
+
+\subsubsection{chemin relatif vs. chemin absolu}
+On utilise la notation suivante :
+\begin{itemize}
+\item ``{\bf /}'' désigne le répertoire racine (de plus haut niveau) ;
+\item ``{\bf .}'' désigne le répertoire courant ;
+\item ``{\bf ..}'' désigne le répertoire père.
+\end{itemize}
+
+Le chemin d'accès à un fichier est la liste des répertoires à
+traverser pour atteindre ledit fichier. Si le point de départ est la
+racine (/), on parle de chemin absolu, si le point de départ est le
+répertoire courant, on parle de chemin relatif. Par exemple, vous êtes
+dans votre répertoire personnel, le chemin absolu du répertoire tp1
+est {\tt
+  /export/home/users/licence/licence1/cp2i12009/TMP/votre\_login/info/tp1},
+alors que son chemin relatif est {\tt info/tp1}.
+
+
+
+
+
+
+\subsubsection{Commandes sur les répertoires}
+{\it nom\_rep} désigne un nom de répertoire :
+
+\begin{itemize}
+\item {\bf pwd} : affiche le répertoire courant ;
+\item {\bf ls} : affiche la liste des fichiers et des répertoires
+  contenus dans le répertoire courant ;
+\item {\bf cd} {\it nom\_rep} : fait de nom\_rep le répertoire courant ;
+\item {\bf mkdir} {\it nom\_rep} : crée le répertoire nom\_rep dans le
+  répertoire courant ;
+\item {\bf rmdir} {\it nom\_rep} : détruit nom\_rep à condition qu'il soit
+  vide.  
+
+\subsubsection{Commandes sur les fichiers}
+{\it f1} et {\it f2} désignent des chemins d'accès à des fichiers.
+\begin{itemize}
+\item {\bf cp} {\it f1 f2} : copie f1 en f2. Si f2 est un répertoire, copie
+  f1 dans f2 en gardant le même nom ;
+\item {\bf rm} {\it f1} : détruit f1 ;
+\item {\bf mv} {\it f1 f2} : déplace f1 en f2 ;
+\item {\bf cat} {\it f1} : affiche le contenu du fichier f1 (en une seule fois) ;
+\item {\bf less} {\it f1} : affiche le contenu du fichier f1 (en plusieurs fois -
+  q pour quitter).
+\end{itemize}
+\end{itemize}
+
+\paragraph{Exercice}
+\begin{itemize}
+\item vérifier que les répertoires créés avec konqueror
+  existent. Si le fichier {\tt blah2.txt} a
+  disparu, le créer dans le répertoire {\tt tp1} ;
+\item se placer dans le répertoire tp2 ;
+\item créer les sous répertoires {\tt tp21} et {\tt tp22} ;
+\item copier le fichier {\tt blah2.txt} dans le répertoire tp21 ;
+\item se placer dans tp21 et visualiser le contenu du fichier
+  blah2.txt ;
+\item déplacer ce fichier dans tp22 ;
+\item effacer tp21 et tp22.
+\end{itemize}
+
+\subsubsection{Permissions sur les fichiers et les répertoires}
+    Comme nous l'avons vu, l'utilisateur n'a qu'un droit limité sur
+    les fichiers et les répertoires du système (il n'a le droit
+    d'écriture que sur son répertoire personnel). La commande {\tt ls -l}
+    (liste détaillée des fichiers et des répertoires) permet de
+    visualiser (entre autre) les droits d'accès sur les fichiers et
+    les répertoires. 
+
+\begin{verbatim}
+Ex : ls -l
+       drwxrw-rw-             ... TP1
+       drwxrw-rw-             .... TP2
+       -rw-r--r--             .... police2.txt
+\end{verbatim}
+
+Détaillons la première séquence de caractères en partant de la gauche :
+\begin{itemize}
+
+\item le premier champ vous indique le type de fichier :
+  \begin{itemize}
+  \item - c'est un fichier normal,
+  \item d c'est un répertoire,
+  \item l c'est un lien symbolique
+  \end{itemize}
+
+\item les trois champs suivants correspondent aux droits du
+  propriétaire (user u) :
+  \begin{itemize}
+  \item r droit en lecture (read), - pas de droit en lecture,
+  \item w droit en écriture (write), - pas de droit en écriture,
+  \item x droit en exécution si c'est un fichier, droit d'accès si
+    c'est un répertoire.
+  \end{itemize}
+
+\item les trois champs suivants correspondent aux droits du groupe. On
+  retrouve r,w,x
+
+\item les trois derniers correspondent aux droits des autres (others),
+  c'est-à-dire aux personnes qui ne sont pas le propriétaire et qui
+  n'appartiennent pas au groupe.  
+\end{itemize}
+
+La commande {\bf chmod} permet de modifier
+les droits d'accès d'un fichier (ou répertoire). Pour pouvoir
+l'utiliser sur un fichier ou un répertoire, il faut en être le
+propriétaire.  La syntaxe est la suivante : 
+
+
+\begin{tabular}[c]{rllll}
+{\bf chmod} & {\bf utilisateur} & {\bf opération} & {\bf droit} & {\bf
+  fichier}\\
+& {\bf \emph{u}} proriétaire & {\bf +} autorisation & {\bf r} lecture
+& \\
+& {\bf \emph{g}} groupe & {\bf -} interdiction & {\bf w} modification
+& \\
+& {\bf \emph{o}} les autres &  & {\bf x} exécution/traversée
+& \\
+\end{tabular}
+
+Pour un fichier contenant un programme, le droit {\bf x} permet
+de lancer le programme. Pour un répertoire, c'est le droit de
+traverser ce répertoire, ou de se déplacer dedans. Vous pouvez vous
+déplacer dans le répertoire {\tt
+  /export/home/users/Enseignants/rozenknop} car vous avez le droit
+{\bf x} dessus, mais vous n'avez pas le droit de lecture {\bf
+  r}. C'est pourquoi {\tt Konqueror} refuse de de s'y rendre, et que
+vous avez dû taper une partie du chemin au clavier pour télécharger ce
+sujet. 
+
+
+Exemples :
+\begin{itemize}
+\item Pour donner le droit en écriture pour le groupe sur le
+  fichier mon-fichier, il faut taper la commande \texttt{chmod g+w mon-fichier}
+\item Pour supprimer le droit d'accès du répertoire mon-répertoire aux
+  autres utilisateurs (autres que propriétaire et utilisateurs du
+  groupe), il faut taper : \texttt{chmod o-x mon-repertoire}
+\item En tapant : \texttt{chmod u+x,g-w mon-fichier}, vous ajoutez le droit en
+  exécution pour le propriétaire, et enlevez le droit en écriture pour
+  le groupe du fichier.
+\end{itemize}
+
+
+\paragraph{}Vous avez une autre méthode pour vous servir de la commande chmod. On
+considère que r=4, w=2 et x=1, si vous avez un fichier avec les droits
+suivants : \texttt{-rw-rw-rw-}, pour les droits utilisateurs vous avez
+\textit{(r=)4+(w=)2=6}, de même pour le groupe et les autres. Donc \texttt{-rw-rw-rw-}
+est équivalent à 666. Suivant la même règle \texttt{rwxrw-r--} est équivalent à
+764. Pour mettre un fichier avec les droits \texttt{-r--r--r--} vous pouvez
+taper~: \texttt{chmod 444 mon-fichier}
+
+
+
+
+
+Exercice :
+\begin{itemize}
+\item Placez-vous dans le votre répertoire personnel ;
+\item Enlevez le droit en lecture pour le fichier \texttt{blah2.txt} (pour
+  vous aussi);
+\item Affichez les droits sur ce fichier pour vérifier que l'opération
+  a fonctionné ;
+\item Essayez de visualiser le contenu du fichier ;
+\item Remettez les droits originaux ;
+\item Interdisez le droit en accès pour le répertoire \texttt{tp1} (pour vous
+  aussi) ;
+\item Essayez de vous placer dedans ;
+\item Remettez les droits originaux.
+\end{itemize}
+
+\section{Les processus}
+A chaque application ou commande exécutée sous Linux correspond un
+processus et le système attribue automatiquement un numéro à chaque
+processus (appelé le \textit{PID}). Le système Linux donne la possibilité de
+gérer de manière avancée ces processus, par exemple en arrêtant des
+processus bloqués, en changeant la priorité d'exécution de ces
+processus, etc. 
+
+Nous ne donnons qu'un aperçu des nombreuses possibilités offertes par le système.
+
+\subsection{Tâche de fond vs premier plan}
+Lorsque vous exécutez une commande depuis le Shell, celui-ci se bloque
+(i.e. vous ne pouvez plus rien faire), jusqu'à ce que la commande se
+termine. Vous avez alors lancé la commande au premier plan.
+
+Il est possible d'exécuter une commande sans bloquer le Shell,
+c'est-à-dire que vous reprenez la main avant que la commande ait fini
+de s'exécuter. On dit alors que la commande s'exécute en tâche de
+fond. Pour exécuter une commande en tâche de fond, on ajoute \& après
+la commande.
+
+Remarquez que si vous fermez la console depuis laquelle vous avez
+lancé \texttt{firefox} en tâche de fond, \texttt{firefox} se termine
+en même temps. Pour éviter cela, c'est-à-dire pour qu'une application
+continue en tâche de fond même après la fermeture du shell qui l'a
+lancée, il faut faire précéder la commande par \texttt{nohup}~:
+essayez par exemple de taper \texttt{nohup firefox \&} dans une
+console, puis de fermer la console !
+
+\subsection{Commandes sur les processus}
+\begin{itemize}
+\item \textbf{ps} affiche la liste des processus lancés depuis le
+  \textit{shell}. Utiliser \textbf{-ux} en option pour avoir une liste
+  complète de tous les processus tournant sur la machine. 
+\item \textbf{kill} \textit{PID} : tue le processus de numéro
+  \textit{PID}. Utiliser \textbf{-9} en option pour un meurtre sauvage et
+  définitif (sinon, ce serait plutôt une requête du genre <<~dis, tu
+  veux bien t'arrêter, stp ? Quand tu pourra...~>>)
+\item \textbf{bg} : Met en tâche de fond un processus qui vient d'être
+  arrêté par un CTRL+Z.
+\item \textbf{fg} : remet un processus interrompu par CTRL+Z au
+  premier plan.
+\end{itemize}
+
+Exercice :
+\begin{itemize}
+\item lancer \textbf{kwrite} par le shell ;
+\item constater que l'on ne peut plus rien faire (Shell bloqué...) ;
+\item ouvrir une autre console ;
+\item lister les processus actifs ;
+\item repérer le numéro de processus correspondant à la commande
+  \texttt{kwrite} ;
+\item tuer ce processus (pas trop sauvagement au début) ;
+\item revenir à la première console (vous devez avoir retrouvé la
+  main) ;
+\item relancer \textbf{kwrite} par le shell ;
+\item cliquer sur la console, puis appuyez sur CTRL+Z
+\item essayez d'utiliser ls \textit{kwrite} que vous venez de lancer
+\item revenez à la console et tapez \textbf{bg}, et réessayez
+  \textit{kwrite} ;
+\item lister les processus depuis la console ;
+\end{itemize}
+
+
+
+
+Cette méthode de gestion des processus (numéro associé à un processus
+et meurtre de processus bloqués) vous permet de récupérer votre
+système chaque fois que celui-ci se bloque (enfin, presque...). Vous
+aurez probablement l'occasion d'expérimenter ceci au cours des
+prochains travaux pratiques.
+
+
+
+
+
+
+\section{L'enchaînement des commandes : les tubes}
+\subsection{Les sorties}
+
+Sous UNIX, la sortie d'une commande est partagée en deux canaux
+différents : la \textbf{sortie standard} (=\textit{stdout}) qui affiche les
+résultats de la commande, et la \textbf{sortie erreur}
+(=\textit{stderr}), qui affiche 
+les messages d'erreur de la commande. La raison pour cette séparation
+est le système d'enchaînement des commandes, qui permet de
+récupérer la sortie d'une commande et de l'utiliser comme entrée
+pour une autre commande. 
+
+Ceci se fait avec des structures qui
+s'appellent "\textbf{tubes}" (anglais : \textit{pipes}), écrites avec
+"|". Nous allons y revenir plus tard. 
+
+Tout d'abord, nous allons faire quelques essais
+pour identifier les deux différents canaux de sortie. La commande
+"\textbf{echo}" nous sert pour créer des sorties : \\
+\texttt{echo "un text"} \\
+Cette
+commande écrit le texte donné comme argument et l'envoie vers la
+sortie standard. Comme, par défaut, tout les canaux de sortie sous
+UNIX sont dirigés vers l'écran (c.à.d. le terminal ou shell ou
+console), le texte
+est affiché dans le terminal. Avec le caractère \textbf{>} ont peut diriger la
+sortie d'une commande vers un fichier : \\
+\begin{verbatim}
+echo "un text" > nomfichier 
+ls > nomfichier
+\end{verbatim}
+Le contenu du fichier peut ensuite être affiché
+avec un éditeur~:
+\begin{verbatim}
+kwrite nomfichier &
+\end{verbatim}
+Une autre façon de vérifier le contenu
+d'un fichier texte est l'utilisation de la commande "\texttt{cat}"
+pour l'afficher : 
+\begin{verbatim}
+cat nomfichier
+\end{verbatim}
+Bien sûr on peut
+également diriger la sortie de la commande "\texttt{cat}" vers un autre
+fichier. Cette opération donne le même résultat que l'utilisation
+de la commande "cp" pour faire une copie du fichier : 
+\begin{verbatim}
+cat fichiersource > fichierdestination
+\end{verbatim}
+fait la même chose que
+\begin{verbatim}
+cp fichiersource fichierdestination
+\end{verbatim}
+
+La séparation des sorties en deux
+canaux devient claire dans le cas ou une erreur se produit. Comme
+les messages d'erreur sont envoyés vers la sortie erreur, qui n'était
+pas dirigée vers un fichier, le message d'erreur est écrit sur
+l'écran : 
+\begin{verbatim}
+cat nomfichierquinexistepas > fichiersortie
+\end{verbatim}
+Si le fichier à afficher n'existe pas, le fichier "fichiersortie" est vide
+(l'opération a échoué), et le message d'erreur ("\texttt{cat:
+  nomfichierquinexistepas: Aucun fichier ou répertoire de ce type}")
+est visible sur l'écran. Par contre, nous pouvons également
+rediriger les messages d'erreur, donc la sortie erreur, vers un
+fichier de la façon suivante en faisant précéder le signe \textbf{>}
+par un \textbf{2}: 
+\begin{verbatim}
+cat nomfichierquinexistepas 2> fichiererreur > fichiersortie
+\end{verbatim}
+Dans ce cas, le fichier "fichiersortie" est vide, le fichier
+"fichiererreur" contient le message d'erreur, et
+aucun message n'est écrit sur l'écran.
+
+Notez enfin que l'on utilise ``\textbf{$>>$}'' au lieu de ``>'' si l'on
+ne veut pas effacer le fichier de sortie, mais seulement
+\textit{ajouter} le texte à la fin.
+
+
+\subsection{Les tubes}
+
+Dans la suite nous allons nous servir de la commande "wc" (=word
+count) pour compter le nombre de lignes dans un fichier : 
+\begin{verbatim}
+wc nomfichier
+\end{verbatim}
+Lancé sans argument, "\texttt{wc}" compte le nombre de lignes, de mots
+et de caractères dans l'entrée standard, qui est par défaut le
+clavier~: lancez \texttt{wc}, tapez
+quelques lignes, finissez en suite par la combinaison
+\texttt{CONTROL+D}. 
+
+A quoi sert-il de compter les nombre
+de lignes tapées dans un terminal~? La commande "wc", lancée sans
+argument, compte les lignes de son entrée standard, qui n'est pas
+toujours le clavier. On peut appliquer une commande à la sortie d'une
+autre commande de la façon suivante~: 
+\begin{verbatim}
+commande1 | commande2
+\end{verbatim}
+Ainsi,
+pour compter les fichiers dans le répertoire courant on peut connecter les
+commandes "\texttt{ls}" et "\texttt{wc}" : 
+\begin{verbatim}
+ls | wc
+\end{verbatim}
+La commande "\texttt{ls}" crée une liste de
+fichiers, qui est envoyé vers la sortie standard. Cette sortie est
+dirigée cette fois vers l'entrée standard de la commande "wc", qui
+compte le nombre de 
+ligne dans cette liste, donc le nombre de fichiers, et l'envoie vers
+sa sortie standard. Comme la sortie standard de la commande "\texttt{wc}" n'est
+pas redirigée, le résultat du comptage est affiché à l'écran.
+
+Voici une liste de commandes utiles :
+\begin{itemize}
+\item \textbf{ps} affiche le nombre de processus démarré dans le
+  terminal.
+\item \textbf{ps aux} affiche tous les processus qui tournent sur la machine
+  (c.à.d les processus de tous les utilisateurs, lancés depuis tous
+  les terminaux).
+\item \textbf{sort} ordonne les données reçues sur son entrée standard et les
+  envoie vers la sortie standard.
+\item \textbf{grep} filtre les données reçues sur l'entrée par ligne (voir
+  l'aide).
+\item \textbf{uniq} enlève des lignes adjacentes en double (voir l'aide)
+\item \textbf{cut} filtre les données reçues sur l'entrée par colonne (voir
+  l'aide).
+\item \textbf{head} n'affiche que les premières n lignes de l'entrée.
+\item \textbf{tail} voir "\textit{head}", n'affiche que les derniers lignes.
+\end{itemize}
+
+Essayez les commandes suivantes pour voir
+leur effet (Utilisez "\texttt{man commande}" pour accéder à l'aide) :
+
+\begin{verbatim}
+ps 
+ps aux 
+ps aux | sort +1 -2 
+ps aux | grep root
+cat /etc/passwd 
+cat /etc/passwd | head -1 
+cat /etc/passwd | cut -d: -f6 
+cat /etc/passwd | cut -c1-3
+\end{verbatim}
+
+\paragraph{Exercices} :
+\begin{itemize}
+
+\item Ecrivez une ligne de commandes qui affiche le nom du
+  processus qui prend le plus de mémoire. 
+
+\item Ecrivez une ligne de commandes
+  qui affiche le nombre de personnes qui sont propriétaires de
+
+  processus tournant sur la machine.
+\end{itemize}
+
+\end{document}

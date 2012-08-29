@@ -1,0 +1,16 @@
+lecture 15 r0
+saut 6          <-- saut sur le test d'execution de boucle
+ecriture r0 16  <corps de boucle>
+valeur -1 r1
+add r1 r0       </corps de boucle>
+sautpos r0 3    <condition de boucle/>, saut sur le corps de boucle
+stop
+?
+?
+?
+?
+?
+?
+?
+3
+?

@@ -1,0 +1,233 @@
+\documentclass[xcolor=svgnames]{beamer}
+\input{communs/slides_style}
+
+%%% Titre -- Cours 1
+\title{Éléments d'informatique -- Cours 1. Éléments d'architecture des
+ordinateurs, mini-assembleur}
+\author{Pierre Boudes}
+\date{\today}
+
+\begin{document}
+
+%% Page de titre et licence CC.
+\begin{frame}
+	\titlepage
+	\vfill
+	\begin{center}
+		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+		{\tiny\CcNote{\CcLongnameByNcSa}}
+		\vspace*{-2.5ex}
+	\end{center}
+\end{frame}
+
+\section[Plan]{}
+\frame[label=plan]{\tableofcontents}
+
+  \section[Plan du cours]{Survol du contenu du cours (ce semestre)}
+\begin{frame}
+  \frametitle{Survol du contenu du cours (ce semestre)\nowrite}
+\pause
+  \begin{itemize}
+  \item Éléments d'architecture des ordinateurs (+mini-assembleur)\pause
+  \item Éléments de systèmes d'exploitation\pause
+\item Programmation structurée impérative (éléments de langage C)\pause
+\begin{itemize}
+  \item Structure d'un programme C
+  \item Variables : déclaration (et initialisation), affectaction
+  \item Évaluation d'expressions\pause
+  \item Instructions de contrôle : if, for, while\pause
+  \item Types de données : entiers, caractères,
+    réels, tableaux, types composés (enregistrements)\pause
+  \item Fonctions d'entrées/sorties (scanf/printf)\pause
+  \item Écriture et appel de fonctions\pause
+  \item Débogage\pause
+\end{itemize}
+\item Notions de compilation
+  \begin{itemize}
+  \item Analyse lexicale, analyse syntaxique, analyse sémantique
+  \item préprocesseur du compilateur C (include, define)
+   \item Édition de lien\pause
+  \end{itemize}
+\item Algorithmes élémentaires\pause
+\item Méthodologie de résolution, manipulation sous linux
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \begin{quote}
+  « L'informatique n'est pas plus la science des ordinateurs que
+  l'astronomie n'est celle des télescopes. »\\ 
+  \hfill E.~W.~Dijkstra\\[1cm]
+\end{quote}
+\end{frame}
+
+\section{Architecture de von Neumann}
+\begin{frame}
+  \frametitle{Architecture de von Neumann}
+  \begin{itemize}
+  \item John William Mauchly et John Eckert autant (ou plus) que
+    vN\pause
+  \item Qu'est-ce que c'est ?\pause
+    \begin{itemize}      
+  \item L'idée d'une machine à \alert{programme
+      stocké}\pause
+\item  Une machine réalisée, l'ancêtre de nos processeurs\pause
+\end{itemize}
+  \item De quoi  cette machine est-elle faite ?\pause
+    \begin{itemize}
+    \item De mémoire (une suite de cases numérotées)\pause
+    \item d'une \alert{unité de calcul}, travaillant sur des \alert{registres}\pause
+    \item d'un \alert{bus} système (adresses et données) reliant mémoire
+      et UC\pause
+    \item \sout{De périphériques} (on oublie !)\pause
+    \item La mémoire contient le programme et les données.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\section{Représentation  des informations}
+
+\begin{frame}
+  \frametitle{Représentation en binaire des informations}
+  \pause
+  \begin{definition}[bit]
+    \begin{itemize}
+    \item Le chiffre binaire, ou \emph{bit}, est l'équivalent binaire
+      de nos chiffres décimaux. Il peut valoir soit $0$ soit $1$. Un
+      bit est une \alert{quantité élémentaire d'information} (oui ou non,
+      ouvert ou fermé, etc.).\pause
+    \item L'information manipulée par un ordinateur est consituée de
+      bits.\pause
+\item Les cases mémoires et les registres contiennent des \alert{mots mémoire}
+  : des suite de $n$ bits, où $n$ est fixé une fois pour toute par
+  l'architecture matérielle.\pause
+\item les instructions du langage machine sont écrites en binaire.\pause
+\item   le \alert{langage assembleur} est une notation du langage
+  machine plus pratique pour les humains. 
+   \end{itemize}
+  \end{definition}
+\pause Nous en verrons un peu plus sur les codages en binaire des données
+dans un autre cours.
+\end{frame}
+
+\section{Cycle d'exécution}
+\begin{frame}
+  \frametitle{Cycle d'exécution}
+\pause
+\begin{itemize}
+  \item Le registre \alert{compteur de programme} (CP) contient l'adresse du mot mémoire
+    représentant la prochaine instruction\pause
+\item le contenu de ce mot est transféré de la mémoire centrale dans
+  le \alert{registre d'instruction} (RI)\pause
+\item CP est \emph{incrémenté} (c'est à dire que sa valeur augmente de 1)\pause
+\item le contenu de RI est décodé afin de déterminer l'opération à
+  exécuter\pause
+\item l'opération est exécutée (le contenu d'un ou plusieurs
+  registres est modifié, ou bien celui d'une case mémoire)\pause
+\item Fin du cycle d'exécution et démarrage d'un nouveau cycle
+\end{itemize}
+\end{frame}
+
+\section{Instructions}
+\begin{frame}
+  \frametitle{Instructions}
+Une instruction type comporte un \alert{code d'opération} et, si nécessaire, une
+ou deux \emph{opérandes} (ou \emph{arguments} de l'opération).
+
+\pause
+\begin{block}{Vocabulaire} Dans l'expression arithmétique usuelle $3 + 5$,  le signe $+$ est l'opérateur
+et les nombres $3$ et $5$ sont les opérandes.
+\end{block} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Quelques instructions typiques (Amil)\nowrite}
+\pause
+  \begin{tabular}[c]{lp{8.3cm}}
+  \C{stop} & Arrête l'exécution du programme.\\ 
+  \C{noop} & N'effectue aucune opération.\\ \pause
+  \C{lecture i rj} & Charge, dans le registre $j$, le contenu de la mémoire d'adresse $i$.\\
+  \C{ecriture ri j} & Écrit le contenu du registre $i$ dans la mémoire
+  d'adresse $j$.\\ \pause
+  \C{saut i} & Met CP à la valeur $i$.\\
+  \C{sautpos ri j} & Si la valeur contenue dans le registre $i$ est
+  positive ou nulle, met CP à la valeur $j$.\\ \pause
+%  \C{valeur x ri} & Initialise le registre $i$ avec la valeur $x$.\\
+ \C{inverse ri} & Inverse le signe du contenu du registre $i$.\\ 
+  \C{add ri rj} & Ajoute la valeur du registre $i$ à celle du registre $j$.\\
+  \C{soustr ri rj} & Soustrait la valeur du registre $i$ à celle du registre $j$.\\
+  \C{mult ri rj} & Multiplie \ldots\\
+  \C{div ri rj} & Divise \ldots \\ \pause
+% \\
+%   \multicolumn{2}{l}{\textbf{Instructions plus avancées}}\\
+%   \C{et ri rj} & Effectue le et bit à bit de la valeur du registre
+%   $i$ et de celle du registre $j$. Le résultat est placé dans le
+%   registre $j$.\\
+   \C{lecture *ri rj} & Charge, dans $rj$, le contenu de la mémoire dont l'adresse est la valeur du registre $i$\\
+%   \C{ecriture ri *rj} & Écrit le contenu de $ri$ dans la  mémoire dont  l'adresse est la valeur du registre $j$.
+\end{tabular}
+\end{frame}
+
+
+\section{Trace d'exécution}
+\begin{frame}[fragile]
+\frametitle{Trace d'exécution\nowrite}
+On simule pas à pas l'exécution du programme.\pause
+\begin{columns}[t]
+  \begin{column}{3.5cm}
+\newcommand{\N}[1]{\structure{\scriptsize #1.}}
+\pause \structure{Programme}
+\begin{semiverbatim}
+\N{ 1} lecture 10 r0
+\N{ 2} lecture 11 r2
+\N{ 3} soustr r2 r0
+\N{ 4} sautpos r0 8
+\N{ 5} lecture 10 r2
+\N{ 6} add r2 r0
+\N{ 7} saut 4
+\N{ 8} ecriture r0 12
+\N{ 9} stop
+\N{ 10} 14
+\N{ 11} 5
+\N{ 12} ?
+\end{semiverbatim}
+ \end{column}
+  \begin{column}{10cm}
+    \pause \structure{Trace}\\[0.5cm]
+\scriptsize
+\newcommand{\commentaire}[1]{\pause} %hack
+\begin{tabular}[c]{l||c|c|c|c|c|c|c|}
+\hline
+ \emph{Instructions} & Cycles & CP& r0& r2& 10& 11 &12\\ \hline \pause
+\hfill Initialisation & 0 & 1 & ? & ? & 14 & 5 & ?
+ \\ \hline \commentaire{Lecture de la donnée d'adresse 10 dans le
+   registre 0} 
+\C{lecture 10 r0} & 1 & 2  & 14 & & & &\\ \hline
+ \commentaire{Initialisation du registre 2 à 5
+} \C{lecture 11 r2} & 2 & 3  & & 5 & & &\\ \hline
+ \commentaire{Soustrait la valeur du registre 2 au registre 0
+} \C{soustr r2 r0
+} & 3 & 4  & 9 & & & &\\ \hline
+ \commentaire{Si la valeur (9) du registre 0 est positive, saute à l'adresse 8
+} \C{sautpos r0 8
+} & 4 & \textbf{8} & & & & &\\ \hline
+ \commentaire{Écriture du registre 0 à l'adresse 12
+} \C{ecriture r0 12
+} & 5 & 9  & & & & & 9
+\\ \hline
+ \commentaire{Fin du processus.
+} \C{stop
+} & 6 & 10  & & & & &\\ \hline
+\end{tabular}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+\section[Démos]{Démos et fin}
+\begin{frame}
+  \frametitle{Démos et fin}
+\end{frame}
+\end{document}

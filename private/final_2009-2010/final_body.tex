@@ -1,0 +1,297 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Partiel d'Éléments d'Informatique}
+
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à
+titre indicatif afin de vous permettre de gérer votre temps. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est fortement recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+\section{Multiplication par additions successives (\textit{5 points})}
+
+Nous voulons écrire une fonction \verb|mult_par_add| qui prend comme
+paramètres deux entiers positifs ou nuls \verb|a| et \verb|b|, et
+retourne la multiplication de \verb|a| par \verb|b|. Cette fonction
+doit calculer la multiplication \textbf{par additions
+  successives, sans utiliser l'opérateur de multiplication du C}. Le
+programme principal est déjà écrit pour pouvoir tester la fonction~:
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+int main()
+{
+  int a; /* premier facteur de la multiplication */
+  int b; /* deuxieme facteur de la multiplication */
+
+  printf("Entrez les deux facteurs a et b : ");
+  scanf("%d",&a);
+  scanf("%d",&b);
+
+  while((a < 0) || (b < 0)) /* pas les deux positifs ou nuls */
+  {
+    printf("Erreur. Entrez les deux facteurs a et b : ");
+    scanf("%d",&a);
+    scanf("%d",&b);
+  }
+
+  printf("la multiplication de a par b est : %d\n",mult_par_add(a,b));
+
+  return EXIT_SUCCESS;
+}
+\end{verbatim}
+
+\begin{enumerate}
+\item Expliquer pourquoi le programme ci-dessus est incomplet et ce qu'il manque pour que la compilation réussisse, et puis pour que l'édition de liens réussisse. \textbf{Les réponses doivent être succintement expliquées.}
+\item Faire l'ajout minimal dans le programme pour que la compilation réussisse.
+\item Écrire la fonction \verb|mult_par_add|.
+\end{enumerate}
+
+Un exemple de sortie du programme est :
+\begin{verbatim}
+Entrez les deux facteurs a et b : 5 -1
+Erreur. Entrez les deux facteurs a et b : 5 4
+La multiplication de a par b est : 20
+\end{verbatim}
+
+\begin{correction}
+\begin{itemize}
+\item (2) 1 pt pour explication vague compil + 1 pt idem pour EdL
+\item 1 pour proto correct
+\item 2 pour code :
+  \begin{itemize}
+  \item pas de boucle -> 0
+  \item 1 boucle correcte avec bonne borne (for ou while quoique c du for)
+  \item 0,5 return avec expression de bon type
+  \item 0,5 calcul expression correcte
+  \end{itemize}
+\end{itemize}
+\end{correction}
+
+\section{Résolution de problèmes \textit{(6 points)}}
+
+Il est demandé de résoudre les deux problèmes suivants sans définir de fonctions utilisateurs.
+L'ensemble du code sera à écrire dans la fonction principale \verb|main|.
+
+\subsection{Calcul du produit des éléments d'un tableau (\textit{2,5 points})}
+
+Écrire le programme qui demande à l'utilisateur d'entrer les valeurs d'un tableau d'entiers de taille \verb|N| (une constante symbolique), et qui calcule et affiche la valeur du produit des
+ entiers du tableau. Deux exemples d'exécution sont les suivants (pour \verb|N| valant 4) :
+\begin{small}
+\begin{verbatim}
+Saisissez 4 entiers : 2 -3 6 -10
+Le produit des éléments du tableau vaut 360.
+
+Saisissez 4 entiers : 3 -3 4 0
+Le produit des éléments du tableau vaut 0.
+\end{verbatim}
+\end{small}
+tout ou rien :
+- 0.5pts : constante symbolique
+- 0.5 : squelette (programme vide)
+- 0.75 initialisation
+- 0.75 produit (incluant init produit = 1)
+\begin{correction}
+\begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define TAILLE 4 /* taille du tableau utilisateur */
+
+/* déclaration de fonctions utilisateurs */
+
+int main()
+{
+    int tab[TAILLE]; /* tableau à initialiser par l'utilisateur */
+    int produit = 1; /* élément neutre de la multiplication */
+    int i; /* var. de boucle */
+
+    /* demande saisie de TAILLE entiers*/
+    printf("Saisissez %d entiers : ",TAILLE);
+
+    /* saisie des elts du tableau (TAILLE entiers) */
+    for(i = 0;i < TAILLE;i = i + 1) /* chaque case du tableau */
+    {
+        /* saisie valeur */
+        scanf("%d",&tab[i]);
+    }
+    /* i >= TAILLE */
+
+    /* calcul produit */
+    for(i = 0;i < TAILLE;i = i + 1) /* chaque case */
+    {
+        /* multiplie le produit partiel par la valeur de la case */
+        produit = produit * tab[i];
+    }
+    /* i >= TAILLE */
+
+    /* produit contient le produit des éléments du tableau */
+    printf("Le produit des éléments du tableau vaut %d.\n",produit);
+
+    return EXIT_SUCCESS;
+}
+
+/* définition de fonctions utilisateurs */
+
+\end{verbatim}
+\end{small}
+\end{correction}
+
+\subsection{Une seconde plus tôt, il était exactement... (\textit{3,5 points})}
+
+Écrire un programme qui demande à l'utilisateur de saisir l'heure sous la forme de 3 entiers (3 variables pour les heures, \verb|h|, les minutes,
+\verb|m| et les secondes, \verb|s|) et qui affiche l'heure qu'il était 1
+seconde plus tôt. Il faudra envisager tous les
+cas possibles pour le changement d'heure. Deux exemples de sorties différentes sont~:
+
+\begin{small}
+\begin{verbatim}
+Introduire l'heure puis les minutes puis les secondes : 23 12 0
+Une seconde plus tôt, il était exactement : 23h11m59s
+
+Introduire l'heure puis les minutes puis les secondes : 0 0 0
+Une seconde plus tôt, il était exactement : 23h59m59s
+\end{verbatim}
+\end{small}
+  \begin{correction}
+\begin{small}
+\begin{verbatim}
+(0.5 bonus) 
+une seconde plus TARD vu en TD. si ça -> 0
+- 1 : saisie heure
+- 1 : seconde OK
+- 1 : minute OK
+- 1 : heure OK
+
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* déclaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* soit l'heure représentée par 3 entiers */
+    int h; /* heures */
+    int m; /* minutes */
+    int s; /* secondes */
+
+    /* saisie de l'heure */
+    printf("Introduire l'heure puis les minutes puis les secondes : ");
+    scanf("%d",&h);
+    scanf("%d",&m);
+    scanf("%d",&s);
+
+    /* calcul de la nouvelle heure */
+    s = s - 1; /* une seconde plus tôt */
+
+    if(s == -1) /* tour du cadran à l'envers des secondes */
+    {
+        /* remise à 59 */
+        s = 59;
+
+        /* une minute de moins */
+        m = m - 1;
+
+        if(m == -1) /* tour du cadran à l'envers des minutes */
+        {
+            /* remise à 59 */
+            m = 59;
+
+            /* une heure de moins */
+            h = h - 1;
+
+            if(h == -1) /* tour du cadran à l'envers des heures */
+            {
+                /* remise à 23 */
+                h = 23;
+            }
+        }
+    }
+    /* h,m,s contiennent l'heure une seconde plus tôt */
+
+    /* affichage de l'heure */
+    printf("Une seconde plus tôt, il était exactement : %dh%dm%ds\n",h,m,s);
+
+    return EXIT_SUCCESS;
+}
+
+/* définition de fonctions utilisateurs */
+
+\end{verbatim}
+\end{small}
+  \end{correction}
+
+\section{Trace d'un programme avec fonctions (\textit{4 points})}
+
+Simulez l'exécution du programme suivant, en réalisant sa \textbf{trace}, comme cela a été vu en TD et en cours.
+\textbf{Rappel : } L'opérateur modulo du C \verb|%| calcule le reste de la division entière : \verb|a % b| vaut le reste de la division entière de \verb|a| par \verb|b|.
+
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+int mystere(int a, int b);
+
+int main()
+{
+  int x = 12;
+  int y = 4;
+  int res;
+ 
+  res = mystere(x, y);
+  printf("mystere(%d, %d) = %d\n", x, y, res);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+int mystere(int a, int b)
+{
+   if (b == 0) 
+    {
+        return a;
+    }
+    return mystere(b, a % b);
+}
+\end{listing}
+\end{small}
+
+\section{Écriture de fonctions (\textit{5 $\times$ 1 point})}
+
+\begin{enumerate}
+\item Écrire la fonction \verb|factorielle| qui prend en entrée un entier positif ou nul $n$ et qui renvoie sa factorielle $n!$, avec la convention $0! = 1$.
+\item Écrire la fonction \verb|combinaison| qui calcule le nombre de combinaisons possibles quand on choisit k objets parmi n objets discernables et que l'ordre dans lequel les objets sont placés (ou énumérés) n'a pas d'importance : elle prend en entrée deux entiers $k$ et $n$ et renvoie $\frac{n!}{k!(n-k)!}$. On considérera la fonction \verb|factorielle| comme disponible. 
+\item Écrire la procédure \verb|affiche_menu| qui n'a pas d'entrée et affiche le menu suivant :
+\begin{verbatim}
+Votre choix ?
+1) choix 1
+2) choix 2
+3) choix 3
+\end{verbatim}
+\item Écrire la procédure \verb|rectangle_d_etoiles| qui prend en
+  entrée la longueur et la largeur en nombre d'étoiles (caractère \verb|'*'|) du rectangle,
+  et qui affiche le rectangle d'étoiles.
+\item Écrire la fonction qui prend en entrée un entier \verb|n| et qui renvoie : \[\sum_{i=0}^{i=n-1} (\sum_{j=0}^{j=i}i*j)\]
+\end{enumerate}
+
+\begin{correction}
+0.5 points si proto juste
+0.5 si corps entierement juste (tolère 1 faute syntaxique anodine, genre oubli ;)
+\end{correction}

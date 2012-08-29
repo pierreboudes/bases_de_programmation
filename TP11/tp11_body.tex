@@ -1,0 +1,57 @@
+% -*- coding: utf-8 -*-
+
+% \renewcommand{\labelitemi}{$\bullet$}
+
+% \newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 11 : Syracuse au menu}
+\thispagestyle{empty}
+\vspace{-1.5cm}
+\paragraph{Résumé de l'épisode précédent.} On choisit un entier $u_0 > 0$ comme premier terme. Si il est pair on le divise par deux si il est impair on le multiplie par trois et on ajoute un. On obtient ainsi le terme suivant. Et on recommence. La conjecture est qu'on atteindra $1$. Le nombre d'itérations nécessaires pour atteindre pour la première fois la valeur $1$ est appelé \emph{temps de vol} et la valeur maximale prise par la suite est appelée \emph{altitude maximale}.
+
+
+\begin{newenu}
+
+\item La fonction \C{Collatz} du TD calcule le terme suivant de la suite à partir du terme courant. Créer un nouveau programme \emph{collatz.c} dans le répertoire du TP11 et ajoutez tout de suite la déclaration et la définition de cette fonction aux bons endroits.
+
+
+\item Déclarer et définir une procédure \C{Syracuse} qui calcule les termes successifs d'une suite de Syracuse construite à partir d'un premier terme fourni en argument, jusqu'à rencontrer pour la première fois $1$. Cette procédure devra afficher les termes succesifs de cette suite. \emph{Vous pouvez programmer de manière récursive si vous êtes à l'aise avec la récursivité et avec les précédents chapitres (notamment les boucles), sinon faite le de manière itérative, c'est à dire avec une boucle\ldots à votre avis, \C{for} ou \C{while} ?} Tester votre procédure en l'appelant dans le \C{main} sur quelques valeurs. 
+
+Exemple : \C{Départ 15 : 15 46 23 70 35 106 53 160 80 40 20 10 5 16 8 4 2 1}.
+
+\item Dans la procédure, trouver et afficher l'altitude maximale  et le temps de vol (Tester). Ajouter un argument booléen à votre procédure \C{Syracuse} qui déterminera s'il faut afficher ou non les termes de la suite. Exemple (avec le booléen à faux) : 
+
+% Exemple (avec le booléen à vrai) : 
+% \begin{verbatim}
+% Départ 15 : 15 46 23 70 35 106 53 160 80 40 20 10 5 16 8 4 2 1
+% temps de vol 17, altitude maximale 160
+% \end{verbatim}
+\begin{verbatim}
+Départ 15 : temps de vol 17, altitude maximale 160
+\end{verbatim}
+
+
+\item Écrire une fonction \C{conjecture} qui exécute tour à tour la procédure
+  \C{Syracuse} sur les entiers $2$ à $n$, pour $n$ donné en argument, sans afficher les termes de la suite.
+
+\begin{verbatim}
+Tester de 2 a 4
+Depart 2 : temps de vol 1, altitude maximale 2
+Depart 3 : temps de vol 7, altitude maximale 16
+Depart 4 : temps de vol 2, altitude maximale 4
+\end{verbatim}
+
+\item Ajouter un menu à votre programme proposant d'afficher les termes de la suite pour une valeur saisie par l'utilisateur ou de tester la conjecture jusqu'à une valeur saisie par l'utilisateur. Pensez à réutiliser des fonctions que vous avez déjà écrites en TP !
+\item Ajouter à votre menu la possibilité de tester la conjecture sur tous les entiers indéfiniement (\C{ctrl-C} pour arrêter).
+\end{newenu}
+
+\section*{Fonction 91}
+Vérifier que la fonction 91 de McCarthy renvoie bien 91 pour les
+valeurs de $n$ telles que  $50\leq n\leq 100$.
+
+%  (vous pouvez l'ajouter au menu ou le tester dans un programme à part), afficher les termes successifs du calcul de la fonction pour chaque $n$ testé. Le test devra commencer à  $100$, puis décrémenter de $1$ en $1$. vous pouvez vous arrêter à zéro, voire plus tôt.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tp11"
+%%% End: 

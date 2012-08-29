@@ -1,0 +1,11 @@
+lecture 10 r0
+valeur 5 r2
+soustr r2 r0
+sautpos r0 8
+valeur 0 r0
+ecriture r0 11
+saut 9
+ecriture r0 11
+stop
+14
+?

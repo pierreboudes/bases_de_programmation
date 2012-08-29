@@ -1,0 +1,375 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux dirigés 4 : la structure de contrôle \C{for}}
+
+L'objectif de ce TD est de vous familiariser avec la notion
+d'itération en programmation. On parle communément de
+``boucle''. Cette notion sera illustrée sur des problèmes de comptage
+et de répétition d'actions. 
+
+\begin{correction}
+  Note aux chargés de TD.
+  \begin{itemize}
+  \item En cours, ils ont vu des notions de compilation (analyse
+    lexicale, syntaxique, sémantique) et la structure de contrôle
+    itérative \C{for}. Sa sémantique a été donnée en langage machine. 
+
+  \item Nous poursuivons les exercices type. Ils doivent
+    savoir résoudre/reproduire les exos marqués exercices type et
+    \textbf{faire leur trace sur un exemple quelconque}.
+
+  \item Le code leur est toujours donné avec les commentaires, en
+    suivant scrupuleusement l'indentation choisie. Ils doivent bien
+    comprendre que le code et les commentaires sont
+    indissociables. N'hésitez pas à ajouter des commentaires en
+    fonction des difficultés rencontrées dans votre groupe.
+
+  \item Insister sur la pertinence des noms des variables. Une
+    déclaration par ligne, pour pouvoir commenter la variable.
+  \end{itemize}
+\end{correction}
+
+\section{Itération : l'instruction \C{for}}
+
+\subsection{Rappel}
+
+Soit le programme suivant :
+\begin{listing}{1}
+/* déclaration de fonctionalités supplémentaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* déclaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* déclaration et initialisation variables */
+    int i; /* var. de boucle */
+
+    for(i = 0;i < 5;i = i + 1)
+    {
+        printf("i = %d\n",i);
+    }
+    /* i >= 5 */
+
+    printf("i vaut %d après l'exécution de la boucle.\n",i);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{listing}
+
+\begin{enumerate}
+\item Quelle est la signification de chaque argument du \verb|for|~?
+  Quelles instructions composent le corps de la boucle~?
+  \begin{correction}
+    Vu en cours. Tout est expression en C (avec effet de bord) mais on
+    ment ici et on considère que ce sont des instructions. Ne sert a
+    rien de les embrouiller et en plus c une mauvaise pratique de les
+    utiliser comme expressions (source d'erreurs, de confusion). 
+\begin{verbatim}
+for(instruction1; expression_booléenne; instruction2)
+{
+    corps de la boucle : le bloc défini par la séquence d'instructions entre {}
+}
+\end{verbatim}
+    \begin{itemize}
+    \item instruction1 : sert à initialiser la variable de boucle
+
+    \item expression\_booléenne : (s'évalue à vrai ou faux) si vrai
+      exécute le corps de boucle, sinon passe a l'instruction suivant
+      la boucle. On parle parfois de la garde de la boucle. 
+
+    \item instruction2 : prépare l'itération suivante; il est
+      important de comprendre que cette instruction doit forcément
+      modifier la valeur de (au moins une variable, on ne leur parle
+      que de la var de boucle) la variable intervenant dans
+      l'expression booléenne SINON la val de expression\_booléenne est
+      constante et on ne sort jamais de la boucle 
+    \end{itemize}
+  \end{correction}
+\item Faire la trace du programme. Qu'affiche le programme~?
+\begin{correction}
+L'exécution de $i = i + 1$ est mise à la ligne 18 pour montrer que c à
+la fin du corps de la boucle, mm si c pas très clair.
+\begin{verbatim}
+ligne          | i | affichage (sortie/écriture à l'écran)
+-------------------------------------------------
+initialisation | ? |
+15             | 0 |
+17             |   | i = 0
+18             | 1 | 
+17             |   | i = 1
+18             | 2 | 
+17             |   | i = 2
+18             | 3 | 
+17             |   | i = 3
+18             | 4 | 
+17             |   | i = 4
+18             | 5 | 
+21             |   | i vaut 5 après l'exécution de la boucle.
+\end{verbatim}
+
+Il affiche :
+\begin{verbatim}
+i = 0
+i = 1
+i = 2
+i = 3
+i = 4
+i vaut 5 après l'exécution de la boucle.
+\end{verbatim}
+\end{correction}
+\item Modifiez le programme afin que la séquence affichée soit exactement (on passera à la ligne juste avant la fin du programme):
+  \begin{itemize}
+  \item \verb|0 1 2 3 4|
+  \item \verb|1 2 3 4|
+  \item \verb|1 2 3 4 5|
+  \item \verb|1 3 5|
+  \item \verb|(0,0) (1,1) (2,2)|.
+  \end{itemize}
+  \begin{correction}
+    Ici, les corrections peuvent se faire plus ou moins rapidement, en
+    fonction de la compréhension des étudiants. Chaque séquence
+    demande la modif d'un ou de plusieurs arguments afin d'insister
+    sur leur rôle. 
+
+Pour \verb|1 2 3 4 5|, c'est soit i < 6 ou i <=5. Ca dépend du problème.
+\begin{verbatim}
+/* correction (0,0) (1,1) (2,2)*/
+/* déclaration de fonctionalités supplémentaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* déclaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* déclaration et initialisation variables */
+    int i; /* var. de boucle */
+
+    for(i = 0; i < 3; i = i + 1)
+    {
+        printf("(%d,%d) ",i,i);
+    }
+    /* i >= 3 */
+
+    printf("\n");
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+
+  \end{correction}
+\item Modifiez le programme afin que la séquence affichée soit~:
+  \begin{itemize}
+  \item \verb|0 1 2 0 1 2|.
+  \item \verb|0 1 2 0 1 2 3|.
+  \end{itemize}
+  De combien de boucles avez-vous besoin~? De combien de variables de
+  boucles avez-vous besoin~?
+
+  \begin{correction}
+    2 boucles à la suite, 1 seule variable (on la réutilise)
+  \end{correction}
+
+\item Modifiez le programme afin que la séquence affichée soit :
+  \begin{itemize}
+  \item \verb|(0,0) (0,1) (0,2) (1,0) (1,1) (1,2) (2,0) (2,1) (2,2)|.
+  \end{itemize}
+  
+  De combien de boucles avez-vous besoin~? De combien de variables de
+  boucles avez-vous besoin~? Quelle est la différence de structuration
+  des boucles entre le point 4 et le point 5~?
+
+  \begin{correction}
+    C'est un produit cartésien : \{0,1,2\} x \{0,1,2\}. 2 boucles
+    imbriquées, 2 variables. La différence, c'est 1) 2 à la suite; 2)
+    2 imbriquées 
+
+\begin{verbatim}
+/* déclaration de fonctionalités supplémentaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* déclaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* déclaration et initialisation variables */
+    int i; /* var. de boucle */
+    int j; /* var. de boucle */
+
+    for(i = 0;i < 3;i = i + 1)
+    {
+        for(j = 0;j < 3;j = j + 1)
+        {
+            printf("(%d,%d) ",i,j);
+        }
+        /* j >= 3 */
+    }
+    /* i >= 3 */
+
+    /* passe a la ligne pour faire joli */
+    printf("\n");
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\end{enumerate}
+
+\subsection{Exercice type : calcul de $\Sigma_1^n i$}
+
+Écrire un programme qui calcule et affiche la somme des entiers de 1 à
+n : $\Sigma_1^n i$. n est un entier quelconque. 
+
+\begin{correction}
+
+\begin{verbatim}
+/* déclaration de fonctionalités supplémentaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* déclaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* déclaration et initialisation variables */
+    int somme = 0; /* élément neutre pour l'addition */
+    int i; /* var. de boucle */
+
+    for(i = 1;i <= 4;i = i + 1) /* i allant de 1 à 4 */
+    {
+        /* ajoute i à la somme partielle */
+        somme = somme + i;
+    }
+    /* i > 4 */
+
+    /* somme vaut 0 + 1 + 2 + 3 + 4 */
+    printf("somme = %d\n",somme);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\subsection{Affichage de n fois "Coucou''}
+
+Écrire un programme qui affiche n fois la chaîne de caractères \verb|"Coucou\n"|.
+
+\begin{correction}
+On n'introduit pas de var pour n car c'est une constante. Ils vont
+voir les constantes symboliques en C. 
+\begin{verbatim}
+/* déclaration de fonctionalités supplémentaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* déclaration constantes et types utilisateurs */
+
+/* déclaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* déclaration et initialisation variables */
+    int i; /* var. de boucle */
+
+    for(i = 0;i < 5;i = i + 1)
+    {
+        printf("Coucou\n");
+    }
+    /* i >= 5 */
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+
+\subsection{Calcul de la somme d'une série d'entiers saisie par l'utilisateur}
+
+Écrire un programme qui demande à l'utilisateur combien d'entiers
+composent sa série, lit la série d'entiers et affiche la somme des
+valeurs de la série. 
+
+\paragraph{Rappel :} l'instruction 
+\verb+scanf("%d", &a)+
+permet de réaliser une saisie utilisateur d'un entier dont la valeur
+sera affectée à la variable \texttt{a} (comme toute variable, \texttt{a} doit
+être préalablement déclarée).
+
+\begin{correction}
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int n; /* taille de la serie a saisir par l'utilisateur*/
+    int elt; /* un element de la serie a saisir par l'utilsateur */
+    int somme = 0; /* somme de la serie a calculer */
+
+    int i; /* var. de boucle */
+
+    /* demande la taille de la serie a l'utilisateur */
+    printf("Combien d'elements dans la série ? ");
+    scanf("%d",&n);
+
+    /* saisie serie (n entiers) et calcul incremental de la somme */
+    for(i = 0; i < n; i = i + 1) /* chaque entier de la serie */
+    {
+        /* saisir sa valeur */
+        scanf("%d",&elt);
+
+        /* l'ajoute a la somme partielle */
+        somme = somme + elt;
+    }
+    /* i >= n */
+
+    /* somme contient la somme des elements de la serie. */
+    printf("La somme des valeurs de cette serie est : %d\n",somme);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td4"
+%%% End: 

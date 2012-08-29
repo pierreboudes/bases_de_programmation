@@ -1,0 +1,155 @@
+%\documentclass[draft]{beamer}
+\documentclass{beamer}
+%\includeonlyframes{current,plan,hal,compiler}
+%\usepackage{lmodern} % computer modern T1 !!
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,stmaryrd}
+\usepackage{moreverb}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-tree}
+\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=6pt}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,patterns,plotmarks,shapes,snakes,er,3d,automata,%
+backgrounds,topaths,trees,petri,mindmap}
+\usepackage{pgfbaseimage}
+\usepackage{graphicx}
+
+
+%\usepackage{beamerthemerugdefault}
+
+%%%%
+\usepackage{amsmath,stmaryrd}
+
+\title{Un peu d'histoire}
+\author{P. B.}
+
+\begin{document}
+%\frame{\titlepage}
+
+\newcommand{\ongletdate}[2][]{
+{\psset{xunit=2mm}
+\begin{pspicture}(1940,0)(1940,.6)
+%\psline(1935,.22)(2000,.22)
+\psframe[fillcolor=gray,linecolor=gray,hatchcolor=gray,hatchangle=20,fillstyle=hlines,hatchsep=.8pt,linestyle=none](1930,0)(2000,.6)
+\rput[tc](#2,.30){\Large\sf\bf\psframebox[fillcolor=black,fillstyle=solid,framearc=.3]{%
+\white #2}}
+\end{pspicture}}
+}
+
+
+\begin{frame}
+
+\hfill\includegraphics[height=4cm]{img/UNIVAC-I-BRL61-0977}
+
+  \ongletdate{1952}
+
+  Dans les années 50, les ordinateurs entrent peu à peu dans l'industrie.
+
+  En 1952, un ordinateur UNIVAC~I est utilisé par la chaîne de
+  télévision CBS pour prédire le vainqueur de l'élection
+  présidentielle opposant Eisenhower à Stevenson.
+% La prédiction est correcte mais n'est pas
+%   révélée au public immédiatement, les commentateurs de la chaîne
+%   préférant se moquer de l'énorme machine. Lorsque l'affaire est
+%   connue ce premier silence renforce le succès tout relatif de la prédiction.
+\end{frame}
+
+
+\begin{frame}[label=Dijkstra]
+
+
+\begin{quote}
+  « L'informatique n'est pas plus la science des ordinateurs que
+  l'astronomie n'est celle des télescopes. »\\ 
+  \hfill E.~W.~Dijkstra\\[1cm]
+\end{quote}
+
+
+\ongletdate{1955}
+
+%\hfill\includegraphics[width=2.5cm]{img/Alan_Turing}
+
+En 1955, le jeune Dijkstra se demande : \alert{est-ce une profession
+  respectable que d'être programmeur ?}
+\end{frame}
+
+\begin{frame}[label=compiler]
+  \ongletdate{1957}
+
+  Les premiers compilateurs voient le jour. Celui du langage FORTRAN
+  développé par l'équipe de John Backus chez IBM est considéré comme
+  le premier compilateur complet. Le compilateur LISP, 1962, est le
+  premier à se compiler lui-même.
+\end{frame}
+
+\begin{frame}[label=algol]
+  \ongletdate{1958}
+
+  Naissance d'ALGOL, ALGOrithmic Language (au départ
+  \emph{international algorithmic language}). Ce langage qui connaîtra
+  plusieurs versions, dont le fameux ALGOL 60, va avoir un grand
+  succès dans les milieux académiques, et il deviendra notamment le
+  standard pour l'écriture d'algorithmes. Il inspirera de nombreux
+  autres langages tels que le Pascal. L'absence de standard bien
+  défini pour les entrées/sorties limitera son adoption dans
+  l'industrie.
+
+  C'est la première fois qu'apparaît le parenthésage des blocs
+  d'expressions (par la paire \texttt{begin}/\texttt{end}).
+\end{frame}
+
+\begin{frame}[label=knuth]
+%\noindent
+%\includegraphics[height=3cm]{img/knuth}
+
+  \begin{quote}
+    « We should forget about small efficiencies, say about
+    97\% of the time: premature optimization is the root of all evil »\\
+\hfill Tony Hoare repris par Donald Knuth.
+  \end{quote}
+
+\ongletdate{1963} 
+
+
+En 1963, Donald Knuth soutien sa thèse de mathématiques et entame son
+travail sur son {\oe}uvre majeure \emph{The Art of Computer
+  Programming}. Avant cela il avait travaillé sur les compilateurs.
+
+\emph{TAoCP}, dont le premier volume sortira en 1968, fonde l'analyse
+mathématique des algorithmes et de leur efficacité.
+\end{frame}
+
+\begin{frame}
+  \ongletdate{1968}
+
+  Dijkstra publie la lettre \emph{Go to statement considered harmful}
+  qui marque le point de départ de la programmation structurée. En
+  1972, Dijkstra, Hoare et Ole-Johan Dahl publieront le livre
+  \emph{Structured programming}.
+\end{frame}
+
+
+\newcommand{\unix}{UNIX\xspace}
+
+\begin{frame}
+\noindent
+\includegraphics[height=3cm]{img/Ken_n_dennis}
+\hfill
+\includegraphics[height=3cm]{img/KandR_C}
+
+\ongletdate{1973}
+
+Les premières versions d'\unix\ sortent début 70. En 1971, sortie du
+premier manuel du programmeur \unix. En 1973, \unix est
+réécrit en langage C, créé pour l'occasion. Le livre de Kennigham et
+Richie, \emph{The C Programming Language}, sortira en 1978.
+
+% En 1983, Ken Thomson et Dennis M. Ritchie reçoivent le Turing award
+% pour leur travail sur \unix. À cette occasion, Ken Thomson
+% prononcera le discours \emph{reflections on trusting trust}.
+\end{frame}
+\end{document}

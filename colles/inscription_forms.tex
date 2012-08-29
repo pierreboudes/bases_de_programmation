@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{article}
+
+\input{../communs/td_style}
+\usepackage{multicol}
+\usepackage{ifthen}
+\begin{document}
+\newcounter{numetu}
+
+\newcommand{\lescases}[1]{
+\vspace{-2.5em}
+\begin{multicols}{2}
+\Large\noindent\setcounter{numetu}{0}%
+\whiledo{#1>\value{numetu}}% deb whiledo
+{\stepcounter{numetu}%
+\framebox[\linewidth]{\thenumetu.\hfill}\\
+}% fin whiledo
+\end{multicols}}
+
+\entete{Colles du lundi 20 octobre 2008, 12h00-13h30}
+\lescases{12}
+\newpage
+\entete{Colles du lundi 20 octobre 2008, 17h00-18h30}
+\lescases{18}
+\newpage
+\entete{Colles du mardi 21 octobre 2008, 17h00-18h30}
+\lescases{18}
+\newpage
+\entete{Colles du mardi 21 octobre 2008, 17h00-18h30}
+\lescases{42}
+\newpage
+\entete{Colles du mercredi 22 octobre 2008, 12h00-13h30}
+\lescases{31}
+\newpage
+\entete{Colles du mercredi 22 octobre 2008, 17h00-18h30}
+\lescases{41}
+\newpage
+\entete{Colles du jeudi 23 octobre 2008, 12h00-13h30}
+\lescases{19}
+\newpage
+\entete{Colles du jeudi 23 octobre 2008, 17h00-18h30}
+\lescases{20}
+\newpage
+\entete{Colles du vendredi 24 octobre 2008, 12h00-13h30}
+\lescases{14}
+\newpage
+\entete{Colles du vendredi 24 octobre 2008, 17h00-18h30}
+\lescases{7}
+\newpage
+\end{document}

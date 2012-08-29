@@ -1,0 +1,805 @@
+% -*- coding: utf-8 -*-
+\renewcommand{\entete}[1]{%
+\noindent
+\rule{\linewidth}{0.5mm}\\
+\noindent
+Universit\'e Paris-Nord \hfill L1\\
+\noindent
+Institut Galil\'ee \hfill Ann\'ee 2010-2011\\
+Licence 1 - 1er semestre\hfill \textbf{Annales pour entraînement
+  dirigé 2011-2012}
+\begin{center}
+\Large\bf #1
+\end{center}
+\rule{\linewidth}{0.5mm}
+\vspace{1cm}
+}
+
+\newcounter{questioncount}
+\setcounter{questioncount}{0}
+\newcommand{\question}{\addtocounter{questioncount}{1}\paragraph{Question \Alph{questioncount}.}}
+\newcommand{\commentaire}[1]{}
+\newcommand{\pt}[1]{\fbox{$#1 \operatorname{pt}$}}
+
+\entete{Éléments d'informatique : partiel de fin de semestre}
+\vspace{-1cm}
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à
+titre indicatif, afin de vous permettre de gérer votre temps. Ne
+dépassez pas le temps indiqué pour chaque question. Par contre, vous
+pouvez tout à fait répondre beaucoup plus rapidement. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+
+\section{For ou while ? (\emph{7 points})}
+
+Il est demandé de résoudre les deux problèmes suivants sans définir de fonctions utilisateurs.
+L'ensemble du code sera à écrire dans la fonction principale
+\verb|main|.
+
+\subsection*{Tableau (\emph{1,5 points})}
+
+\question Soit un tableau d'entiers non initialisé et dont la taille sera fixée
+à l'aide d'une constante symbolique N.  Écrire un programme qui initialise
+chaque case $i$ du tableau à la valeur $i^2 + 1$ ($i$ est l'indice de
+la case).\bareme{1,5}
+
+\begin{correction}
+\begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+#define N 3
+
+/* fonction principale */
+int main()
+{
+    int t[N];
+    int i; /* variable de boucle */
+
+    for (i = 0; i < N; i = i + 1) /* pour chaque case */
+    {
+      /* initialiser la case */
+      t[i] = i * i + 1;
+    }
+
+
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+\end{small} 
+  
+\end{correction}
+\begin{baremeenv}
+Maximum : \pt{1,5}.
+  \begin{enumerate}[ (a)]
+  \item \pt{+0,5} pour la déclaration de la constante symbolique
+  \item \pt{+0,25} si déclarations des deux variables (i et t[N]) 
+    \item \pt{+0,5} si le tableau est parcouru par une boucle for
+      (avec ou sans la constante symbolique pour la dimension).
+    \item \pt{+0,25} affectaction correcte des valeurs des cases du tableau.
+     \item[$\ast$] Pas de pénalité pour mauvais include ou return.
+  \end{enumerate}
+\end{baremeenv}
+
+\subsection*{Pour une poignée de brouzoufs (\emph{5,5 points})}
+
+Pour le bon fonctionnement des machines à café de notre base lunaire,
+nous devons programmer une machine à rendre la monnaie.  L'unité
+monétaire lunaire est le brouzouf (nom fictif). Il y a des
+pièces de 10, 20 ou 50 brouzoufs, et les montants acceptés par la
+machine sont des multiples de 10.
+
+Un fois votre programme construit, l'utilisateur pourra saisir un
+montant et verra s'afficher toutes les manières dont nous pouvons lui
+faire la monnaie sur ce montant. Dans l'exemple suivant, l'utilisateur
+saisit 60 :
+\begin{center}
+  \small
+\begin{verbatim}
+Entrer un montant : 60
+Pour rendre 60 brouzoufs, je peux donner :
+*   0 en pieces de 50 +   0 en pieces de 20 +  60 en pieces de 10
+*   0 en pieces de 50 +  20 en pieces de 20 +  40 en pieces de 10
+*   0 en pieces de 50 +  40 en pieces de 20 +  20 en pieces de 10
+*   0 en pieces de 50 +  60 en pieces de 20 +   0 en pieces de 10
+*  50 en pieces de 50 +   0 en pieces de 20 +  10 en pieces de 10
+Il y a 5 facons de rendre la monnaie.
+\end{verbatim}
+\end{center}
+
+\question Commencer par écrire un programme qui demande à
+l'utilisateur de saisir un montant $x$, sans vérifier la validité de
+la saisie (nous supposons que l'utilisateur saisit toujours un
+multiple de 10), puis affiche à
+l'utilisateur tous les multiples $m$ de 50 inférieurs ou égaux à ce
+montant $x$.\bareme{1.5}
+
+\begin{correction}
+  \begin{small}
+\begin{verbatim}
+/* Déclaration de fonctionalités supplémentaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Déclaration constantes et types utilisateurs */
+
+/* Déclaration de fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Déclaration et initialisation variables */
+    int i;
+    int n = 0;
+
+    printf("Entrer un montant : ");
+    scanf("%d", &n);
+
+    printf("multiples de 50 inferieurs a %d brouzoufs :\n", n);
+    for (i = 0; i <= n; i = i + 50) /* i en pieces de 50 */
+    {
+       printf("%d\n", i);
+    }
+ 
+   return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{small}
+\end{correction}
+
+
+\begin{baremeenv}
+Maximum : \pt{1,75}. (hausse du barème).
+Il faillait faire deux choses : la saisie (0,5 pt) et surtout la
+boucle. L'afichage aurait du être celui des multiples de 50, mais on
+compte presque tous les points si c'est le nombre de pièces de 50 qui est affiché.
+
+  \begin{enumerate}[ (a)]
+  \item \pt{+0,5} pour la saisie.
+  \item \pt{0,5} si il y a exactement une boucle.
+\item \pt{+0,5} si la boucle parcours les multiples successifs de 50
+  ou si elle compte le nombre de pièces de 50. 
+    \item \pt{+0,25} si il y a affichage des multiples.
+\item \pt{-0,25} si l'esperluette
+    est manquante dans la saisie, si une variable est non déclaré, si
+    l'une des bornes de la boucle est mauvaise (d'un pas).
+ \end{enumerate}
+\end{baremeenv}
+
+Ceci nous indique toute les possibilités de rendre une partie de la
+monnaie en pièces de 50, et à chaque fois, il reste à rendre la
+monnaie sur un montant de $x - m$. Pour rendre le reste de la monnaie,  il
+suffit de déterminer tous les multiples de 20 inférieurs au
+montant $x - m$, puis pour chaque possibilité de compléter avec des pièces de 10.
+
+Pour les deux questions suivantes vous pouvez n'indiquer que les
+modifications que vous apportez au programme précédent. 
+
+\question Écrire le programme complet, mais sans vérifier la validité
+de la saisie. Votre programme devra afficher toutes les manières
+possible de rendre la monnaie et le nombre de façons de le faire (comme
+dans l'exemple).\bareme{3}
+
+\begin{correction}
+\begin{small}
+\begin{listing}{1}
+/* Déclaration de fonctionalités supplémentaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Déclaration constantes et types utilisateurs */
+
+/* Déclaration de fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Déclaration et initialisation variables */
+    int i;
+    int j;
+    int compt = 0;
+    int n = 0;
+
+    printf("Entrer un montant : ");
+    scanf("%d", &n);
+
+    printf("Pour rendre %d brouzoufs, je peux donner :\n", n);
+    for (i = 0; i <= n; i = i + 50) /* i pieces de 50 */
+    {
+        for (j = 0; j <= n - i; j = j + 20) /* j pieces de 20 */
+        {
+            compt =compt + 1;
+            printf("* %d en pieces de 50 + %d en pieces de 20 + %d en %pieces de 10\n",
+                        i, j, n - i - j);
+        }
+    }
+
+    printf("Il y a %d facon de rendre la monnaie\n", compt);
+  
+   return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{listing}
+\end{small}
+\end{correction}
+
+
+\begin{baremeenv}
+Il fallait surtout ne pas se tromper en imbricant les deux boucles.
+  \begin{enumerate}[ (a)]
+  \item \pt{1}  si il y a exactement deux boucles imbriquées.
+  \item \pt{+0,5} si la seconde boucle compte bien les multiples de 20
+    jusqu'au montant sur le lequel il reste à rendre la monnaie.
+\item \pt{+0,5} si la monnaie est complétée correctement par des
+  pièces de 10.
+    \item \pt{+0,5} Si l'affichage est à l'intérieur de la boucle
+      comprend les 3 valeurs.
+\item \pt{+0,5} si il y a un compteur correctement initialisé et
+  incrémenté à chaque tour de la boucle interne.
+\end{enumerate}
+\end{baremeenv}
+
+\question Modifier la saisie de manière à ce que tant que le montant n'est
+pas un multiple de 10, l'utilisateur doive saisir de nouveau ce nombre. \bareme{1}
+
+\begin{correction}
+
+On se donne une variable booléenne qui dénotera le fait que la saisie est
+correcte ou incorrecte. Tant que cette variable est à faux on
+redemande la saisie et on vérifie si elle est correcte. 
+
+  On remplace les lignes 17 à 19 par :
+
+\begin{small}
+\begin{verbatim}
+    int saisie = FALSE;
+
+    while (!saisie)
+    {
+        printf("Entrer un montant : ");
+        scanf("%d", &n); 
+        if (0 = n % 10)
+        {
+          saisie = TRUE;   
+        }
+        else
+        {
+            printf("Erreur : %d n'est pas multiple de 10\n", n);
+        }
+    }
+\end{verbatim}
+\end{small}
+
+Et on ajoute ligne 6 les incontournables :
+\begin{small}
+\begin{verbatim}
+#define TRUE 1
+#define FALSE 0
+\end{verbatim}
+\end{small}
+\end{correction}
+
+\begin{baremeenv}
+
+Maximum : \pt{1}.
+  \begin{enumerate}[ (a)]
+  \item[$\ast$]   Ici, on ne sanctionne pas l'absence de l'esperluette
+    dans le scanf.
+  \item \pt{+ 1}
+  On donne 1 point pour n'importe quelle solution opérationnelle (tant
+  qu'elle n'est pas trop tirée par les cheveux -- pas de double boucle
+  !). L'affichage n'a pas à être parfait (la partie qui est ici dans le else peut
+  être absente). 
+\item \pt{-0,5} Si la construction du test << n est multiple de 10 >>
+  est fausse on enlève un demi-point. Il n'est pas nécessaire de
+  passer par une variable booléenne, mais si c'est le cas elle doit
+  être correctement déclarée et initialisée. On ne sanctionne pas
+  l'absence des déclarations des constantes (symboliques) booléennes,
+\item \pt{+0,25} mais à défaut de trouver une solution juste on peut compter un quart
+  de point pour ces déclarations de variables booléennes.
+  \end{enumerate}
+\end{baremeenv}
+
+
+\section{Trace d'un programme avec fonctions (\textit{5 points})}
+
+\question Simulez l'exécution du programme figure~\ref{fig:prog}, en réalisant sa
+\textbf{trace}, comme cela a été vu en TD et en cours. \bareme{4}
+
+\begin{figure}[htbp]
+  \centering
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+int foo(int n);
+int bar(int n);
+
+/* fonction principale */
+int main()
+{
+    int x = 1;
+    int res;
+
+    res = foo(x);
+    printf("foo(%d) = %d\n", x, res);
+    
+    res = bar(x);
+    printf("bar(%d) = %d\n", x, res);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+int foo(int n)
+{
+    int i;
+    int res = 5;
+    i = 0;
+    while(i < n)
+    {
+        res = 3 * res + 2;
+        i = i + 1;
+    }
+    return res;
+}
+
+int bar(int n)
+{
+    if (n == 0) 
+    {
+        return 5;
+    }
+    return 3 * bar(n - 1) + 2;
+}
+\end{listing}
+\end{small} 
+  \caption{Programme pour la trace}
+  \label{fig:prog}
+\end{figure}
+
+\begin{correction}
+  Table~\ref{trace} page~\pageref{trace}.
+
+  \begin{table}
+  \begin{small} 
+   \setlength{\unitlength}{\tabcolsep}
+    \begin{tabular}[t]{|r|c|c|l|}
+      \multicolumn{4}{l}{\C{main()}}\\ \hline
+      ligne & x & res & Affichage\\ \hline
+      initialisation  & 1 & ? & \\ \hline
+      16 &\multicolumn{3}{r|}{
+        \put(1,0){\noindent
+          \begin{tabular}[t]{|r|c|c|c|}
+            \multicolumn{4}{l}{\C{foo(1)}}\\ \hline
+            ligne & n & i & res \\ \hline
+            initialisation & 1 & ? & 5 \\ \hline
+            30 & & 0 & \\ \hline
+            33 & & & 17 \\ \hline
+            34 & & 1 & \\ \hline
+            36 & \multicolumn{3}{l|}{renvoie 17} \\ \hline
+          \end{tabular}
+        }}\\ \hline
+      16 & & 17 & \\ \hline
+      17 & & &   foo(1) = 17 \carriagereturn \\ \hline
+      19 &\multicolumn{3}{r|}{
+        \put(1,0){\noindent
+          \begin{tabular}[t]{|r|c|}
+            \multicolumn{2}{l}{\C{bar(1)}}\\ \hline
+            ligne & n  \\ \hline
+            initialisation & 1 \\ \hline
+            45 &\multicolumn{1}{r|}{
+              \put(1,0){\noindent
+                \begin{tabular}[t]{|r|c|}
+                  \multicolumn{2}{l}{\C{bar(0)}}\\ \hline
+                  ligne & n  \\ \hline
+                  initialisation & 0 \\ \hline
+                  43 & \multicolumn{1}{l|}{renvoie 5} \\ \hline
+                \end{tabular}
+              }}\\ \hline
+            45 & \multicolumn{1}{l|}{renvoie 17} \\ \hline
+          \end{tabular}
+        }}\\ \hline
+      19 & & 17 & \\ \hline
+      20 & & &   bar(1) = 17 \carriagereturn \\ \hline
+      22 & \multicolumn{3}{l|}{renvoie \C{EXIT\_SUCCESS}} \\ \hline
+     \end{tabular}
+        \caption{Trace du programme de l'exercice 2.}
+        \label{trace}
+\end{small}
+  \end{table}
+\end{correction}
+
+\begin{baremeenv}
+\newpage
+ Maximum \pt{4}. Si des erreurs, maximum \pt{3,75}.
+  \begin{enumerate}[(a)]
+\item \pt{+1} deux premières lignes de la trace du main sont correctes
+  (identification des variables et leurs initialisations).
+  \begin{enumerate}[$\ast$]
+  \item \pt{-0,5} par variable manquante ou en trop
+  \item \pt{-0,5} par initialisation manquante ou en trop
+  \end{enumerate}
+\item \pt{+1,25} Pour l'appel à foo :
+  \begin{enumerate}[$\ast$]
+  \item \pt{+0,25} pour foo(1) ligne 16 
+\item \pt{+0,25} une colonne pour le paramètre formel n bien
+  initialisé à 1 
+\item \pt{+0,25} pour le déroulement correct de la boucle (un tour, i
+  = 1)
+\item \pt{+0,25} pour le retour d'un entier (même si valeur fausse)
+\item \pt{+0,25} ligne 16 affectation en accord avec cette valeur
+ \end{enumerate}
+\item \pt{+1,25}  pour l'appel récursif à bar :
+  \begin{enumerate}[$\ast$]
+  \item \pt{+0,25} pour bar(1) ligne 19 
+\item \pt{+0,5} pour le déclenchement du second appel ligne 45.
+\item \pt{+0,25} une colonne pour le paramètre formel n bien
+  initialisé à 1 et à 0 dans le second appel.
+\item \pt{+0,25} pour le retour de la valeur et l'affectaction ligne 19.
+\end{enumerate}
+\item \pt{+0,25} pour au moins l'un des deux affichages (ligne 17 et
+  ligne 20) sur valeur cohérente avec la case.
+\end{enumerate}
+\end{baremeenv}
+
+\question Réécrire les lignes 30 à 35 avec un \C{for} au lieu du
+\C{while} sans changer la sémantique du programme (le code machine
+généré). \bareme{0,5}
+
+\begin{correction}
+  \begin{small}
+    \begin{listing}{30}
+      for (i = 0; i < n; i = i + 1)
+      {
+            res = 3 * res + 2;    
+      }
+
+     
+    \end{listing}
+  \end{small}
+\end{correction}
+
+\begin{baremeenv}
+  Maximum \pt{0,5}.
+  \begin{enumerate}[(a)]
+\item \pt{0,5} si la boucle est exactement écrite comme ci-dessus.
+\item Zéro sinon.
+  \end{enumerate}
+\end{baremeenv}
+
+
+\question Les deux fonctions C \C{foo} et \C{bar} calculent la même
+fonction mathématique, mais une seule est récursive. Laquelle ? Rappeler
+brièvement ce qu'est une fonction récursive. \bareme{0,5}
+
+\begin{correction}
+  Une fonction récursive est une fonction dont la définition fait
+  appel à la fonction elle-même. La fonction  bar est récursive car sa
+  définition (lignes 39 à 46) fait appel à la fonction bar (ligne 45).
+\end{correction}
+
+\begin{baremeenv}
+  Maximum \pt{0,5}.
+  \begin{enumerate}[(a)]
+\item \pt{0,5}
+    si le rappel de cours est correct et si bar est correctement
+    identifé comme fonction récursive. 
+\item \pt{0,25} si seul l'un des deux est correct. 
+\item Zéro sinon.
+  \end{enumerate}
+\end{baremeenv}
+
+\section{Points du plan (\textit{4,5 points})}
+
+\question Déclarer un type utilisateur \verb+point_s+ pour représenter les points
+du plan réel en coordonnées cartésiennes (les couples $(x, y)$ avec
+$x\in\bbbr$ et $y\in\bbbr$).
+\bareme{1}
+
+\begin{correction}
+On déclare le type \C{point\_s}, comme un struct :
+\begin{small}
+\begin{verbatim}
+struct point_s 
+{
+    double x; /* absisse  */
+    double y; /* ordonnee */
+};
+\end{verbatim}
+\end{small}
+\end{correction}
+
+\begin{baremeenv}
+ Maximum \pt{1} (tout juste). On ne compte pas faux si le point virgule
+  final est oublié. Sinon zéro.
+\end{baremeenv}
+
+\question Déclarer et définir une fonction \verb+calculer_milieu+
+prenant en paramètres deux points du plan $a$ et $b$ et retournant les
+coordonnées du point situé au milieu du segment $[a, b]$. Rappel : si
+$(x_a, y_a)$ sont les coordonnées de $a$ et $(x_b, y_b)$ les
+coordonnées de $b$, alors le milieu de $[a, b]$ a pour coordonnées
+$(\frac{x_a + x_b}{2}, \frac{y_a + y_b}{2})$.
+\bareme{1.5}
+
+\begin{correction}
+Déclaration :
+\begin{small}
+\begin{verbatim}
+struct point_s calculer_milieu(struct point_s a, struct point_s b);
+\end{verbatim}
+\end{small}  
+Définition :
+\begin{small}
+\begin{verbatim}
+struct point_s calculer_milieu(struct point_s a, struct point_s b)
+{
+    struct point_s milieu;
+
+    milieu.x = (a.x + b.x) / 2.0;
+    milieu.y = (a.y + b.y) / 2.0;
+
+    return milieu;
+}
+\end{verbatim}
+\end{small}  
+\end{correction}
+\begin{baremeenv}
+Maximum \pt{1,5}.
+  \begin{enumerate}[(a)]
+  \item \pt{+0,5} déclaration correcte.
+  \item \pt{1} définition correcte.
+  \item \pt{0,5} autrement, si la définition retourne un point mais qui n'a pas
+  la bonne valeur.
+ \end{enumerate}
+\end{baremeenv}
+
+\question Déclarer et définir une fonction \verb+calculer_distance+
+prenant en paramètres deux points du plan $a$ et $b$ et retournant la
+distance qui sépare $a$ et $b$. Vous pourrez utiliser les fonctions
+\C{sqrt(double x)} et \C{pow(double base, double exposant)}  de la
+bibliothèque math pour effectuer le calcul. \bareme{1.5}
+
+\begin{correction}
+Déclaration :
+\begin{small}
+\begin{verbatim}
+double calculer_distance(struct point_s a, struct point_s b);
+\end{verbatim}
+\end{small}  
+
+Pour définir la fonction il faut se souvenir que la distance sera 
+\begin{gather*}
+  d(a, b) = \sqrt{(x_a - x_b)^2+(y_a - y_b)^2}
+\end{gather*}
+
+Définition :
+\begin{small}
+\begin{verbatim}
+double calculer_distance(struct point_s a, struct point_s b)
+{
+    double d;
+
+    d = sqrt(pow(x.a - x.b, 2.0) +  pow(y.a - y.b, 2.0));
+
+    return d;
+}
+\end{verbatim}
+\end{small}  
+\end{correction}
+
+\begin{baremeenv}
+Maximum \pt{1,5}. Si incorrect maximum \pt{1}.
+  \begin{enumerate}[(a)]
+  \item \pt{+0,5} déclaration correcte.
+  \item \pt{1} définition correcte (qui peut ne pas faire appel à pow).
+\item \pt{0,5} si la définition retourne un double mais qui n'a pas
+  la bonne valeur (par exemple, erreur de définition mathématique de la distance).
+ \end{enumerate}
+\end{baremeenv}
+
+\question Quelle instruction préprocesseur vous permet de vous assurer
+que les fonctions de la bibliothèque math sont bien déclarées ?
+\bareme{0.5}
+
+\begin{correction}
+  L'instruction \verb+#include <math>+ est nécessaire, au début du
+  programme et en début de
+  ligne, pour charger les déclarations des fonctions de la bibliothèque
+  mathématique.
+\end{correction}
+
+\begin{baremeenv}
+  \pt{0,5} si mentionne l'instruction include, sinon zéro. un
+  \verb+-lm+ est hors sujet.
+\end{baremeenv}
+
+\section{Énumération des nombres premiers (\emph{3,5 points})}
+Pippo dispose d'une fonction \verb+int est_premier(int x)+ qui renvoie
+\emph{vrai} si $x$ est premier et \emph{faux} sinon. Rappel : l'entier 1 n'est
+pas considéré comme premier. 
+
+Pippo souhaite disposer d'une énumération des nombres premiers par
+ordre croissant comme dans le tableau suivant. 
+
+\begin{center}
+\begin{tabular}{|r|c|c|c|c|c|c|c|c|c|c }
+\hline
+numéro              & 1 & 2 & 3 & 4 & 5   & 6   &   7 &   8 &  9  &
+\ldots \\ \hline
+nombre premier & 2 & 3 & 5 & 7 & 11 & 13 & 17 & 19 & 23 & \ldots \\ \hline
+\end{tabular}
+\end{center}
+
+
+Mais Pippo ne veut pas mémoriser de tableau dans son programme. Il veut
+disposer de cette énumération sous la forme d'une fonction dont la
+déclaration sera :
+\begin{center}
+  \verb+int numero_vers_premier(int n);+
+\end{center}
+\noindent Cette fonction prend en paramètre un numéro \C{n} (un entier positif non nul) et
+retourne le \C{n}-ième nombre premier. Par exemple, l'appel
+\verb+numero_vers_premier(9)+ lui retournera le neuvième nombre premier
+(qui est 23).
+
+
+\question Définir la fonction \verb+numero_vers_premier+ (vous pouvez faire
+appel à la fonction
+\verb+est_premier+).
+\bareme{2.5}
+
+\begin{correction}
+\begin{small}
+\begin{verbatim}
+int numero_vers_premier(int n)
+{
+    int compt = 0; /* compteur */
+    int p = 1; /*var de boucle */
+    while (compt < n)
+    {
+        p = p + 1;
+        if (est_premier(p))
+        {
+            compt = compt + 1; /*on compte un nouveau nb premier */
+        }
+    }
+    /* le compteur a enregistre n nombre premiers, p est le dernier d'entre eux */
+    return p;
+}
+\end{verbatim}
+\end{small}
+\end{correction}
+
+
+\begin{baremeenv}
+  Maximum : \pt{2,5}.  Si incorrect maximum \pt{2}.
+\begin{enumerate}[ (a)]
+\item[$\ast$]  La difficulté
+  était algorithmique, on note essentiellement la dessus. Il faut
+  nécessairement une boucle et un compteur sinon zéro.
+\item \pt{1}. Compter 1 point si présence d'un compteur et de
+  exactement une boucle (ormis d'éventuelles
+  boucles pour réinventer le test de primalité au cas où la réponse ne
+  fasse pas appel à est\_premier). 
+\item \pt{+0,5}. Ajouter 0,5 points si la condition d'arrêt
+  correspond à un compteur arrivant à n. 
+\item \pt{+0,5} Compter 0,5 points en plus
+  si de plus l'incrément du compteur est conditionnée à un test de primalité,
+  (c'est à dire if dans la boucle avec un appel à est\_premier ou un
+  code ressemblant à un test de primalité), même si il y a des
+  conditions supplémentaires inutiles.
+\end{enumerate}
+\end{baremeenv}
+
+\question Définir la fonction \verb+est_premier+ (comme en cours et en
+TD).\bareme{1}
+
+\begin{correction}
+Nous avons besoin des constantes booléennes. On place en début de
+programme :
+ \begin{small}
+\begin{verbatim}
+#define FALSE 0
+#define TRUE 1
+\end{verbatim}
+  \end{small}
+
+On écrit la fonction comme ceci :
+  \begin{small}
+\begin{verbatim}
+int est_premier(int n)
+{
+    int i;
+
+    for (i = 2; i < n; i = i + 1)
+    {   
+        if (n % i == 0) 
+        {
+            return FALSE; 
+        }
+    }
+    return TRUE;
+}
+\end{verbatim}
+  \end{small}
+\end{correction}
+
+\begin{baremeenv}
+  C'est un rappel de cours et TD immédiat : C'est donc soit tout juste
+  soit vraiment pas terrible. Maximum : \pt{1}.
+
+Si la réponse est incorrecte :
+  \begin{enumerate}[ (a)]
+  \item \pt{+0,25}
+    on peut compter 0,25 point
+    si les constantes booléennes sont définies et/ou utilisées 
+\item \pt{+0,25} s'il y a exactement une boucle.
+ \end{enumerate}
+\end{baremeenv}
+
+
+\paragraph{Question bonus (plus difficile).}
+Déclarer et définir la fonction réciproque de la précédente,
+\verb+premier_vers_numero+  (qui prend
+en entrée un nombre premier et renvoie son numéro d'ordre).
+\bareme{2}
+
+\begin{correction}
+  \begin{small}
+\begin{verbatim}
+int premier_vers_numero(int p)
+{
+    int compt = 0; /* compteur */
+    int q = 1; /*var de boucle */
+    while (q < p)
+    {
+        q = q + 1;
+        if (est_premier(q))
+        {
+            compt = compt + 1; /*on compte un nouveau nb premier */
+        }
+    }
+    /* le compteur a enregistre tous les nombre premiers jusqu'a p compris */
+    return compt;    
+}
+\end{verbatim}
+  \end{small}
+\end{correction}
+
+\begin{baremeenv}
+
+Maximum : \pt{2}.
+  \begin{enumerate}[ (a)]
+  \item \pt{0} Ne pas compter de point s'il y a la moindre erreur
+    algorithmique. 
+\item \pt{1} On peut compter 1 point si l'algo est juste mais
+    qu'il y a de grosses erreurs de programmation (manque une déclaration etc.).
+  \end{enumerate}
+\end{baremeenv}
+
+%\newpage
+%\hfill Total des points (bonus inclus) : \thetotalpointsint
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "final_bareme"
+%%% End: 

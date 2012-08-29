@@ -1,0 +1,44 @@
+\frametitle {L'instruction de contrôle if}
+
+\structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else
+\{\emph{\colorbox{red!20}{bloc2}}\}}.
+\medskip
+
+\pause
+  \begin{columns}
+    \begin{column}[t]{5cm}
+\structure{Code source}
+\begin{verbatim}
+/* avant */
+if (age < 18)
+{
+  permis = 0;
+}
+else
+{
+  permis = 1;
+}
+/* après */
+\end{verbatim}
+   \end{column}
+\pause
+   \begin{column}[t]{4cm}
+\structure{Schéma de traduction}\\[.3cm]
+\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+
+\tikzstyle{line} = [draw, thick, -latex']
+\begin{tikzpicture}[node distance=.7cm]
+  \node [amil] (avant) {\emph{avant}};
+  \node [amil,below of=avant] (eval) {évalue la condition};
+  \node [amil,below of =eval,fill=orange!20] (selection) {saute si elle est fausse};
+  \uncover<4->{%
+    \node [amil,below of =selection,fill=green!20] (bloc1) {bloc1};
+    \node [amil,below of =bloc1,fill=orange!20] (saut1) {saut};
+  }
+  \node [amil,below of =saut1,fill=red!20](bloc2) {bloc2};
+  \node [amil,below of =bloc2] (apres) {\emph{après}};
+  \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
+\uncover<4->{\path [line] (saut1) -| ++(2.4,0) |-  (apres);}
+\end{tikzpicture}
+\end{column}
+\end{columns}

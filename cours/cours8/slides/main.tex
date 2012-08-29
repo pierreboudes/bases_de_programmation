@@ -1,0 +1,346 @@
+\documentclass[xcolor=svgnames]{beamer}
+\input{communs/slides_style}
+
+%%% Titre 
+\title{Éléments d'informatique -- Cours 8. Types de données, représentations et entrées/sorties.}
+\author{Pierre Boudes}
+\date{\today}
+
+\begin{document}
+
+%% Page de titre et licence CC.
+\begin{frame}
+	\titlepage
+	\vfill
+	\begin{center}
+		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+		{\tiny\CcNote{\CcLongnameByNcSa}}
+		\vspace*{-2.5ex}
+	\end{center}
+\end{frame}
+
+\section[Plan]{}
+\frame[label=plan]{\tableofcontents}
+
+%%%%%%%%%%%%%%%%%%%%
+ \section*{Contenu du cours}
+\begin{frame}
+%  \frametitle{Contenu du cours (rappel)}
+ \begin{itemize}
+  \item {Éléments d'architecture des ordinateurs (+mini-assembleur)}\nowrite
+  \item {Éléments de systèmes d'exploitation}
+\item Programmation structurée impérative (éléments de langage C)
+\begin{itemize}
+  \item {Structure d'un programme C}
+  \item {Variables : déclaration (et initialisation), affectaction}
+  \item {Évaluation d'expressions}
+  \item {Instructions de contrôle : if, for, while}
+  \item \alert{Types de données : entiers, caractères,
+    réels}, {tableaux}, enregistrements
+  \item \alert{Fonctions d'entrées/sorties (scanf/printf)}
+  \item Écriture et appel de fonctions
+  \item Débogage
+\end{itemize}
+\item {Notions de compilation
+  \begin{itemize}
+  \item Analyse lexicale, analyse syntaxique, analyse sémantique
+  \item préprocesseur du compilateur C (include, define)
+   \item Édition de lien
+  \end{itemize}}
+\item Algorithmes élémentaires
+\item Méthodologie de résolution, manipulation sous linux
+\end{itemize}
+\end{frame}
+
+% \section[Autres cours]{Survol des cours d'informatique des autres semestres}
+
+% \begin{frame}
+%   \frametitle{Survol des cours d'informatique des autres semestres}
+% \pause
+% \begin{itemize}
+%     \item 
+% Deuxième semestre\pause
+%       \begin{itemize}
+%         \item Programmation impérative (suite de EI)
+%         \item Mini-projet, réalisation collaborative \hfill Sauf PC, SC.
+%         \item Init. aux interfaces graphiques et au web \hfill Opt. maths, info.
+%         \item Traitement automatique des langues \hfill Opt. maths, info.\pause
+%       \end{itemize}
+%     \item 
+% Troisième semestre\pause
+%       \begin{itemize}
+%       \item Architecture et système \hfill Info, SPI.
+%       \item Logique \hfill Info, (opt. maths)
+%       \item Administration de parc info. \hfill Info, opt. PC, (opt. maths)
+%       \item Calcul formel et prog. pour les sci. phy. \hfill PC.
+%       \item Traitement de données app. à la finance \hfill MIEF, opt. maths.
+%       \item Algorithmique numérique \hfill MIEF, opt. maths.
+%      \end{itemize}
+%     \item
+% Quatrième semestre\pause
+%       \begin{itemize}
+%       \item Algorithmique et arbres \hfill Sauf PC, SC, SPI.
+%       \item Programmation orientée objets \hfill Info.
+%       \item Génie logiciel \hfill Info.
+%       \item Systèmes réseaux \hfill Info, SPI.
+%      \end{itemize}
+%   \end{itemize}
+% \end{frame}
+
+\section[Représentation des données]{Représentation  des données}
+
+\begin{frame}
+  \frametitle{Représentation en binaire des données (rappel)\nowrite}
+  \pause
+
+  \begin{definition}[bit]
+    \begin{itemize}
+    \item Le chiffre binaire, ou \emph{bit}, est l'équivalent binaire
+      de nos chiffres décimaux. Il peut valoir soit $0$ soit $1$. Un
+      bit est une quantité élémentaire d'information (oui ou non,
+      ouvert ou fermé, etc.).\pause
+    \item L'information manipulée par un ordinateur est consituée de
+      bits.
+    \end{itemize}
+  \end{definition}
+\end{frame}
+
+\subsection{Représentation des entiers naturels}
+\begin{frame}
+%3 minutes de copie pure compter 4.
+ \frametitle{Représentation des entiers naturels}
+  \begin{itemize}
+  \item Dans une base donnée, un nombre entier positif est représenté
+    de manière unique par une suite de chiffres de la base :\pause
+    \begin{itemize}
+    \item En base $10$, on écrit le nombre $109$ comme la suite des
+      chiffres $1$, $0$, $9$ car :
+\[
+109 = 1\times 10^2 + 0\times 10^1 + 9 \times 10^0
+\]
+\pause
+\item Et en base $2$, le nombre $25$ s'écrit comme la suite des bits
+  $1$, $1$, $0$, $0$, $1$ car :
+\[
+\binaire{11001} = 1\times
+      2^4 + 1\times 2^3 + 0\times 2^2 + 0\times 2^1 + 1\times 2^0
+\]
+\pause
+\item Plus généralement, la correspondance entre la représentation et le nombre est donnée par :
+\[
+\binaire{b_k\ldots b_0} = \sum^{k}_{i = 0} b_i \times 2^i
+\]
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Les blagues d'informaticiens (ici XKCD)}
+  \begin{center}
+    \includegraphics[scale=0.5]{img/1_to_10.png}
+  \end{center}
+\pause
+\begin{itemize}
+\item
+  Sur une échelle de $1$ à $10$, combien de chances y a t'il que cette
+  question utilise le binaire ?\pause
+\item $\ldots4$ ?\pause
+\item Qu'est-ce qu'un $4$ ?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{itemize}
+\item<1-> $1$ bit représente $2$ possibilités, $2$ bits $4$ possibilités,
+  $3$ bits $8$ possibilités, \ldots, $n$ bits $2^n$ possiblités.
+\item<2-> Avec $n$ bits on peut écrire les $2^{n}$ premiers nombres de
+  $0$ à $\sum^{n - 1}_{i = 0} 2^i = 2^n - 1$. En général, sur ordinateur, $n$ est
+  fixé.
+\item<3-> L'addition se fait comme en base 10, c'est même encore plus facile :
+\uncover<4->{
+  \begin{gather*}
+    \begin{tabular}{l r l r}
+       &\binaire{11001} & (= &25)\\ 
+      + &\binaire{11} & (= & 3)\\ \hline \pause
+      & \binaire{11100} & (= & 28)
+    \end{tabular}
+  \end{gather*}
+}
+\item<5-> Dans une représentation de taille fixée (sur ordinateur), il y a un risque de \alert{débordement} :
+  \begin{gather*}
+    \begin{tabular}{l r l r}
+      &\binaire{11001} & (= & 25) \\
+      + &\binaire{111} & (= &7)\\ \hline \pause
+       & \alert{\binaire{00000}} & (= &\alert{0})
+    \end{tabular}\qquad\uncover<6->{
+   \begin{tabular}{l r l r}
+      &\binaire{11011} & (= & 27) \\
+      + &\binaire{111} & (= &7)\\ \hline 
+       & \alert{\binaire{00010}} & (= &\alert{2})
+    \end{tabular}}
+  \end{gather*}
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Représentation des entiers relatifs}
+\begin{frame}
+ \frametitle{Représentation des entiers relatifs}
+  \begin{itemize}
+  \item Pour représenter les entiers relatifs, on peut réserver $1$
+    bit au stockage du signe de l'entier ($0$ positif, $1$ négatif) et
+    représenter en base $2$ sa valeur absolue sur les bits restants.\pause
+\item Ça se fait parfois, mais il y a deux inconvénients :
+    \begin{itemize}
+      \item Il y a deux représentation du zéro \binaire{\alert{1}0000} et \binaire{\alert{0}0000}
+      \item L'addition doit être modifiée\pause
+    \end{itemize}
+\item Alternative : la représentation en \alert{\emph{complément à deux}}. 
+  \begin{itemize}
+    \item Pour coder $-5$, on commence par coder $5$ : \hfill $\binaire{00101}$\pause 
+\item On inverse les bits  \hfill $\binaire{11010}$\pause
+\item On ajoute $1$ \hfill $\binaire{11011}$\pause
+\item On obtient alors $-5$. L'addition avec $5$ fait zéro !
+  \end{itemize}\pause
+\item Ça fonctionne bien car :
+  \begin{itemize}
+    \item
+  ajouter un nombre binaire avec le même nombre dont les bits ont
+  étés inversés, donne \binaire{11\ldots1}.\pause
+\item À nombre de bits fixé, ajouter $1$ donne zéro,
+  par débordement.
+  \end{itemize}\pause
+\item Avec $n$ bits on représente les nombres de $-2^{n-1}$ à $2^{n-1} - 1$.
+\item Remarque : le premier bit reste un bit de signe.
+  \end{itemize}
+\end{frame}
+
+\subsection{Représentation des réels en virgule flottante}
+\begin{frame}
+    \frametitle{Représentation des réels en virgule flottante}
+\pause
+    \begin{itemize}
+    \item La représentation informatique usuelle des réels s'inspire de la
+      notation scientifique :
+      \begin{align*}
+        \pi &= 3,141592653589793\tag{pi}\\
+        -700 \text{ milliards} &= -7 \times 10^{11}\tag{Paulson}\\
+        h &= 6,626068 \times 10^{-34} \tag{Planck}\\
+        \text{Univers} &= 1 \times 10^{80}  \tag{Atomes}
+      \end{align*}\pause
+\vspace{-.8cm}
+\item Les bits sont séparés en :
+  \begin{itemize}
+  \item bit de signe\hfill (1 bit)
+  \item mantisse \hfill (53 bits)
+  \item exposant \hfill (11 bits)
+  \end{itemize}\pause
+\item En double précision (64 bits) :
+  \begin{itemize}
+\item exposant : entre $10^{-308}$ et $10^{308}$ (environ).
+\item mantisse : 16 chiffres décimaux (environ).
+  \end{itemize}\pause
+\item Infini positif, infini négatif.
+\item NaN : not a number.
+    \end{itemize}
+\end{frame}
+
+\section[Types et E/S]{Types en C et entrées sorties associées}
+\begin{frame}
+  \frametitle{Types en C et entrées/sorties associées}
+  
+\pause
+  \begin{itemize}
+  \item Type des entiers relatifs  \alert{\C{int}} : 
+    \begin{itemize}
+    \item Déclaration et initialisation : \C{int n = -23;}.
+    \item Représentation en complément à deux.
+    \item E/S : \alert{\C{\%d}}.
+    \end{itemize}
+\pause
+  \item Type des caractères \alert{\C{char}} :
+    \begin{itemize}
+    \item Déclaration et initialisation : \C{char c = 'A';}.
+    \item Représentation sur 8 bits, ASCII, ISO-8859-x, UTF-8.
+    \item E/S : \alert{\C{\%c}}.
+    \end{itemize}
+\pause
+  \item Type des réels \alert{\C{double}} :
+    \begin{itemize}
+    \item Déclaration et initialisation : \C{double x = 3.14e-3;}.
+    \item Représentation en virgule flottante sur 64 bits.
+    \item E/S : \alert{\C{\%lg}} (mais plutôt \C{\%g} avec \C{printf}).
+    \item \alert{Attention :} toujours mettre le point (équivalent
+      anglais de la virgule) pour les constantes réelles (\C{1.0}).
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Entiers}
+\C{int n;\\
+...\\
+printf("Entrer un nombre entier$\backslash$n");\\ \pause
+scanf("\%d", \alert{\&}n);}
+  \end{block}\pause
+
+\begin{block}{Réels}
+\C{double x;\\
+...\\
+printf("Entrer un nombre reel$\backslash$n");\\
+scanf("\%lg", \&x);\\ \pause
+printf("Vous avez saisi : \%g$\backslash$n", x);
+}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+  
+  \begin{block}{Caractères}
+\C{char c;\\
+...\\
+printf("Entrer un caractère$\backslash$n");\\
+scanf("\%c", \&c);
+}
+\\ \pause
+    \alert{Attention :} mieux vaut utiliser \C{scanf(" \%c", \&c);}
+    (voir démo)
+  \end{block}\pause
+
+%\structure{À emporter (pas au programme du premier partiel)\aemporter}
+\begin{block}{Chaînes de caractères}
+\C{char nom[64];\\
+...\\
+printf("Entrer votre nom$\backslash$n");\\
+scanf("\%s", nom);\\ \pause
+printf("Vous avez saisi : \%s$\backslash$n", nom);
+}
+\end{block}
+
+\end{frame}
+
+\pause
+\section[Conversions]{Conversions automatiques entre types}
+\begin{frame}
+  \frametitle{Conversions  automatiques entre types}
+  \begin{itemize}
+\item Sans changement de représentation  :
+  \begin{itemize}
+    \item \C{char} vers \C{int}\pause
+    \item \C{int} vers \C{char} (troncature)
+  \end{itemize}\pause
+  \item Avec changement de représentation :
+    \begin{itemize}
+    \item char ou entiers vers réels
+    \item réels vers entiers ou char
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\section[Démos]{Démos et fin}
+\begin{frame}
+  \frametitle{Démos et fin}
+\end{frame}
+\end{document}

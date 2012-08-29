@@ -1,0 +1,23 @@
+\begin{tabular}[c]{l||c|c|c|c|c|c|}
+\hline
+ \emph{Instructions} & Cycles & CP& r0& r1& 100& 101\\ \hline
+\hfill INIT & 0 & 1 & ? & ? & 18
+ & 124
+ \\ \hline \commentaire{Lecture de la donnée d'adresse 100 dans le registre 0
+} \C{lecture 100 r0
+} & 1 & 2  & 18 & & &\\ \hline
+ \commentaire{Lecture de la donnée d'adresse 101 dans le registre 1
+} \C{lecture 101 r1
+} & 2 & 3  & & 124 & &\\ \hline
+ \commentaire{Écriture du registre 1 à l'adresse 100
+} \C{ecriture r1 100
+} & 3 & 4  & & & 124
+ &\\ \hline
+ \commentaire{Écriture du registre 0 à l'adresse 101
+} \C{ecriture r0 101
+} & 4 & 5  & & & & 18
+\\ \hline
+ \commentaire{Fin du processus.
+} \C{stop
+} & 5 & 6  & & & &\\ \hline
+\end{tabular}

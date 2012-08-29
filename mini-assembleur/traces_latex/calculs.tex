@@ -1,0 +1,40 @@
+\begin{tabular}[c]{|c|c|c|c|c|c|c|c|c|}
+\hline
+Cycles & CP & instruction & r0& r1& 2& 3& 13& 14\\ \hline
+INIT & 1 & & ? & ? & -30
+ & -3
+ & ?
+ & ?
+ \\ \hline1 &\textbf{4} & \commentaire{Saut a l'adresse 4
+} saut 4
+ & & & & & & \\ \hline
+2 & 5 & \commentaire{Lecture de la donnée d'adresse 2 dans le registre 0
+} lecture 2 r0
+ & -30 & & & & & \\ \hline
+3 & 6 & \commentaire{Lecture de la donnée d'adresse 3 dans le registre 1
+} lecture 3 r1
+ & & -3 & & & & \\ \hline
+4 & 7 & \commentaire{Multiplie la valeur du registre 1 par celle du registre 0
+} mult r0 r1
+ & & 90 & & & & \\ \hline
+5 & 8 & \commentaire{Multiplie la valeur du registre 0 par 3
+} mult 3 r0
+ & -90 & & & & & \\ \hline
+6 & 9 & \commentaire{Écriture du registre 0 à l'adresse 13
+} ecriture r0 13
+ & & & & & -90
+ & \\ \hline
+7 & 10 & \commentaire{Écriture du registre 1 à l'adresse 14
+} ecriture r1 14
+ & & & & & & 90
+ \\ \hline
+8 & 11 & \commentaire{Masque binaire du registre 1 avec la valeur du registre 0
+} et r0 r1
+ & & 2 & & & & \\ \hline
+9 & 12 & \commentaire{Masque binaire du registre 0 avec la valeur -90
+} et -90 r0
+ & -90 & & & & & \\ \hline
+10 & 13 & \commentaire{Fin du processus.
+} stop
+ & & & & & & \\ \hline
+\end{tabular}

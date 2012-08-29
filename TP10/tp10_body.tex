@@ -1,0 +1,141 @@
+% -*- coding: utf-8 -*-
+
+% \renewcommand{\labelitemi}{$\bullet$}
+
+% \newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 10 : un struct craquant}
+
+
+\begin{correction}
+  Note aux chagé de TP : j'utiliserai ce jeu pour évoquer la notion
+  d'invariant de boucle pour le dernier cours, la stratégie gagnante
+  (toujours rendre la tablette carrée) sera explicitée à ce moment là
+  (ne pas trop les aider à la trouver !).
+
+  Il est important que les étudiants apprennent à manipuler les
+  struct. On déploiera donc des trésors de pédagogie pour les forcer à
+  représenter une tablette par un struct plutôt que par deux
+  d'entiers (les étudiants qui ne sont pas sensibles aux tablettes aux
+  noisettes, au chocolat noir ou au lait, devront donc être convaincus
+  par d'autres moyens : essayer l'allégé, le bio, le culturisme).
+\end{correction}
+% L'objectif de ce TP est de terminer votre menu, et d'y ajouter
+% quelques fonctionnalités en utilisant des fonctions que vous aurez à
+% déclarer et/ou à définir.
+
+%\vspace{-1cm}
+\section{Le jeu de la tablette de chocolat}
+
+Une tablette (ou plaquette) de chocolat est une matrice de carreaux de
+chocolat que l'ont peut couper selon les lignes ou les colonnes qui
+séparent les carreaux. La hauteur et la largeur se comptent en nombre
+de carreaux. On a peint en vert un carreau dans le coin d'une
+tablette. Deux joueurs coupent tour à tour la tablette, au choix,
+selon une ligne ou une colonne (pas nécessairement près du
+bord). L'objectif est de ne pas être le joueur qui se retrouve avec le
+carreau vert (la tablette de hauteur 1 et de largeur 1).
+
+Nous allons programmer ce jeu en faisant jouer à l'ordinateur le rôle
+de l'opposant.
+
+\subsection{Type utilisateur}
+
+Définir un type utilisateur qui servira à représenter la tablette
+(faire simple !).
+
+\begin{correction}
+\begin{verbatim}
+struct tablette_s 
+{
+  int l; /* largeur (nombre de colonnes) */
+  int c; /* hauteur (nombre de lignes) */
+}
+\end{verbatim}
+\end{correction}
+
+\subsection{Le tour de jeu et l'arbitre}
+Le joueur commencera la partie, puis l'opposant (l'ordinateur) jouera
+et ainsi de suite. À chaque fois l'une des deux dimensions de la tablette sera
+modifiée, jusqu'à ce qu'il y ait un perdant. Vous adopterez la
+structure suivante pour le programme :
+\begin{itemize}
+\item Une variable sera utilisée pour déterminer à qui vient le tour de
+  jouer (joueur ou opposant);
+\item Une boucle réalisera le tour de jeu;
+\item Une fonction \C{partie\_perdue()} prenant en argument la tablette
+  et renvoyant vrai lorsque celle-ci se réduit au carré vert, servira
+  à construire la condition de sortie de la boucle;
+\item Après quoi un affichage annoncera au joueur s'il a gagné ou
+  perdu.
+\item À l'intérieur de la boucle, selon le tour, il sera fait appel à
+  une fonction \C{joueur()} ou bien à une fonction \C{opposant()} (ces
+  fonctions doivent modifier la tablette).
+\end{itemize}
+
+Vous êtes libre du choix de la taille initiale de la tablette.
+
+\subsection{Affichage}
+
+Réaliser une fonction d'affichage de la tablette qui sera appelée au
+début de chaque tour de jeu. Vous pouvez dans un premier temps vous
+contenter d'un affichage numérique de ses dimensions, et par la suite
+améliorer votre programme avec un affichage plus graphique.
+
+\subsection{Les joueurs}
+
+Le joueur étant l'humain entre le clavier et l'écran, il faudra lui
+faire saisir le choix de son coup, en deux temps : couper des colonnes
+ou couper des lignes ? Combien ? À vous de déterminer la manière de
+réaliser cette saisie.
+
+Vous pouvez commencer à tester le fonctionnement de votre programme en
+utilisant la fonction \C{joueur()} également pour l'opposant.
+
+L'opposant jouera au hasard. Pour cela vous pouvez vous aider d'une
+fonction \C{nombre\_aleatoire} qui tire au hasard un nombre entre
+zéro et son argument (un entier positif). Cette fonction utilisera
+\C{rand}. N'oubliez pas d'initialiser
+le générateur de nombres aléatoires dans le \C{main()} ni d'inclure
+les bons fichiers d'en-tête (fonctionnalités supplémentaires).
+
+Tester votre programme. Avez-vous prévu les cas où l'un des deux
+joueurs n'a pas le choix ? Est-ce que les coups invalides sont rendus
+impossibles ? Vous pouvez réutiliser et améliorer des fonctions vues
+précédemment (\C{choix\_utilisateur()}, par exemple).
+
+\section{Améliorations}
+
+\subsection{Tablette aléatoire}
+Dans votre programme la tablette est initialisée au
+départ. Pouvez-vous utiliser une fonction sans argument,
+\C{tablette\_aleatoire} qui renvoie une tablette aléatoire ?
+
+\subsection{L'opposant parfait}
+Pouvez-vous trouver la meilleure manière de jouer (cela dépend de la
+tablette de départ) ? Si oui, faîtes en profiter votre opposant. Vous
+pouvez également le faire se tromper de temps en temps, en introduisant
+pour cela une dose de hasard...
+
+\subsection{Plusieurs tablettes}
+On peut utiliser plusieurs tablettes pour ce jeu : chaque joueur
+choisit sur quelle tablette jouer son tour et le perdant sera celui
+recevant pour son tour toutes les tablettes à la dimension $1\times
+1$.
+
+\subsection{Intégration au menu}
+Comme pour \emph{deviner un nombre}, nous voulons maintenant que \emph{croque
+tablette} soit un jeu disponible dans notre menu.
+
+\begin{correction}
+{
+\footnotesize
+\listinginput{1}{chocolat.c}
+}
+\end{correction}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tp10"
+%%% End: 

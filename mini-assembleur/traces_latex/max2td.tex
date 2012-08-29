@@ -1,0 +1,35 @@
+\begin{tabular}[c]{|c|c|c|c|c|c|c|c|}
+\hline
+Cycles & CP & instruction & r0& r1& 15& 16& 17\\ \hline
+INIT & 1 & & ? & ? & 23
+ & 45
+ & ?
+ \\ \hline1 & 2 & \commentaire{Lecture de la donnée d'adresse 15 dans le registre 0
+} lecture 15 r0
+ & 23 & & & & \\ \hline
+2 & 3 & \commentaire{Lecture de la donnée d'adresse 16 dans le registre 1
+} lecture 16 r1
+ & & 45 & & & \\ \hline
+3 & 4 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -45 & & & \\ \hline
+4 & 5 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & -22 & & & \\ \hline
+5 & 6 & \commentaire{Si la valeur (-22) du registre 1 est positive, saute a l'adresse 9
+} sautpos r1 9
+ & & & & & \\ \hline
+6 & 7 & \commentaire{Lecture de la donnée d'adresse 16 dans le registre 0
+} lecture 16 r0
+ & 45 & & & & \\ \hline
+7 & 8 & \commentaire{Écriture du registre 0 à l'adresse 17
+} ecriture r0 17
+ & & & & & 45
+ \\ \hline
+8 &\textbf{11} & \commentaire{Saut a l'adresse 11
+} saut 11
+ & & & & & \\ \hline
+9 & 12 & \commentaire{Fin du processus.
+} stop
+ & & & & & \\ \hline
+\end{tabular}

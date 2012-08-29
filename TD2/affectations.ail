@@ -1,0 +1,11 @@
+valeur 2 r0
+ecriture r0 11
+lecture 11 r0
+ecriture r0 10
+stop
+
+
+
+
+5
+?

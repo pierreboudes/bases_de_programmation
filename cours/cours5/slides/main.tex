@@ -1,0 +1,464 @@
+%\documentclass[draft]{beamer}
+\documentclass[xcolor=pdftex,svgnames,table]{beamer}
+%\usepackage[table]{xcolor}
+\input{communs/slides_style}
+
+%%% Titre -- Cours 5
+\title{Éléments d'informatique -- Cours 5. Tableaux.
+%, while,
+%  expressions booléennes.
+}
+\author{Pierre Boudes}
+\date{\today}
+
+\begin{document}
+
+%% Page de titre et licence CC.
+\begin{frame}
+	\titlepage
+	\vfill
+	\begin{center}
+		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+		{\tiny\CcNote{\CcLongnameByNcSa}}
+		\vspace*{-2.5ex}
+	\end{center}
+\end{frame}
+
+\section[Plan]{}
+\frame[label=plan]{\tableofcontents}
+
+\section{printf/scanf (1)}
+\begin{frame}[fragile]
+  \frametitle{printf/scanf (1)}
+\begin{itemize}
+\item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
+  (\emph{print formatted}). 
+\item Chaque \verb+%+
+  dans le texte à afficher est substitué par la valeur formatée d'un
+  \alert{paramètre supplémentaire} de la fonction (autant de
+  paramètres supplémentaires que de \verb+%+
+). Le caractère suivant le symbole \verb+%+
+  détaille la conversion à utiliser.  La conversion \verb+%d+
+  met une valeur au format \alert{entier décimal}.  \pause
+\item Exemples :
+  \begin{itemize}
+\item
+    \verb+printf("Bonjour\n")+ 
+affiche \C{Bonjour} et un saut de
+    ligne\pause
+\item
+    \verb+printf("i vaut %d\n", i)+ 
+affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
+ligne)\pause
+\item
+    \verb+printf("(%d, %d)\n", 31, -4)+ 
+affiche \C{(31, -4)} et un saut de ligne. Remarquez qu'il y a deux
+paramètres en plus
+ \end{itemize}
+\pause
+\item Réciproquement pour faire entrer dans le programme une donnée saisie par
+  l'utilisateur, nous utiliserons \alert{\C{scanf}}.
+\item Exemple : \verb+scanf("%d", &x)+
+\end{itemize}
+\end{frame}
+
+\section{Mémoire et tableaux}
+\subsection{La mémoire, les variables, les octets}
+\begin{frame}
+  \frametitle{La mémoire, les octets}
+
+  \begin{itemize}\item 
+    La mémoire vive, ou mémoire de travail est un dispositif
+    électronique dans lequel sont stockées les données en cours de
+    traitement. Les données y sont codées en binaire (comme dans le
+    reste de l'ordinateur), à l'aide de bits ($0$ ou $1$) regroupés en
+    \alert{octets} (groupes de 8 bits).
+\pause
+\item    Du point de vue logiciel la mémoire se présente comme une
+    succession d'octets, numérotés par les entiers à partir de
+    $0$. La mémoire est ainsi un grand tableau, dont chaque case (ou
+    cellule) renferme un octets. Les numéros sont les adresses
+    des cases.
+\pause
+\end{itemize}
+\begin{tabular}{r|c|c|c| c }
+  \hline
+  Adresses : & $0$ & $1$ & $2$ & \ldots \\ \hline
+  octets (valeurs) :  & {\small 01000110} & {\small 11010111} & {\small 00000001} & \ldots \\
+  \hline
+\end{tabular}
+\end{frame}
+
+%\subsection{Mémoire et variables (rappels)}
+\begin{frame}
+  \frametitle{Mémoire et variables (rappels)\nowrite}
+  \begin{itemize}
+  \item Déclarer une variable a pour effet de réserver de la mémoire
+    et de lui donner un usage particulier pour la suite du
+    programme :\pause
+    \begin{itemize}
+    \item La déclaration \C{int toto;} aura pour effet de réserver l'espace mémoire nécessaire au stockage d'un entier.
+\pause
+\item  Dans la suite du programme, l'adresse de cet espace mémoire sera utilisée partout où il est fait référence à cette variable (identificateur \C{toto}).
+\pause
+\item C'est le codage machine des entiers en binaire qui sera employé pour manipuler cette donnée. 
+   \end{itemize}\pause
+  \end{itemize}
+  \begin{block}{Remarque.\youwrite} 
+    La  taille d'un \C{int} est en principe exactement celle d'un mot
+    mémoire, c'est à dire 4 ou 8 octets. Nous
+    verrons au cours suivant d'autres types de données, leurs tailles
+    et codages. Quoi qu'il en soit, le
+    compilateur prend en charge ces aspects et nous aurons rarement à
+    nous en soucier en programmant.
+\end{block}
+\end{frame} 
+
+\subsection{Tableaux}
+\begin{frame}[fragile]
+  \frametitle{Tableaux et mémoire}
+  
+
+\begin{itemize}
+  \item En C, on peut réserver plusieurs espaces mémoires contigus pour des données de même type en une seule déclaration :\pause
+    \begin{lstlisting}
+      int toto[3];
+    \end{lstlisting}
+\end{itemize}
+\pause
+
+{
+\scriptsize
+\begin{tabular}{r| c| c|c|c|c| c|c|c|c| c|c|c|c| c}
+  \hline
+  Adresses : & \ldots & $344$ & & & & $348$& & & &  $352$& & & & \ldots \\ \hline
+  Valeur :  & \ldots & \multicolumn{4}{|c|}{{\tiny 1 \ldots0}} 
+                              & \multicolumn{4}{|c|}{{\tiny 0\ldots1}}
+                              & \multicolumn{4}{|c|}{{\tiny 1\ldots1}} & \ldots \\
+\hline
+\uncover<6->{\emph{Identificateur}: & \ldots & \multicolumn{4}{|c|}{\C{toto[0]}} &  \multicolumn{4}{|c|}{\C{toto[1]}} &  \multicolumn{4}{|c|}{\C{toto[2]}} & \ldots  }
+\end{tabular}\medskip
+}
+\pause
+\begin{itemize}
+\item C'est ce qu'on appelle un tableau, statique, unidimensionnel. \pause
+  \begin{itemize}
+    \item Sa taille doit être connue au moment de la compilation (statique)\pause
+    \item Les cases sont accessibles, comme s'il s'agissait de variables, à l'aide des identificateurs \C{toto[0]}, \C{toto[1]}, \C{toto[2]}\pause
+\item   La numérotation commence à zéro. Si $n$ est le nombre de cases du tableau la dernière case est donc numérotée $n - 1$. 
+  \end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Attention !}
+  \begin{alertenv}
+Il ne faut jamais accèder à une case au delà de la numérotation : \C{toto[3]}, \C{toto[-1]}, etc. Le compilateur ne vous préviendra pas de votre erreur, mais le programme va boguer. 
+\end{alertenv}
+\pause
+
+L'erreur d'exécution \C{segmentation fault} signifie que le programme
+a effectué un accès à une case mémoire qui ne lui était pas réservée
+(mais il faut beaucoup s'écarter des bons indices du tableau).
+\end{frame}
+
+\subsection{Exemples et trace}
+\begin{frame}[fragile]
+  \frametitle{Premier exemple}
+\pause
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily]
+int main()
+{
+  /*Declaration et initialisation de variables*/
+  int tableau[3]%\only<3>{\colorbox{yellow}{= \{3,5,8\}}}%;
+
+  tableau[0] = 3; %\only<3>{\emph{$\leftarrow$ inutile}}%
+  tableau[1] = 5; %\only<3>{\emph{$\leftarrow$ inutile}}%
+  tableau[2] = tableau[0] + tableau[1]; %\only<3>{\emph{$\leftarrow$ inutile}}%
+
+  return EXIT_SUCCESS;  
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Second exemple}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+int main()
+{
+  /* Declaration et initialisation de variables */
+  int tab[3] = {3,5,8};
+  int i; /* var. de boucle */
+\end{lstlisting}
+\pause
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+  for (i = 0; i < 3; i = i + 1) /* pour chaque case */
+  {
+    printf("tab[%d] = %d\n", i, tab[i]);
+  }
+  return EXIT_SUCCESS;  
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Trace du second exemple}
+
+\begin{lstlisting}[numbers=left,basicstyle=\ttfamily\tiny]
+int main()
+{
+  /* Declaration et initialisation de variables */
+  int tab[3] = {3,5,8};
+  int i; /* var. de boucle */
+
+  for (i = 0; i < 3; i = i + 1) /* pour chaque case */
+  {
+    printf("tab[%d] = %d\n", i, tab[i]);
+  }
+  return EXIT_SUCCESS;  
+}
+\end{lstlisting}
+
+ \scriptsize
+\pause
+\rowcolors[\hline]{2}{green!25}{yellow!50} \arrayrulecolor{blue!75!gray}
+  \begin{tabular}{|r|c|c|c|c|l|}
+\hline
+    ligne & \C{tab[0]} & \C{tab[1]} & \C{tab[2]} & \C{i} & sortie
+    écran  \pause \\
+   initialisation & 3 & 5 & 8 & ? &  \pause \\
+7 & & & & 0 & \pause \\ 
+ 9 & & & &  & \C{tab[0] = 3} \pause  \\ 
+  10 & & & & 1 & \pause \\ 
+  9 & & & &  & \C{tab[1] = 5} \pause \\
+ 10 & & & & 2 & \pause \\ 
+  9 & & & &  & \C{tab[2] = 8} \pause \\
+ 10 & & & & 3 & \pause \\
+11 & \multicolumn{4}{c}{Renvoie \C{EXIT\_SUCCESS}} & \\
+  \end{tabular}
+\end{frame}
+
+\subsection{Pour aller plus loin}
+\begin{frame}
+  \frametitle{Pour aller plus loin\nowrite}
+
+\begin{itemize}
+\item La taille d'un tableau statique gagne à être fixée par une constante symbolique (\C{\#define N 3}).
+\pause
+\item L'identificateur du tableau (\emph{ie} \C{tab} dans la déclaration \C{int tab[3];}) est lui même une variable. Sa valeur est l'adresse de la première case du tableau \C{tab[0]}.
+\pause
+  \begin{itemize}
+  \item  Les variables dont la valeur est une adresse s'appellent des \alert{pointeurs}; 
+\item La notation \emph{esperluette}, \C{\&x}, donne accès à l'adresse d'une variable;
+\item La notation \emph{étoile}, \C{*tab}, ne s'applique qu'à une adresse, elle donne alors accès à la valeur contenue à cette adresse. 
+\item Les expressions \C{tab[i]} et  \C{*(tab + i)} sont identiques en C.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% \section*{Démos}
+% \begin{frame}
+%   \frametitle{Démos}
+% \end{frame}
+
+% \section[while]{L'instruction de contrôle while}
+% \subsection{Syntaxe}
+% \begin{frame}[fragile]
+%   \frametitle{L'instruction de contrôle while}
+
+% \structure{Syntaxe :}\\
+%  \C{while (\emph{condition}) 
+% \{\emph{\colorbox{green!20}{bloc}}\}}.
+% \medskip
+
+% \pause
+%   \begin{columns}
+%     \begin{column}[t]{6cm}
+% \structure{Code source}
+% \begin{verbatim}
+% /* avant */
+% while ( ... )
+% {
+%  ...
+% }
+% /* après */
+% \end{verbatim}
+%   \end{column}
+% \uncover<3->{
+%    \begin{column}[t]{4cm}
+% \structure{Schéma de traduction}\\[.3cm]
+% \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+% \tikzstyle{line} = [draw, thick, -latex']
+%      \begin{tikzpicture}[node distance=.7cm]
+%        \node [amil] (avant) {avant};
+%       \node [amil,below of =avant,fill=orange!20] (saut1) {saute à la condition};
+%        \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
+%       \node [amil,below of =bloc](eval) {évalue la condition};
+%        \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
+%        \node [amil,below of =sautcond] (apres) {après};
+%        \path [line] (saut1) -| ++(2.6,0) |-  (eval);
+%        \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
+%      \end{tikzpicture}
+%    \end{column}
+% }
+%  \end{columns}
+% \end{frame}
+
+% \subsection{Trace}
+% \begin{frame}[fragile]
+%   \frametitle{Trace}
+% \begin{columns}
+%   \begin{column}[t]{3.7cm}
+%  \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\scriptsize]
+% int main()
+% {
+%     /* Declaration et initialisation des variables */
+%     int x;
+%     int nb = 1; /* nombre de chiffres */
+
+%     printf("Entrer un nombre positif ");
+%     scanf("%d", &x);
+    
+%     while (x > 9) /* tant que x a plus d'un chiffre */
+%     {
+%         x = x / 10; /* enlever un chiffre a x */
+%         nb = nb + 1; /* compter un chiffre de plus */
+%     }
+%     printf("ce nombre a %d chiffres decimaux\n", nb);
+    
+%     /* Valeur fonction */
+%     return EXIT_SUCCESS;
+% }
+% \end{lstlisting}
+% \vspace{.4cm}
+%   \end{column}
+% \begin{column}[t]{4cm}
+% \scriptsize
+% \pause
+% L'utilisateur saisit 6071.
+
+% \rowcolors[\hline]{2}{green!25}{yellow!50} %\arrayrulecolor{green!75!gray}
+% \begin{tabular}{|r|c|c|l|}
+% \hline
+%     ligne & \C{x} & \C{nb} & sortie écran \pause \\ \hline
+%   initialis.& ? &  1 & \pause \\
+% 7 &  &  & \C{Entrer\ldots}\pause \\
+% 8 &  6071 &  & \pause\\
+% 12 &  607 &  & \pause \\
+% 13 &   & 2 & \pause\\
+% 12 &  60 &  & \pause\\
+% 13 &   & 3 & \pause \\
+% 12 &  6 &  & \pause\\
+% 13 &   & 4 &  \pause \\
+% 15 & & & \C{ce nombre a 4...}\pause \\ 
+% 18 & \multicolumn{3}{c}{Renvoie \C{EXIT\_SUCCESS}}
+% \end{tabular}
+%  \end{column}
+% \end{columns}
+% \end{frame}
+
+% \subsection{For ou while ?}
+% \begin{frame}
+%   \frametitle{For ou while ?}
+
+%   \begin{itemize}
+%   \item Un \C{for} peut toujours être simulé par un \C{while} et le
+%     code machine sera identique. Il suffit d'introduire un
+%     \alert{compteur de boucle} (la variable de boucle du
+%     \C{for}).\pause
+% \item Par convention, les programmeurs préfèrent utiliser un \C{for} lorsque
+%   le nombre d'itérations est connu à l'avance. Par exemple, pour
+%   faire la somme des éléments d'un tableau. Dans le cas contraire, les
+%   programmeurs utilisent un \C{while}. Par exemple, pour chercher un
+%   élément dans un tableau.\pause
+% \item Maintenant que nous avons le \C{while}, il est possible qu'un
+%   programme ne termine jamais (\C{Ctrl-C}).
+%   \end{itemize}
+% \end{frame}
+
+% \section{Expressions booléennes}
+
+% \subsection{Syntaxe}
+% \begin{frame}
+%   \frametitle{Expressions booléennes}
+% Les \emph{conditions} employées dans les structures de contrôle
+% (\C{if}, \C{for} ou \C{while}) sont des \alert{expressions
+% booléennes}, pouvant être \emph{Vrai}, \emph{Faux}  ou :\pause
+%   \begin{itemize}
+%    \item des inégalités entre expressions arithmétiques
+%       \begin{align*}
+%         \text{\emph{inégalité}} &\mathrel{:=} e_1 \mathrel{\C{<}} e_2
+%         \mid e_1 \mathrel{\C{>}} e_2 \mid e_1 \mathrel{\C{!=}}  e_2 \\
+% &\mid e_1 \mathrel{\C{<=}}  e_2  \mid e_1 \mathrel{\C{>=}} e_2  \mid e_1 \mathrel{\C{==}} e_2
+%       \end{align*}
+% \pause
+%       \item ou des combinaisons logiques d'expressions booléennes :
+%         \begin{align*}
+%           \text{\emph{condition}} &\mathrel{:=}  (\text{\emph{condition}}) \mathrel{\C{\&\&}}
+%           (\text{\emph{condition}}) \tag{et} \\
+% &\mid (\text{\emph{condition}}) \mathrel{\C{||}}
+%           (\text{\emph{condition}})\tag{ou} \\
+% &\mid {\C{!}}(\text{\emph{condition}}) \tag{non}
+%         \end{align*}
+%   \end{itemize}
+% \end{frame}
+
+
+% \subsection{Constantes}
+% \begin{frame}[fragile]
+%   \frametitle{Constantes booléennes}
+%   \begin{itemize}
+%     \item
+%  Certains langages possédent un type booléen (admettant deux
+%   valeurs \emph{true} et \emph{false}) pour les expressions
+%   booléennes.\pause
+
+% \item En langage C, les
+%   expressions booléennes sont de type entier (\C{int}), l'entier \emph{zéro}
+%   joue le rôle du Faux, l'entier \emph{un} joue le rôle du Vrai et tout
+%   entier différent de zéro est évalué a vrai.\pause
+
+% \item On se donne deux
+%   constantes symboliques :
+% \begin{lstlisting}[escapechar={\%},basicstyle=\scriptsize\ttfamily]
+% /* Declaration des constantes et types utilisateur */
+% #define TRUE 1
+% #define FALSE 0
+
+% int main()
+% {
+%     int continuer = TRUE; /* faut-il continuer ?*/
+
+%     while (continuer)
+%     {
+%         ...
+% \end{lstlisting}
+
+%   \end{itemize}
+% \end{frame}
+
+\section{Démos}
+\begin{frame}
+  \frametitle{Démos}
+\end{frame}
+
+
+\section{En TP}
+\begin{frame}
+  \frametitle{Interrogation (durée 1h)}
+  
+Soient deux tableaux d'entiers \C{ligne} et \C{colonne}, initialisés à des valeurs de votre choix de l'intervalle $[0,4]$. Les tailles de ces deux tableaux seront fixées par des constantes symboliques, respectivement \C{N} et \C{M}. 
+
+Écrire un programme qui :
+\begin{itemize}
+\item affiche la somme de chaque case du tableau \C{ligne} avec chaque
+  case du tableau \C{colonne}; 
+\item compte le nombre de fois où cette somme vaut $5$ et affiche le résultat à l'écran.
+\end{itemize} 
+
+\pause
+\alert{Les interrogations de TP seront un peu plus faciles !}
+
+\end{frame}
+\end{document}

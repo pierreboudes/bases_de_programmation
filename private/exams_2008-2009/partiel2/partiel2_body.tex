@@ -1,0 +1,221 @@
+% -*- coding: utf-8 -*-
+
+%TODO :
+% correction ortographique !!
+% barême correction précis.
+\newcommand{\commentaire}[1]{}
+
+\entete{Partiel d'éléments d'informatique}
+
+\vspace{-2em}
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barême vous est donné à
+titre indicatif afin de vous permettre de gérer votre temps. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+\section{Trace d'un programme (\emph{4 points})}
+
+Le programme suivant calcul les \C{N} premiers termes d'une certaine
+suite. En faire la trace. \emph{Attention : ici \C{N} vaut 1}.
+
+
+\begin{small}
+\listinginput{1}{terme_suivant.c}
+\end{small}
+
+\section{Exercices sur des tableaux, sans fonctions (\emph{5 points})}
+Pour les deux exercices suivants, tout le traitement sera effectué dans
+le \C{main}, sans faire appel à des fonctions utilisateurs.
+
+\subsection{Somme de deux vecteurs (\emph{1,5 points})}
+
+Rappel : la somme de deux vecteurs du plan se fait terme à terme comme
+ceci : 
+\[
+(x, y) + (x', y') = (x + x', y + y').
+\]
+Nous voulons faire un
+programme qui réalise la somme de deux vecteurs de dimension $N$. Un
+vecteur sera représenté par un tableau.
+
+
+Écrire un programme qui, étant donnés deux tableaux de réels, $u$ et
+$v$, de tailles $N$, calcule dans un tableau $w$ de taille $N$ la somme
+terme à terme de $u$ et de $v$, puis affiche le contenu de $w$. Définir
+\C{N} comme une constante symbolique valant 2. Les tableaux $u$ et $v$
+seront initialisés à des valeurs de votre choix. 
+
+\emph{Tout le traitement sera effectué dans le \C{main}, sans faire
+  appel à des fonctions utilisateurs.}
+
+
+
+\subsection{Unicité des éléments d'un tableau (\emph{3,5 points})}
+
+Nous disposons d'un tableau $t$ de $N$ caractères et nous souhaitons
+savoir si chaque caractère apparaissant dans le tableau n'y apparaît
+qu'une seule fois, autrement dit on veut savoir si chaque caractère
+est unique.
+
+\begin{newenu}
+\item Écrire un programme qui, étant donné un tableau initalisé $t$,
+  teste si le premier élément du tableau est unique et affiche
+  \C{Vrai} si c'est le cas, \C{Faux} sinon.
+
+\item  Écrire un programme qui étant donné un tableau initialisé $t$, teste
+  si tous les éléments sont uniques et affiche \C{Vrai} si c'est le
+  cas, \C{Faux} sinon.
+\end{newenu}
+
+\emph{Tout le traitement
+sera effectué dans le \C{main}, sans faire appel à des fonctions
+utilisateurs.}
+
+\section{Conjecture de Syracuse (\emph{5 points})}
+
+Une suite de Syracuse est définie de la manière suivante. On choisit
+un entier $u_0 > 0$ comme premier terme. Si il est pair on le divise
+par deux si il est impair on le multiplie par trois et on ajoute un. On
+obtient ainsi le terme suivant. Et on recommence. 
+
+La suite finit toujours par atteindre $1$ (mais personne ne sait le
+démontrer !)  auquel cas on s'arrête car à partir de $1$ la suite
+devient périodique ($1$, $4$, $2$, $1$, $\ldots$).  Pour un premier
+terme fixé, le nombre d'itérations nécessaires à atteindre pour la
+première fois la valeur un est appelé \emph{temps de vol} et la valeur
+maximale prise par la suite est appelée \emph{altitude maximale}.
+
+La fonction \C{terme\_suivant} du premier exercice calcule le terme
+suivant à partir du terme courant.
+
+\begin{newenu}
+\item Déclarer et définir une procédure \C{syracuse} qui calcule les
+  termes successifs d'une suite de Syracuse construite à partir d'un
+  premier terme fourni en argument, jusqu'à rencontrer pour la
+  première fois $1$. Cette procédure devra afficher l'altitude maximale
+  et le temps de vol de la suite obtenue (le temps de vol est égal à
+  $0$ si le premier terme vaut $1$). Utiliser (sans rappeler sa
+  déclaration et sa définition) la fonction \C{terme\_suivant} pour
+  calculer le terme suivant. \emph{Répondre en faisant bien apparaître
+    d'une part la déclaration, d'autre part la définition.}
+\item Écrire un \C{main} qui exécute tour à tour la procédure
+  \C{syracuse} sur les entiers $2$ à $n$, pour $n$ choisi par
+  l'utilisateur. La saisie sera réalisée dans une fonction à declarer
+  et définir (inutile de vérifier que l'utilisateur saisit bien un
+  entier $n \geq 2$).
+\end{newenu}
+
+Exemple d'affichage (l'utilisateur saisit 7 à la première ligne) :
+\begin{verbatim}
+Tester de 2 a 7
+Depart : 2, altitude maximale : 2, temps de vol : 1
+Depart : 3, altitude maximale : 16, temps de vol : 7
+Depart : 4, altitude maximale : 4, temps de vol : 2
+Depart : 5, altitude maximale : 16, temps de vol : 5
+Depart : 6, altitude maximale : 16, temps de vol : 8
+Depart : 7, altitude maximale : 52, temps de vol : 16
+\end{verbatim}
+
+
+\section{Nombres rationnels (\emph{6 points})}
+
+% alternative : fraction rationnelle %
+Dans cet exercice, vous devrez écrire un programme calculant sur les
+nombres rationnels. Un nombre rationnel est toujours donné par une
+fraction $\frac{p}{q}$, définie par deux entiers $p$ et $q$. Le nombre
+$q$ est nécessairement non nul et sera toujours pris positif, le
+nombre $p$ peut être négatif ou nul.
+
+\begin{newenu}
+  \item Définir un type utilisateur pour les fractions.
+  \item Déclarer et définir une fonction \C{multiplier\_fractions} qui
+    prend deux fractions en argument et renvoie le produit des deux
+    fractions (ne pas chercher à simplifier la fraction
+    obtenue). \emph{Répondre en faisant bien apparaître d'une part la
+      déclaration, d'autre part la définition.}
+  \item Même question pour la somme de deux fractions
+    \C{additionner\_fractions}.
+  \item Déclarer et définir une procédure affichant une fraction
+    rationnelle comme dans l'exemple suivant où les fractions
+    $\frac{34}{26}$, $\frac{34}{26}$, $-\frac{34}{1}$,  $\frac{0}{1}$ sont affichées
+    tour à tour (quatre affichages, sans saut de ligne, séparés par des
+    espaces) :
+\begin{verbatim}
+34/26 -34/26 34 0
+\end{verbatim}
+\end{newenu}
+
+La représentation d'un nombre rationnel sous la forme d'une fraction
+$\frac{p}{q}$ est normalisée lorsque $p$ et $q$ sont premiers entre
+eux : c'est à dire lorsque le \textsc{pgcd} (plus grand commun
+diviseur) de $p$ et $q$ vaut $1$ (autrement il faut \emph{simplifier}
+par le \textsc{pgcd}). Pour la suite de l'exercice, on supposera
+donnée une fonction \C{int pgcd(int a, int b)} qui calcule et renvoie
+le \textsc{pgcd} de deux entiers \textbf{positifs} $a$ et $b$.
+
+
+\begin{lastenu}
+\item Déclarer et définir une fonction \C{normaliser\_fraction} qui
+  met une fraction sous forme normale.
+
+  \begin{correction}
+\begin{verbatim}
+/* Declaration */
+struct fraction_s normaliser_fraction(struct fraction_s x);
+...
+/* Definition */
+struct fraction_s normaliser_fraction(struct fraction_s x)
+{
+  int d; /* pgcd */
+  struct fraction_s res; /* fraction normalisee */
+  /* Calcul du pgcd */
+  if (x.p < 0)
+  {
+     d = pgcd(-x.p, x.q);
+  }
+  else
+  {
+     d = pgcd(x.p, x.q);
+  }
+  /* Simplification */
+  res.p = x.p / d;
+  res.q = x.q / d;
+  return res;
+}
+\end{verbatim}
+  \end{correction}
+\item Écrire un \C{main} qui réalise la somme
+  $\frac{1}{6} + \frac{1}{3}$, normalise le résultat et
+  l'affiche, à l'aide des fonctions précédentes.
+\end{lastenu}
+
+\begin{correction}
+\begin{verbatim}
+int main()
+{
+   struct fraction_s x = {1, 6};
+   struct fraction_s y = {1, 3};
+   struct fraction_s res;
+   
+   res = additionner_fractions(x, y);
+   res = normaliser_fraction(res);
+   printf("Resultat : ")
+   afficher_fraction(res);
+   printf("\n");
+
+   return EXIT_SUCCESS;
+}
+\end{verbatim}
+
+\end{correction}
+
+\subsection*{Question bonus}
+
+Définir la fonction \C{int pgcd(int a, int b)} utilisée dans
+l'exercice précédent.

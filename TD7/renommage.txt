@@ -1,0 +1,4 @@
+
+for i in `ls td9*`; do svn mv $i td8${i##td9}; done
+perl -pi -e 's/td9/td8/g' *.tex
+

@@ -1,0 +1,25 @@
+\begin{tabular}[c]{l||c|c|c|c|c|c|}
+\hline
+ \emph{Instructions} & Cycles & CP& r0& r2& 10& 11\\ \hline
+\hfill Initialisation & 0 & 1 & ? & ? & 14
+ & ?
+ \\ \hline \commentaire{Lecture de la donnée d'adresse 10 dans le registre 0
+} \C{lecture 10 r0
+} & 1 & 2  & 14 & & &\\ \hline
+ \commentaire{Initialisation du registre 2 à 5
+} \C{valeur 5 r2
+} & 2 & 3  & & 5 & &\\ \hline
+ \commentaire{Soustrait la valeur du registre 2 au registre 0
+} \C{soustr r2 r0
+} & 3 & 4  & 9 & & &\\ \hline
+ \commentaire{Si la valeur (9) du registre 0 est positive, saute à l'adresse 8
+} \C{sautpos r0 8
+} & 4 & \textbf{8} & & & &\\ \hline
+ \commentaire{Écriture du registre 0 à l'adresse 11
+} \C{ecriture r0 11
+} & 5 & 9  & & & & 9
+\\ \hline
+ \commentaire{Fin du processus.
+} \C{stop
+} & 6 & 10  & & & &\\ \hline
+\end{tabular}

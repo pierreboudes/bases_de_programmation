@@ -1,0 +1,281 @@
+% -*- coding: utf-8 -*-
+
+\renewcommand{\labelitemi}{$\bullet$}
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 3 : affichages et structure de contrôle  \emph{if}}
+
+\newcommand{\TPshortName}{TP3}
+
+\input{../communs/preambule_tp.tex}
+
+\section{Affichage}
+
+\begin{newenu}
+\item Écrire un programme \C{exo1.c} qui affiche à l'écran << coucou >>.
+\item Modifier ce programme pour qu'il affiche à l'écran << coucou >> sur cinq lignes de deux façons :
+  \begin{itemize}
+  \item avec cinq printf;
+  \item avec un seul printf.
+  \end{itemize}
+\item Écrire un programme \C{exo2.c}  qui affiche à l'écran l'évaluation de l'expression \C{7 * 3 + 2}.
+\item Modifier ce programme pour qu'il affiche à l'écran l'évaluation
+  de l'expression \C{3 * x + 2}, avec la variable entière \verb|x|
+  initialisée à une valeur quelconque.
+\end{newenu}
+
+\begin{correction}
+Durée 1/2 heure ?
+
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* affiche coucou sur une ligne 5 fois */
+    printf("coucou\ncoucou\ncoucou\ncoucou\ncoucou\n");
+    
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+
+\end{verbatim}
+
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* declaration et initialisation variables */
+    int x = 3;
+
+    printf("x * 7 + 2 = %d\n",x * 7 + 2);
+
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\section{Faut-il répudier la dette ?}
+
+\begin{figure}[h!]
+    \begin{center}
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em, node distance=3.5cm]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20,  text width=5.7em, text centered, 
+    minimum height=2em,  node distance=3.2cm]
+\tikzstyle{choix} = [rectangle, inner sep=2pt,
+    text centered]
+    
+\begin{tikzpicture}[node distance = 1.7cm, auto]
+    % Place nodes
+    \node [cloud] (temps) {Comment sont les marchés ?};
+    \node [below of=temps] (chatfantome) {};
+    \node [cloud,  right of=chatfantome] (chat) {Les taux montent ?};
+    \node [left of=chatfantome] (chatfantome2) {};
+    \node [cloud, left of=chatfantome2] (temperature) {Dette $ > 50\%$ du
+      PIB ?};
+    \node [block,right of=chat] (nontemps) {Ne rien changer};
+    \node [block, below left of=temperature] (ouitemperature) {Ne plus
+      rembourser};
+    \node [block, below right of=temperature] (nontemperature) {Ne
+      rien changer};
+    \node [block, below  left of=chat] (ouichat) {Ne plus rembourser};
+    \node [block, below right of=chat] (nonchat) {Ne rien changer};
+
+   % Draw edges
+\path [line] (temps) -| node [near start, above, choix] {paniqués} (temperature);
+\path [line] (temps) -- node [near start, right, choix] {inquiets} (chat);
+\path [line] (temps) -| node [near start, above, choix] {stables} (nontemps);
+\path [line] (temperature) -- node [left, choix] {oui} (ouitemperature);
+\path [line] (temperature) -- node [right, choix] {non} (nontemperature);
+\path [line] (chat) -- node [left, choix] {oui} (ouichat);
+\path [line] (chat) -- node [right, choix] {non} (nonchat);
+\end{tikzpicture}
+    \end{center}
+    \caption{Décider s'il faut continuer de rembourser la dette}
+    \label{fig:ad}
+\end{figure}
+
+
+
+Un arbre de décision\footnote{(cf.
+  \texttt{http\hspace{-0.5em}://fr.wikipedia.org/wiki/Arbre\_de\_décision}) 
+  Les arbres de décision
+  sont très utilisés en informatique pour prendre des décisions
+  automatiquement. Ils sont soit programmés par un humain soit appris
+  automatiquement par un algorithme d'apprentissage automatique.} 
+est un graphe particulier où les n\oe{}uds sont 
+des questions et les arêtes sont les réponses à ces questions.
+Il se lit de haut en bas. On avance dans l'arbre en répondant aux
+questions. Les n{\oe}uds les plus bas jouent le rôle particulier de
+classes de réponse au problème initial. 
+
+Ici, il y a deux classes de réponse : \textit{<<~Ne plus rembourser~>>} et
+\textit{<<~Ne rien changer~>>}.
+Par exemple, si les marchés sont paniqués et si la dette est
+strictement supérieure à $50\%$ du PIB alors on ne rembourse plus.
+
+
+
+Soient 3 variables entières représentant les propriétés du jour
+courant pour prendre la décision~:
+  
+\begin{itemize}
+\item \verb|marches| est la variable représentant l'état des marchés, elle contient une valeur pour PANIQUE, une pour INQUIETUDE et
+  une pour STABILITE.
+\item \verb|dette| est la variable représentant la dette en points de
+  PIB.
+\item \verb|hausse| est la variable représentant le fait que les taux
+  montent; elle contient une valeur pour
+  NON et une pour OUI.
+\end{itemize}
+
+Écrire un programme \C{exo3.c} implantant l'arbre de décision pour proposer une
+réponse étant donné un jour. Après chaque test effectué sur une
+variable, vous afficherez sa valeur afin de suivre la progression dans
+l'arbre. 
+
+
+
+\paragraph{La méthode à suivre~:}
+\begin{enumerate}
+\item Se donner des exemples de problèmes et les résoudre à la main. 
+\item Écrire un algorithme en français permettant de résoudre ces
+  problèmes. 
+\item Traduire l'algorithme en langage C, en utilisant l'algorithme
+  pour les commentaires. 
+\item Tester le programme sur les exemples pour s'assurer de sa
+  correction.
+\end{enumerate}
+
+\begin{correction}
+Durée 1 heure ?
+
+Les printf indiquant les tests effectués sont à ajouter.
+
+\begin{verbatim}
+algo :
+si panique alors
+  si dette > 50 alors
+    ne plus rembourser
+  sinon
+    ne rien changer
+si inquietude alors
+  si les taux montent alors
+    ne plus rembourser
+  sinon
+    ne rien changer
+si stabilite alors
+  ne rien changer
+\end{verbatim}
+
+Les choix sont mutuellement exclusifs.
+
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* declaration constantes et types utilisateurs */
+#define STABILITE 0
+#define INQUIETUDE 1
+#define PANIQUE 2
+#define OUI 1
+#define NON 0
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* declaration et initialisation variables */
+    int marches = PANIQUE; 
+    int dette = 54; /* pourcents de PIB */
+    int hausse = OUI; 
+
+/* 
+   si marches paniques alors
+     si dette > 50 alors
+       ne plus rembourser
+     sinon
+       ne rien changer
+   si marches inquiets alors
+     si taux en hausse alors
+       ne rembourse plus
+     sinon
+       ne rien changer
+   si marches stables alors
+     ne rien changer
+*/
+
+    /* cas mutuellement exclusif */
+
+    if(marches == PANIQUE)
+    {
+        if(dette > 50)
+        {
+            /* ne plus rembourser */
+            printf("Ne plus rembourser.\n");
+        }
+        else /* dette <= 50 */
+        {
+            /* ne rien changer */
+            printf("Ne rien changer.\n");
+        }
+    }
+
+    if(marches == INQUIETUDE)
+    {
+        if(hausse == OUI)
+        {
+            /* ne plus rembourser */
+            printf("Ne plus rembourser.\n");
+        }
+        else /* NON pas de hausse des taux */
+        {
+            /* ne rien changer */
+            printf("Ne rien changer.\n");
+        }
+    }
+
+    if(marches == STABILITE)
+    {
+        /* ne rien changer */
+        printf("Ne rien changer.\n");
+    }
+    
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tp3"
+%%% End: 

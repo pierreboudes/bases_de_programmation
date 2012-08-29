@@ -1,0 +1,486 @@
+\documentclass[xcolor=svgnames]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,stmaryrd}
+\usepackage{moreverb}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-tree}
+\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=6pt}
+
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,patterns,plotmarks,shapes,snakes,er,3d,automata,%
+backgrounds,topaths,trees,petri,mindmap}
+\usepackage{pgfbaseimage}
+\usepackage{graphicx}
+\input{communs/cc_beamer}
+\newcommand{\binaire}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\C}[1]{\texttt{#1}}
+\newcommand{\bbbn}{\ensuremath{\mathbb{N}}}
+%\usetheme{classic}
+\usetheme{CambridgeUS}
+\newcommand{\nowrite}{\put(10,-4){\includegraphics[scale=.05]{creative_commons/nopencil}}}
+\newcommand{\youwrite}{\put(10,-4){\includegraphics[scale=.05]{creative_commons/pencil}}}
+\newcommand{\aemporter}{\put(10,-6){\includegraphics[scale=.05]{creative_commons/szymonraj_Shopping_bag}}}
+
+\usepackage{listings}
+\lstset{
+  language=[ANSI]C, 
+%  gobble=2, 
+%  escapeinside="", 
+  basicstyle=\ttfamily, 
+%  directivestyle=\color{Fuchsia},
+  identifierstyle = \color{DarkOrange},
+  keywordstyle=\color{DarkGreen}, 
+  commentstyle=\color{DarkRed}, 
+%  numbers=left, 
+  numbersep=2pt, 
+ numberstyle=\scriptsize, 
+%  moredelim=[is][\color{gray}\itshape]{/*}{*/}, 
+%  moredelim=[is][\alert]{/+}{+/}, 
+%  morecomment=[is]{/=}{=/}, 
+%  morecomment=[in]{comment=}{,} 
+%  fancyvrb=true 
+} 
+
+%%% Titre -- Cours 12
+\title{Éléments d'informatique -- Cours 12.\\ Indécidabilité de l'arrêt,
+théorème de Rice}
+\author{Pierre Boudes}
+\institute{Paris 13}
+\date{\today}
+
+\begin{document}
+
+%%Page de titre et licence CC.
+\begin{frame}
+	\titlepage
+	\vfill
+	\begin{center}
+		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+		{\tiny\CcNote{\CcLongnameByNcSa}}
+		\vspace*{-2.5ex}
+	\end{center}
+\end{frame}
+
+\section{Partiel}
+\begin{frame}
+  \frametitle{Contenu du partiel}
+  \begin{itemize}
+  \item Au \emph{partiel}, vous aurez le mêmes types
+    d'exercices qu'au premier partiel avec différents types de données
+    (\C{int}, \C{char}, \C{double}, \C{struct}) et des fonctions :
+\begin{itemize}
+\item commenter, compléter un programme (cours)
+\item simuler l'exécution d'un programme (trace)
+\item if et constantes symboliques (arbre de décision)
+\item écriture de boucles (for ou while ?)
+\item un exercice porte spécialement sur les structures
+\item un exercice supplémentaire : déclarer/définir des fonctions
+  avec $\frac{1}{2}$pt  par déclaration juste et $\frac{1}{2}$pt par
+  définition juste\pause
+\item et une question bonus notée sévèrement
+\end{itemize}
+\item le programme à modifier/compléter, la trace, l'exercice sur les \C{struct} sont forcément avec fonctions
+ \item
+\alert{Gérez votre temps, apprenez à lire un sujet et ne rien oublier.} \structure{Nous
+testons vos acquis pas votre propension à paniquer !}
+ \end{itemize}
+\end{frame}
+
+\section{Rappels}
+  \subsection{Structure et contenu d'un programme C}
+\begin{frame}[fragile]
+  \frametitle{Structure et contenu d'un programme C}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+...
+
+/* Declaration des constantes et types utilisateurs */
+...
+
+/* Declaration des fonctions utilisateurs */
+...
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    ...
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Directives préprocesseur}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+#include %\colorbox{yellow}{<math.h>}% /* pow, sqrt */ /* bibliothèque */
+
+/* Declaration des constantes et types utilisateurs */
+#define %\colorbox{yellow}{N 5}% /* constante symbolique */
+#define TRUE 1
+#define FALSE 0
+
+/* Declaration des fonctions utilisateurs */
+...
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int %\colorbox{yellow}{donnee[N];}%
+    ...
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Types utilisateurs struct}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+...
+/* Declaration des constantes et types utilisateurs */
+...
+struct paire_s 
+{
+    int g; /* gauche */
+    int d; /* droite */
+} %\colorbox{yellow}{;}%
+
+/* Declaration des fonctions utilisateurs */
+...
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    struct paire_s meschaussures = {37, 44};
+    ...
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+...
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Fonctions : déclarations (type), appels, définitions}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+...
+/* Declaration des fonctions utilisateurs */
+int factorielle(int n);                /*     Z -> Z    */
+int pgcd(int a, int b);                /* Z x Z -> Z    */ 
+double neper(int ordre);               /*     Z -> R    */
+void afficher_paire(struct paire_s x); /* paire -> rien */
+int saisie_choix();                   /*  rien -> Z    */
+
+/* Fonction principale */
+int main()
+{
+    ...
+    afficher_paire(meschaussures); /* appel */
+    ...
+}
+
+/* Definitions des fonctions utilisateurs */
+double neper(int n) /* définition de la fonction neper */
+{
+    ...
+    somme = somme + 1.0 / factorielle(k); /* appel */
+    ...
+    return somme;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fonctions récursives}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+...
+/* Declaration des fonctions utilisateurs */
+int factorielle(int n);                /*     Z -> Z    */
+int pgcd(int a, int b);                /* Z x Z -> Z    */ 
+double neper(int ordre);               /*     Z -> R    */
+void afficher_paire(struct paire_s x); /* paire -> rien */
+int saisie_choix();                   /*  rien -> Z    */
+
+/* Fonction principale */
+int main()
+{
+    ...
+    afficher_paire(meschaussures); /* appel */
+    ...
+}
+
+/* Definitions des fonctions utilisateurs */
+double neper(int n) /* définition de la fonction neper */
+{
+   if (n > 1)
+   {
+       return 1.0 / factorielle(n)  + neper(n - 1); /* appel récursif */
+   ...
+\end{lstlisting}
+\end{frame}
+
+\section{Algorithmique élémentaire}
+\newcounter{savedenumi}
+
+\begin{frame}
+  \frametitle{Algorithmes : quels outils pour quels problèmes}
+\pause
+\begin{columns}
+ \begin{column}[t]{0.59\linewidth}
+  \begin{enumerate}
+    \item  Traiter des cas spécifiques 
+      \begin{itemize}
+      \item \alert{\C{if else}} (différencier)
+      \item \alert{\C{\#define}} constantes symboliques (nommer)
+      \item arbre de décision (organiser)
+     \end{itemize}\pause
+    \item Parcourir/générer des cas\pause
+      \begin{itemize}
+      \item \alert{boucle \C{for}} (rarement while)
+      \item tableaux
+      \end{itemize}\pause
+   \item Composer des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+        \pause
+      \item \alert{accumulateur} (à initialiser)
+      \end{itemize}\pause
+    \item[3'.] Dénombrer des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+          \pause
+        \item \alert{compteur} (à initialiser à 0)
+      \end{itemize}
+\setcounter{savedenumi}{\value{enumi}}
+\end{enumerate}
+\end{column}\hspace{-1cm}
+\pause
+\begin{column}[t]{0.59\linewidth}
+\begin{enumerate}
+\setcounter{enumi}{\value{savedenumi}}
+   \item Sélectionner des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+        \item \alert{\C{if}}  (sélectionner/traiter)
+      \end{itemize}\pause
+    \item Rechercher un cas\pause
+      \begin{itemize}
+        \item boucle \alert{\C{while}}, conditions booléennes, \C{if}
+      \end{itemize}\pause
+    \item[2'.] Parcourir/générer : une \emph{ligne} mais aussi une \emph{surface}, un \emph{volume}...\pause
+      \begin{itemize}
+        \item imbriquer les boucles (var. $\neq$)
+      \end{itemize}\pause
+    \item Boucle événementielle
+  \begin{itemize}
+\item boucle \alert{while}
+  \end{itemize}\pause
+    \item Attente active 
+  \begin{itemize}
+\item boucle \alert{while}
+  \end{itemize}
+\end{enumerate}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\section{Indécidabilité}
+\begin{frame}
+  \frametitle{Problèmes indécidables, les limites de l'analyse
+    automatique}
+\begin{itemize}
+\item  Un \alert{problème de décision} est un énoncé à paramètres qui selon les
+  valeurs des paramètres peut être vrai ou faux. Un programme
+  informatique (un calcul)
+  résout un problème de décision lorsque il prend en entrée les
+  paramètres du problème de décision et détermine si l'énoncé est vrai ou faux
+  pour ces paramètres. 
+\pause
+\item 
+Par exemple, déterminer si un entier naturel quelconque est premier
+est un problème de décision. Ce problème est \alert{décidable} : il existe
+un programme (un calcul) qui le résout.\pause
+\item 
+Certains problèmes sont \alert{indécidables} c'est
+à dire qu'il n'existe pas de programme qui les résolve.
+\pause
+\item
+Il est important de savoir si un problème est décidable avant de
+chercher à le résoudre. 
+\pause
+\item Nous allons voir que de nombreux problèmes
+sont indécidables. Le plus fameux d'entre eux est le \alert{problème de
+l'arrêt} : être capable de déterminer, pour tout programme
+informatique, s'il s'arrêtera de lui-même ou continuera son exécution éternellement.
+\end{itemize}
+\end{frame}
+\subsection{Argument de la diagonale}
+\begin{frame}
+  \frametitle{L'argument de la diagonale inventé par Cantor en 1891}
+Montrons qu'il n'existe pas de bijection entre $\mathbb{N}$ et les
+parties de $\mathbb{N}$.\pause
+\begin{itemize}
+  \item On \textbf{suppose} l'existence d'une telle bijection
+    $p:\mathbb{N}\to \mathcal{P}(\mathbb{N})$ (une énumération de $\mathcal{P}(\mathbb{N})$).
+\item Soit la partie  $D = \{k\in \mathbb{N} \mid k\notin p(k)\}$.\pause
+\item $D$ doit avoir un numéro dans l'énumération. Soit $n$ tel que
+  $p(n) = D$.\pause
+\item Est-ce que $n\in D$ ?\pause\ Soit $n\in D$ et par définition de $D$,
+  $n\notin p(n) = D$ (impossible). Soit $n\notin D = p(n)$  et par
+  définition de $D$, $n\in D$ (impossible). Contradiction.
+\item L'hypothèse de départ est donc fausse. \qed
+\end{itemize}
+\pause
+Comme il existe une injection de $\mathbb{N}$ dans
+$\mathcal{P}(\mathbb{N})$,  c'est que $\mathcal{P}(\mathbb{N})$ est
+strictement plus grand que $\mathbb{N}$. 
+
+\pause Sur le même principe on
+montre (par exemple) que $\mathbb{R}$ ou que l'ensemble des fonctions
+$\mathbb{N}\to\mathbb{N}$ sont non dénombrables. Ce dernier point
+montre qu'\textbf{il existe beaucoup de fonctions non calculables}.
+\end{frame}
+
+\subsection{L'indécidabilité de l'arrêt}
+
+\begin{frame}
+  \frametitle{L'indécidabilité de l'arrêt}
+
+  \begin{itemize}
+\small
+  \item On \textbf{construit} une énumération des programmes $\mathbb{N}\to\mathbb{N}$.\pause
+  \item Un programme prend un entier en entrée et s'arrête ($1$) ou
+    boucle éternellement ($0$).\pause
+
+\begin{pspicture}(0,0.5)(9, 4)
+%%      \showgrid
+\def\tempdrawOne{%
+\psline(0,-.15)(3.65,-.15)
+\psline[linestyle=dotted](3.7,-.15)(4.3,-.15)
+}
+\def\tempdrawTwo{%
+\psline(.15,.25)(.15,-1.66)
+\psline[linestyle=dotted](.15,-1.7)(.15,-2.3)
+}
+\only<6->{%
+\def\tempdrawTwo{%
+\psline(.15,.25)(.15,-1.66)
+\psline[linestyle=dotted](.15,-1.7)(.15,-2.3)
+\psline(.15,-2.35)(.15,-2.86)
+\psline[linestyle=dotted](.15,-2.92)(.15,-3.1)
+}
+}
+\only<10->{%
+\def\tempdrawOne{%
+\psline(0,-.15)(3.65,-.15)
+\psline[linestyle=dotted](3.7,-.15)(4.3,-.15)
+\psline(4.335,-.15)(4.85,-.15)
+\psline[linestyle=dotted](4.9,-.15)(5.2,-.15)
+}
+}
+\rput[Br](3,3.5){\psset{linewidth=1.5pt}\tempdrawOne\phantom{Programme 0}}
+\rput[Br](3,3){\tempdrawOne Programme 0}
+\rput[Br](3,2.5){\tempdrawOne Programme 1}
+\rput[Br](3,2){\tempdrawOne Programme 2}
+\rput[Br](3,3.5){Donnée:\psset{linewidth=1.5pt}\tempdrawTwo}
+\rput[Br](3.5,3.5){$0$\tempdrawTwo}
+\rput[Br](4,3.5){$1$\tempdrawTwo}
+\rput[Br](4.5,3.5){$2$\tempdrawTwo}
+\rput[Br](3.5,3){\only<7>{\red}$1$}
+\rput[Br](4,3){$1$}
+\rput[Br](4.5,3){$1$}
+\rput[Br](3.5,2.5){$1$}
+\rput[Br](4,2.5){\only<8>{\red}$0$}
+\rput[Br](4.5,2.5){$0$}
+\rput[Br](3.5,2){$0$}
+\rput[Br](4,2){$0$}
+\rput[Br](4.5,2){\only<9>{\red}$1$}
+\only<6->{%
+\rput[Br](3,1.3){\tempdrawOne\phantom{Programme 2}}
+\rput[Br](3,.8){\tempdrawOne Programme $n$}
+\only<7->{\rput[Br](3.5,.8){\only<7-9>{\red}$0$}}
+\only<8->{\rput[Br](4,.8){\only<8-9>{\red}$1$}}
+\only<9->{\rput[Br](4.5,.8){\only<9>{\red}$0$}}
+}
+\only<10->{%
+\rput[Br](5.2,3.5){\tempdrawTwo}
+\rput[Br](5.7,3.5){$n$\tempdrawTwo}
+\rput[Br](5.7,.8){\red \rnode{case}{?}}
+}
+\end{pspicture}\pause
+\item \textbf{On suppose} qu'il existe un programme $f(p, q)$ qui renvoie $1$ si le programme \no~$p$ s'arrête sur la donnée $q$ et \textbf{renvoie $0$ sinon}. \only<11->{%
+    \rput[Bl]{10}(-4,0){\rnode{con}{\psframebox[fillstyle=solid,fillcolor=yellow]{\Large\sf\bf Contradiction}}} }
+  \pause
+%($f$ lui-même  ne boucle jamais éternellement).
+  \item On construit un programme $g$ qui prend en entrée un
+    entier $p$ et s'arrête si $f(p,p)$ vaut $0$ ou boucle
+    éternellement sinon.  Le programme $g$ a lui même un numéro, $n$.  
+  \end{itemize}
+  \begin{center}
+\only<10->{
+    Est-ce que $g(n)$ s'arrête ?  Que vaut $f(n,n)$ ?
+}
+  \end{center}
+\uncover<11->{
+\psset{arrows=->, linewidth=2pt}
+\ncarc{case}{con}
+%\ncarc{con}{hyp}
+}
+\end{frame}
+
+\subsection{Les limites de l'analyse automatique de programmes}
+\begin{frame}
+\frametitle{Les limites de l'analyse automatique de programmes}
+  \structure{Conclusion.} Le problème de
+  l'arrêt est \alert{indécidable} : il n'est pas possible
+  d'écrire un programme capable d'analyser n'importe quel programme
+  et de déterminer si ce dernier s'arrêtera.
+
+\pause
+\begin{block}{Théorème de Rice}
+  Une généralisation due à Henry Gordon Rice et publiée en 1953, établit
+  que toute propriété des programmes qui s'énonce uniquement sur les
+  entrées-sorties des programmes est soit triviale, soit indécidable.
+\end{block}
+\pause
+Exemples :
+\begin{itemize}
+\item Le programme bouclera indéfiniment \pause (indécidable)\pause
+  \item La sortie du programme fera au moins 0 octets \pause (trivial)\pause
+ \item Le programme affichera \C{"bonjour"} \pause (indécidable)\pause
+  \item Le programme contient \C{printf("bonjour")} \pause (décidable)\pause
+  \item Le programme effacera mon disque dur \pause (indécidable)\pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \Huge Bonnes révisions !
+  \end{center}
+\end{frame}
+\end{document}

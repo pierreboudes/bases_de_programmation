@@ -1,0 +1,16 @@
+#Pour l'UE elements d'informatique
+if [ -f ~/toto/pub/EI/bashrc ]
+   then source ~/toto/pub/EI/bashrc
+fi
+#Pour l'UE elements d'informatique
+if [ -f ~/toto/pub/EI/bashrc ]
+   then source ~/toto/pub/EI/bashrc
+fi
+#Pour l'UE elements d'informatique
+if [ -f ~/toto/pub/EI/bashrc ]
+   then source ~/toto/pub/EI/bashrc
+fi
+#Pour l'UE elements d'informatique
+if [ -f ~/boudes/pub/EI/bashrc ]
+   then source ~/boudes/pub/EI/bashrc
+fi

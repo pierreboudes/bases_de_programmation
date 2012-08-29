@@ -1,0 +1,28 @@
+\begin{tabular}[c]{l||c|c|c|c|c|c|}
+\hline
+ \emph{Instructions} & Cycles & CP& r0& r1& 15& 16\\ \hline
+\hfill Initialisation & 0 & 1 & ? & ? & 3
+ & ?
+ \\ \hline \commentaire{Lecture de la donnée d'adresse 15 dans le registre 0
+} \C{lecture 15 r0
+} & 1 & 2  & 3 & & &\\ \hline
+ \commentaire{Lecture de la donnée d'adresse 15 dans le registre 1
+} \C{lecture 15 r1
+} & 2 & 3  & & 3 & &\\ \hline
+ \commentaire{Ajout de la valeur 1 au registre 1
+} \C{add 1 r1
+} & 3 & 4  & & 4 & &\\ \hline
+ \commentaire{Multiplie la valeur du registre 1 par celle du registre 0
+} \C{mult r0 r1
+} & 4 & 5  & & 12 & &\\ \hline
+ \commentaire{Divise la valeur du registre 1 par 2
+} \C{div 2 r1
+} & 5 & 6  & & 6 & &\\ \hline
+ \commentaire{Écriture du registre 1 à l'adresse 16
+} \C{ecriture r1 16
+} & 6 & 7  & & & & 6
+\\ \hline
+ \commentaire{Fin du processus.
+} \C{stop
+} & 7 & 8  & & & &\\ \hline
+\end{tabular}

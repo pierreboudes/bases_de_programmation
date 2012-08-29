@@ -1,0 +1,101 @@
+init 1 r1                      # r1 vaut i allant de 1 a n
+init 1 r2                      # r2 vaut i!
+lecture 100 r0                 # calcul de i-n
+inverse r0                     #
+add r1 r0                      #
+sisaut r0 10                   # si i<n
+add 1 r1                       #  incrementation de i
+mult r1 r2                     #  mise-a-jour de i!
+saut 3                         #  et on recommence
+ecriture r2 101                # sinon, ecriture de i! en 101
+stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3
+

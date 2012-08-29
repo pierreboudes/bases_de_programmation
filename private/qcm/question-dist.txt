@@ -1,0 +1,50 @@
+# Exemple de fichier de QCM
+#
+# Syntaxe globale :
+# Les lignes commençant par '#' sont des commentaires.
+#
+# Les réponses sont situées sous les questions, avec un blanc devant. La
+# question se termine par un '!' seul sur sa ligne.
+#
+#
+# Convention : mettre la bonne réponse en premier (si il y en a une seule).
+
+Ceci est une question
+ Ceci est la bonne réponse.
+ Ceci est une mauvaise réponse.
+ Ceci est aussi une mauvaise réponse.
+ Le nombre de réponse n'est pas limité.
+!
+
+# Il *faut* mettre le '!' pour indiquer que la question est finie.
+
+
++Ceci est une question très longue. Elle doit donc être écrite sur 
+ plusieurs ligne. Dans ce cas, la première ligne de la question doit
+ commencer par '+' et les lignes suivantes par un blanc (qui sera 
+ supprimé lors de la génération du QCM). La dernière ligne de la 
+-question commence par '-'.
+ Ceci est la bonne réponse.
+ Les réponses sont écrites comme d'habitude
+ La fin de la question aussi
+!
+
+On peut aussi mettre directement du \latex dans les questions
+ Et, \emph{bien sûr}, aussi dans les réponses.
++Si une réponse fait plusieurs lignes, il faut faire comme pour les
+ questions longues : un '+' au début de la première ligne, un blanc
+-au début des lignes suivantes et un '-' au début de la dernière ligne
+ Encore une réponse.
+ Et, toujours, un '!' pour finir la question.
+!
+
+
+La commande \verb+mount+ permet de monter
+ n'importe quel disque dur, clé USB ou répertoire distant
+ uniquement des répertoires exportés par NFS
++uniquement des disques durs ou répertoires mentionnés dans le fichier
+-\verb+/etc/fstab+
+ uniquement des disques durs locaux.
+!
+
+

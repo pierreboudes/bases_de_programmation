@@ -1,0 +1,16 @@
+valeur 0 r1     :: initialisation a zero de l'accumulateur pour la somme
+valeur 0 r2     :: initialisation a zero de l'indice de boucle, i
+saut 7          :: saut sur la condition d'execution de boucle
+add r2 r1       <corps_de_boucle> :: ajoute i a l'accumulateur
+valeur 1 r3
+add r3 r2         :: increment de 1 l'indice de boucle </corps_de_boucle>
+lecture 15 r0   <condition_de_boucle>
+soustr r2 r0      :: r0 vaut n - i
+sautpos r0 4      :: si n >= i saut sur corps_de_boucle </condition_de_boucle> 
+ecriture r1 16  :: ecriture du resultat 
+stop
+?
+?
+?
+3               <-- n
+?               <-- valeur de retour

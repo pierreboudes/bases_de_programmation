@@ -1,0 +1,34 @@
+lecture 30 r1      
+lecture 31 r0    :: initialisation du minimum a x1
+valeur 2 r2      :: initialisation de l'indice de boucle
+saut 12          :: saut sur la condition de boucle
+valeur 30 r4     <corps_de_boucle>
+add r2 r4        
+lecture *r4 r5     :: r5 contient l'element suivant, xi
+soustr r0 r5       <condition_du_si>  r5 vaut xi - minimum (xi < minimum ?)
+sautpos r5 11      </condition_du_si>  saute apres le bloc alors
+lecture *r4 r0     <alors/>
+add 1 r2         </corps_de_boucle>
+valeur 0 r3      <condition_de_boucle>
+add r1 r3
+soustr r2 r3       :: r3 vaut n - r2
+sautpos r3 5     </condition_de_boucle> saut sur corps_de_boucle
+valeur 31 r4
+add r1 r4        :: r4 vaut 30 + n + 1
+ecriture r0 *r4 
+stop
+?
+?
+?
+?
+?
+?
+?
+?
+?
+?
+3               :: n
+10              :: x1
+100             :: ...
+1               :: xn
+? <-- resultat

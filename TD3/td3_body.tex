@@ -1,0 +1,341 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux dirigés  3 : variables impératives et structure de contrôle  \emph{if}}
+
+L'objectif de ce TD est de vous familiariser avec l'écriture de programmes simples en langage C : calcul artihmétique, affichage de résultats et exécution conditionnelle d'instructions. Il aborde les mêmes notions que le TD 1, mais en utilisant le langage C.
+
+\begin{correction}
+  Note aux chargés de TD.
+  \begin{itemize}
+  \item En cours, ils ont vu les variables imperatives, le printf et
+    le if. Leur sémantique a été donnée par leur traduction en langage
+    amil.
+  \item Ils doivent savoir resoudre/reproduire les exos marqués exercices types et faire leur trace sur un exemple quelconque.
+  \item On garde la procédure des TD précédents :
+    \begin{itemize}
+    \item on se donne des exemples
+    \item on trouve un algorithme en francais
+    \item on traduit l'algorithme en C, en s'aidant de commentaires
+    \item on teste sur les exemples 
+    \end{itemize}
+  \item Le code de la fonction main vide en C a ete présente, commente avec les differents points qu'ils vont voir au semestre. Il est long et peut etre raccourci mais il faut s'assurer qu'ils sachent écrire ce genre de préambule du C avant d'écrire leurs programmes.
+  \item Le code leur est toujours donne avec les commentaires, en suivant scrupuleusement l'indentation choisie. Ils doivent bien comprendre que le code et les commentaires sont indissociables. N'hesitez pas a ajouter des commentaires en fonction des difficultes rencontrées dans votre groupe.
+  \end{itemize}
+\end{correction}
+
+\section{Déclaration et affectation de variables impératives}
+
+\subsection{Trace de programme en C}
+
+Soit le programme suivant :
+\begin{listing}{1}
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Declaration des constantes et types utilisateurs */
+
+/* Declaration des fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int x;
+
+    x = 3;
+    x = x + 1;
+    printf("x = %d\n", x);
+
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+  
+\end{listing}
+
+\begin{enumerate}
+\item Que fait ce programme ?
+  \begin{correction}
+    \begin{itemize}
+    \item Il déclare la variable impérative \verb|x| (occupe un espace memoire)
+    \item Il affecte 3 à la variable \verb|x|
+    \item Affecte à x la valeur de l'expression (x + 1) qui vaut 4 : la sous-expression x s'évalue comme la valeur de la variable (3), plus un. 
+    \item Affiche la valeur de l'expression x qui s'évalue comme la valeur de la variable, cad 4.
+    \end{itemize}
+  \end{correction}
+\item Donner la traduction des instructions aux lignes 15 et 16 en langage amil.
+  \begin{correction}
+    \begin{itemize}
+    \item[] CP vaut 1
+    \item[\#]  Soit la var x correspondant à la case mémoire d'adresse 10 (initialisation).
+    \item[\#] affecte 3 a la var x
+    \item[1] valeur 3 r0
+    \item[2] ecriture r0 10
+    \item[\#] x = x + 1
+    \item[3] lecture 10 r0
+    \item[4] valeur 1 r1
+    \item[5] add r1 r0 \# r0 vaut l'expression x + 1
+    \item[6] ecriture r0 10 \# affecte la valeur de l'expression à x
+    \end{itemize}
+  \end{correction}
+\item Donner la trace du programme C. Pour cela vous utiliserez un tableau comportant 1 colonne pour le numéro de ligne + autant de colonnes que de variables utilisées dans le programme + 1 colonne pour l'affichage éventuel du programme.
+  \begin{correction}
+    Il est très important qu'ils sachent faire une trace d'un programme C. Ils seront évalués dessus pendant les colles et aux examens. Le choix de la numérotation des lignes n'est pas imposé. On va d'habitude au plus court. Par contre, la numérotation doit être donnée explicitement dans le code.
+
+trace :\\
+\begin{verbatim}
+ligne          | x | sortie (affichage a l'ecran)
+-------------------------------------------------
+initialisation | ? |
+15             | 3 |
+16             | 4 |
+17             |   |  x = 4
+renvoie EXIT_SUCCESS
+\end{verbatim}
+  \end{correction}
+\end{enumerate}
+
+\section{Execution conditionnelle d'instructions :  \emph{if}}
+
+\subsection{Majeur ou mineur ?}
+
+Soit la variable \verb|age|, contenant l'âge d'une personne. Écrire un programme qui affiche si cette personne est majeure ou mineure.
+
+\begin{correction}
+\begin{verbatim}
+algorithme :
+si age >= 18 alors 
+  affiche majeur
+sinon 
+  affiche mineur
+\end{verbatim}
+\begin{listing}{1}
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Declaration des constantes et types utilisateurs */
+
+/* Declaration des fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int age = 16; /* age de la personne */
+
+    if(age >= 18) /* majeur */
+    {
+	/* affiche majeur */
+	printf("Vous êtes majeur.\n");
+    }
+    else /* mineur (age < 18) */
+    {
+	/* affiche mineur */
+	printf("Vous êtes mineur.\n");
+    }
+    
+    /* valeur fonction */
+    return EXIT_SUCCESS; /* renvoie OK */
+}
+
+/*Definitions des fonctions utilisateurs */
+\end{listing}
+\end{correction}
+
+\subsection{Exercice type :  Le minimum de 3 valeurs}
+
+Soient 3 variables \verb|a|, \verb|b|, \verb|c|, initialisées à des
+valeurs quelconques. Écrire un programme qui calcule et affiche à
+l'écran le minimum des 3 valeurs.
+
+\begin{correction}
+Nous donnons une version ``standard'' pour la recherche d'un
+extremum~: une val par défaut. On parcourt les autres valeurs et on
+modifie en
+conséquence. Servira plus tard quand calcul extremum d'une série, bien
+qu'en général il soit plus difficile d'écrire le code initialisant
+l'extremum avec la première valeur de la série et on préfère
+initialiser avec une valeur limite (i.e. min = +infini).  
+\begin{verbatim}
+algorithme :
+soit min = a /* valeur par defaut */
+si b < min /* b plus petit que min courant */
+  /* b est le min courant */
+  min = b
+/* min contient min(a,b) */
+si c < min /* c plus petit que min courant */
+  /* c est le min courant */
+  min = c
+/* min contient min(min(a,b),c) = min(a,b,c) */
+affiche min
+\end{verbatim}
+\begin{listing}{1}
+\end{listing}
+\end{correction}
+
+
+\subsection{Exercice type : Quel temps fait-il ?}
+
+En vous inspirant du codage du genre vu en cours (1 pour MASCULIN, 2
+pour FÉMININ), proposez un codage pour indiquer si le temps est
+COUVERT, ENSOLEILLÉ ou PLUVIEUX.
+Écrivez un programme principal qui, étant donné le temps affecté à une
+variable, affiche le temps qu'il fait.
+
+\begin{correction}
+\begin{verbatim}
+Exemple : Soit temps = 1 avec 0 COUVERT, 1 ENSOLEILLÉ et 2 PLUVIEUX.
+Affiche ``Le temps est ensoleillé.''
+
+Algo :
+    /* Codage :
+       0 COUVERT
+       1 ENSOLEILLE
+       2 PLUVIEUX
+    */
+si temps = 0 alors affiche couvert
+si temps = 1 alors affiche ensoleille
+si temps = 2 alors affiche pluvieux 
+
+les cas sont mutuellement exclusifs.
+\end{verbatim}
+\begin{verbatim}
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Declaration des constantes et types utilisateurs */
+
+/* Declaration des fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation variables */
+    int temps = 1; /* temps qu'il fait */
+
+    /* si temps = 0 alors affiche couvert */ 
+    if(temps == 0) /* COUVERT */
+    {
+        printf("Le temps est couvert.\n");
+    }
+
+    /* si temps = 1 alors affiche ensoleille */ 
+    if(temps == 1) /* ENSOLEILLE */
+    {
+        printf("Le temps est ensoleille.\n");
+    }
+
+    /* si temps = 2 alors affiche pluvieux */ 
+    if(temps == 2) /* PLUVIEUX */
+    {
+        printf("Le temps est pluvieux.\n");
+    }
+    
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\subsection{Exercice type : Dans 1 seconde, il sera exactement...}
+
+Écrire un programme principal qui, étant donnée une heure représentée
+sous la forme de 3 variables pour les heures, \verb|h|, les minutes,
+\verb|m| et les secondes, \verb|s|, affiche l'heure qu'il sera 1
+seconde plus tard. Il faudra envisager tous les
+cas possibles pour le changement d'heure. Deux exemples de sortie sont~:
+
+\begin{verbatim}
+L'heure actuelle est : 23h12m12s
+Dans une seconde, il sera exactement : 23h12m13s
+
+L'heure actuelle est : 23h59m59s
+Dans une seconde, il sera exactement : 00h00m00s
+\end{verbatim}
+
+\begin{correction}
+\begin{verbatim}
+algo :
+- affiche l'heure actuelle
+- ajoute une seconde
+- si tour du cadran des secondes alors
+    - remise a 0 des secondes
+    - il est une minute de plus
+    - si tour du cadran des minutes alors
+        - remise a 0 des minutes
+        - il est une heure de plus
+        - si tour du cadran des heures alors
+    	    - remise a zero des heures
+- affiche la nouvelle heure
+\end{verbatim}
+  \begin{listing}{1}
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Declaration des constantes et types utilisateurs */
+
+/* Declaration des fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* soient 23h59m59s */
+    int h = 23;
+    int m = 59;
+    int s = 59;
+
+    /* affiche l'heure actuelle */
+    printf("L'heure actuelle est : %dh%dm%ds\n",h,m,s);
+
+    /* une seconde de plus */
+    s = s + 1;
+
+    if(s == 60) /* tour du cadran des secondes */
+    {
+	/* remise a 0 */
+	s = 0;
+
+	/* une minute de plus */
+	m = m + 1;
+
+	if(m == 60) /* tour du cadran des minutes */
+	{
+	    /* remise a 0 */
+	    m = 0;
+
+	    /* une heure de plus */
+	    h = h + 1;
+
+	    if(h == 24) /* tour du cadran des heures */
+	    {
+		/* remise a zero */
+		h = 0;
+	    }
+	}
+    }
+    /* h,m,s contiennent l'heure une seconde plus tard */
+
+    /* affiche l'heure */
+    printf("Dans une seconde, il sera exactement : %dh%dm%ds\n",h,m,s);
+
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+  \end{listing}
+\end{correction}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td3"
+%%% End: 

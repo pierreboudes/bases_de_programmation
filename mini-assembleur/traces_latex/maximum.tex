@@ -1,0 +1,253 @@
+\begin{tabular}[c]{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Cycles & CP & instruction & r0& r1& r2& r3& r4& 19& 21& 22& 23& 24& 25& 26& 27& 28& 29& 31\\ \hline
+INIT & 1 & & ? & ? & ? & ? & ? & 1
+ & 23
+ & 29
+ & 34
+ & -23
+ & -40
+ & 45
+ & 1
+ & 0
+ & 19
+ & ?
+ \\ \hline1 & 2 & \commentaire{Lecture de la donnée d'adresse 21 dans le registre 0
+} lecture 21 r0
+ & 23 & & & & & & & & & & & & & & & \\ \hline
+2 & 3 & \commentaire{Lecture de la donnée d'adresse 23 dans le registre 3
+} lecture *r0 r3
+ & & & & 34 & & & & & & & & & & & & \\ \hline
+3 & 4 & \commentaire{Lecture de la donnée d'adresse 19 dans le registre 2
+} lecture 19 r2
+ & & & 1 & & & & & & & & & & & & & \\ \hline
+4 & 5 & \commentaire{Lecture de la donnée d'adresse 22 dans le registre 1
+} lecture 22 r1
+ & & 29 & & & & & & & & & & & & & & \\ \hline
+5 & 6 & \commentaire{Ajout de la valeur du registre 2 au registre 0
+} add r2 r0
+ & 24 & & & & & & & & & & & & & & & \\ \hline
+6 & 7 & \commentaire{Ajout de la valeur du registre 2 au registre 1
+} add r2 r1
+ & & 30 & & & & & & & & & & & & & & \\ \hline
+7 & 8 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -30 & & & & & & & & & & & & & & \\ \hline
+8 & 9 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & -6 & & & & & & & & & & & & & & \\ \hline
+9 & 10 & \commentaire{Si la valeur (-6) du registre 1 est positive, saute a l'adresse 17
+} sautpos r1 17
+ & & & & & & & & & & & & & & & & \\ \hline
+10 & 11 & \commentaire{Pas d'operation
+} noop
+ & & & & & & & & & & & & & & & & \\ \hline
+11 & 12 & \commentaire{Lecture de la donnée d'adresse 24 dans le registre 4
+} lecture *r0 r4
+ & & & & & -23 & & & & & & & & & & & \\ \hline
+12 & 13 & \commentaire{Inversion du signe de la valeur du registre 4
+} inverse r4
+ & & & & & 23 & & & & & & & & & & & \\ \hline
+13 & 14 & \commentaire{Ajout de la valeur du registre 3 au registre 4
+} add r3 r4
+ & & & & & 57 & & & & & & & & & & & \\ \hline
+14 &\textbf{4} & \commentaire{Si la valeur (57) du registre 4 est positive, saute a l'adresse 4
+} sautpos r4 4
+ & & & & & & & & & & & & & & & & \\ \hline
+15 & 5 & \commentaire{Lecture de la donnée d'adresse 22 dans le registre 1
+} lecture 22 r1
+ & & 29 & & & & & & & & & & & & & & \\ \hline
+16 & 6 & \commentaire{Ajout de la valeur du registre 2 au registre 0
+} add r2 r0
+ & 25 & & & & & & & & & & & & & & & \\ \hline
+17 & 7 & \commentaire{Ajout de la valeur du registre 2 au registre 1
+} add r2 r1
+ & & 30 & & & & & & & & & & & & & & \\ \hline
+18 & 8 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -30 & & & & & & & & & & & & & & \\ \hline
+19 & 9 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & -5 & & & & & & & & & & & & & & \\ \hline
+20 & 10 & \commentaire{Si la valeur (-5) du registre 1 est positive, saute a l'adresse 17
+} sautpos r1 17
+ & & & & & & & & & & & & & & & & \\ \hline
+21 & 11 & \commentaire{Pas d'operation
+} noop
+ & & & & & & & & & & & & & & & & \\ \hline
+22 & 12 & \commentaire{Lecture de la donnée d'adresse 25 dans le registre 4
+} lecture *r0 r4
+ & & & & & -40 & & & & & & & & & & & \\ \hline
+23 & 13 & \commentaire{Inversion du signe de la valeur du registre 4
+} inverse r4
+ & & & & & 40 & & & & & & & & & & & \\ \hline
+24 & 14 & \commentaire{Ajout de la valeur du registre 3 au registre 4
+} add r3 r4
+ & & & & & 74 & & & & & & & & & & & \\ \hline
+25 &\textbf{4} & \commentaire{Si la valeur (74) du registre 4 est positive, saute a l'adresse 4
+} sautpos r4 4
+ & & & & & & & & & & & & & & & & \\ \hline
+26 & 5 & \commentaire{Lecture de la donnée d'adresse 22 dans le registre 1
+} lecture 22 r1
+ & & 29 & & & & & & & & & & & & & & \\ \hline
+27 & 6 & \commentaire{Ajout de la valeur du registre 2 au registre 0
+} add r2 r0
+ & 26 & & & & & & & & & & & & & & & \\ \hline
+28 & 7 & \commentaire{Ajout de la valeur du registre 2 au registre 1
+} add r2 r1
+ & & 30 & & & & & & & & & & & & & & \\ \hline
+29 & 8 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -30 & & & & & & & & & & & & & & \\ \hline
+30 & 9 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & -4 & & & & & & & & & & & & & & \\ \hline
+31 & 10 & \commentaire{Si la valeur (-4) du registre 1 est positive, saute a l'adresse 17
+} sautpos r1 17
+ & & & & & & & & & & & & & & & & \\ \hline
+32 & 11 & \commentaire{Pas d'operation
+} noop
+ & & & & & & & & & & & & & & & & \\ \hline
+33 & 12 & \commentaire{Lecture de la donnée d'adresse 26 dans le registre 4
+} lecture *r0 r4
+ & & & & & 45 & & & & & & & & & & & \\ \hline
+34 & 13 & \commentaire{Inversion du signe de la valeur du registre 4
+} inverse r4
+ & & & & & -45 & & & & & & & & & & & \\ \hline
+35 & 14 & \commentaire{Ajout de la valeur du registre 3 au registre 4
+} add r3 r4
+ & & & & & -11 & & & & & & & & & & & \\ \hline
+36 & 15 & \commentaire{Si la valeur (-11) du registre 4 est positive, saute a l'adresse 4
+} sautpos r4 4
+ & & & & & & & & & & & & & & & & \\ \hline
+37 & 16 & \commentaire{Lecture de la donnée d'adresse 26 dans le registre 3
+} lecture *r0 r3
+ & & & & 45 & & & & & & & & & & & & \\ \hline
+38 &\textbf{4} & \commentaire{Saut a l'adresse 4
+} saut 4
+ & & & & & & & & & & & & & & & & \\ \hline
+39 & 5 & \commentaire{Lecture de la donnée d'adresse 22 dans le registre 1
+} lecture 22 r1
+ & & 29 & & & & & & & & & & & & & & \\ \hline
+40 & 6 & \commentaire{Ajout de la valeur du registre 2 au registre 0
+} add r2 r0
+ & 27 & & & & & & & & & & & & & & & \\ \hline
+41 & 7 & \commentaire{Ajout de la valeur du registre 2 au registre 1
+} add r2 r1
+ & & 30 & & & & & & & & & & & & & & \\ \hline
+42 & 8 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -30 & & & & & & & & & & & & & & \\ \hline
+43 & 9 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & -3 & & & & & & & & & & & & & & \\ \hline
+44 & 10 & \commentaire{Si la valeur (-3) du registre 1 est positive, saute a l'adresse 17
+} sautpos r1 17
+ & & & & & & & & & & & & & & & & \\ \hline
+45 & 11 & \commentaire{Pas d'operation
+} noop
+ & & & & & & & & & & & & & & & & \\ \hline
+46 & 12 & \commentaire{Lecture de la donnée d'adresse 27 dans le registre 4
+} lecture *r0 r4
+ & & & & & 1 & & & & & & & & & & & \\ \hline
+47 & 13 & \commentaire{Inversion du signe de la valeur du registre 4
+} inverse r4
+ & & & & & -1 & & & & & & & & & & & \\ \hline
+48 & 14 & \commentaire{Ajout de la valeur du registre 3 au registre 4
+} add r3 r4
+ & & & & & 44 & & & & & & & & & & & \\ \hline
+49 &\textbf{4} & \commentaire{Si la valeur (44) du registre 4 est positive, saute a l'adresse 4
+} sautpos r4 4
+ & & & & & & & & & & & & & & & & \\ \hline
+50 & 5 & \commentaire{Lecture de la donnée d'adresse 22 dans le registre 1
+} lecture 22 r1
+ & & 29 & & & & & & & & & & & & & & \\ \hline
+51 & 6 & \commentaire{Ajout de la valeur du registre 2 au registre 0
+} add r2 r0
+ & 28 & & & & & & & & & & & & & & & \\ \hline
+52 & 7 & \commentaire{Ajout de la valeur du registre 2 au registre 1
+} add r2 r1
+ & & 30 & & & & & & & & & & & & & & \\ \hline
+53 & 8 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -30 & & & & & & & & & & & & & & \\ \hline
+54 & 9 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & -2 & & & & & & & & & & & & & & \\ \hline
+55 & 10 & \commentaire{Si la valeur (-2) du registre 1 est positive, saute a l'adresse 17
+} sautpos r1 17
+ & & & & & & & & & & & & & & & & \\ \hline
+56 & 11 & \commentaire{Pas d'operation
+} noop
+ & & & & & & & & & & & & & & & & \\ \hline
+57 & 12 & \commentaire{Lecture de la donnée d'adresse 28 dans le registre 4
+} lecture *r0 r4
+ & & & & & 0 & & & & & & & & & & & \\ \hline
+58 & 13 & \commentaire{Inversion du signe de la valeur du registre 4
+} inverse r4
+ & & & & & 0 & & & & & & & & & & & \\ \hline
+59 & 14 & \commentaire{Ajout de la valeur du registre 3 au registre 4
+} add r3 r4
+ & & & & & 45 & & & & & & & & & & & \\ \hline
+60 &\textbf{4} & \commentaire{Si la valeur (45) du registre 4 est positive, saute a l'adresse 4
+} sautpos r4 4
+ & & & & & & & & & & & & & & & & \\ \hline
+61 & 5 & \commentaire{Lecture de la donnée d'adresse 22 dans le registre 1
+} lecture 22 r1
+ & & 29 & & & & & & & & & & & & & & \\ \hline
+62 & 6 & \commentaire{Ajout de la valeur du registre 2 au registre 0
+} add r2 r0
+ & 29 & & & & & & & & & & & & & & & \\ \hline
+63 & 7 & \commentaire{Ajout de la valeur du registre 2 au registre 1
+} add r2 r1
+ & & 30 & & & & & & & & & & & & & & \\ \hline
+64 & 8 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -30 & & & & & & & & & & & & & & \\ \hline
+65 & 9 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & -1 & & & & & & & & & & & & & & \\ \hline
+66 & 10 & \commentaire{Si la valeur (-1) du registre 1 est positive, saute a l'adresse 17
+} sautpos r1 17
+ & & & & & & & & & & & & & & & & \\ \hline
+67 & 11 & \commentaire{Pas d'operation
+} noop
+ & & & & & & & & & & & & & & & & \\ \hline
+68 & 12 & \commentaire{Lecture de la donnée d'adresse 29 dans le registre 4
+} lecture *r0 r4
+ & & & & & 19 & & & & & & & & & & & \\ \hline
+69 & 13 & \commentaire{Inversion du signe de la valeur du registre 4
+} inverse r4
+ & & & & & -19 & & & & & & & & & & & \\ \hline
+70 & 14 & \commentaire{Ajout de la valeur du registre 3 au registre 4
+} add r3 r4
+ & & & & & 26 & & & & & & & & & & & \\ \hline
+71 &\textbf{4} & \commentaire{Si la valeur (26) du registre 4 est positive, saute a l'adresse 4
+} sautpos r4 4
+ & & & & & & & & & & & & & & & & \\ \hline
+72 & 5 & \commentaire{Lecture de la donnée d'adresse 22 dans le registre 1
+} lecture 22 r1
+ & & 29 & & & & & & & & & & & & & & \\ \hline
+73 & 6 & \commentaire{Ajout de la valeur du registre 2 au registre 0
+} add r2 r0
+ & 30 & & & & & & & & & & & & & & & \\ \hline
+74 & 7 & \commentaire{Ajout de la valeur du registre 2 au registre 1
+} add r2 r1
+ & & 30 & & & & & & & & & & & & & & \\ \hline
+75 & 8 & \commentaire{Inversion du signe de la valeur du registre 1
+} inverse r1
+ & & -30 & & & & & & & & & & & & & & \\ \hline
+76 & 9 & \commentaire{Ajout de la valeur du registre 0 au registre 1
+} add r0 r1
+ & & 0 & & & & & & & & & & & & & & \\ \hline
+77 &\textbf{17} & \commentaire{Si la valeur (0) du registre 1 est positive, saute a l'adresse 17
+} sautpos r1 17
+ & & & & & & & & & & & & & & & & \\ \hline
+78 & 18 & \commentaire{Écriture du registre 3 à l'adresse 31
+} ecriture r3 31
+ & & & & & & & & & & & & & & & & 45
+ \\ \hline
+79 & 19 & \commentaire{Fin du processus.
+} stop
+ & & & & & & & & & & & & & & & & \\ \hline
+\end{tabular}

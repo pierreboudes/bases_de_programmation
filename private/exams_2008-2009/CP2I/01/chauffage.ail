@@ -1,0 +1,104 @@
+lecture 100 r0            # calcul de (h - debut hp)
+inverse r0                # 
+lecture 102 r1            # r1 contient l'heure courante h
+add r1 r0                 #
+sisaut r0 7               # si h < debut hp
+saut 14                   #  saut vers l'ecriture de 1
+lecture 101 r0            # sinon : calcul de (h - debut hc)
+inverse r0                #
+add r1 r0                 #
+sisaut r0 14              # si h < debut hc
+init 0 r0                 #  ecriture de 0 dans 103
+ecriture r0 103           # 
+stop                      # sinon
+init 1 r0                 #  ecriture de 1 dans 103
+ecriture r0 103           #
+stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7
+22
+1
+
+

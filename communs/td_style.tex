@@ -1,0 +1,70 @@
+%%%% PACKAGES
+\usepackage[scale=0.74,vmargin=1.4cm ]{geometry}
+
+\usepackage{latexsym,amssymb,amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{textcomp} %pour euro
+\usepackage{ifpdf}
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage[dvips]{graphicx}
+\usepackage{pstricks, pst-tree, pst-node}
+\fi
+\usepackage{calc}
+\usepackage{moreverb}
+\usepackage{version}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{rotating}
+\usepackage{subfigure}
+
+\lstset{language=C, showstringspaces=false}
+\usepackage{enumerate}
+
+%%%% COMMANDES
+\newcommand{\entete}[1]{%
+\noindent
+\rule{\linewidth}{0.5mm}\\
+\noindent
+Universit\'e Paris-Nord \hfill L1\\
+\noindent
+Institut Galil\'ee \hfill Ann\'ee 2011-2012\\
+Licence 1 - 1er semestre
+\begin{center}
+\Large\bf #1
+\end{center}
+\rule{\linewidth}{0.5mm}
+\vspace{1cm}
+}
+
+\newcommand{\C}[1]{{\upshape\texttt{#1}}}
+\newenvironment{correction}{\paragraph{Correction.}}{}
+\newenvironment{cpii}{}{} % pour les liens spécifiques au CP2I
+\excludeversion{cpii}
+\newenvironment{baremeenv}{\paragraph{Barème.} \begin{itshape}}{\end{itshape}}
+%\excludeversion{baremeenv}
+
+% Hack tres moche pour des enumerate qui continuent la numérotation...
+% j'ai deja fait ca ailleurs et mieux mais ou ?
+\newcounter{saveenumi}
+\newenvironment{newenu}
+{\begin{enumerate}}
+{\setcounter{saveenumi}{\value{enumi}}\end{enumerate}}
+\newenvironment{lastenu}
+{\begin{enumerate}\setcounter{enumi}{\value{saveenumi}}}
+{\setcounter{saveenumi}{\value{enumi}}\end{enumerate}}
+
+\newcommand{\bbbn}{\ensuremath{\mathbb{N}}}
+\newcommand{\bbbr}{\ensuremath{\mathbb{R}}}
+
+\newcommand{\carriagereturn}{\C{$\backslash$n}}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

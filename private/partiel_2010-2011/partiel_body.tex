@@ -1,0 +1,571 @@
+% -*- coding: utf-8 -*-
+
+\newcounter{questioncount}
+\setcounter{questioncount}{0}
+\newcommand{\question}{\addtocounter{questioncount}{1}\paragraph{Question \Alph{questioncount}.}}
+\newcommand{\commentaire}[1]{}
+
+\entete{Éléments d'informatique : partiel de mi semestre}
+\vspace{-1cm}
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à
+titre indicatif afin de vous permettre de gérer votre temps. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+
+\section{Étude de programmes et questions de cours}
+
+\subsection{Somme des éléments d'un tableau (\textit{3,5 points})}
+
+Nous voulons écrire un programme qui calcule la somme des éléments
+d'un tableau d'entiers. Une partie du programme est déjà écrite, et
+Pippo pense qu'il ne
+reste plus qu'à écrire la partie qui calcule effectivement la
+somme. Voici son programme :
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define TAILLE 3
+
+/* Fonction principale */
+int main()
+{
+  int t[TAILLE] = {12,10,15}; /* tableau à sommer */
+
+
+
+  /* calcul de la somme (À FAIRE) */
+
+
+
+
+
+  /* affichage du résultat */
+  printf("La somme est %d\n", somme);
+
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+
+\question Avant d'aller plus loin Pippo veut tester son programme,
+mais la compilation échoue. Expliquer pourquoi, quelle étape de la
+compilation échoue précisément et ce qu'il manque pour que la
+compilation réussisse.  \bareme{1}
+
+\begin{correction}
+Il manque la déclaration (et l'initialisation à zéro) de la variable
+\C{somme}. La compiliation échoue à l'analyse sémantique. 
+\begin{baremeenv}
+    0.5 pt pour ``déclaration de la variable \C{somme}'' + 0.5 pt pour
+    ``analyse sémantique'' ou 0.25 pt si ``avant la génération du code
+    objet'' et/ou ``avant l'édition de lien''.
+\end{baremeenv}
+\end{correction}
+
+\question Expliquer le fonctionnement de l'instruction \C{\#define}.\bareme{1}
+\begin{correction}
+L'instruction define est une instruction préprocesseur elle sera donc
+exécutée au tout début de la compilation. Cette instruction permet de
+définir une constante symbolique (ici TAILLE) et un texte de
+substitution pour cette constante (ici 3). Le préprocesseur remplacera
+chaque occurrence de la constante symbolique par le texte de
+substitution dans le source du programme juste avant qu'il soit
+compilé. 
+  \begin{baremeenv}
+    1 pt si juste. 0.5 pt si seulement notion de constantes et pas de mise en
+  relation avec la substitution au moment de la compilation.
+  \end{baremeenv}
+\end{correction}
+
+
+\question Compléter le programme pour qu'il calcule effectivement la somme
+  des éléments du tableau (pour une taille de tableau arbitraire).\bareme{1.5}
+
+Un exemple de sortie du programme pour le tableau donné dans le code est :
+\begin{verbatim}
+La somme est 37
+\end{verbatim}
+
+\begin{correction}
+
+  \begin{listing}{11}
+  int somme = 0; /* accumulateur pour la somme */    
+  int i; /* var de boucle */
+
+  for (i = 0; i < TAILLE; i = i + 1) /* pour chaque case */
+  {
+    somme = somme + t[i]; /* ajout de la case a la somme */   
+  }
+  \end{listing}
+
+  \begin{baremeenv}
+    1.5pt pour le code juste (compilation correction quel que soit
+  TAILLE). Sinon, maxi 1 pt :
+  \begin{itemize}
+  \item pas de boucle -> 0
+  \item 0.5pt une (et une seule) boucle (for, while accepté)
+  \item 0,5pt la boucle parcours effectivement un tableau de taille TAILLE
+  \item pas de points en moins ou en plus pour la déclaration de la
+    variable de boucle (redite sous une autre forme de la première
+    question) ou pour l'initialisation de somme à zéro.
+  \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+\subsection{Une erreur classique (3 points)} 
+
+Pippo a écrit un programme C. Celui-ci compile, mais une erreur survient à l'exécution, qu'il ne comprend pas.
+
+\begin{verbatim}
+$ gcc puissance.c -o puissance.exe
+$ puissance.exe
+Entrer un nombre reel : 2.3
+Entrer son exposant (entier positif) : 2
+Segmentation fault
+\end{verbatim}
+\question
+Expliquer brièvement ce que signifie ce message d'erreur (dernière ligne).\bareme{1}
+\begin{correction}
+Le message d'erreur \C{Segmentation fault} signifie que le programme a tenté de lire ou d'écrire dans un espace mémoire qui ne lui était pas réservé, ce que le système a détecté et refusé, provoquant la terminaison prématurée du programme et l'affichage du message d'erreur. 
+
+\begin{baremeenv}
+  Compter 0.25 pt si ça parle tout de suite de l'erreur du scanf (au lieu de donner la signification du message d'erreur), 0.5 pt si il est juste fait mention de la mémoire (sans réservation etc.).
+\end{baremeenv}
+\end{correction}
+
+\medskip
+Voici quelques lignes choisies du programme.
+\begin{listing}{10}
+int main()
+{
+    /* Déclaration et initialisation des variables */
+   double x;
+   int n;
+\end{listing}
+\vdots
+\begin{listing}{22}
+    printf("Entrer un nombre reel : ");
+    scanf("%lg", x);
+    printf("Entrer son exposant (entier positif) : ");
+    scanf("%d", n);
+\end{listing}
+
+\question
+Que faut-il corriger ? \bareme{1}
+
+\begin{correction}
+Il faut mettre une esperluette devant le nom de la variable dans les deux \C{scanf}.
+ Comme ceci :
+  \begin{listing}{22}
+    printf("Entrer un nombre reel : ");
+    scanf("%lg", &x); /* <-- ici */
+    printf("Entrer son exposant (entier positif) : ");
+    scanf("%d", &n);  /* <-- ici */
+\end{listing}
+
+Complément de correction.
+Le rôle de l'esperluette est de donner à \C{scanf} l'adresse de la variable dans laquelle écrire le résultat de la saisie utilisateur. Sans esperluette \C{scanf} récupère la valeur de la variable et l'utilise comme une adresse, ce qui provoque en général (si on a de la chance) une erreur de segmentation (\C{Segmentation fault}). 
+
+\begin{baremeenv}
+  Compter 0.5 pt par scanf correctement corrigé (et oui c'est un piège). Si d'autres corrections, hors sujet, apparaissent diminuer la note de l'exercice (jusqu'à zéro).
+\end{baremeenv}
+\end{correction}
+
+
+\question
+ Quelle option de compilation aurait dû utiliser Pippo pour obtenir de
+  l'aide ?\bareme{0.5}
+
+\begin{correction}
+En utilisant l'option \verb+-Wall+ (afficher tous les avertissements) de la commande \C{gcc}, Pippo aurait eut à la compilation un message d'avertissement le prévenant d'un erreur probable à la ligne 23 et de même pour la ligne 25.
+
+\begin{baremeenv}
+Compter juste si il est fait mention de \verb+-Wall+. Sinon zéro.  
+\end{baremeenv}
+\end{correction}
+
+\question Compléter le programme pour que, lorsque l'entier $n$
+saisi est positif, il calcule et affiche $x^n$.\bareme{1}
+
+\begin{correction}
+Nous avons besoins de deux variables supplémentaires :
+  \begin{listing}{15}
+  int i; /* var de boucle */
+  int produit = 1; /* accumulateur pour le produit */ 
+  \end{listing}
+
+Et il suffit de répeter n fois la multiplication par x :
+\begin{listing}{26}
+  for (i  = 0; i < n; i = i + 1) /* faire n fois */
+  {
+    produit = produit * x; /* multiplication par x */
+  }
+
+  /* affichage */
+  printf("%d a la puissance %d = %d\n", x, n, produit);
+\end{listing}
+
+  \begin{baremeenv}
+    Compter 1,5 point si tout juste et dans ce cas veiller à ne pas
+    dépasser le barème de la section (7 points).  Autrement enlever un
+    demi point par erreur parmi : oubli de déclaration d'une variable, pas de boucle, trop de boucles,
+    pas d'affichage, calcul faux. Par exemple pas de boucle +
+    calcul faux c'est un point en moins.
+  \end{baremeenv}
+\end{correction}
+\section{Unicité des éléments d'un tableau (\emph{4 points})}
+
+Nous disposons d'un tableau $t$ de $N$ entiers. Utiliser une constante
+symbolique pour $N$. Nous souhaitons
+savoir si chaque entier apparaissant dans le tableau n'y apparaît
+qu'une seule fois, autrement dit on veut savoir si chaque entier
+est unique.
+
+\question Écrire un programme qui, étant donné un tableau initalisé $t$,
+  teste si le premier élément du tableau est unique et affiche
+  \C{Vrai} si c'est le cas, \C{Faux} sinon.\bareme{2}
+  \begin{correction}
+
+
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define N 3
+#define TRUE 1
+#define FALSE 0
+
+/* Fonction principale */
+int main()
+{
+  int t[N] = {10,10,15};
+  int unique = TRUE;
+  int i; /* var de boucle */
+
+  i = 1;
+  while (unique && (i < N)) /* tant que t[0] est unique */
+  {
+    if (t[i] == t[0]) /* t[0] n'est pas unique */
+    {
+      unique = FALSE;
+    }
+    i = i + 1; /* case suivante */
+  }
+
+  /* affichage du résultat */
+  if (unique)
+  {
+    printf("Vrai\n");
+  }
+  else
+  {
+    printf("Faux\n");
+  }
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+
+    \begin{baremeenv}
+    2 pts si arrive au résultat avec une seule boucle (for ou
+    while). L'affichage doit être correct mais on accepte les
+    variantes : ''machin n'est
+    pas unique / "machin est unique'' etc.
+
+    Sinon maximum 1,5 pts : 0,5 pts s'il y a une seule boucle; 0,5
+    points de plus si c'est un while; ajouter 0,5 points si utilise une
+    variable booléenne (déclarée et initialisée, et les define TRUE
+    et FALSE).      
+    \end{baremeenv}
+  \end{correction}
+
+
+\question Écrire un programme qui étant donné un tableau initialisé $t$, teste
+  si tous les éléments sont uniques et affiche \C{Vrai} si c'est le
+  cas, \C{Faux} sinon.\bareme{2}
+
+  \begin{correction}
+
+
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define N 4
+#define TRUE 1
+#define FALSE 0
+
+/* Fonction principale */
+int main()
+{
+  int t[N] = {10,12,15,12};
+  int unique = TRUE;
+  int i; /* var de boucle */
+  int j; /* var de boucle */
+
+  j = 0; /* premiere case */
+  while (unique && (j < N)) /* pour chaque case, verifier que la case
+  est unique */
+  { 
+    i = j + 1; /* case suivant t[j] */
+    while (unique && (i < N)) /* tant que t[j] est unique */
+    {
+      if (t[i] == t[j]) /* t[j] n'est pas unique */
+      {
+        unique = FALSE;
+      }
+      i = i + 1; /* case suivante */
+    }
+    j = j + 1; /* case suivante */
+  }
+  /* affichage du résultat */
+  if (unique)
+  {
+    printf("Vrai\n");
+  }
+  else
+  {
+    printf("Faux\n");
+  }
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+   \begin{baremeenv}
+   2pt si arrive au résultat avec deux boucles (avec affichage mais
+   variantes acceptée). 
+
+    Sinon maximum 1,5 pts : 0,5 pts s'il y a deux boucles avec
+   variables de boucles différentes (quelles
+   que soient les boucles et les bornes); 0,5 point si elles sont
+   toutes deux des while; 0,5 pts S'il a un algorithme correct en
+   français en commentaire ou dans le texte; 0,5 points si utilise une
+   variable boolénnee ou deux variables booléennes. 
+   \end{baremeenv}
+  \end{correction}
+
+\emph{Tout le traitement
+sera effectué dans le \C{main}, sans faire appel à des fonctions
+utilisateurs.}
+
+
+\section{Faut-il aller au cinéma ? (4 points)}
+
+Je viens de gagner une place de cinéma pour un séance ce soir. Je dispose des informations suivantes, codées dans des variables entières, pour décider si je vais me rendre à cette séance ou rester chez moi :
+\begin{itemize}
+\item \C{critique} une critique du film lui attribuant une appréciation parmi MAUVAIS, MOYEN, BON.
+\item \C{acteurs} mon appréciation personnelle du choix des acteurs : MOYEN ou BON.
+\item \C{distance} la distance approximative (en kilomètres) qui me sépare du cinéma.
+\end{itemize}
+Vous utiliserez des constantes symboliques pour coder les appréciations et vous initialiserez les trois variables, \C{critique}, \C{acteurs}, \C{distance} à des valeurs de votre choix. Pour prendre ma décision je dispose de l'arbre de décision suivant. 
+
+\begin{figure}[!ht]
+    \begin{center}
+\small
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,  node distance = 2.5cm,
+    text width=3.5em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20,  text width=6em, text centered, 
+    minimum height=2em,]
+\tikzstyle{choix} = [rectangle, inner sep=2pt,
+    text centered]
+    
+\begin{tikzpicture}[node distance = 2.8cm, auto]
+    % Place nodes
+    \node [cloud] (critique) {Qu'en dit la critique ?};
+    \node [cloud,  below of=critique] (acteurs) {Choix des acteurs ?};
+    \node [left of=acteurs] (A) {};
+   \node [right of=acteurs] (B) {};
+    \node [cloud, left of=A] (distance1) {Distance $\leq 5$ km ?};
+    \node [block, right of=B] (noncritique) {Je reste};
+    \node [block, below left of=distance1] (ouidistance) {J'y vais};
+    \node [block, below right of=distance1] (nondistance) {Je reste};
+    \node [block, below left of=acteurs] (nonacteurs) {Je reste};
+    \node [cloud, below right of=acteurs] (distance2) {Distance $\leq 1$ km ?};
+    \node [block, below left of=distance2] (ouid2) {J'y vais};
+    \node [block, below right of=distance2] (nond2) {Je reste};
+    
+   % Draw edges
+\path [line] (critique) -- node [near start, left, choix] {bon} (distance1);
+\path [line] (critique) -- node [near start, right, choix] {moyen} (acteurs);
+\path [line] (critique) -- node [near start, right, choix] {mauvais} (noncritique);
+\path [line] (distance1) -- node [near start, left, choix] {oui} (ouidistance);
+\path [line] (distance1) -- node [near start, right, choix] {non} (nondistance);
+\path [line] (acteurs) -- node [near start, left, choix] {moyen} (nonacteurs);
+\path [line] (acteurs) -- node [near start, right, choix] {bon} (distance2);
+\path [line] (distance2) -- node [near start, left, choix] {oui} (ouid2);
+\path [line] (distance2) -- node [near start, right, choix] {non} (nond2);
+\end{tikzpicture}
+    \end{center}
+    \caption{Décider si je vais au cinéma}
+    \label{fig:ad}
+\end{figure}
+
+\question
+Écrire un programme implantant cet arbre de décision et affichant la décision à prendre (quel que soit le choix d'initialisation des variables). \bareme{4}
+
+\begin{correction}
+ \listinginput{1}{programmes/cinema.c}
+\end{correction}
+
+\begin{baremeenv}
+  On accepte le fait que la distance soit une variable réelle, sans pénalité. 
+
+Compter :
+\begin{itemize}
+\item 
+  0,5 points pour le codage BON, MOYEN, MAUVAIS à l'aide de define s'il est correct (pas d'erreur de syntaxe, comme un signe égal), retirer une pénalité de 0.25 s'il a trop de constantes symboliques. S'il y a par exemple une constante symbolique pour définir la valeur d'initialisation de la distance.
+\item 0,5 points pour des
+  déclarations avec initialisations correctes.  
+\item 0,5 points pour l'indentation (si celle-ci est absente le sanctionner).
+\item  Une pénalité de 0,25 points par oubli du stdlib, du  stdio ou du return final (on ne sanctionne pas l'utilisation d'un 0 à la place du \C{EXIT\_SUCCESS}).
+\item On admet que les cas exclusifs soient traités dans des if en cascade (comme dans le corrigé à la racine de l'arbre) plutôt qu'avec des if else emboîtés. On admet les else if même si ça n'a pas été vu en cours. 
+\item Pour le reste, dessiner l'arbre sous-jacent au programme de l'étudiant et calculer la distance d'édition entre cet arbre est celui demandé par les opérations suivantes (il ne s'agit pas d'un arbre ordonné) :
+  \begin{itemize}
+  \item étiquette à modifier sur un sommet ou un arc
+\item inversion père-fils
+\item sommet absent
+  \end{itemize}
+On part d'un total de 2.5 et on compte 0.5 point de pénalité par opération d'édition nécessaire.  
+\end{itemize}
+\end{baremeenv}
+
+
+
+\section{Histogrammes (5 points)}
+
+\question
+Soit un entier $n$ initialisé à une valeur positive de votre choix. Écrire un programme qui affiche une ligne contenant $n$ fois le caractère \verb+'#'+ et se terminant par un saut de ligne. Pour cette question, vous pouvez répondre en ne donnant que le code de la fonction principale du programme (\C{main}). \bareme{1}
+
+\begin{correction}
+\begin{verbatim}
+int main()
+{
+  int n = 6;
+  int i; /* var. de boucle */
+
+  for (i = 0; i < n; i = i + 1) /* repeter n fois */
+  {
+    printf("#"); /* afficher # */
+  }
+  /* fin de ligne */
+  printf("\n");
+
+  return EXIT_SUCCESS;
+}
+\end{verbatim}
+\end{correction}
+
+\begin{baremeenv}
+  On part de 1 point et on enlève 0.25 pt par erreur : oubli de déclarer la variable de boucle, absence du retour à la ligne etc. Zéro s'il n'y a pas de for.
+\end{baremeenv}
+
+\medskip
+Soit un tableau d'entiers, initialisé à des valeurs de votre choix, toutes positives ou nulles, et dont la taille N sera définie par une constante symbolique. Dans les exemples suivants la taille du tableau est 10 et les valeurs contenues dans le tableau sont $3,0,2,8,9,10,3,5,5,2$.
+
+On veut écrire un programme qui affiche sous forme d'histogramme (graphique en bâtons, ou graphique barres) les données du tableau : chaque barre de l'histogramme aura une longueur égale à la donnée représentée.
+
+\question
+Écrire un programme qui affiche sous forme d'histogramme les données du tableau. Les barres seront dessinées horizontalement, à l'aide du caractère \verb+'#'+. \bareme{3}
+
+Exemple d'exécution :
+\begin{small}
+\begin{verbatim}
+Graphique barre 1 :
+
+###
+
+##
+########
+#########
+##########
+###
+#####
+#####
+##
+\end{verbatim}
+\end{small}
+
+
+\begin{correction}
+Voir le programme complet plus loin.
+\end{correction}
+\begin{baremeenv}
+   On compte entre un et trois points si il y a une double boucle imbriquée : on part de 3 on enlève des pénalités jusqu'à 1 (ne pas descendre en dessous). Pénalité faible : il manque un include,  le N n'est pas dans un define et non utilisé dans la boucle, le tableau n'est pas déclaré, pas initialisé, il manque un saut de ligne, variable de boucle non déclarée. Cas particulier : on ne compte que 1 point si les deux boucles ont la même variable, sans regarder plus loin.
+
+S'il n'y a pas de double boucle on ne corrige pas plus on met zéro.
+\end{baremeenv}
+
+\question
+Indiquer comment modifier le programme de la question précédente, de manière à demander à l'utilisateur le caractère qui sera utilisé pour dessiner les barres (à la place du \verb+#+).\bareme{1}
+
+\begin{correction}
+Voir le programme complet plus loin.
+\end{correction}
+\begin{baremeenv}
+    On ne compte pas de pénalité si le scanf est fait dans un format
+    \verb+"%c"+ au lieu de \verb+" %c"+ ou si c'est de type entier au lieu
+     d'etre un char, mais  un bonus de 0.25pt si utilise un char. 
+On compte un demi point pour le scanf correct (avec \&, sinon 0) et un demi point pour le
+printf correct. 
+Pénailité de 0.25 si la variable n'est pas correctement
+déclarée.
+\end{baremeenv}
+
+\paragraph{Question bonus (plus difficile).}
+Ajouter à votre programme un nouvel affichage en histogramme des données dont les barres progressent cette fois verticalement. Indication : avant cela, votre programme devra trouver le maximum parmi les données du tableau.\bareme{2}
+
+Exemple d'exécution :
+\begin{small}
+\begin{verbatim}
+Graphique barre 2 :
+
+                ##            
+             ## ##            
+          ## ## ##            
+          ## ## ##            
+          ## ## ##            
+          ## ## ##    ## ##   
+          ## ## ##    ## ##   
+ ##       ## ## ## ## ## ##   
+ ##    ## ## ## ## ## ## ## ##
+ ##    ## ## ## ## ## ## ## ##
+\end{verbatim}
+
+% \paragraph{Question 3.}
+% Expliquer les modifications à apporter votre programme pour ajouter en légende la valeur des données, et pour que l'utilisateur puisse choisir le caractère utilisé pour l'affichage. 
+\end{small}
+
+\begin{correction}
+  \listinginput{1}{programmes/graphbar.c}
+\end{correction}
+\begin{baremeenv}
+Deux points si c'est vraiment parfait, uniquement.
+
+On donne plus d'un point uniquement lorsque la réponse est très proche d'une solution correcte. On admet une réponse à base de tableau bidimensionnel.  
+
+On peut aller jusqu'à un point si des parties du programme ne fonctionnent pas (recherche du maximum par exemple), mais qu'il y a de bonnes idées (par exemple, penser à balayer la ligne courante). 
+
+S'il n'y a que la recherche du maximum on ne compte qu'un quart de point.  
+\end{baremeenv}
+%\hfill\thetotalpointsint
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "partiel"
+%%% End: 

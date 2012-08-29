@@ -1,0 +1,275 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{latexsym,amssymb,amsmath}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+
+\usepackage[dvips]{graphicx}
+\usepackage{listings}
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt}
+%\lstset{language=C, showstringspaces=false}
+
+
+%%%% Moreverb (inclusion de fichiers sources etc.)
+\usepackage{moreverb}
+\usepackage{rotating}
+
+
+%\begin{verbatimtab}[tab width]
+%...   <-respect des tabulations
+% \end{verbatimtab}
+%\verbatiminput[tab width]{file name}
+%\begin{listing}[interval]{start line}
+%...   <-numerotation
+%\end{listing}
+%\begin{listingcont}
+%...   <-continuer un listing
+%\end{listingcont}
+%\listinginput[interval]{start line}{file name}
+
+\topmargin      0mm
+\oddsidemargin  -5mm
+\evensidemargin -5mm
+\textheight     253.5mm
+\textwidth      170.0mm
+\columnsep        4.1mm
+\parindent        1.0em
+\headsep          0mm
+\headheight       0pt
+\lineskip         0pt
+\normallineskip   0pt
+\def\baselinestretch{1}
+
+\sloppy
+\hbadness=10000
+
+\newcommand{\C}[1]{{\upshape\texttt{#1}}}
+\usepackage{version}
+\newenvironment{correction}{\paragraph{Correction .}}{}
+
+\newcommand{\commentaire}[1]{}
+%\excludeversion{correction}
+\input{enteteAnnee}
+
+
+\newcommand{\question}[1]{\par\noindent\refstepcounter{section}
+  \hspace{-.25cm}\fbox{\normalfont\Large\bfseries{Question
+      \arabic{section}}} \hfill barême~: {#1} pt\bigskip}
+
+\pagestyle{empty}
+
+\begin{document}
+\entete{Devoir sur table \no 1}
+
+\question{2}
+\label{q:exec_proc}
+
+Décrire brièvement le cycle d'exécution du processeur dans une
+machine de Von Neumann.
+
+\bigskip
+
+
+
+
+
+\question{2}
+\label{q:exec_SE}
+
+Décrire brièvement le cycle d'exécution d'un système d'exploitation
+mono-tâche.
+
+
+
+\bigskip
+
+
+\question{3}
+\label{q:echange}
+
+Les questions suivantes concernent une machine de Von Neumann dont le
+jeu d'instructions est donné à la fin du sujet. Il s'agit du jeu
+d'instructions du simulateur AMIL.
+
+\begin{enumerate}
+\item Décrire (en français) un algorithme en trois étapes qui échange
+  les contenus des mémoires 100 et 101.
+\item Ecrire le programme correspondant en utilisant le jeu
+  d'instructions d'AMIL. Commenter le programme afin de le rendre
+  compréhensible.
+\end{enumerate}
+
+
+
+\begin{correction}
+  \lstinputlisting[lastline=5]{echange.ail}
+
+  \input{trace_echange.tex}
+\end{correction}
+
+\bigskip
+
+\question{5}
+\label{q:allumage}
+
+On considère un appartement équipé d'un chauffage électrique, et d'un
+abonnement avec l'option \textit{Heures Pleines / Heures Creuses},
+qui permet de payer moins chère l'électricité la nuit. Par soucis
+d'économie, on souhaite que le chauffage se mette en route
+automatiquement pendant les heures creuses et s'éteigne pendant les
+heures pleines.
+
+\bigskip
+
+On suppose que le début des heures pleines est inscrit dans la
+mémoire à l'adresse 100, que le début des heures creuses se trouve à
+l'adresse 101 et que l'heure actuelle se trouve à l'adresse 102 (les
+heures sont des entiers compris entre 0 et 24). On souhaite que la
+machine AMIL décide de l'état du chauffage, et écrive à
+l'adresse 103 la valeur 1 s'il faut que les radiateurs soient (ou restent)
+allumés, ou bien la valeur 0 s'il doivent être (ou rester) éteints.
+
+\bigskip
+
+
+\begin{enumerate}
+\item Décrire (en français) un algorithme répondant à ce souhait.
+\item Ecrire et commenter le programme correspondant  en utilisant le jeu
+  d'instructions d'AMIL.
+\item Faire les traces d'exécution du programme~:
+  \begin{enumerate}
+  \item lorsque les cases mémoires 100, 101 et 102 contiennent
+    respectivement les valeurs 7,~22,~et~1~;
+  \item lorsque les cases mémoires 100, 101 et 102 contiennent
+    respectivement les valeurs 7,~22~et~12~;
+  \item lorsque les cases mémoires 100, 101 et 102 contiennent
+    respectivement les valeurs 7,~22~et~23~!
+  \end{enumerate}
+\end{enumerate}
+
+\begin{correction}
+  \lstinputlisting[lastline=15]{chauffage.ail}
+
+  \input{trace_chauffage_1.tex}
+
+  \bigskip
+
+  \input{trace_chauffage_12.tex}
+
+  \bigskip
+
+  \input{trace_chauffage_23.tex}
+
+
+\end{correction}
+
+\bigskip
+
+
+\question{4}
+\label{q:factorielle}
+
+On appelle $n$ l'entier stocké à l'adresse 100 de la mémoire.
+\begin{enumerate}
+\item Décrire en français l'algorithme permettant de placer $(n!)$ à
+  l'adresse 101 de la mémoire.
+\item Ecrire et commenter le programme correspondant en utilisant le jeu
+  d'instructions d'AMIL.
+\item Faire la trace d'exécution du programme lorsque $n$ vaut $3$.
+\end{enumerate}
+
+
+\begin{correction}
+
+  \lstinputlisting[lastline=11]{factorielle.ail}
+
+  \input{trace_factorielle.tex}
+
+\end{correction}
+
+\bigskip
+\question{4}
+\label{q:prod_scal}
+
+\newcommand{\Z}{\mathbb{Z}}
+
+Soient deux vecteurs de dimension $n$, dont les composantes sont des
+entiers relatifs~: 
+
+$$\vec{u}=\left(
+\begin{array}[c]{c}
+  u_1\\
+  u_2\\
+  \dots\\
+  u_n
+\end{array}
+\right),\ \vec{v}=\left(
+\begin{array}[c]{c}
+  v_1\\
+  v_2\\
+  \dots\\
+  v_n
+\end{array}
+\right) \text{ avec } u_1\dots u_n, v_1\dots v_n \in \Z.$$
+
+Le but de cet exercice est de faire calculer leur produit scalaire
+($\vec{u}\ .\ \vec{v}=\sum_{i=1}^n u_iv_i$) par le simulateur AMIL.
+
+\bigskip
+
+On suppose que la dimension $n$ des deux vecteurs est stockée à
+l'adresse 100 de la mémoire.
+
+Les composantes $u_1$, $u_2$, \dots, $u_n$ de $\vec{u}$ sont stockées
+aux adresses $101,\ 102,\ \dots,\ 100+n$.
+
+Les composantes $v_1$, $v_2$, \dots, $v_n$ de $\vec{v}$ sont stockées
+aux adresses $100+n+1,\  100+n+2,\ \dots,\ 100+2n$.
+
+
+
+\bigskip
+
+\begin{enumerate}
+\item Décrire en français un algorithme qui calcule le produit
+  scalaire $\vec{u}\ .\ \vec{v}$ et qui stocke le résultat à l'adresse
+  99 de la mémoire.
+\item Ecrire le programme correspondant en utilisant le jeu
+  d'instructions d'AMIL. Commenter le programme autant que possible.
+  Préciser en particulier le rôle de chacun des registres que le
+  programme utilise.
+\end{enumerate}
+
+
+
+\begin{correction}
+
+  \lstinputlisting[lastline=18]{scalaire.ail}
+
+  \input{trace_scalaire.tex}
+
+\end{correction}
+
+
+
+
+\subsection*{Rappel du jeu d'instructions du simulateur AMIL}
+\noindent
+\begin{tabular}[c]{lp{13.2cm}}
+  \C{stop} & Arrête l'exécution du programme.\\
+  \C{noop} & N'effectue aucune opération.\\
+  \C{saut i} & Met le compteur ordinal à la valeur $i$.\\
+  \C{sisaut ri j} & Si la valeur contenue dans le registre i est positive ou nulle, met le compteur ordinal à la valeur $j$.\\
+  \C{init x ri} & Initialise le registre $i$ avec la valeur $x$.\\
+  \C{lecture i rj} & Charge, dans le registre $j$, le contenu de la mémoire d'adresse $i$.\\
+  \C{lecture *ri rj} & Charge, dans le registre $j$, le contenu de la mémoire dont l'adresse est la valeur du registre $i$.\\
+  \C{ecriture ri j} & Écrit le contenu du registre $i$ dans la mémoire d'adresse $j$.\\
+  \C{ecriture ri *rj} & Écrit le contenu du registre $i$ dans la mémoire dont  l'adresse est la valeur du registre $j$.\\
+  \C{inverse ri} & Inverse le signe du contenu du registre $i$.\\
+  \C{add x rj} & Ajoute $x$ au contenu du registre $j$.\\
+  \C{add ri rj} & Ajoute la valeur du registre $i$ à celle du registre $j$.\\
+  \C{mult}, \C{div}, \C{et} & Même syntaxe que pour \C{add} mais pour la multiplication, la division entière et le et bit à bit.
+\end{tabular}
+
+\end{document}

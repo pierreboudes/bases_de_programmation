@@ -1,0 +1,548 @@
+% -*- coding: utf-8 -*-
+
+
+\newcounter{questioncount}
+\setcounter{questioncount}{0}
+\newcommand{\question}{\addtocounter{questioncount}{1}\paragraph{Question \Alph{questioncount}.}}
+\newcommand{\commentaire}[1]{}
+\newcommand{\pt}[1]{\fbox{$#1 \operatorname{pt}$}}
+
+
+\setlength{\abovecaptionskip}{-10pt}
+
+
+
+\entete{Éléments d'informatique, rattrapage}
+\vspace{-1cm}
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à
+titre indicatif afin de vous permettre de gérer votre temps. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+
+\section{Trace d'un programme avec fonctions}
+
+\question Simulez l'exécution du programme figure~\ref{fig:prog}, en réalisant sa
+\textbf{trace}. \bareme{4}
+
+\begin{figure}[htbp]
+  \centering
+\begin{small}
+\listinginput{1}{pourtrace.c}
+\end{small} 
+  \caption{Programme pour la trace}
+  \label{fig:prog}
+\end{figure}
+
+\begin{correction}
+  Table~\ref{trace} page~\pageref{trace}.
+  \setlength{\abovecaptionskip}{10pt}
+
+  \begin{table}
+  \begin{small} 
+   \setlength{\unitlength}{\tabcolsep}
+    \begin{tabular}[t]{|r|c|c|c|l|}
+      \multicolumn{5}{l}{\C{main()}}\\ \hline
+      ligne & n & x & res & Aff.\\ \hline
+      initialisation  & 3 & 6.0 &  ? & \\ \hline
+      17 &\multicolumn{4}{r|}{
+        \put(1,0){\noindent
+          \begin{tabular}[t]{|r|c|c|c|l|}
+            \multicolumn{5}{l}{\C{foo(3, 6.0)}}\\ \hline
+            ligne & n & x & i & Aff. \\ \hline
+            initialisation & 3 & 6.0 & ? &  \\ \hline
+            27 & &  & 0 & \\ \hline
+            29  &\multicolumn{4}{r|}{
+              \put(1,0){\noindent
+                \begin{tabular}[t]{|r|c|l|}
+                  \multicolumn{3}{l}{\C{bar(6.0)}}\\ \hline
+                  ligne & x & Aff. \\ \hline
+                  initialisation & 6.0 &  \\ \hline
+                  36 & \multicolumn{2}{l|}{renvoie 4.0} \\ \hline
+                \end{tabular}
+              }}\\ \hline
+            29 & & 4.0 & & \\ \hline
+            30 & & & 1 &  \\ \hline
+            29  &\multicolumn{4}{r|}{
+              \put(1,0){\noindent
+                \begin{tabular}[t]{|r|c|l|}
+                  \multicolumn{3}{l}{\C{bar(4.0)}}\\ \hline
+                  ligne & x & Aff. \\ \hline
+                  initialisation & 4.0 &  \\ \hline
+                  36 & \multicolumn{2}{l|}{renvoie 3.0} \\ \hline
+                \end{tabular}
+              }}\\ \hline
+            29 & & 3.0 & & \\ \hline
+            30 & & & 2 &  \\ \hline
+            29  &\multicolumn{4}{r|}{
+              \put(1,0){\noindent
+                \begin{tabular}[t]{|r|c|l|}
+                  \multicolumn{3}{l}{\C{bar(3.0)}}\\ \hline
+                  ligne & x & Aff. \\ \hline
+                  initialisation & 3.0 &  \\ \hline
+                  36 & \multicolumn{2}{l|}{renvoie 2.5} \\ \hline
+                \end{tabular}
+              }}\\ \hline
+            29 & & 2.5 & & \\ \hline
+            30 & & & 3 &  \\ \hline
+            31 & \multicolumn{4}{l|}{renvoie 2.5} \\ \hline
+          \end{tabular}
+        }}\\ \hline
+      17 & &  & 2.5 & \\ \hline
+      18 & & & & \verb|bar^3(6) = 2.5| \\ \hline
+      20 & \multicolumn{4}{l|}{renvoie \C{EXIT\_SUCCESS}} \\ \hline
+     \end{tabular}
+        \caption{Trace du programme de l'exercice 2.}
+        \label{trace}
+\end{small}
+  \end{table}
+\end{correction}
+
+\begin{baremeenv}
+ Maximum \pt{4}. Si des erreurs, maximum \pt{3,5} en sommant :
+  \begin{enumerate}[(a)]
+\item \pt{+1} deux premières lignes de la trace du main sont correctes
+  (identification des variables et leurs initialisations).
+  \begin{enumerate}[$\ast$]
+  \item \pt{-0,5} par variable manquante ou en trop
+  \item \pt{-0,25} par initialisation manquante ou en trop
+  \end{enumerate}
+\item \pt{+2} Pour l'appel à foo :
+  \begin{enumerate}[$\ast$]
+  \item \pt{+0,5} pour foo(3, 6) ligne 17
+\item \pt{+0,5}, \pt{+0,25} par colonne paramètre formel n et x bien
+  initialisées à 3 et 6
+\item \pt{+0,5} pour le déroulement correct de la boucle sans se
+  soucier de ce qui s'y passe (trois tours, i
+  = 3), \pt{0.25} si juste oubli de i = 3.
+\item \pt{+0,5} pour le fait que \C{x} change de valeur au moins une
+  fois ligne 29.
+ \end{enumerate}
+\item \pt{+1}  pour au moins un des (trois) appels à bar
+  correct et dans \C{foo()}. Pénalité de \pt{-0.5} si contient un  (ou
+  plusieurs) appel imbriqué.
+  \begin{enumerate}[$\ast$]
+  \item \pt{+0,25} pour bar(6) ligne 19.
+\item \pt{+0,5} si retourne un résultat exacte.
+\end{enumerate}
+\item \pt{+0,5} affichage ligne 18 correct et cohérent avec les
+  valeurs trouvées. \pt{0} si une erreur.
+\end{enumerate}
+\end{baremeenv}
+
+\section{Sans fonctions, for ou while, arbre de décision (11 pt)}
+
+Il est demandé de résoudre les trois problèmes suivants sans définir de
+fonctions utilisateurs et en faisant le meilleur choix entre for et
+while s'il y a des boucles.  L'ensemble du code sera à écrire dans la
+fonction principale \verb|main|.
+
+\subsection{Puissance}
+
+\question Écrire le programme qui : demande à l'utilisateur d'entrer
+un nombre à virgule $x$, puis un entier $n$; et qui calcule puis affiche
+la valeur de $x^n$, comme dans l'exemple suivant. \bareme{2.5}
+
+On supposera que l'entier saisi est toujours supérieur ou égal à zéro
+(on ne teste pas la saisie de l'utilisateur).
+
+\paragraph{Exemple d'exécution :}
+\begin{small}
+\begin{verbatim}
+Saisissez un nombre decimal : 0.5
+Saisissez un entier : 3
+0.5 puissance 3 = 0.125
+\end{verbatim}
+\end{small}
+
+
+\begin{correction}
+  \begin{small}
+\listinginput{1}{puissance.c}
+  \end{small}
+  
+  \begin{baremeenv}
+Si tout juste à l'aide d'un for : \pt{2.5} sinon (y compris si while) total maximum de
+\pt{2} pris dans les points suivants :
+    \begin{itemize}
+      \item \pt{0.25}  déclaration (avec ou sans initialisation) d'une variable
+        double ou float pour la saisie de $x$
+      \item \pt{0.25}  déclaration (avec ou sans initialisation) d'une variable
+        entière pour la saisie de $n$
+      \item \pt{0.25} déclaration d'un accumulateur de type double ou float pour stocker le
+      produit 
+    \item \pt{0.25} initialisation à 1 de l'accumulateur
+      \item \pt{0.25} saisie de $n$ à l'aide d'un scanf avec ou sans \&
+      \item \pt{0.25} saisie de $n$ à l'aide d'un scanf avec ou sans \&
+      \item \pt{0.5} boucle for pas de point en moins si oublie de
+        déclaration de la variable de boucle
+      \item \pt{0.25} bloc de boucle exécuté $n$ fois
+    \item \pt{0.25} affichage du résultat du calcul
+    \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+
+\subsection{Moins de dette privée}
+
+Pippo emprunte 100 brouzoufs à 6\% d'intérêts annuel. Il rembourse
+par versements de 25 brouzoufs chaque année, en commençant un an après
+la date d'emprunt. Combien d'années devra t'il rembourser son emprunt
+?  Chaque année, on calcule d'abord les intérêts à ajouter à la dette
+actuelle, puis on soustrait le montant du versement annuel.
+
+\question Écrire un programme qui affiche le plan de remboursement de
+Pippo, c'est à dire, pour chaque année : les intérêts de l'année, le
+versement effectué, la dette restant à rembourser.\bareme{2.5}
+
+Votre programme doit pouvoir être exécuté pour n'importe quelle autre
+initialisation des données du prêt.
+
+
+
+\paragraph{Exemple d'exécution :}
+\begin{small}
+\begin{verbatim}
+annee 1, interets : 6, versement : 25, dette : 81
+annee 2, interets : 4.86, versement : 25, dette : 60.86
+annee 3, interets : 3.6516, versement : 25, dette : 39.5116
+annee 4, interets : 2.3707, versement : 25, dette : 16.8823
+annee 5, interets : 1.01294, versement : 25, dette : -7.10477
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+  \begin{small}
+\listinginput{1}{dette.c}
+  \end{small}
+  
+  \begin{baremeenv}
+Si tout juste à l'aide d'un while: \pt{2.5} sinon maxi \pt{2,25}.
+    \begin{itemize}
+      \item \pt{0.25}  déclaration et initialisation de la dette et
+        du taux comme des double (on ne regarde pas versement).
+      \item \pt{0.5} une et une seule boucle while.
+      \item \pt{0.5} modification de la valeur de la dette dans la
+        boucle (\pt{0.25} si mauvaise modification)
+      \item \pt{0.25} déclaration et initialisation du compteur
+        d'années (une erreur de 1 est acceptée)
+      \item \pt{0.25} incrément du compteur d'année à chaque tour de boucle
+  \item \pt{0.25} affichage dans la boucle
+    \item \pt{0.25} affichage des bonnes valeurs avec les bonnes conversions
+    \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+\question Le dernier versement est trop important. Comment modifier
+votre programme de manière à  ne rembourser que le reste à payer,
+dernière année ?\bareme{1} La dernière ligne affichée sera alors :
+\begin{small}
+\begin{verbatim}
+annee 5, interets : 1.01294, versement : 17.8952, dette : 0
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+juste avant affichage dans le while on insère :
+  \begin{small}
+\begin{verbatim}
+        if (dette < 0)
+        {
+            versement = versement + dette; /* on supprime le trop versé */
+            dette = 0;
+        }
+\end{verbatim}
+  \end{small}
+  
+  \begin{baremeenv}
+Si tout juste : \pt{1} sinon maxi \pt{0.75}.
+    \begin{itemize}
+\item \pt{0.25} pour un if dans le while (ou après si condition du while
+  modifiée)
+\item \pt{0.25} pour un pour dette mise à zéro avant affichage
+\item \pt{0.25} pour un versement égal au reste à percevoir avant affichage
+\end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+
+\question Si le versement est inférieur aux intérêts, que dire de
+l'exécution de ce programme ?\bareme{1}
+
+\begin{correction}
+  Si le versement est inférieur aux intérêts la première année, la
+  dette va augmenter et elle ne sera jamais nulle (ou négative). Donc
+  le programme va boucler et la dette atteindre une valeur
+  représentant l'infinie.
+
+  \begin{baremeenv}
+    \pt{0.5} si mention du fait que le programme ne s'arrête jamais.
+  \end{baremeenv}
+\end{correction}
+
+
+\subsection{Faut-il renoncer à rembourser la dette publique ?}
+
+\begin{figure}[h!]
+    \begin{center}
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em, node distance=3.5cm]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20,  text width=5.7em, text centered, 
+    minimum height=2em,  node distance=3.2cm]
+\tikzstyle{choix} = [rectangle, inner sep=2pt,
+    text centered]
+    
+\begin{tikzpicture}[node distance = 1.7cm, auto]
+    % Place nodes
+    \node [cloud] (temps) {Comment sont les marchés ?};
+    \node [below of=temps] (fantome) {};
+    \node [left of=fantome] (fantome2) {};
+    \node [block, left of=fantome2] (panique) {Ne plus rembourser};
+    \node [cloud, right of=fantome] (inquiets) {Dette $ > 0.5$
+      PIB ?};
+    \node [block,right of=inquiets] (confiants) {Ne rien changer};
+    \node [cloud,  below left of=inquiets] (pop) {La population
+      refuse l'austérité ?};
+    \node [block, below left of=pop] (ouipop) {Ne plus
+      rembourser};
+    \node [block, below right of=pop] (nonpop) {Ne
+      rien changer};
+    \node [block, below right of=inquiets] (nondette) {Ne rien changer};
+
+   % Draw edges
+\path [line] (temps) -| node [near start, above, choix] {paniqués} (panique);
+\path [line] (temps) -- node [near start, right, choix] {inquiets} (inquiets);
+\path [line] (temps) -| node [near start, above, choix] {confiants}
+(confiants);
+\path [line] (inquiets) -- node [left, choix] {oui} (pop);
+\path [line] (inquiets) -- node [right, choix] {non} (nondette);
+\path [line] (pop) -- node [left, choix] {oui} (ouipop);
+\path [line] (pop) -- node [right, choix] {non} (nonpop);
+\end{tikzpicture}
+    \end{center}
+    \caption{Décider s'il faut continuer de rembourser la dette}
+    \label{fig:ad}
+\end{figure}
+
+
+
+Un arbre de décision
+est un graphe particulier où les n\oe{}uds sont 
+des questions et les arêtes sont les réponses à ces questions.
+Il se lit de haut en bas. On avance dans l'arbre en répondant aux
+questions. Les n{\oe}uds les plus bas jouent le rôle particulier de
+classes de réponse au problème initial. 
+
+Ici, il y a deux classes de réponse : <<~Ne plus rembourser~>> et
+<<~Ne rien changer~>>.
+Par exemple, si les marchés sont inquiets, si la dette est
+strictement supérieure à $0.5$ fois le PIB et que la population refuse
+l'austérité, alors on ne rembourse plus.
+
+
+
+Vous utiliserez quatre variables dont vous coderez les valeurs avec des
+constantes symboliques. Les trois premières représentent les propriétés du jour
+courant pour prendre la décision, la dernière représente la décision à
+prendre :
+  
+\begin{itemize}
+\item \verb|marches| est un entier représentant l'état des marchés,
+  elle peut valoir un entier signifiant PANIQUE, ou un entier
+  signifiant INQUIETUDE ou un entier signifiant CONFIANCE.
+\item \verb|dette| est un nombre a virgule représentant la dette en
+  proportion du PIB (une valeur de 0.5 représente 50\% du PIB).
+\item \verb|refus| est un entier représentant le refus de l'austérité
+  qui peut avoir la valeur usuelle
+ TRUE (si la population refuse l'austérité) ou la valeur usuelle FALSE (sinon).
+\item \verb|rembourser| est un entier représentant la décision à
+  prendre et peut avoir la valeur TRUE (s'il faut continuer de
+  rembourser) ou FALSE (s'il faut arrêter de rembourser). Sa valeur
+  initiale est TRUE. 
+\end{itemize}
+
+Votre programme sera en deux parties. Une première partie concernera
+la prise de décision sans affichage, en fonction
+des valeurs de \verb|marches|, \verb|dette|, \verb|refus|. Vous
+donnerez des valeurs de votre choix à ces trois variables mais le
+programme doit fonctionner pour tous les autres choix possibles. À la fin
+de cette première partie \verb|rembourser| contiendra la valeur
+correcte pour la décision prise (TRUE ou FALSE). La seconde partie
+exploitera la valeur de \verb|rembourser| pour effectuer l'affichage.
+
+\question
+Écrire le programme complet en distinguant bien les deux
+parties.\bareme{4}
+
+\begin{correction}
+\begin{figure}
+  \centering
+\begin{small}
+\listinginput{1}{marches.c}
+\end{small} 
+  \caption{Faut-il annuler la dette ? -- Corrigé.}
+  \label{fig:dropdebt}
+\end{figure}
+Correction figure~\ref{fig:dropdebt}.
+ \begin{baremeenv}
+\pt{4} si tout juste. Sinon on fait un maximum de \pt{3.5} en sommant :
+\begin{itemize}
+\item 
+  \pt{0.5} pour le codage TRUE, FALSE, PANIQUE, INQUIETUDE, CONFIANCE à l'aide de define s'il est correct (pas d'erreur de syntaxe, comme un signe égal), retirer une pénalité de 0.25 s'il a trop de constantes symboliques. S'il y a par exemple une constante symbolique pour définir la valeur d'initialisation de la distance.
+\item \pt{0,5} pour des
+  déclarations avec initialisations correctes utilisant les constantes
+  symboliques (\pt{0.25} si sans les constantes symboliques (par
+  exemple 1 au lieu de TRUE).  
+\item \pt{0,5} pour une indentation correcte (si il y a matière à
+  indenter !).
+\item  Une pénalité de \pt{-0,25} par oubli du stdlib, du  stdio ou du
+  return final (on ne sanctionne pas l'utilisation d'un 0 à la place
+  du \C{EXIT\_SUCCESS}).
+\item Pour l'arbre de décision: on part d'un total de \pt{2.5} et on compte \pt{0.5}
+  point de pénalité par branche de l'arbre en erreur.  S'il y a des boucles c'est
+  zéro ! 
+\item \pt{0.5} pour test sur \C{rembourser} et affichage correct.
+\end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+
+\section{Complexes en notation algébrique}
+\begin{figure}
+\small
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+... 
+
+/* déclaration de fonctions utilisateurs */
+struct complexe_s multiplier(struct complexe_s x, struct complexe_s y);
+...
+
+/* Fonction principale */
+int main()
+{
+   struct complexe_s z = ... ; /* à compléter pour traduire z = - 0.5 + 0.5 i */ 
+   struct complexe_s resultat;
+   
+   /* calcul de (z * z) + z */
+   ....
+
+   /* affichage du résultat */
+   afficher(resultat);
+
+   /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+
+/* définition de fonctions utilisateurs */
+...
+\end{listing}
+  \caption{Calculs dans les complexes}
+  \label{fig:deuxj}
+\end{figure}
+
+\question 
+Compléter le programme de la figure~\ref{fig:deuxj} :\bareme{5}
+\begin{enumerate}
+\item définir le type utilisateur \verb+struct complexe_s+, pour stocker
+  un nombre complexe en notation algébrique (sa partie réelle et sa
+  partie imaginaire sous forme de nombres à virgule).%\bareme{1}
+\item Dans le main, initialiser la
+  valeur de la variable $z$ à  $- 0.5 + 0.5 i$ (il faut traduire en
+  instructions C).%\bareme{0.5}
+\item Dans le main, calculer $z = z^2 + z$ en faisant appel à des
+  fonctions élémentaires sur les complexes, telles que \C{multiplier} (rappel : les opérations \C{+} et
+  \C{*} du C ne sont pas définies sur des struct). Vous aurez besoin %\bareme{1.5}
+  d'une autre fonction que \C{multiplier} pour effectuer le calcul,
+  il faut la déclarer (lui donner un nom explicite). 
+\item  Déclarer également la procédure \C{afficher} qui
+  sert à afficher le résultat.%\bareme{0.5}
+\item Définir au choix deux des trois fonctions utilisateur de ce programme.%\bareme{1.5}
+\end{enumerate}
+
+Votre programme doit fonctionner et calculer des valeurs correctes pour
+n'importe quelle autre initialisation de la variable \C{z}. Vous
+pouvez répondre à ces cinq questions en même temps, en donnant le code
+complet de votre programme, ou signaler pour chaque question à quelles
+lignes du programme de la figure~\ref{fig:deuxj} vous insérez de
+nouvelles instructions.
+
+\begin{correction}
+  Correction figure~\ref{fig:deuxjcorr}.
+
+  \begin{baremeenv}
+Si tout juste: \pt{5}.
+    \begin{itemize}
+      \item \pt{1} déclaration correcte syntaxiquement d'une structure
+      contenant exactement deux champs double ou float, (même si le nom
+      n'est pas le bon).
+      \item \pt{0.5} initialisation correcte de la variable $z$.
+      \item \pt{1.5} calcul exact sinon maxi \pt{1} 
+        \begin{itemize}
+        \item \pt{0.5}  si au moins un appel syntaxiquement correct à
+          \C{multiplier}.
+        \item \pt{0.25} si il est fait mention d'une fonction
+          d'addition (quel que soit le nom) prenant deux complexes et
+          retournant deux complexes.
+        \item \pt{0.5}  déclaration correcte d'une fonction d'addition avec
+          même prototype que la multiplication.
+        \end{itemize}
+      \item \pt{0.5}  Déclaration correcte de \C{afficher}
+      \item \pt{1.5} si deux définitions justes, sinon maxi \pt{1}
+        avec \pt{0.75} par fonction (\pt{0.5} si valeur de retour non
+        déclarée). On ne récompense pas de troisième
+        fonction !
+   \end{itemize}
+  \end{baremeenv}
+\begin{figure}
+\begin{small}
+  \listinginput{1}{complexes_corr.c}
+\end{small}
+\caption{Calculs dans les complexes -- correction}
+  \label{fig:deuxjcorr}
+\end{figure}
+\end{correction}
+
+\section{Autres déclarations de fonctions}
+\begin{enumerate}
+\item Déclarer (sans la définir) une procédure \verb|menu| qui n'a pas d'entrée et
+  affiche :\label{item:menu}\bareme{0.5}
+\begin{small}
+\begin{verbatim}
+********
+* MENU *
+********
+\end{verbatim}
+\end{small}
+\item Déclarer (sans la définir) une fonction qui calcule la valeur absolue d'un réel.\label{valeurabsolue}\bareme{0.5}
+\end{enumerate}
+
+\begin{correction}
+\begin{verbatim}
+void menu();
+double valeur_absolue(double x);
+\end{verbatim}
+  \begin{baremeenv}
+    Compter simplement \pt{0.5} par déclaration correcte.
+  \end{baremeenv}
+\end{correction}
+
+%\newpage
+%\thetotalpointsint
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "rattrapage_corr"
+%%% End: 

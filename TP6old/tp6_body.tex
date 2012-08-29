@@ -1,0 +1,193 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 6 : représentation bornée des données; lecture de données au clavier}
+\vspace{-1cm}
+\begin{correction}
+  Note aux chargés de TD.
+  \begin{itemize}
+  \item Le premier exercice fait référence au cours.
+  \item Le dernier exercice est à réserver à ceux qui ont fini, il n'y a pas de corrections à donner. Un exemple similaire sera peut-être donné à l'exam pour récompenser ceux qui travaillent par eux-mêmes. à voir...
+  \item À nouveau, bien insister sur la procédure permettant d'attaquer un problème de programmation (ils auront a faire ca a l'exam). La procédure :
+    \begin{itemize}
+    \item on se donne des exemples
+    \item on trouve un algorithme en francais
+    \item on traduit l'algorithme en C en s'aidant de commentaires issus de l'algo en francais
+    \item on test sur les exemples qu'on s'est donnes
+    \end{itemize}
+  \item N.B. : le ``programme vide'' voit son écriture simplifiée en n'indiquant plus dans le main la déclaration des variables, ni la valeur de retour. Si certains ont encore des problèmes avec ça, il faut repousser.
+  \end{itemize}
+\end{correction}
+
+\section{Représentation bornée des données}
+
+Il est demandé d'expliquer la sortie de chacun des programmes suivants, en s'aidant éventuellement du cours. Les programmes sont disponibles sur la page web du cours. 
+\begin{enumerate}
+\item Exécuter le programme suivant et expliquer sa sortie.
+\begin{small}
+\begin{verbatim}
+/* declaration des fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+#include <limits.h> /* INT_MAX, INT_MIN */
+
+/* declaration des constantes et types utilisateurs */
+
+/* declaration des fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* declaration et initialisation des variables */
+    int a;
+
+    printf("INT_MAX = %d\n",INT_MAX);
+    printf("INT_MIN = %d\n",INT_MIN);
+
+    printf("Entrer un entier plus grand que INT_MAX ou plus petit que INT_MIN :\n");
+    scanf("%d",&a);
+    printf("Vous avez saisi l'entier %d.\n",a);
+
+   return EXIT_SUCCESS;
+}
+
+/* definition des fonctions utilisateurs */
+\end{verbatim}
+\end{small}
+  \begin{correction}
+    La sortie est la suivante (noter que scanf affecte INT\_MAX ou INT\_MIN) :
+\begin{verbatim}
+sur une archi 32 bits (celle des machines de TP normalement):
+
+1033$ ./a.out
+INT_MAX = 2147483647
+INT_MIN = -2147483648
+Entrer un entier plus grand que INT_MAX ou plus petit que INT_MIN :
+9999999999999
+Vous avez saisi l'entier 2147483647.
+1034$ ./a.out
+INT_MAX = 2147483647
+INT_MIN = -2147483648
+Entrer un entier plus grand que INT_MAX ou plus petit que INT_MIN :
+-99999999999999
+Vous avez saisi l'entier -2147483648.
+\end{verbatim}
+  \end{correction}
+\item Exécuter le programme suivant et expliquer sa sortie.
+\begin{small}
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+#include <limits.h> /* INT_MAX */
+
+/* declaration des constantes et types utilisateurs */
+
+/* declaration des fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* declaration et initialisation des variables */
+    int i;
+
+    for(i = 0;i <= INT_MAX;i = i + 100000)
+    {
+        printf("%d\n",i);
+    }
+    /* i > INT_MAX */
+
+    return EXIT_SUCCESS;
+}
+
+/* definition des fonctions utilisateurs */
+\end{verbatim}
+\end{small}
+  \begin{correction}
+    i = i + 100000, c'est pour boucler plus vite.
+
+    Ca boucle car i jamais > INT\_MAX. La rep des entiers signés fait que lorsque la retenue est perdue, la rep est celle de INT\_MIN (vu en cours). Attention INT\_MAX + 1 == INT\_MIN.
+  \end{correction}
+\end{enumerate}
+
+\section{Mini-calculatrice}
+\label{intro}
+
+Écrire un programme qui demande à l'utilisateur d'entrer une
+expression simple à évaluer et qui affiche la valeur de l'expression.
+L'expression à saisir est très simple et suit la forme suivante :
+\C{\itshape nombre\_réel opérateur nombre\_réel}, où \C{\itshape opérateur} est l'un des quatre
+opérateurs arithmétiques '+', '-', '*' ou '/'. Exemple d'éxecution :
+\begin{small}
+\begin{verbatim}
+Entrez une expression de la forme : nombre operateur nombre
+15.9 * 1.234
+15.9 * 1.234 = 19.6206
+\end{verbatim}
+% Entrez une expression de la forme : nombre operateur nombre
+% 15.9 / 2
+% 15.9 / 2 = 7.95
+
+% Entrez une expression de la forme : nombre operateur nombre
+% 1 + 3
+% 1 + 3 = 4
+\end{small}
+
+\begin{correction}
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    double nombre_g; /* membre gauche de l'expression */
+    double nombre_d; /* membre droit de l'expression */
+    char op; /* operateur */
+    double expr; /* resultat de l'expression */
+
+    /* saisie expression */
+    printf("Entrez une expression de la forme : nombre operateur nombre\n");
+    scanf("%lg",&nombre_g);
+    scanf(" %c",&op);
+    scanf("%lg",&nombre_d);
+
+    /* calcul valeur expression */
+    /* cas mutuellement exclusif */
+    if(op == '+') /* addition */
+    {
+        expr = nombre_g + nombre_d;
+    }
+
+    if(op == '-') /* soustraction */
+    {
+        expr = nombre_g - nombre_d;
+    }
+
+    if(op == '*') /* multiplication */
+    {
+        expr = nombre_g * nombre_d;
+    }
+
+    if(op == '/') /* division */
+    {
+        expr = nombre_g / nombre_d;
+    }
+
+    /* affichage resultat */
+    printf("%g %c %g = %g\n",nombre_g,op,nombre_d,expr);
+
+    return EXIT_SUCCESS;
+}
+
+/* definition de fonctions utilisateurs */
+
+\end{verbatim}
+\end{correction}
+

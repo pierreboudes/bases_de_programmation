@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.10pt}
+\select@language {french}
+\beamer@sectionintoc {3}{Le(s) syst\IeC {\`e}me(s) d'exploitation}{4}{0}{1}
+\beamer@subsectionintoc {3}{1}{Abstraction du mat\IeC {\'e}riel}{10}{0}{1}
+\beamer@subsectionintoc {3}{2}{Gestionnaire de processus}{16}{0}{1}
+\beamer@subsectionintoc {3}{3}{Environnement de travail}{34}{0}{1}
+\beamer@sectionintoc {4}{D\IeC {\'e}mos et fin}{39}{0}{2}

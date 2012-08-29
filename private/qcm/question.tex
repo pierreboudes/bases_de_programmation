@@ -1,0 +1,755 @@
+# Exemple de fichier de QCM
+#
+# Syntaxe globale :
+# Les lignes commençant par '#' sont des commentaires.
+#
+# Les réponses sont situées sous les questions, avec un blanc devant. La
+# question se termine par un '!' seul sur sa ligne.
+#
+#
+# Convention : mettre la bonne réponse en premier (si il y en a une seule).
+
+@META facile=1
+Le langage C est un langage
+ compilé
+ lu, écrit, parlé
+ interprété
+ composé
+!
+
+@META facile=1
++Laquelle des analyses suivantes ne fait pas partie des étapes de la
+-compilation :
+ analyse harmonique
+ analyse syntaxique
+ analyse lexicale
+ analyse sémantique
+!
+
+@META facile=1
++Un programme en langage C doit comporter une et une seule définition de la
+-fonction :
+ main
+ begin
+ init
+ include
+!
+
+@META facile=1
+Un fichier source est :
+ un fichier texte qui sera traduit en instructions processeur
+ un fichier que l'ont doit citer dans les documents produits sur l'ordinateur
+ un document illisible pour les humains
+ un document de référence du système
+ un document qui doit être protégé
+!
+
+@META difficile=1
+Une \emph{segmentation fault} est une erreur qui survient lorsque :
++le programme tente d'accèder à une partie de la mémoire qui ne lui
+-est pas réservée
++ le programme source a été enregistré sur le disque dur en plusieurs
+  morceaux et l'un d'entre eux ne peut pas être chargé par le
+- compilateur
+ la division du programme en zones homogènes échoue
++ le programme tente d'afficher des caractères sur une ligne qui va au delà
+- de la largeur de la fenêtre du terminal
+!
+
++Pour déclarer une variable qui sera utilisée comme variable de boucle
+- on peut utiliser l'instruction
+  \verb|int k;|
+  \verb|loop i;|
+  \verb|int loop n;|
+  \verb|int loop[];|
+!
+
++Pour déclarer un tableau d'entiers de taille 5, on peut utiliser
+-l'instruction
+ \verb|int toto[5];|
+ \verb|char tableau[5];|
+ \verb|int tab[] = 5;|
+ \verb|int toto[taille=5];|
+!
+
++Pour déclarer un tableau de 5 réels, on peut utiliser
+-l'instruction
+ \verb|double cinq[5];|
+ \verb|double tab[] = 5;|
+ \verb|double a, b, c, d, e;|
+ \verb|double zero{} = {5};|
+!
+
++Afin de représenter la taille d'un tableau, définir une constante
+-symbolique N valant 3.
+ \verb|#define N 3|
+ \verb|#define taille = N|
+ \verb|#define taille = 3|
+ \verb|#define N =  3|
+!
+
+@META difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 3; i = i + 1) 
+ {
+     for (j = 0; j < 5; j = j + 1) 
+     {
+           ...
+     }
+ }
+ printf("j = %d\n", j); 
+ \end{verbatim}
+-qu'est ce qui sera affiché par ce printf ?
+ \verb|j = 5|
+ \verb|j = %d|
+ \verb|j = 4|
+ \verb|j = 0|
+!
+
+@META difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 0; i = i + 1) 
+ {
+     for (j = 0; j < 5; j = j + 1) 
+     {
+       ...
+     }
+ }
+ printf("j = %d\n", j);
+ ...
+ }
+ \end{verbatim}
+-qu'est ce qui sera affiché par le printf ?
+ \verb|j = 0|
+ \verb|j = 5|
+ \verb|j = %d|
+ \verb|j = 4|
+!
+
+@META difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 2; i = i + 1) 
+ {
+     for (j = 0; j < 3; j = j + 1) 
+     {
+         printf("%d ", j);
+     }
+ }
+ printf("\n");
+\end{verbatim}
+-qu'est ce qui sera affiché par ce programme ?
+ \verb|0 1 2 0 1 2|
+ \verb|0 1 2 0 1 2 3|
+ \verb|0 1 2 3 0 1 2|
+ \verb|0 0 1 1 2 2 3|
+!
+
+@META difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 2; i = i + 1) 
+ {
+     for (j = 0; j < 3; j = j + 1) 
+     {
+         printf("%d ", i);
+     }
+ }
+ printf("\n");
+ \end{verbatim}
+-qu'est ce qui sera affiché par ce programme ?
+ \verb|0 0 0 1 1 1|
+ \verb|0 1 2 0 1 2|
+ \verb|0 1 0 1 0 1 0 1|
+ \verb|1 2 1 2 3|
+!
+
+@META difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 3; i = i + 1) 
+ {
+     for (j = 0; j < 2; j = j + 1) 
+     {
+         printf("%d ", i);
+     }
+ }
+ printf("\n");
+\end{verbatim}
+-qu'est ce qui sera affiché par ce programme ?
+ \verb|0 0 1 1 2 2|
+ \verb|0 1 2 0 1 2|
+ \verb|0 1 0 1 0 1|
+ \verb|1 2 3 1 2|
+!
+
++Lorsqu'un programme utilise \verb|printf| ou \verb|scanf| il faut
+- qu'il contienne l'instruction préprocesseur :
+ \verb|#include <stdio.h>|
+ \verb|#include <studio.h>|
+ \verb|#include <studlib.h>|
+ \verb|#appart <stdlib.h>|
+!
+
++Pour déclarer une fonction \verb|exposant| qui prend un argument un
+- réel $x$ et un entier positif $n$ et renvoie la valeur de $x^n$ on écrit :
+ \verb|double exposant(double x, int n);|
+ \verb|int exposant(double n, int x);|
+ \verb|void exposant(double x^n);|
+ \verb|exposant(double x, int n, int r);|
+!
+
++Pour déclarer une fonction \verb|pgcd| qui calcule et renvoie le plus
+  grand diviseur commun de deux entiers positifs passés en arguments 
+- on écrit : 
+ \verb|int pgcd(int y, int x);|
+ \verb|int pgcd(int x, int x);|
+ \verb|int pgcd(int x, y);|
+ \verb|void pgcd(int x, int y);|
+!
+
++Pour déclarer une fonction \verb|saisie_utilisateur| qui demande à
+- l'utilisateur d'entrer un entier au clavier et renvoie cet entier on écrit :
+ \verb|int saisie_utilisateur();|
+ \verb|void saisie_utilisateur(int n);|
+ \verb|void saisie_utilisateur(char c);|
+ \verb|saisie_utilisateur(scanf(%d));|
+!
+
+
++Pour déclarer une procédure \verb|afficher_menu| sans argument et qui
+-ne renvoie rien on utilise :
+ \verb|void afficher_menu();|
+ \verb|double afficher_menu();|
+ \verb|int afficher_menu();|
+ \verb|int afficher_menu(int char);|
+ \verb|char afficher_menu(printf("menu"));|
+!
+
+Avant de faire appel à une fonction il est nécessaire de :
+ l'avoir déclarée
+ l'avoir définie
+ l'avoir déclarée et définie
+ avoir défini une constante symbolique de la taille de cette fonction
+!
+
++Si \verb|carre| est une fonction prenant en entrée un entier et
+ renvoyant le carré de cet entier, et que n est une variable entière
+-définie et initialisée, il est correct d'écrire :
+ \verb+n = carre(n);+
+ \verb+n = carre(int n);+
+ \verb+int n = carre();+
+ \verb+int carre(2);+
+!
+
+@META difficile=1
++Si \verb|racine| est une fonction prenant en entrée un réel et
+ renvoyant la racine carrée de cet réel, et que x est une variable réelle
+-définie et initialisée, il est incorrect d'écrire :
+ \verb+x - 1 = racine(x);+
+ \verb+x = racine(x * x) - racine(x);+
+ \verb+x = racine(racine(x)*racine(x));+
+ \verb+x = racine(2/3);+
+!
+
+Si x est une variable réelle alors \verb|x = 3/2| lui affecte la valeur :
+  1
+  0
+  0.5
+  1.5
+!
+
+Sous unix (ou linux), la commande \verb|ls| permet de :
+ afficher la liste de fichiers contenus dans un répertoire
+ compiler un programme
+ afficher le contenu d'un fichier texte
+ voir des clips musicaux
+!
+
+Sous unix (ou linux), la commande \verb|cd| permet de :
+ changer de répertoire courant
+ jouer de la musique
+ ouvir un bureau partagé (common desktop)
+ récupérer un programme arrêté avec la commande \verb|ab|
+ détruire un fichier
+!
+
++Sous unix (ou linux), pour créer un répertoire TP11 dans le répertoire
+-courant on peut utiliser la commande :
+ \verb+mkdir TP11+
+ \verb+new TP11+
+ \verb+kwrite TP11+
+ \verb+yppasswd+
+!
+
+Une variable booléenne est un variable :
+ qui est vraie ou fausse
+ réelle positive
+ jamais nulle
+ à laquelle une valeur vient d'être affectée
+ NaN (not a number, qui n'est pas un nombre)
+! 
+
+Le type des réels en C est :
+ \verb+double+
+ \verb+real+
+ \verb+int+
+ \verb+char+
+!
+
+@META difficile=1
++Le code suivant :
+ \begin{verbatim}
+ int somme = 0;
+ int i;
+ for (i = 1; i < 4; i = i + 1)
+ {
+   somme = somme + i;
+ }
+ printf("%d", somme); 
+ \end{verbatim}
+-affichera :
+ 0
+ 6
+ 1
+ 42
+!
+
+Pour parcourir un tableau, on utilise plutôt :
+ un \verb|for|
+ un \verb|while|
+ un \verb|if|
+ un \verb|char|
+!
+
+Si $n$ est une variable entière pour demander sa valeur à l'utilisateur, on utilise plutôt :
+ \verb+scanf("%d", &n);+
+ \verb+printf("Valeur de n ? %d\n", n);+
+ \verb+printf("Valeur de n ? %g\n", n);+
+  un débogueur
+!
+
+Dans la commande gcc, l'option \verb|-Wall| signifie :
+ que l'on veut voir tous les avertissements
+ qu'il faut indenter le fichier source
+ qu'on veut changer alétoirement de fond d'écran
+ qu'il faut lancer un déboggueur
+!
+
+Un débogueur est une application qui :
+ peut aider le programmeur à détecter des erreurs dans un programme
+ peut reconstruire un fichier en langage C à partir d'un exécutable
+ signale les erreurs de syntaxe du fichier source qui empêchent la compilation 
+ peut tester la bonne terminaison de n'importe quel programme
+!
+
+Un registre du processeur est :
+ une case mémoire qui sera manipulée directement lors des calculs du processeur
+ une unité de calcul spécialisée de l'ordinateur
+ un composant qui contient la liste des fichiers du système
+ une gamme de fréquence de fonctionnement du processeur
+!
+
+@META difficile=1
++Quelle étape de la compilation vient d'échouer lorsqu'on a un message
+ comme celui-ci : \\
+ \verb+Undefined symbols :"_prinft"+ ou \\
+- \verb+référence indéfinie vers « prinft »+
+ l'édition de liens
+ l'analyse harmonique
+ l'analyse sémantique
+ l'analyse des entrées clavier
+!
+
+@META difficile=1
++ Si cette erreur apparaît à la compilation : \\
+ \verb+Undefined symbols :"_prinft"+ ou \\
+ \verb+référence indéfinie vers « prinft »+
+- que doit-on chercher dans le programme ?
+  une faute de frappe dans un appel de fonction
+  une variable non déclarée
+  un caractère interdit en C
+  une directive préprocesseur \verb+#include+ manquante
+!
+
+@META difficile=1
++ Si cet avertissement apparaît à la compilation : \\
+ \verb+warning: implicit declaration of function ‘max’+ , 
+- que doit-on chercher dans le programme ?
+  une fonction appelée avant sa déclaration
+  une fonction déclarée mais non définie
+  un désaccord entre la déclaration et la définition d'une fonction
+  une directive préprocesseur \verb+#include+ manquante
+!
+
+@META difficile=1
++ Si cette erreur apparaît à la compilation : \\
+  \verb+erreur: conflicting types for ‘max’+ , 
+- que doit-on chercher dans le programme ?
+  un désaccord entre la déclaration et la définition d'une fonction
+  une fonction déclarée mais non définie
+  une fonction appelée avant sa déclaration
+  une directive préprocesseur \verb+#include+ manquante
+!
+
+#questions de Meriem
++  Quelle est la principale différence entre une fonction et une 
+- procédure :
+ la fonction retourne une valeur, la procédure retourne plusieurs valeurs 
+ la fonction retourne une valeur, la procédure ne retourne rien 
+  la procédure ne possède pas de paramètres
+  Il n'y en a pas
+!
+
+Comment s'effectue la correspondance entre  les paramètres effectifs et formels:
+ en vrac
+ selon les types de paramètres
+ d'après leur positionnement dans la liste de paramètres
+ il n'y a aucune correspondance
+!
+
+À quoi servent les fonctions et les procédures:
+ à rien, il est obligatoire de les utiliser 
+ à faciliter la réutilisation du code
+ à augmenter la taille du fichier source
+ à sauvegarder du code
+!
+
+Comment lire une variable entière à partir du clavier:
+ \verb|scanf("%d")|
+ \verb|x = scanf("%d")|
+ \verb|scanf("%d",&x)|
+ \verb|scanf(&x)|
+!
+
+Quel est l'opérateur de différence en C:
+ \verb|<>|
+ \texttt{$\neq$}
+ \verb|!=|
+ \verb|!|
+!
+
+Pour quelle valeur de x, le programme n'entrera pas dans le bloc de \verb|if (x) {...}| :
+ x est différent de 1
+ x est égale à 1
+ x est égale à -1
+ x est égale à zéro
+!
+
+Que signifie l'opérateur \verb|%| en C:
+ modulo
+ division
+ partie entière
+ division entière
+ division par 100
+!
+
+
+#Sylvie
+
+
+@META difficile=1
++Soit la fonction \verb|min| qui prend en argument deux entiers et renvoie le minimum, le code suivant :
+ \begin{verbatim}
+ int x = 3;
+ int y = 4;
+ int z;
+
+ z = min(x , y);
+ z = 2 + min (3 * 2 , z);
+ x = min (min (3 , y) + 1 , z - 1);
+ printf("x = %d\n",x);
+   \end{verbatim}
+-affichera :
+ 4
+ 3
+ 2
+ 1
+!
+
+@META difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i;
+ int j;
+  
+ for(i=4;i>0;i=i-1)
+ {
+   for(j=i;j<6;j=j+1)
+   {
+     printf("*");
+   } 
+   printf(" ");
+ }
+ printf("\n");
+ \end{verbatim}
+-qu'est ce qui sera affiché par ces printf ?
+ \verb|** *** **** *****|
+ \verb|** ** ** ** ** **|
+ \verb|**** **** **** ****|
+ \verb|***** **** *** ***|
+!
+
+@META facile=1
++Lorsqu'un programme utilise \verb|INT_MAX| il faut qu'il contienne
+-l'instruction préprocesseur :
+ \verb|#include <limits.h>|
+ \verb|#include <stdio.h>|
+ \verb|#include <studio.h>|
+ \verb|#appart <limite.h>|
+!
+
+@META facile=1
++ Si cette erreur apparaît à la compilation : \\
+\verb+error: expected ‘;’ before ‘}’ token+ 
+- que doit-on chercher dans le programme ?
+ un point-virgule manquant
+ une accolade manquante
+ un point-virgule en trop
+ une accolade en trop
+!
+
+@META facile=1
+Pour compiler un programme \verb|prog.c|, on utilise la ligne de commande : 
+ \verb|gcc -Wall prog.c -o prog.exe|
+ \verb|gcc -Wall prog.exe -o prog.c|
+ \verb|gcc prog.exe -Wall -o prog.c|
+ \verb|gcc prog.c -o -Wall prog.exe|
+!
+
+@META facile=1
+Si n est une variable entière alors \verb|n = 5%2| lui affecte la valeur :
+ 1
+ 2
+ 2.5
+ 1.5
+!
+
+@META facile=1
++Lorsque l'on souhaite tirer un nombre aléatoirement, quelle
+-instruction doit-on utiliser pour initialiser la graine ?
+ \verb|srand(time(NULL));|
+ \verb|rand(time(NULL));|
+ \verb|srand(NULL);|
+ \verb|rand(NULL);|
+!
+
+@META difficile=1
++On considère deux variables bool\'eennes \verb|A| et \verb|B|
+initialisées à \verb|TRUE| et \verb|FALSE| respectivement. Parmi
+les expressions bool\'eennes suivantes, laquelle a pour valeur
+-\verb|TRUE| ?
+ \verb+!(!A || B) == (A && !B)+
+ \verb|(A == TRUE) && (B == TRUE)|
+ \verb|A && B|
+ \verb+(!A || B)+
+!
+
+@META facile=1
++Soient deux variables entières \verb|x| et \verb|y| initialisées à
+4 et 5 respectivement. L'affichage \verb|x=4 et y=5| est obtenu avec la
+-commande :
+ \verb|printf("x=%d et y=%d\n",x,y);|
+ \verb|printf("x=%d et y=%d\n,x,y");|
+ \verb|printf("x=%x et y=%y\n");|
+ \verb|printf("x=%d et y=%d\n",x y);|
+!
+
+# Céline
+@META difficile=1
++On souhaite faire une boucle de contrôle de saisie: tant que l'entier
+\verb|n| n'appartient pas à l'intervalle $[a..b]$, on recommence la
+saisie de \verb|n|. Soit le programme suivant:
+ \begin{verbatim}
+ int a = 0; 
+ int b = 20;
+ int n;
+ scanf("%d", &n); 
+ while(cond) 
+ {
+   scanf("%d", &n);
+ }
+\end{verbatim}
+-Quelle est la condition \verb|cond| : 
+ \verb|(a<=n) && (n<=b)|
+ \verb|a<=n<=b|
+ \verb+(a<n) || (n>b)+
+ \verb|(n<=a) && (n<=b)| 
+!
+
+@META difficile=1
++Soit le programme principal suivant: 
+ \begin{verbatim}
+int main() 
+{
+  int somme=0;
+  for (i=0; i<5; i=i+1) 
+  {
+    somme = somme +i;
+    i = i+1; /* attention ! */
+  }
+  printf("somme = %d",somme); 
+  return EXIT_SUCCESS;
+}
+\end{verbatim}
+-La valeur de somme affichée est : 
+ 0
+ 10
+ 6
+ 15
+!
+
+@META facile=1
++Vous avez déclaré préalablement un ensemble de fonctions utilisées
+par votre programme principal. L'ordre dans lequel vous devez
+-maintenant définir ces fonctions est l'ordre : 
+ un ordre quelconque
+ alphabétique 
+ dans lequel vous avez déclaré ces fonction
+ dans lequel ces fonctions sont appelées dans le main
+!
+
+@META facile=1
++Soit le programme principal suivant: 
+ \begin{verbatim}
+int main() 
+{
+ int a = 3;
+ int b = 5;
+ printf("f(a,b)=%d, a=%d, b=%d\n",f(a,b),a,b);
+ return EXIT_SUCCESS;
+}
+\end{verbatim}
+ appelant la fonction \verb|f| ainsi définie: 
+ \begin{verbatim}
+int f(int a, int b)
+{
+  a = a + b; 
+  return a;
+}
+\end{verbatim}
+-L'affichage dans le main est le suivant: 
+ \verb|f(a,b)=8, a=8, b=5|
+ \verb|f(a,b)=8, a=3, b=5|
+ \verb|f(3,5)=8, a=3, b=5|
+ \verb|f(a,b)=13, a=8, b=5|
+!
+
+@META facile=1
+Vous utilisez une boucle \verb|while| quand :
+ vous ne connaissez pas le nombre d'itérations de la boucle à l'avance
+ vous n'avez pas déclaré de fonction
+ vous avez déjà fait un  \verb|for| dans le même programme principal 
+ l'incrément de la variable de boucle n'est pas 1
+!
+
+#nouvelles questions Pierre
+@META facile=1
+Un enregistrement permet de grouper plusieurs valeurs dans :
+ ses champs
+ ses chants
+ ses cases
+ ses blocs
+!
+
++Si le code :
+\begin{verbatim}
+struct toto_s
+{
+  int n;
+  double x;
+};
+\end{verbatim}
+ précède la fonction \verb+main()+, alors on peut écrire en début de
+-\verb|main()|:
+ \verb|struct toto_s toto;|
+ \verb|int struct toto_s = {3, -1e10};|
+ \verb|int toto.n = 3;|
+ \verb|toto_s struct z = {3, 0.5};|
+ \verb|toto_s n, x;|
+!
+
++Si a et b sont deux variables de type :
+\begin{verbatim}
+struct toto_s
+{
+  int n;
+  double x;
+};
+\end{verbatim}
+-Alors pour tester l'égalité de a et de b on utilise la condition :
+ \verb|(a.n == b.n) && (a.x == b.x)|
+ \verb|a=b|
+ \verb|a==b|
+ \verb|a{n, x} == b{n, x}|
+!
+
+#Jean-Paul
+@META facile=1
+Sur unix (ou linux), la commande \verb|mkdir| permet de :
+  créer un répertoire
+  changer de répertoire courant
+  créer un fichier texte
+  ouvrir un fichier texte
+!
+
+@META facile=1
++Pour afficher à l'aide de \verb|printf("%d\n",tab[i]);| le contenu d'un tableau de 5 entiers initialisé au
+-préalable, on utilise plutôt :
+ \verb|for(i=0;i<5;i=i+1)|
+ \verb|for(i=0;i<=5;i=i+1)|
+ \verb|for(i=1;i<5;i=i+1)|
+ \verb|for(i=1;i<=5;i=i+1)|
+!
+
+@META facile=1
+Laquelle de ces écritures correspond à la déclaration d'une variable de type caractère en langage C?
+ \verb|char c;|
+ \verb|char 'c';|
+ \verb|char "c";|
+ \verb|int char;|
+!
+
+@META facile=1
++Quel est le problème d'un programme comportant les lignes suivantes?
+\begin{verbatim}
+while (1)
+{
+  printf("coucou\n");
+}
+\end{verbatim}
+-
+  il comporte une boucle infinie
+  il n'affiche rien
+  il ne compile pas
+  il risque d'afficher bonjour à la place de coucou
+!
+
+@META difficile=1
++Les lignes
+\begin{verbatim}
+int i;
+int x=0;
+for(i=0,i<5,i=i+1)
+{
+  x=x+1;
+}
+\end{verbatim}
+-
+ comportent une erreur qui sera détectée au cours de l'analyse syntaxique
+ comportent une erreur qui ne sera pas détectée
+ comportent une erreur qui sera détectée au cours de l'édition de lien
+ ne comportent aucune erreur
+!

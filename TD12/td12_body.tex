@@ -1,0 +1,258 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux dirigés 12}
+
+\vspace{-1,8cm}
+
+\begin{correction}
+  Note aux chargés de TD : ce sont des exercices typiques qu'ils auront à l'examen : ils doivent savoir écrire des fonctions et les programmes qui les utilisent.
+
+La deuxième partie est tirée de l'examen de l'année dernière. La fin du TD doit être utilisée pour les révisions demandées par les étudiants.
+\textbf{Attention : }Certaines parties sont sans correction.
+\end{correction}
+
+\section{Écriture et appel de fonctions}
+
+\subsection{Un programme de géométrie}
+
+Nous souhaitons écrire un programme de géométrie permettant le calcul d'aires de formes simples : l'utilisateur spécifie les dimensions des figures et le programme calcule les aires de ces figures. Afin de tester les fonctions, un premier programme est écrit :
+\begin{footnotesize}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* Declaration des constantes et types utilisateurs */
+#define PI 3.1415926
+
+/* Declaration des fonctions utilisateurs */
+/* calcule l'aire d'un rectangle */
+double aire_rectangle(double longueur,double largeur);
+/* calcule l'aire d'un cercle */ 
+double aire_cercle(double rayon);
+/* calcule l'aire d'un triangle */ 
+double aire_triangle(double base,double hauteur);
+
+int main()
+{
+    double longueur;
+    double largeur;
+    double cote; 
+    double rayon;
+    double base;
+    double hauteur;
+
+    printf("Entrez la longueur et largeur du rectangle : ");
+    scanf("%lg",&longueur);
+    scanf("%lg",&largeur);
+    printf("L'aire du rectangle est %g.\n",aire_rectangle(longueur,largeur));
+
+    printf("Entrez le rayon du cercle : ");
+    scanf("%lg",&rayon);
+    printf("L'aire du cercle est %g.\n",aire_cercle(rayon));
+
+    printf("Entrez la base et la hauteur du triangle : ");
+    scanf("%lg",&base);
+    scanf("%lg",&hauteur);
+    printf("L'aire du triangle est %g.\n",aire_triangle(base,hauteur));
+
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{footnotesize}
+
+\begin{itemize}
+\item Est-ce que le programme compile ? Est-ce que l'édition de liens
+  réussit ? \textbf{Les réponses doivent être succintement expliquées}.
+\begin{correction}
+La compilation réussit si l'analyse lexicale, syntaxique et sémantique réussissent. Le programme compile parce qu'il n'y a pas d'erreurs lexicales, syntaxiques et que l'utilisation des variables et des fonctions est conforme à leur déclaration. Par contre l'édition de liens échoue car le code des fonctions est manquant pour produire un exécuatble. NB: ce n'est pas le cas de printf et scanf qui ont leur code disponible sur le disque dur dans un répertoire connu de l'éditeur de liens.       
+\end{correction}
+\item Définir les fonctions manquantes.
+\begin{correction}
+{
+\footnotesize
+\listinginput{1}{../exemples_code_c/calcul_aires.c}
+}
+\end{correction}
+\item Afin de s'assurer de la correction du programme, faire sa trace.
+\end{itemize}
+
+\subsection{Calcul de la constante e}
+\begin{correction}
+L'essentiel ici est la réutilisation de la fonction factorielle (déjà vue) et de trouver un programme le plus simple possible pour tester, sachant que $e = 2,718 281 828 459 045 235 360 287 4...$. Vous pouvez expliquer que factorielle(n) va très rapidement faire un dépassement de capacité et le calcul ne sera plus valide.
+\end{correction}
+\begin{itemize}
+\item Écrire la fonction \verb|factorielle| qui prend en entrée un entier positif ou nul $n$ et qui renvoie sa factorielle $n!$, avec la convention $0! = 1$.
+\item Écrire la fonction \verb|e_approchee| qui prend en entrée un entier $n$ et qui renvoie $\sum_{i=0}^{i=n} \frac{1}{n!}$. Cette serie converge vers la constante $e$, la constante de Néper, la base des logarithmes naturels. On utilisera la fonction \verb|factorielle|
+\item Écrire un complet programme simple qui permet de tester \verb|e_approchee|.
+\end{itemize}
+\begin{correction}
+{
+\footnotesize
+\listinginput{1}{../exemples_code_c/e_approchee.c}
+}
+\end{correction}
+
+\section{Révision}
+
+\subsection{Calcul du quotient d'une division entière par soustractions
+  successives (\textit{4 points})}
+
+Nous voulons écrire une fonction \verb|quotient_par_soustraction| qui
+prend deux entiers strictement positifs a et b en paramètre, et
+retourne le quotient de la division entière de a par b. Le nombre a est
+appelé le dividende et b le diviseur. Cette fonction doit calculer le
+quotient par soustractions successives \textbf{sans utiliser
+  l'opérateur / du C (division entière)}. Le programme principal
+est déjà écrit pour pouvoir tester la fonction :
+\begin{footnotesize}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+
+int main()
+{
+  int dividende;
+  int diviseur;
+
+  printf("Entrez le dividende et le diviseur : ");
+  scanf("%d",&dividende);
+  scanf("%d",&diviseur);
+
+  while(dividende <= 0 || diviseur <= 0) /* pas les deux strictement positifs */
+  {
+      printf("Erreur. Entrez le dividende et le diviseur : ");
+      scanf("%d",&dividende);
+      scanf("%d",&diviseur);
+  }
+
+  printf("le quotient de la division euclidienne est : %d\n",
+         quotient_par_soustraction(dividende,diviseur));
+
+  return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+\end{verbatim}
+\end{footnotesize}
+
+\begin{enumerate}
+\item Est-ce que le programme compile ?
+\begin{correction}
+La compilation réussit si l'analyse lexicale, syntaxique et sémantique réussissent. Le programme ne compile pas parce que l'analyse sémantique échoue : une fonction est appelée sans avoir été déclarée, on ne peut pas vérifié si le nom est correct, si les types d'entrée et sortie sont les bons.       
+\end{correction}
+\item Compléter le programme pour que l'édition de liens réussise et produise un exécutable.
+  \begin{correction}
+Il faut définir et déclarer la fonction \verb|quotient_par_soustraction|.
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+int quotient_par_soustraction(int a,int b);
+
+int main()
+{
+  int dividende;
+  int diviseur;
+
+  printf("Entrez le dividende et le diviseur : ");
+  scanf("%d",&dividende);
+  scanf("%d",&diviseur);
+
+  while(dividende <= 0 || diviseur <= 0) /* pas les deux strictement positifs */
+  {
+      printf("Erreur. Entrez le dividende et le diviseur : ");
+      scanf("%d",&dividende);
+      scanf("%d",&diviseur);
+  }
+
+  printf("le quotient de la division euclidienne est : %d\n",
+         quotient_par_soustraction(dividende,diviseur));
+
+  return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+/* a = qb + r. on peut enlever b à a q fois avant d'obtenir le reste r < b */
+int quotient_par_soustraction(int a,int b)
+{
+  int quotient = 0; /* le quotient de a par b */
+
+  while(a >= b)
+  {
+      a = a - b;
+      quotient = quotient + 1;
+  }
+
+  return quotient;
+}
+\end{verbatim}
+\end{correction}
+\end{enumerate}
+
+Deux exemples d'exécution du programme sont :
+\begin{verbatim}
+Entrez le dividende et le diviseur : 23 4
+le quotient de la division euclidienne est : 5
+Entrez le dividende et le diviseur : 1 4
+le quotient de la division euclidienne est : 0
+\end{verbatim}
+
+\subsection{Exercices sur des tableaux, sans fonctions (\emph{5 points})}
+Pour les deux exercices suivants, tout le traitement sera effectué dans
+le \C{main}, sans faire appel à des fonctions utilisateurs.
+
+\subsubsection{Somme de deux vecteurs (\emph{1,5 points})}
+
+Rappel : la somme de deux vecteurs du plan se fait terme à terme comme
+ceci :
+\[
+(x, y) + (x', y') = (x + x', y + y').
+\]
+Nous voulons faire un
+programme qui réalise la somme de deux vecteurs de dimension $N$. Un
+vecteur sera représenté par un tableau.
+
+
+Écrire un programme qui, étant donnés deux tableaux de réels, $u$ et
+$v$, de tailles $N$, calcule dans un tableau $w$ de taille $N$ la somme
+terme à terme de $u$ et de $v$, puis affiche le contenu de $w$. Définir
+\C{N} comme une constante symbolique valant 2. Les tableaux $u$ et $v$
+seront initialisés à des valeurs de votre choix.
+
+\emph{Tout le traitement sera effectué dans le \C{main}, sans faire
+  appel à des fonctions utilisateurs.}
+
+
+
+\subsubsection{Unicité des éléments d'un tableau (\emph{3,5 points})}
+
+Nous disposons d'un tableau $t$ de $N$ caractères et nous souhaitons
+savoir si chaque caractère apparaissant dans le tableau n'y apparaît
+qu'une seule fois, autrement dit on veut savoir si chaque caractère
+est unique.
+
+\begin{newenu}
+\item Écrire un programme qui, étant donné un tableau initalisé $t$,
+  teste si le premier élément du tableau est unique et affiche
+  \C{Vrai} si c'est le cas, \C{Faux} sinon.
+
+\item  Écrire un programme qui étant donné un tableau initialisé $t$, teste
+  si tous les éléments sont uniques et affiche \C{Vrai} si c'est le
+  cas, \C{Faux} sinon.
+\end{newenu}
+
+\emph{Tout le traitement
+sera effectué dans le \C{main}, sans faire appel à des fonctions
+utilisateurs.}
+

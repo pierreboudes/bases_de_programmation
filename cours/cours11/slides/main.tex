@@ -1,0 +1,419 @@
+\documentclass[xcolor=svgnames]{beamer}
+\input{communs/slides_style}
+
+%%% Titre -- Cours 11
+\title{Éléments d'informatique -- Cours 11.\\ Pile d'appel, fonctions récursives.}
+\author{Pierre Boudes}
+\date{\today}
+
+\begin{document}
+
+%% Page de titre et licence CC.
+\begin{frame}
+        \titlepage
+        \vfill
+        \begin{center}
+                \CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+                {\tiny\CcNote{\CcLongnameByNcSa}}
+                \vspace*{-2.5ex}
+        \end{center}
+\end{frame}
+
+
+\section[Plan du cours]{Contenu du semestre}
+\begin{frame}
+  \frametitle{Ce semestre\nowrite}
+
+  \begin{itemize}
+  \item Éléments d'architecture des ordinateurs (+mini-assembleur)
+  \item Éléments de systèmes d'exploitation
+\item Programmation structurée impérative (éléments de langage C)
+\begin{itemize}
+  \item Structure d'un programme C
+  \item Variables : déclaration (et initialisation), affectaction
+  \item Évaluation d'expressions, expressions booléennes
+  \item Instructions de contrôle : if, for, while
+  \item Types de données : entiers,  caractères,
+    réels, tableaux, struct
+  \item Fonctions d'entrées/sorties (scanf/printf)
+\item Écriture et appel de fonctions
+  \item Débogage
+\end{itemize}
+\item Notions de compilation
+  \begin{itemize}
+  \item  Analyse lexicale, analyse syntaxique, analyse sémantique;
+  préprocesseur du C (include, define);
+  Édition de lien
+  \end{itemize}
+\item Algorithmes élémentaires
+\item Méthodologie de résolution, manipulation sous linux
+\end{itemize}
+ \end{frame}
+
+\section[Plan]{}
+\frame[label=plan]{\tableofcontents}
+
+\section{Pile d'appel (rappels)}
+\subsection{Rappel sur les fonctions en C}
+\begin{frame}
+  \frametitle{Rappel sur les fonctions en C\nowrite}
+ Utilisation des fonctions :
+  \begin{itemize}
+    \item \structure{déclaration} (types des paramètres et de la valeur de retour)
+    \item \structure{définition}  (code, paramètres formels)
+    \item \structure{appel} (paramètres effectifs, \textbf{espace mémoire})
+  \end{itemize}
+Voyons de manière plus précise cette question d'espace mémoire.
+\end{frame}
+
+\subsection{Traces et mémoire}
+\begin{frame}
+  \frametitle{Traces et mémoire \nowrite}
+\noindent \structure{Rappel :} 
+nous faisons la trace de chaque appel de chaque fonction que
+l'on a défini (pas les fonctions externes, comme printf). 
+
+\begin{columns}
+\column[T]{6cm}
+La trace d'un programme donne schématiquement ce type de dessin
+\begin{itemize}
+  \item<3-> verticalement, c'est le temps
+  \item<3-> et horizontalement, l'occupation mémoire
+  \item<4-> un appel de fonction occupe une portion de mémoire, puis la
+    libère. 
+\item<5-> la trace représente réellement ce qui arrive dans vos programmes.
+\end{itemize}
+ \uncover<6->{
+\structure{Un appel de fonction peut-il modifier la mémoire d'une
+  fonction appelante ?}}
+
+\column[T]{4.5cm}
+\vspace{-.5cm}
+\small
+\only<2->{\noindent\begin{tikzpicture}
+\tikzstyle{every node}=[anchor=base]
+\only<3->{\tikzset{axis/.style={fill=none}}}
+\only<2>{\tikzset{axis/.style={color=white,fill=white,draw=white}}}
+% Axis
+  \draw[axis,arrows = ->] (-.7,5.9) -- (4.2,5.9);
+  \draw(4.1,6) node[axis,anchor=base east] {mémoire};
+  \draw[axis,arrows = ->] (-.6,6.1) -- (-.6,-.5);
+  \draw(-.8,-.2) node[axis,rotate=-90,anchor=base east] {temps};
+%
+ \draw (0, 5.6) node {main()};
+  \filldraw[fill=LightGreen,draw=Green] (-0.5,-0.25) rectangle
+  (1,5.5); 
+  \draw[pattern color=Green, pattern=north east lines,draw=none] (-0.5,-0.25) rectangle
+  (0,5.5); 
+ \draw (0.25, 5.25) node {\C{x}};
+  \draw[draw=Green] (0.5,-0.25) -- (0.5,5.5);
+  \draw (0.75, 5.25) node {\C{y}};
+%
+ \draw (1.75, 5.1) node {max(1,2)};
+  \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (1,4) rectangle (2.5,5); 
+  \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (1,4) rectangle
+  (1.5,5); 
+  \draw (2.25, 4.75) node {\C{b}};
+  \draw[draw=DarkGoldenrod] (2,4) -- (2,5); 
+  \draw (1.75, 4.75) node {\C{a}};
+%
+  \draw (1.75, 3.6) node {\C{f(8)}};
+  \filldraw[fill=PowderBlue,draw=RoyalBlue]
+  (1,0) rectangle (2.5,3.5); 
+  \draw[pattern color=RoyalBlue, pattern=north east lines,draw=none]
+  (1,0) rectangle  (1.5,3.5); 
+  \draw (1.75, 3.25) node {\C{z}};
+  \draw[draw=RoyalBlue] (2,0) -- (2,3.5); 
+  \draw (2.25, 3.25) node {\C{r}};
+%
+  \draw (3, 3.1) node {\C{g(2)}};
+  \filldraw[fill=Salmon,draw=Crimson] (2.5,2) rectangle(3.5,3); 
+  \draw[pattern color=Crimson, pattern=north east lines,draw=none]
+  (2.5,2) rectangle  (3,3);
+  \draw (3.25, 2.75) node {\C{n}};
+%
+  \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (2.5,.5) rectangle
+  (4,1.5); 
+  \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (2.5,.5) rectangle
+  (3,1.5); 
+  \draw (3.25, 1.6) node {max(2,-1)};
+  \draw (3.25, 1.25) node {\C{a}};
+  \draw[draw=DarkGoldenrod] (3.5,.5) -- (3.5,1.5);
+  \draw (3.75, 1.25) node {\C{b}};
+\end{tikzpicture}}
+  \end{columns}
+\end{frame}
+
+\subsection{Pile d'appel}
+\begin{frame}
+  \frametitle{Pile d'appel}
+\begin{columns}
+\column[T]{4cm}
+On parle de \alert{pile d'appel} car les appels de fonctions
+s'empilent... \emph{comme sur une pile
+    d'assiettes.}
+
+\uncover<13->{
+\structure{Peut-on avoir deux assiettes identiques dans la pile ? (La même
+  fonction avec des contenus différents)}}
+
+% de contenus différents
+\column[T]{7.5cm}
+\small
+\noindent\begin{tikzpicture}[rotate=90]
+\tikzstyle{every node}=[anchor=base]
+\tikzset{axis/.style={fill=none}}
+\tikzset{fonction/.style={rotate=90}}
+% Axis
+  \draw[axis,arrows = ->] (-.7,5.9) -- (4.2,5.9);
+  \draw(4.1,6) node[axis,rotate=90,anchor=base east] {mémoire};
+  \draw[axis,arrows = ->] (-.6,6.1) -- (-.6,-.5);
+  \draw(-.8,-.2) node[axis,anchor=base east] {temps};
+%
+\uncover<1,3->{
+  \draw (0, 5.6) node[fonction] {main()};
+  \filldraw[fill=LightGreen,draw=Green] (-0.5,-0.25) rectangle
+  (1,5.5); 
+  \draw[pattern color=Green, pattern=north east lines,draw=none] (-0.5,-0.25) rectangle
+  (0,5.5); 
+ \draw (0.25, 5.25) node {\C{x}};
+  \draw[draw=Green] (0.5,-0.25) -- (0.5,5.5);
+  \draw (0.75, 5.25) node {\C{y}};
+}
+%
+\uncover<1,4,12->{
+ \draw (1.75, 5.1) node[fonction] {max(1,2)};
+  \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (1,4) rectangle (2.5,5); 
+  \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (1,4) rectangle
+  (1.5,5); 
+  \draw (2.25, 4.75) node {\C{b}};
+  \draw[draw=DarkGoldenrod] (2,4) -- (2,5); 
+  \draw (1.75, 4.75) node {\C{a}};
+}
+%
+\uncover<1,6-10,12->{
+  \draw (1.75, 3.6) node[fonction] {\C{f(8)}};
+  \filldraw[fill=PowderBlue,draw=RoyalBlue]
+  (1,0) rectangle (2.5,3.5); 
+  \draw[pattern color=RoyalBlue, pattern=north east lines,draw=none]
+  (1,0) rectangle  (1.5,3.5); 
+  \draw (1.75, 3.25) node {\C{z}};
+  \draw[draw=RoyalBlue] (2,0) -- (2,3.5); 
+  \draw (2.25, 3.25) node {\C{r}};
+}
+%
+\uncover<1,7,12->{
+  \draw (3, 3.1) node[fonction] {\C{g(2)}};
+  \filldraw[fill=Salmon,draw=Crimson] (2.5,2) rectangle(3.5,3); 
+  \draw[pattern color=Crimson, pattern=north east lines,draw=none]
+  (2.5,2) rectangle  (3,3);
+  \draw (3.25, 2.75) node {\C{n}};
+}
+%
+\uncover<1,9,12->{
+  \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (2.5,.5) rectangle
+  (4,1.5); 
+  \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (2.5,.5) rectangle
+  (3,1.5); 
+  \draw (3.25, 1.6) node[fonction] {max(2,-1)};
+  \draw (3.25, 1.25) node {\C{a}};
+  \draw[draw=DarkGoldenrod] (3.5,.5) -- (3.5,1.5);
+  \draw (3.75, 1.25) node {\C{b}};
+}
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+
+\section[Récursion]{Fonctions récursives}
+\subsection{Définition et analogie mathématique}
+\begin{frame}
+  \frametitle{Fonctions récursives}
+
+  \begin{block}{Définition}
+    Une fonction récursive est une fonction dont la définition fait
+    appel à la fonction \emph{elle-même}.
+  \end{block}
+
+\pause
+Il y a une forte analogie avec les maths : $(n + 1)! = (n + 1) \times n!$
+
+\pause
+\begin{alertblock}{Terminaison}
+  Il faut un cas de base qui ne déclenche pas d'appel récursif.
+\end{alertblock}
+\pause
+Comme
+  dans :
+\begin{align*}
+  f: \bbbn &\to \bbbn \\
+  n &\mapsto
+  \begin{cases}
+    n\times f(n-1) \text{ si  n > 0}\\
+    1 \text{ sinon}
+  \end{cases}
+\end{align*}
+\end{frame}
+
+\subsection{Exemple de la factorielle}
+\begin{frame}[fragile]
+  \frametitle{Factorielle (1)}
+  %numbers=left 
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily\small] 
+int factorielle(int n)
+{
+    int res; /* resultat */ 
+    if (n > 0) /* cas recursif */
+    {
+        res = n * %\colorbox{yellow}{factorielle(n - 1)}%; 
+    } 
+    else /* cas de base */ 
+    {
+        res = 1; 
+    }
+    return res;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Factorielle (2)}
+
+Version plus concise :
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily\small] 
+int factorielle(int n)
+{
+    if (n < 2) /* cas de base */
+    {
+         return 1;
+    } 
+    return n * factorielle(n - 1); 
+}
+\end{lstlisting}
+\end{frame}
+
+\subsection{Pour aller plus loin}
+\begin{frame}[fragile]
+  \frametitle{Récursion (2). Pour aller plus loin\nowrite}
+  \begin{itemize}
+  \item Outre les exemples mathématiques directs comme factorielle, de nombreux problèmes sont beaucoup plus facile à résoudre de manière récursive. À au moins un moment du raisonnement, on suppose que l'on dispose déjà de la fonction qui résout le problème et on l'applique à un cas << plus petit >>.\pause
+  \item On apprend ici la programmation impérative où un élément central est le changement d'état des cases mémoires (et les effets de bord comme vous le verrez au second semestre). En \structure{programmation fonctionnelle}, l'accent est mis sur les fonctions sans effets de bord, et la récursion occupe le tout premier plan, notamment pour faire ce que l'on a l'habitude de faire avec des boucles en programmation impérative.\pause
+\item \alert{Un appel récursif peut être indirect}, c'est à dire effectué dans le code d'une fonction auxilliaire.
+ \end{itemize}
+\end{frame}
+
+\subsection{Exemples}
+\begin{frame}[fragile]
+  \frametitle{Exemples. Affichage à la descente}
+Avec le code  :
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
+int factorielle(int n)
+{
+    printf("%d ", n);
+    if (n < 2) /* cas de base */
+    {
+         return 1;
+    } 
+    return n * factorielle(n - 1); 
+}
+\end{lstlisting}
+L'appel \verb+factorielle(5)+ aura pour effet de bord d'afficher :
+\pause
+\begin{verbatim}
+5 4 3 2 1
+\end{verbatim}
+\pause
+\begin{itemize}
+\item  Comment obtenir \verb+1 2 3 4 5+ ?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exemples. Affichage à la remontée}
+Et avec le code : 
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,numbers=left,firstnumber=7,escapechar={\%}] 
+int factorielle(int n)
+{
+    int res = 1;
+    %\only<3->{\colorbox{yellow}{printf("\%d ", n)};}%
+    if (n > 1) /* cas recursif */
+    {
+        res =  n * factorielle(n - 1); 
+    } 
+    %printf("\%d ", n);%
+    return res;
+}
+\end{lstlisting}
+L'appel \verb+factorielle(5)+ aura pour effet de bord d'afficher :
+\pause
+\begin{verbatim}
+1 2 3 4 5
+\end{verbatim}
+
+\begin{itemize}
+\item  Comment obtenir \verb+5 4 3 2 1 1 2 3 4 5+ ?
+\item Peut-on obtenir : \verb+1 2 3 4 5 5 4 3 2 1+  ?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exemple. Double appel}
+  Coefficients binomiaux : \[\binom{n}{p} = \frac{n!}{p!(n-p)!}\]
+
+\pause
+Relation de récurrence donnée par le triangle de Pascal :
+\[
+\binom{n + 1}{p + 1}  = \binom{n}{p} + \binom{n}{p + 1}
+\]
+
+\pause
+Cas de base : $\binom{n}{0} = \binom{n}{n} = 1$
+
+\pause
+Code :
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily\scriptsize] 
+int binomial(int n, int p)
+{
+    if ( (p == 0) || (n == p) ) /* cas de base */
+    {
+        return 1; 
+    } 
+    return binomial(n - 1, p - 1) + binomial(n - 1, p);
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Exemple. Écriture récursive de boucles}
+
+Calcul de la moyenne d'une série saisie par l'utilisateur.
+\pause
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
+double faire_moyenne()
+{
+    return faire_moyenne_aux(0, 0);
+}
+
+double faire_moyenne_aux(double somme, int n)
+{
+    int terme = -1;
+
+    printf("Entier positif : ");
+    scanf("%d", &terme);
+    if (terme < 0) /* cas de base */
+    {
+        return somme / n; /* moyenne des termes precedents */
+    }
+    return faire_moyenne_aux(somme + terme, n + 1);
+}
+\end{lstlisting}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: %%%
+%%% mode: latex %%%
+%%% ispell-local-dictionary: "french" %%%
+%%% TeX-master: nil %%%
+%%% End: %%%

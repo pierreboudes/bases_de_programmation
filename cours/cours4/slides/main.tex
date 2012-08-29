@@ -1,0 +1,477 @@
+\documentclass[xcolor=svgnames]{beamer}
+\input{communs/slides_style}
+
+%%% Titre -- Cours 4
+\title{Éléments d'informatique -- Cours 4. Compilation. Instruction de contrôle \C{for}.}
+\author{Pierre Boudes}
+\date{\today}
+
+\begin{document}
+
+%% Page de titre et licence CC.
+\begin{frame}
+	\titlepage
+	\vfill
+	\begin{center}
+		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+		{\tiny\CcNote{\CcLongnameByNcSa}}
+		\vspace*{-2.5ex}
+	\end{center}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+ \section*{Contenu du cours}
+\begin{frame}
+%  \frametitle{Contenu du cours (rappel)}
+ \begin{itemize}
+  \item \emph{Éléments d'architecture des ordinateurs (+mini-assembleur)}\nowrite
+  \item \emph{Éléments de systèmes d'exploitation}
+\item Programmation structurée impérative (éléments de langage C)
+\begin{itemize}
+  \item \emph{Structure d'un programme C}
+  \item \emph{Variables : déclaration (et initialisation), affectaction}
+  \item \alert{Évaluation d'expressions}
+  \item \alert{Instructions de contrôle} : \emph{if}, \alert{for}, while
+  \item Types de données : entiers, caractères,
+    réels, tableaux, enregistrements
+  \item \alert{Fonctions d'entrées/sorties (scanf/printf)}
+  \item Écriture et appel de fonctions
+  \item Débogage
+\end{itemize}
+\item \alert{Notions de compilation
+  \begin{itemize}
+  \item Analyse lexicale, analyse syntaxique, analyse sémantique
+  \item préprocesseur du compilateur C (include, define)
+   \item Édition de lien
+  \end{itemize}}
+\item Algorithmes élémentaires
+\item Méthodologie de résolution, manipulation sous linux
+\end{itemize}
+\end{frame}
+
+\section[Plan]{}
+\frame[label=plan]{\tableofcontents}
+
+
+\begin{frame}
+  \frametitle{Liens utiles}
+
+  \begin{itemize} 
+\item ma page : \url{http://www-lipn.univ-paris13.fr/~boudes/}
+\item Un livre de la BU: \emph{Le livre du C, premier langage (pour les
+  vrais débutants en programmation)}, Claude Delannoy.
+\item \url{http://www.siteduzero.com/} (chercher langage C)
+\item \url{http://www.developpez.com/} (chercher langage C)
+\item le cours de Anne Canteaut :\\ {\small\url{http://www-roc.inria.fr/secret/Anne.Canteaut/COURS_C/}}
+\item le cours de Bernard Cassagne :\\ {\small\url{http://clips.imag.fr/commun/bernard.cassagne/Introduction_ANSI_C.html}}
+\item le cours de Henri Garreta  : \\
+{\small\url{http://www.dil.univ-mrs.fr/~garreta/generique/}}
+\item codeblocks : \url{http://www.codeblocks.org/}
+\item ubuntu : \url{http://www.ubuntu-fr.org/}
+\item virtualbox : \url{http://www.virtualbox.org/}
+  \end{itemize} 
+\end{frame}
+ 
+
+\section{Compilation}
+\begin{frame}
+  \frametitle{Compilation}
+\begin{itemize} 
+\item  \structure{Compiler} un programme c'est traduire un texte (\structure{code
+  source}) d'un langage de haut niveau (langage C) en code de bas
+  niveau (\structure{code machine}), de manière à ce que le système
+  d'exploitation puisse, au besoin, déclencher l'exécution de ce
+  programme.\pause \textbf{Dans un langage compilé, l'étape de traduction a
+    lieu une fois pour toutes.}\pause
+
+\item \structure{Interpréter}, c'est faire en même temps la traduction et l'exécution du
+texte d'un langage de haut niveau (un \structure{script}). Un interprète simule ainsi un
+processeur capable d'exécuter le langage de haut niveau. \pause
+\textbf{Dans un
+langage interprété, l'étape de traduction a lieu à chaque exécution.}\pause
+\item Le langage C est traditionnellement un langage compilé.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Compilation}
+ 
+Les cinq grandes étapes de la compilation :
+
+  \begin{enumerate}
+  \item Analyse lexicale
+  \item Analyse syntaxique
+  \item Analyse sémantique
+  \item Génération du code
+  \item Édition de liens
+\end{enumerate}
+\end{frame}
+
+\subsection{Analyse lexicale}
+\begin{frame}
+  \frametitle{Analyse lexicale}
+\begin{block}{Analyse lexicale}
+ Identifie les \emph{lexèmes} (unités lexicales du langage). Les espaces sont inutiles (\C{3*x+1} ou \C{3 * x + 1}), sauf comme séparateurs (\C{int x}, \C{intx}).
+\end{block}
+\pause
+Erreur lexicale :
+\begin{description}
+\item[code source] \C{int x = @;}
+\item[compilation] \C{error: stray ‘@’ in program}
+\end{description}
+\pause
+Erreur détectée uniquement au moment de l'analyse sémantique :\\
+\begin{description}
+\item[code source] \C{intx = 0;}
+\item[compilation] \C{error: ‘intx’ undeclared (first use in this function)} 
+\end{description}
+\end{frame}
+
+\subsection{Analyse syntaxique}
+\begin{frame}
+  \frametitle{Analyse syntaxique}
+\begin{block}{Analyse syntaxique} 
+trouve la structure syntaxique, (arbre
+  syntaxique), et teste l'appartenance au langage. 
+\end{block}
+\pause
+Exemple : dans l'expression \C{x = 3 * x + 1}, est-ce que la sous-suite  \C{x + 1} correspond à une structure syntaxique ?
+\pause
+\begin{center}
+\C{
+\begin{tikzpicture} [level distance=5mm,every node/.style={fill=blue!20,circle,inner sep=1pt}]
+\node {=}
+child {node {x}} 
+child {node {+}
+  child {node {*}
+    child {node {3}} 
+    child {node {x}}
+  }  
+  child {node {1}} 
+};
+\end{tikzpicture}
+}
+\end{center}
+\pause
+\begin{description}
+\item[code source] Un else sans if le précédant immédiatement (point-virgule mal placé ?)
+\item[compilation] \C{error: expected expression before ‘else’} 
+\end{description}
+
+\end{frame}
+
+\subsection{Analyse sémantique}
+\begin{frame}
+\frametitle{Analyse sémantique}
+\begin{block}{Analyse sémantique}
+  trouver le sens des différentes actions
+  voulues par le programmeur.
+  \begin{itemize}
+  \item Quels sont les objets manipulés par le programme,
+  \item quelles sont les propriétés de ces objets,
+  \item quelles sont les actions du programme sur ces objets.
+  \end{itemize}
+
+\end{block}
+\pause
+Beaucoup d'erreurs peuvent apparaître durant cette phase : identificateur utilisé mais non
+déclaré (la réciproque génère un \emph{warning} avec l'option $-$\C{Wall}), opération n'ayant
+aucun sens, etc.
+
+
+\begin{description}
+\item[code source] variable \C{x} utilisée mais non déclarée
+\item[compilation] \C{error: ‘x’ undeclared (first use in this function)}
+\end{description}
+\end{frame}
+
+
+\subsection{Génération du code}
+\begin{frame}
+\frametitle{Génération du code}
+\begin{block}{Génération du code}
+  encodage en assembleur, optimisations et allocations des registres, traduction en code objet. 
+\end{block}
+\end{frame}
+
+\subsection{Édition de liens}
+\begin{frame}
+\frametitle{Édition de liens}
+\begin{block}{Édition de liens}
+  le code objet des fonctions externes
+  (bibliothèques) est ajouté à l'exécutable. Le point d'entrée dans le
+  programme est choisi (\C{main}). Insertion de données de débogage (option \C{$-$g}).
+\end{block}
+\pause
+\begin{description}
+\item[code source] Oublie de \C{stdio.h} et utilisation de \C{printf}.
+\item[compilation] \C{warning: incompatible implicit declaration of built-in function ‘printf’}
+\end{description}
+\pause
+\begin{description}
+\item[code source] Pas de fonction principale (\C{main})
+\item[compilation] \C{Undefined symbols:  "\_main", ...}
+\end{description}
+\pause
+À votre avis : \C{Undefined symbols: "\_prinft" } ?
+\end{frame}
+
+
+\section[gcc]{La compilation en pratique (gcc)}
+\begin{frame}
+  \frametitle{La compilation en pratique (gcc)}
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=7em, text centered, minimum height=2em,]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{sline} = [draw, structure, dashed,  -latex']
+\begin{tikzpicture}[node distance = 1.4cm, auto]
+% les fichiers
+%\matrix {
+\node [block] (source) {\C{source.c}};
+\node [right of = source] (nothing1) {};
+\node [right of = nothing1] (nothing2) {};
+\uncover<3->{\node [block, below of =nothing2] (pre) {\C{.c} (à l'écran)};
+{\small \node [node distance=13em, draw, rounded corners,text width=10em, right of =pre] { Le préprocesseur enlève les commentaires et exécute les instructions commençant par un dièse : \C{\#define} (rechercher-remplacer) et \C{\#include} (insertion de fichier).};}}
+\uncover<4->{\node [block, below of =pre] (asm) {\C{source.i}};}
+\uncover<5->{\node [block, below of =asm] (obj) {\C{source.o}};}
+\node [block, below of =obj] (exe) {exécutable};
+\node [node distance= .7cm, below of =exe] (gcc) {\C{gcc \uncover<2->{\alert{$-$Wall}} source.c $-$o nom} };
+\uncover<7->{
+\node [block, node distance = .1cm, above left of =source] (sourceb) {\C{source.c}};
+\node [block, node distance = .1cm, above left of =pre] (preb) {\C{.c} (à l'écran)};
+\node [block, node distance = .1cm, above left of =asm] (asmb) {\C{source.i}};
+\node [block, node distance = .1cm, above left of =obj] (objb) {\C{source.o}};
+}
+
+% les arcs
+\path [line] (source) |- (exe);
+\uncover<3->{\path [line] (source) |- node {\C{gcc $-$E}} (pre);}
+\uncover<4->{\path [line] (source) |- node {\C{gcc $-$S}} (asm);}
+\uncover<5->{\path [line] (source) |- node {\C{gcc $-$c}} (obj);}
+\uncover<3->{\path [sline] (source) -| node {\structure{Préprocesseur}} (pre);}
+\uncover<4->{\path [sline] (pre) -- node {\structure{Compilation}} (asm);}
+\uncover<5->{\path [sline] (asm) -- node {\structure{Génération du code objet}} (obj);}
+\uncover<6->{\path [sline] (obj) -- node {\structure{Édition de liens}} (exe);}
+\end{tikzpicture}
+\end{frame}
+
+
+\section[Le for du C]{L'instruction de contrôle for du langage C}
+\subsection{Rappel sur la programmation structurée}
+%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}
+  \frametitle{Rappel sur la programmation structurée \nowrite}
+  \begin{definition}[Programmation structurée]
+    Programmer par \structure{blocs} d'instructions en combinant ces blocs de trois manières :
+    \begin{enumerate}
+    \item exécuter les blocs les uns à la suite des autres (\structure{séquence})
+    \item si une certaine condition est vraie, exécuter un bloc sinon
+      en exécuter un autre (\structure{sélection})
+    \item recommencer l'exécution d'un bloc tant qu'une certaine
+      condition est vraie (\structure{répétition}).
+    \end{enumerate}
+    Un bloc peut lui-même contenir une combinaison de blocs.
+  \end{definition}
+\pause
+Aujourd'hui nous allons voir une première forme de répétition en C, le
+\C{for}. Avant cela nous revenons sur la sélection  (le \C{if} ou \C{if else}).
+\end{frame}
+
+\subsection{Rappels sur l'instruction de contrôle if}
+\begin{frame}[fragile]
+  \frametitle{Rappels sur l'instruction de contrôle if \nowrite}
+
+\structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
+\{\emph{\colorbox{red!20}{bloc2}}\}}.
+\medskip
+
+%\pause
+  \begin{columns}
+    \begin{column}[t]{5cm}
+\structure{Code source}
+\begin{verbatim}
+/* avant */
+if (age < 18)
+{
+  permis = 0;
+}
+else
+{
+  permis = 1;
+}
+/* après */
+\end{verbatim}
+   \end{column}
+\pause
+   \begin{column}[t]{4cm}
+\structure{Schéma de traduction}\\[.3cm]
+\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+
+\tikzstyle{line} = [draw, thick, -latex']
+\begin{tikzpicture}[node distance=.7cm]
+  \node [amil] (avant) {avant};
+  \node [amil,below of=avant] (eval) {évalue la condition};
+  \node [amil,below of =eval,fill=orange!20] (selection) {saute si elle est fausse};
+ % \uncover<4->{%
+    \node [amil,below of =selection,fill=green!20] (bloc1) {bloc1};
+    \node [amil,below of =bloc1,fill=orange!20] (saut1) {saute après};
+  %}
+  \node [amil,below of =saut1,fill=red!20](bloc2) {bloc2};
+  \node [amil,below of =bloc2] (apres) {après};
+  \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
+%\uncover<4->{
+\path [line] (saut1) -| ++(2.4,0) |-  (apres);
+%}
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{L'instruction de contrôle for}
+\begin{frame}[fragile]
+  \frametitle{L'instruction de contrôle for}
+
+\structure{Syntaxe :}\\
+ \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}}) 
+\{\emph{\colorbox{green!20}{bloc}}\}}.
+\medskip
+
+\pause
+  \begin{columns}
+    \begin{column}[t]{6cm}
+\structure{Code source}
+\begin{verbatim}
+/* avant */
+for (i = 0; i < 5; i = i + 1)
+{
+  printf("%d\n", i);
+  ...
+}
+/* après */
+\end{verbatim}
+La variable \C{i} est appelée \alert{variable de boucle}, elle doit être préalablement déclarée comme toute autre variable.
+
+   \end{column}
+\uncover<3->{
+   \begin{column}[t]{4cm}
+\structure{Schéma de traduction}\\[.3cm]
+\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+\tikzstyle{line} = [draw, thick, -latex']
+     \begin{tikzpicture}[node distance=.7cm]
+       \node [amil] (avant) {avant};
+       \node [amil,below of=avant] (instruction1) {instruction 1};
+       \node [amil,below of =instruction1,fill=orange!20] (saut1) {saute à la condition};
+       \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
+\uncover<4->{\node [amil,below of =bloc,fill=yellow!20] (instruction2) {instruction 2};}
+       \node [amil,below of =instruction2](eval) {évalue la condition};
+       \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
+       \node [amil,below of =sautcond] (apres) {après};
+       \path [line] (saut1) -| ++(2.6,0) |-  (eval);
+       \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
+     \end{tikzpicture}
+   \end{column}
+}
+ \end{columns}
+\end{frame}
+
+\section{Démos}
+\begin{frame}
+  \frametitle{Démos}
+\end{frame}
+
+\section{Trace}
+\begin{frame}[fragile]
+  \frametitle{Trace}
+\begin{columns}
+  \begin{column}[b]{4cm}
+ \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\scriptsize]
+int main()
+{
+  /* Declaration et initialisation de variables */
+ int i; /* var. de boucle */
+
+  for (i = 0; i < 3; i = i + 1) /* pour chacune des 3 etapes */
+  {
+    printf("etape %d\n", i);
+  }
+  printf("i vaut %d\n", i);
+
+  return EXIT_SUCCESS;  
+}
+\end{lstlisting}
+\vspace{.4cm}
+  \end{column}
+\begin{column}[b]{4cm}
+ \scriptsize
+\pause
+  \begin{tabular}{|r|c|l|}
+\hline
+    ligne & \C{i} & sortie écran \\ \hline
+\pause
+   initialisation & ? &  \\ \hline
+\pause
+  6 & 0 & \\ \hline
+\pause
+  8 &  & \C{etape 0} \\ \hline
+\pause
+  9 & 1 & \\ \hline
+\pause
+  8 &  & \C{etape 1} \\ \hline
+\pause
+  9 & 2 & \\ \hline
+\pause
+  8 &  & \C{etape 2} \\ \hline
+\pause
+  9 & 3 & \\ \hline
+\pause
+  10 & & \C{i vaut 3} \\ \hline
+\pause
+12 & \multicolumn{2}{|c|}{Renvoie \C{EXIT\_SUCCESS}} \\ \hline
+\end{tabular}
+  \end{column}
+ \end{columns}
+\end{frame}
+\section{printf/scanf (1)}
+\begin{frame}[fragile]
+  \frametitle{printf/scanf (1) \nowrite}
+\begin{itemize}
+\item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
+  (\emph{print formatted}). 
+\item Chaque \verb+%+ 
+dans le texte à afficher est substitué par la valeur formatée d'un
+\alert{paramètre supplémentaire} de la fonction. Le caractère suivant le
+symbole \verb+%+ 
+détaille la conversion à utiliser.  La conversion  \verb+%d+
+met une valeur au format \alert{entier décimal}.
+\pause
+\item Exemples :
+  \begin{itemize}
+\item
+    \verb+printf("Bonjour\n")+ 
+affiche \C{Bonjour} et un saut de
+    ligne\pause
+\item
+    \verb+printf("i vaut %d\n", i)+ 
+affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
+ligne)\pause
+\item
+    \verb+printf("(%d, %d)\n", 31, -4)+ 
+affiche \C{(31, -4)} et un saut de ligne.
+ \end{itemize}
+\pause
+\item Réciproquement pour faire entrer dans le programme une donnée saisie par
+  l'utilisateur, nous utiliserons \alert{\C{scanf}}.
+\item Exemple : \verb+scanf("%d", &x)+
+\end{itemize}
+\end{frame}
+
+\section*{Démos}
+\begin{frame}
+  \frametitle{Démos}
+\end{frame}
+
+\end{document}

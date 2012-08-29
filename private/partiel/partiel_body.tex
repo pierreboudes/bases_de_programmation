@@ -1,0 +1,774 @@
+% -*- coding: utf-8 -*-
+
+\newcounter{questioncount}
+\setcounter{questioncount}{0}
+\newcommand{\question}{\addtocounter{questioncount}{1}\paragraph{Question \Alph{questioncount}.}}
+\newcommand{\commentaire}[1]{}
+\newcommand{\pt}[1]{\fbox{$#1 \operatorname{pt}$}}
+
+\entete{Éléments d'informatique : partiel de mi-semestre}
+\vspace{-1cm}
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à titre indicatif
+  afin de vous permettre de gérer votre temps. Vous pouvez traiter les
+  questions dans l'ordre de votre choix, en faisant bien apparaître la
+  numérotation alphabétique. Les premières questions sont plus faciles que les
+  dernières.  Il est recommandé de faire tourner à la main sur un exemple
+  vos programmes pour s'assurer qu'il sont corrects.
+\end{description}
+
+\setlength{\textfloatsep}{1em}
+
+\section{Étude de programmes et questions de cours (\emph{8 points})}
+
+\subsection{Questions de cours}
+\question Rappeler les cinq étapes de la compilation. \bareme{1}
+
+
+\begin{correction}
+Les cinq étapes de la compilation sont :
+  \begin{itemize}
+  \item l'analyse lexicale,
+\item l'analyse syntaxique,
+\item l'analyse sémantique,
+\item la génération du code,
+\item l'édition de liens.
+  \end{itemize}
+  \begin{baremeenv}
+Si tout juste \pt{1}, sinon :
+    \begin{itemize}
+\item S'il ne manque que génération du code \pt{0.75}, sinon:
+    \item \pt{0.5} s'il manque une ou deux étapes ou s'il n'en manque
+      aucune mais qu'elles sont dans le désordre (quel que soit le
+      niveau de désordre). Sinon :
+    \item \pt{0.25} si il y a au moins dans cet ordre : analyse syntaxique
+      et analyse sémantique.
+    \end{itemize}
+  \end{baremeenv}
+\end{correction}
+\question Expliquer le fonctionnement de l'instruction
+\C{\#define}. Vous pouvez prendre comme exemple le programme de la
+figure~\ref{fig:max}. \bareme{1}
+
+\begin{correction}
+  L'instruction \verb|#define| s'adresse au préprocesseur du
+  compilateur, elle instruit le préprocesseur de l'existence d'un nom
+  (par convention noté en majuscule) dans la suite du texte du
+  programme et d'une expression qui devra se substituer à ce nom avant
+  de commencer la compilation. Ce nom est appelé constante symbolique,
+  il est en général plus clair pour le programmeur que l'expression
+  qui le remplacera et facilite ainsi une relecture non ambiguë du
+  programme (deux constantes symboliques définiront des noms
+  différents pour des rôles différents, même si les expressions de
+  substitution sont
+  identiques).
+
+Dans le programme de la
+figure~\ref{fig:max}, ligne~5, l'instruction \verb|#define| définit une
+constante symbolique de nom \C{TAILLE} qui sera substituée par
+l'expression \C{3}. Cette constante est utilisée pour référer à la
+taille du tableau \C{t} dans la suite du programme.
+
+ \begin{baremeenv}
+\pt{1} si constante symbolique, préprocesseur,  TAILLE remplacé
+      par 3. \pt{0.5} si seulement notion de constantes et pas de mise en
+      relation avec la substitution au moment de la compilation.
+\end{baremeenv}
+\end{correction}
+
+\begin{figure}[htb]
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define TAILLE 3
+
+/* Fonction principale */
+int main()
+{
+  int t[TAILLE] = {12, 15, 10}; /* tableau */
+
+
+
+  /* calcul du maximum (À FAIRE) */
+
+
+
+
+
+  /* affichage du résultat */
+  printf("Le maximum est %d\n", maximum);
+
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+\end{small}
+  \caption{Calcul du maximum d'un tableau (à compléter)}
+  \label{fig:max}
+\end{figure}
+
+\subsection{Maximum des éléments d'un tableau}
+
+Nous voulons écrire un programme qui calcule le maximum des éléments
+d'un tableau d'entiers positifs. Une partie du programme est déjà écrite, figure~\ref{fig:max}, et
+Pippo pense qu'il ne
+reste plus qu'à écrire la partie qui calcule effectivement le
+maximum. 
+
+\question Avant de continuer Pippo veut tester son programme, mais la compilation échoue. Expliquer pourquoi, quelle étape de la
+  compilation échoue précisément et ce qu'il manque pour que la
+  compilation réussisse. \bareme{1}
+
+  \begin{correction}
+
+La compilation échoue car la variable \C{maximum} est utilisée sans
+avoir été déclarée. C'est à l'analyse sémantique que cette erreur est
+détectée puisque c'est l'étape où les objets manipulés par le
+programme et les actions sur ces objets sont analysés.  
+    \begin{baremeenv}
+      \pt{1} dont \pt{0.5} pour \emph{déclaration de la variable
+      \C{maximum}}  plus \pt{0.5} pour \emph{analyse sémantique} ou
+      \pt{0.25} si \emph{avant la génération du code objet} et/ou \emph{avant
+      l'édition de lien}.
+    \end{baremeenv}
+  \end{correction}
+\question Compléter le programme pour qu'il calcule effectivement le maximum
+  des éléments du tableau (pour n'importe quel tableau contenant des
+  entiers positifs et de taille \C{TAILLE} fixée arbitrairement). \bareme{2}
+
+  \paragraph{Exemple.} Pour le tableau donné dans le code, une fois
+  terminé, le programme affichera :
+
+\begin{small}
+\begin{verbatim}
+Le maximum est 15
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+Voir figure~\ref{fig:maxcorr}.
+  \begin{figure}[htbp]
+\small
+  \begin{listing}{11}
+    int maximum = 0; /* maximum initial: plus petite valeur possible */    
+    int i; /* variable de boucle */
+
+    /* calcul du maximum */
+    for (i = 0; i < TAILLE; i = i + 1) /* pour chaque element de t */    
+    {
+        if (maximum < t[i]) /* t[i] > max(t[0], ... , t[i - 1]) */
+        {
+            maximum = t[i]; /* t[i] = max(t[0], ..., t[i]) */ 
+        }
+    }
+  \end{listing}
+   \caption{Complément de programme}
+    \label{fig:maxcorr}
+  \end{figure}
+
+\begin{baremeenv}
+\pt{2.5}  (barème augmenté)  pour le code juste (compilation correction quel que soit
+  TAILLE). Sinon, maxi \pt{2} :
+  \begin{itemize}
+  \item pas de boucle on met \pt{0} quelque soit le contenu.
+  \item pas de points en moins ou en plus pour la déclaration de la
+    variable de boucle (redite sous une autre forme de la première
+    question) ou pour l'initialisation de maximum à zéro ou à la
+    première case du tableau.
+  \item \pt{0.5} une (et une seule boucle (for, while accepté)
+ \item \pt{0.5} la boucle parcours effectivement un tableau de taille
+    TAILLE (TAILLE - 1 admis si l'initialisation du maximum est faite à \C{t[0]}).
+\item \pt{0.5} pour un if imbriqué dans la boucle.
+\item \pt{0.5} si le if est correct, c'est à dire s'il réalise le bon test (comparaison avec le maximum
+  courant) et change la valeur du maximum courant en conséquent.
+  \end{itemize}
+\end{baremeenv}
+\end{correction}
+
+
+\subsection{Trace d'un programme} 
+
+\question Simuler l'exécution du programme figure~\ref{pourtrace}, en réalisant sa
+\textbf{trace}.\bareme{3}
+
+\paragraph{Rappel.} La trace représente l'exécution du programme par
+un tableau à $n + 2$ colonnes : la première colonne contient le numéro
+de la ligne exécutée; les $n$ colonnes suivantes, les variables du
+programme ($n$ à déterminer) et la dernière colonne, l'affichage
+réalisé par le programme à l'écran. La trace commence par une ligne
+nommant les colonnes, puis la ligne reportant les valeurs initiales
+des variables, après quoi seules les lignes modifiant l'état mémoire
+du programme ou l'affichage sont à reporter dans le
+tableau. L'utilisateur doit saisir trois entiers : considerer, comme
+indiqué en commentaires, qu'il saisit $1$ puis $2$ puis $3$.
+\begin{figure}[htbp]
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations de constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int terme;
+    int raison;
+    int n;
+    int i;
+    int serie = 0;
+    
+    printf("Entrez le premier terme, la raison puis le nombre de termes : ");
+    scanf("%d",&terme);  /* 1 est saisi par l'utilisateur */
+    scanf("%d",&raison); /* 2 est saisi par l'utilisateur */
+    scanf("%d",&n);      /* 3 est saisi par l'utilisateur */
+    
+    for (i = 0; i < n; i = i + 1)
+    {
+        serie = serie + terme;
+        terme = terme * raison;
+    }
+
+    printf("somme des %d premiers termes de la suite : %d\n", n, serie);
+
+    return EXIT_SUCCESS;
+}
+\end{listing}
+\end{small}
+  \caption{Faire la trace du programme}
+  \label{pourtrace}
+\end{figure}
+
+\begin{correction}
+Voir table~\ref{fig:trace}.
+
+  \begin{sidewaystable}
+  \centering
+         \begin{tabular}[t]{|r|c|c|c|c|c|l|}
+          \multicolumn{7}{l}{\C{main()} (l'utilisateur saisit $1$, puis $2$, puis $3$)}\\ \hline
+          \textbf{numéro de ligne} & \C{terme} &\C{raison} & \C{n} &
+          \C{i} & \C{serie} & \textbf{Affichage (sortie écran)}  \\ \hline
+          initialisation  & ? & ? & ? & ? &  0& \\ \hline
+          17 & & & & & &Entrez le premier terme, la raison, puis le
+          nombre de termes :\\ \hline
+          18 &  1& & & & & \\ \hline
+          19&  & 2 & & & &\\ \hline
+          20 &  &  & 3 & & &\\ \hline
+          22 &  &  & & 0 & &\\ \hline
+          24 &  &  & &  & 1 &\\ \hline
+          25 & 2 &  & &  & &\\ \hline
+          26 &  &  & & 1 & &\\ \hline
+          24 &  &  & &  & 3 &\\ \hline
+          25 & 4 &  & &  & &\\ \hline
+          26 &  &  & & 2 & &\\ \hline
+          24 &  &  & &  & 7 &\\ \hline
+          25 & 8 &  & &  & &\\ \hline
+          26 &  &  & & 3 & &\\ \hline
+          28 &  &  & &  & & somme des 3 premiers termes de la suite : 7\\ \hline
+          30 &  \multicolumn{6}{l|}{retourne \C{EXIT\_SUCCESS}} \\
+          \hline
+         \end{tabular}
+  \caption{Trace du programme de la figure~\ref{pourtrace}}
+  \label{fig:trace}
+\end{sidewaystable}
+  \begin{baremeenv}
+      Compter :
+      \begin{itemize}
+      \item \pt{0.5} pour une ligne d'en-tête juste, autrement dit pour
+        les colonnes (0 sinon)
+      \item \pt{0.5} pour une ligne d'initialisation juste (0 sinon)
+      \item aucune pénalité si la dernière ligne est absente (renvoie
+        ....).
+      \item \pt{2} pour le corps du main juste :
+        \begin{itemize}
+        \item \pt{-0,5} de pénalités si des erreurs dans la partie saisie
+        \item \pt{-0,5}  de pénalités si des erreurs dans l'un ou l'autre
+          ou les deux affichages.
+        \item \pt{-1} de pénalité sur le for : si la boucle ne passe pas exactement
+          par trois étapes avec i = 0, 1, 2 ou bien si la dernière
+          affectation de \C{i} (à 3) n'est pas faite.
+        \item Pour toute autre ligne erronée (ligne 24 ou 25 ne
+          compter qu'une seule fois)
+          compter \pt{-0.5} de pénalité.
+        \end{itemize}
+     \item Si des valeurs de variables non modifiées apparaissent sur
+        certaines lignes compter également une pénalité de \pt{-0.5}.
+      \end{itemize}
+    \end{baremeenv}
+\end{correction}
+
+\section{Jours d'automne (\textit{4 points})}
+
+Cette année votre premier semestre se déroule sur trois saisons :
+l'été qui se termine le 22 septembre, l'automne qui commence le 23
+septembre et se termine le 21 décembre et l'hiver qui commence le 22
+décembre.
+
+Soient deux variables entières \C{jour} et \C{mois}, représentant une
+date entre le premier septembre (1/9) et le 31 décembre (31/12) et que
+vous initialiserez à des valeurs de votre choix, prises dans cet
+intervalle (votre programme doit fonctionner pour n'importe quel
+choix correct de date).
+
+\question Écrire un programme qui :
+\begin{enumerate}
+\item définit trois constantes symboliques pour représenter par trois
+  nombres différents les trois
+  saisons : \C{ETE}, \C{AUTOMNE}, \C{HIVER}. \bareme{0.5}
+\item affiche la date représentée par les variables \C{jour} et \C{mois} \bareme{0.5}
+\item trouve la saison correspondant à cette date \bareme{2}
+\item affiche : \bareme{1}
+\begin{itemize}
+\item \C{C'est encore l'été}, si la date est en été;
+\item \C{C'est l'automne}, si la date est en automne;
+\item \C{Déjà l'hiver}, si la date du jour est en hiver.
+\end{itemize}
+\end{enumerate}
+
+
+Vous séparerez clairement le calcul de la saison et la partie
+affichage dans votre programme. Pour cela vous utiliserez une variable
+entière \C{saison} dont les valeurs possibles seront : \C{ETE},
+\C{AUTOMNE}, \C{HIVER}.
+
+
+\paragraph{Exemples d'exécutions :}
+\begin{small}
+\begin{verbatim}
+Date : 20 10
+c'est l'automne
+
+Date : 5 9
+C'est encore l'ete
+
+Date :  23 12
+Deja l'hiver
+\end{verbatim}
+\end{small}
+  \begin{correction}
+Voir figure~\ref{automne}.
+\begin{baremeenv}
+   \begin{itemize}
+\item \pt{0.5} pour les trois define avec trois valeurs quelconques mais
+  différentes.
+    \item \pt{0.5} pour l'affichage jour/mois
+    \item \pt{3} pour calcul et affichage. Si ce
+      programme est trop compliqué (des boucles ou autre) c'est zéro à
+      cette partie sans regarder plus loin. Sinon :
+      \begin{itemize}
+\item \pt{1} si séparation calcul / affichage et que l'affichage en fonction
+  de la valeur de la variable saison est correct (a des variations de
+  syntaxe pret).
+      \item \pt{0.5} si fonctionne pour mois 10 et 11  (jour quelconque)
+     \item \pt{0.5} par transition dans le mois correctes (en décembre et
+       en septembre), \pt{0.25} si c'est à un jour pret.
+     \end{itemize}
+     \item \pt{-0.5} s'il y a des variables non declarées, ou
+       si il n'y a pas de main.
+\item aucune pénalité pour le traitement des dates mals formatées ou
+  en dehors de l'intervalle.
+\item pas de penalité si oublie d'un include ou du EXIT\_SUCCESS.
+   \end{itemize}
+\end{baremeenv}
+\begin{figure}[htbp]
+ \begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* 1) déclaration constantes et types utilisateurs */
+#define ETE 1
+#define AUTOMNE 2
+#define HIVER 3
+
+/* Fonction principale */
+int main()
+{
+    int jour = 21;
+    int mois = 9;
+    int saison = AUTOMNE;
+    
+    /* 2 affichage */
+    printf("Date : %d %d\n", jour, mois);
+
+
+    /*3 calcul de la saison */
+    if ((9 == mois) && (jour < 23)) 
+    {
+        saison = ETE;
+    }
+    if ((12 == mois) && (jour > 21)) 
+    {
+        saison = HIVER;
+    }
+
+    /* 3' optionnel (non demandé) */
+    if ((mois < 9) || (mois > 12))
+    {
+      saison = 0;
+      printf("Il n'y a plus de saisons !\n");
+    }
+
+    /*4 affichage */
+    if (ETE == saison)
+    {
+        printf("C'est encore l'ete\n");
+    }
+    if (AUTOMNE == saison)
+    {
+        printf("C'est l'automne\n");
+    }
+    if (HIVER == saison)
+    {
+        printf("Deja l'hiver\n");
+    }
+
+
+   /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+\end{small}
+  \caption{Jours d'automne}
+  \label{automne}
+\end{figure}
+  \end{correction}
+
+\section{For ou while ?}
+\subsection{Puissances successives d'un entier (\emph{4 points})}
+
+\question Écrire un programme qui demande un entier $n$ à l'utilisateur et
+calcule puis affiche $n^{10}$ ($n$ puissance dix). \bareme{2}
+\paragraph{Exemple d'exécution.} 
+\begin{small}
+\begin{verbatim}
+Donner un entier : 2
+2 exposant 10 = 1024
+\end{verbatim}
+\end{small}
+
+
+\begin{correction}
+Voir figure~\ref{fig:puissance}.
+  \begin{figure}[htbp]
+    \begin{small}
+      \begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+/* declarations de constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int n = 0; /* base */
+    int produit = 1;
+    int i; /* var de boucle */
+
+    /* saisie */
+    printf("Donner un entier : ");
+    scanf("%d", &n);
+
+    /* calcul */
+    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
+                                     la multiplication par n */
+    {
+        produit = produit * n;
+    }
+
+    /* affichage */
+    printf("%d exposant %d = %d\n", n, 10, produit);
+
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+    \end{small}
+    \caption{Puissance dix}
+    \label{fig:puissance}
+  \end{figure}
+  \begin{baremeenv}
+    \begin{itemize}
+    \item \pt{0.5} pour la saisie meme si oublie du \&
+    \item \pt{1.5} pour le reste, zéro si pas de boucle sinon :
+      \begin{itemize}
+      \item enlever \pt{0.5} si c'est un while
+      \item enlever \pt{0.5} par problème de déclaration, d'initialisation,
+        ou d'include manquant. 
+\item enlever \pt{0.5} si erreur sur le nombre d'étapes de boucle.
+      \item on ne demande pas un affichage élaboré.
+      \end{itemize}
+    \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+\question Comment modifier simplement votre programme pour qu'il
+affiche le calcul des puissances successives de l'entier $n$ saisi,
+de $n^0$ jusqu'à $n^{10}$ ?\bareme{1}
+
+
+\paragraph{Exemple d'exécution.} 
+\begin{small}
+\begin{verbatim}
+Donner un entier : 2
+2 exposant 0 = 1
+2 exposant 1 = 2
+2 exposant 2 = 4
+...
+2 exposant 10 = 1024
+\end{verbatim}
+\end{small}
+\begin{correction}
+  Il suffit de placer l'affichage dans la boucle, au début du bloc.
+\begin{small}
+\begin{verbatim}
+    /* calcul et affichage */
+    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
+                                     la multiplication par n */
+    {
+        /* affichage */
+        printf("%d exposant %d = %d\n", n, i, produit);
+        produit = produit * n;
+    }
+    /* affichage */
+    printf("%d exposant %d = %d\n", n, 10, produit);
+\end{verbatim}
+\end{small}
+  \begin{baremeenv}
+    Compter \pt{0} pour toute autre solution. Pénalité de \pt{-0.5} si
+    n'affiche pas l'exposant ou pas la bonne valeur
+    d'exposant. Ne pas enlever de point si l'affichage ne va que
+    jusqu'à l'exposant 9.
+  \end{baremeenv}
+\end{correction}
+
+
+\question Comment modifier simplement votre programme pour qu'il
+affiche le calcul des puissances successives de l'entier $n$
+uniquement à partir de l'exposant $5$ ?\bareme{1}
+
+\paragraph{Exemple d'exécution.} 
+\begin{small}
+\begin{verbatim}
+Donner un entier : 2
+2 exposant 5 = 32
+2 exposant 6 = 64
+...
+2 exposant 10 = 1024
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+il suffit d'encapsuler l'affichage de l'intérieur de boucle dans un
+test :
+\begin{small}
+\begin{verbatim}
+    /* calcul et affichage */
+    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
+                                     la multiplication par n */
+    {
+        /* affichage */
+        if (i > 4) 
+        {
+            printf("%d exposant %d = %d\n", n, i, produit);
+        }
+        produit = produit * n;
+    }
+    /* affichage */
+    printf("%d exposant %d = %d\n", n, 10, produit);
+\end{verbatim}
+\end{small}
+  \begin{baremeenv}
+    Autre solution admise : deux boucles (i allant de 0 à 4 puis i
+    allant de 5 à 9)  à la suite l'une de l'autre. Sinon zéro.
+ \end{baremeenv}
+\end{correction}
+
+
+
+\subsection{Unicité des éléments d'un tableau (\emph{4 points})}
+
+Nous disposons d'un tableau $t$ de $N$ entiers. Utiliser une constante
+symbolique pour $N$. Nous souhaitons
+savoir si chaque entier apparaissant dans le tableau n'y apparaît
+qu'une seule fois, autrement dit on veut savoir si chaque entier
+est unique dans le tableau.
+
+\question Écrire un programme qui, étant donné un tableau initalisé $t$,
+  teste si le premier élément du tableau est unique et affiche
+  \C{Vrai} si c'est le cas, \C{Faux} sinon.\bareme{2}
+  \begin{correction} 
+Voir figure~\ref{fig:unicite1}.
+    \begin{figure}[htbp]
+      \begin{small}
+        \begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define N 3
+#define TRUE 1
+#define FALSE 0
+
+/* Fonction principale */
+int main()
+{
+  int t[N] = {10,10,15};
+  int unique = TRUE;
+  int i; /* var de boucle */
+
+  i = 1;
+  while (unique && (i < N)) /* tant que t[0] est unique */
+  {
+    if (t[i] == t[0]) /* t[0] n'est pas unique */
+    {
+      unique = FALSE;
+    }
+    i = i + 1; /* case suivante */
+  }
+
+  /* affichage du résultat */
+  if (unique)
+  {
+    printf("Vrai\n");
+  }
+  else
+  {
+    printf("Faux\n");
+  }
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+      \end{small}
+      \caption{Unicité des éléments d'un tableau}
+      \label{fig:unicite1}
+    \end{figure}
+
+    \begin{baremeenv}
+    \pt{2} si arrive au résultat avec une seule boucle (for ou
+    while). L'affichage doit être correct mais on accepte les
+    variantes : ''machin n'est
+    pas unique / "machin est unique'' etc.
+
+    Sinon maximum \pt{1,5} : \pt{0,5} s'il y a une seule boucle; \pt{0,5}
+    de plus si c'est un while; ajouter \pt{0,5} si utilise une
+    variable booléenne (déclarée et initialisée, et les define TRUE
+    et FALSE).      
+    \end{baremeenv}
+  \end{correction}
+
+
+\question Écrire un programme qui étant donné un tableau initialisé $t$, teste
+  si tous les éléments sont uniques et affiche \C{Vrai} si c'est le
+  cas, \C{Faux} sinon.\bareme{2}
+
+  \begin{correction} 
+Voir figure~\ref{fig:unicite2}.
+
+    \begin{figure}[htbp]
+      \begin{small}
+        \begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define N 4
+#define TRUE 1
+#define FALSE 0
+
+/* Fonction principale */
+int main()
+{
+  int t[N] = {10,12,15,12};
+  int unique = TRUE;
+  int i; /* var de boucle */
+  int j; /* var de boucle */
+
+  j = 0; /* premiere case */
+  while (unique && (j < N)) /* pour chaque case, verifier que la case
+  est unique */
+  { 
+    i = j + 1; /* case suivant t[j] */
+    while (unique && (i < N)) /* tant que t[j] est unique */
+    {
+      if (t[i] == t[j]) /* t[j] n'est pas unique */
+      {
+        unique = FALSE;
+      }
+      i = i + 1; /* case suivante */
+    }
+    j = j + 1; /* case suivante */
+  }
+  /* affichage du résultat */
+  if (unique)
+  {
+    printf("Vrai\n");
+  }
+  else
+  {
+    printf("Faux\n");
+  }
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+      \end{small}
+      \caption{Unicité de tous les éléments du tableau}
+\label{fig:unicite2}
+    \end{figure}
+
+   \begin{baremeenv}
+   \pt{2} si arrive au résultat avec deux boucles (avec affichage mais
+   variantes acceptée). 
+
+    Sinon maximum \pt{1,5} : \pt{0,5} s'il y a deux boucles avec
+   variables de boucles différentes (quelles
+   que soient les boucles et les bornes); \pt{0,5} si elles sont
+   toutes deux des while; \pt{0,5} s'il a un algorithme correct en
+   français en commentaire ou dans le texte; \pt{0,5} si utilise une
+   variable boolénnee ou deux variables booléennes. 
+   \end{baremeenv}
+  \end{correction}
+
+\subsection*{Question bonus (\emph{2 points})}
+ Cette question est difficile et elle sera notée de manière très stricte. Il vaut
+beaucoup mieux traiter toutes les autres questions avant de chercher à y
+répondre. 
+ \question Écrire un programme qui :
+\begin{enumerate}
+\item  demande à l'utilisateur d'entrer un
+nombre $n$ dont on supposera qu'il est strictement supérieur à $1$.
+\item tant que $n$ est différent de $1$, répète l'étape suivante :
+
+  \hfill\fbox{\parbox{0.8\linewidth}{
+   calculer une nouvelle valeur de $n$ ainsi :
+    \begin{itemize}
+    \item si $n$ est pair, le diviser par deux
+    \item si $n$ est impair, le multiplier par trois et lui ajouter un
+    \end{itemize}
+    et afficher la nouvelle valeur de $n$.}}
+
+\item affiche le nombre de fois où l'étape précédente a été répétée,
+et la plus grande valeur prise par $n$ au cours de ce calcul.
+\end{enumerate}
+Ce programme termine-t-il toujours ?
+
+\begin{correction}
+  Cette question bonus sera traitée en TD à la fin du semestre.
+\end{correction}
+%\newpage
+%\hfill\thetotalpointsint
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "partiel"
+%%% End: 

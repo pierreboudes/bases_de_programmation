@@ -1,0 +1,320 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Rattrapage d'Éléments d'Informatique}
+
+\begin{description}
+\item[Durée :] 3 heures.
+\item[Documents autorisés :] Aucun.
+\item[Recommandations :] Un barème vous est donné à
+titre indicatif afin de vous permettre de gérer votre temps. La
+notation prendra en compte à la fois la syntaxe et la sémantique de
+vos programmes, c'est-à-dire qu'ils doivent compiler correctement. Une
+fois votre programme écrit, il est fortement recommandé de le faire tourner à la
+main sur un exemple pour s'assurer de sa correction.
+\end{description}
+
+\section{Calcul du quotient d'une division entière par soustractions
+  successives (\textit{4 points})}
+
+Nous voulons écrire une fonction \verb|quotient_par_soustraction| qui
+prend deux entiers strictement positifs a et b en paramètre, et
+retourne le quotient de la division entière de a par b. Le nombre a est
+appelé le dividende et b le diviseur. Cette fonction doit calculer le
+quotient par soustractions successives \textbf{sans utiliser
+  l'opérateur / du C (division entière)}. Le programme principal
+est déjà écrit pour pouvoir tester la fonction :
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+
+int main()
+{
+  int dividende;
+  int diviseur;
+
+  printf("Entrez le dividende et le diviseur : ");
+  scanf("%d%d",&dividende,&diviseur);
+
+  while(dividende <= 0 || diviseur <= 0) /* pas les deux strictement positifs */
+  {
+      printf("Erreur. Entrez le dividende et le diviseur : ");
+      scanf("%d%d",&dividende,&diviseur);
+  }
+
+  printf("le quotient de la division euclidienne est : %d\n",
+         quotient_par_soustraction(dividende,diviseur));
+
+  return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+\end{verbatim}
+
+\begin{enumerate}
+\item Ajouter uniquement la déclaration de la fonction \verb|quotient_par_soustraction| dans le programme principal, à la bonne place.
+\item Est-ce que le programme compile ? Est-ce que l'édition de liens
+  réussit ? \textbf{Les réponses doivent être succintement expliquées}.
+\item Écrire la fonction \verb|quotient_par_soustraction|.
+\end{enumerate}
+
+Deux exemples d'exécution du programme sont :
+\begin{verbatim}
+Entrez le dividende et le diviseur : 23 4
+le quotient de la division euclidienne est : 5
+Entrez le dividende et le diviseur : 1 4
+le quotient de la division euclidienne est : 0
+\end{verbatim}
+
+\section{Boucles \emph{for} et \emph{while} \textit{(7 points)}}
+
+Ces boucles ont exactement la même sémantique et on peut facilement
+réécrire l'une en l'autre. Par convention, on préfère utiliser la
+boucle \emph{for} lorsque l'on connaît le nombre d'itérations à
+l'avance ; on utilise \emph{while} dans le cas contraire, lorsque le nombre
+d'itérations n'est pas connu à l'avance. Par exemple, pour faire la
+somme des éléments d'un tableau on utilisera \emph{for} et pour
+trouver un élément dans un tableau, ne sachant pas où il se trouve, on
+choisira \emph{while}. L'intérêt de respecter cette convention est
+que la lecture d'un programme est facilité en indiquant à quoi sert la
+boucle.
+
+Résoudre les problèmes suivants en utilisant soit \emph{for}, soit \emph{while}.
+
+\subsection{Nombre d'occurrences dans un tableau \textit{(3,5 points})}
+
+Écrire un programme qui fait initialiser un tableau d'entiers de taille \verb|TAILLE| (constante symbolique à définir) par l'utilisateur, demande à l'utilisateur un entier, et affiche le nombre d'occurrences de l'entier dans le tableau. Des exemples de sorties sont les suivants :
+\begin{verbatim}
+Saisissez 4 entiers : -2 -2 -2 3
+Compte le nombre d'occurrences de quel entier ?
+-2
+Il y a 3 occurrences de -2 dans le tableau.
+
+Saisissez 4 entiers : -2 -2 -2 3
+Compte le nombre d'occurrences de quel entier ?
+3
+Il y a 1 occurrences de 3 dans le tableau.
+
+Saisissez 4 entiers : -2 -2 -2 3
+Compte le nombre d'occurrences de quel entier ?
+0
+Il y a 0 occurrences de 0 dans le tableau.
+\end{verbatim}
+
+\begin{correction}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+#define TAILLE 4 /* taille du tableau utilisateur */
+
+/* declaration de fonctions utilisateurs */
+
+int main()
+{
+    int tab[TAILLE]; /* tableau a initialiser par l'utilisateur */
+    int elt; /* l'elt a chercher */
+    int nb_occ = 0; /* le nombre d'occurrences de elt dans tab */
+    int i; /* var. de boucle */
+
+    /* saisie de TAILLE entiers*/
+    printf("Saisissez %d entiers : ",TAILLE);
+
+    for(i = 0;i < TAILLE;i = i + 1) /* chaque case du tableau */
+    {
+        /* saisir sa valeur */
+        scanf("%d",&tab[i]);
+    }
+    /* i >= TAILLE */
+
+    /* demande a l'utilisateur de saisir l'entier à chercher */
+    printf("Compte le nombre d'occurrences de quel entier ?\n");
+    scanf("%d",&elt);
+
+    /* compte le nombre d'occurrences */
+    for(i = 0;i < TAILLE;i = i + 1) /* chaque case du tableau */
+    {
+        if(tab[i] == elt) /* trouvé */
+        {
+            /* un de plus */
+            nb_occ = nb_occ + 1;
+        }
+    }
+    /* i >= TAILLE */
+
+    /* affiche résultats */
+    printf("Il y a %d occurrences de %d dans le tableau.\n",nb_occ,elt);
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+
+\end{verbatim}
+\end{correction}
+
+\subsection{Comptage du nombre d'éléments inférieurs et
+  supérieurs à un seuil donné (\textit{3,5 points})}
+
+Écrire un programme principal qui demande à l'utilisateur d'entrer un entier
+positif ou nul \verb|seuil|, d'entrer une suite d'entiers
+positifs ou nuls, puis affiche combien d'entiers de la suite
+sont strictement plus grand que \verb|seuil| et combien sont strictement plus
+petit que \verb|seuil|. La lecture d'un \textit{entier négatif} marquera la fin de
+la suite. Un exemple de sortie est :
+
+\begin{verbatim}
+Entrez le seuil : 3
+Entrez la suite en terminant par un nombre negatif : 1 2 3 4 5 0 -1
+Il y a 2 nombres > seuil et 3 nombres < seuil.
+\end{verbatim}
+
+\textbf{N.B. : } On ne peut pas stocker la série dans un tableau, car on ne connait pas la taille de la suite. Le calcul du nombre d'entiers plus grands et plus petits que le seuil se fait de façon incrémentale, après chaque lecture d'un nouvel entier.
+
+\begin{correction}
+\begin{verbatim}
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  int plus_grand = 0;
+  int plus_petit = 0;
+  int seuil;
+  int nombre;
+
+  printf("Entrez le seuil : ");
+  scanf("%d",&seuil);
+
+  printf("Entrez la suite en terminant par un nombre negatif : ");
+  scanf("%d",&nombre);
+  while(nombre >= 0)
+  {
+      if(nombre < seuil) /* un plus petit */
+        ++plus_petit;
+      if(nombre > seuil) /* un plus grand */
+        ++plus_grand;
+
+      /* on passe au suivant */
+      scanf("%d",&nombre);
+  }
+
+  printf("Il y a %d nombres > seuil et %d nombres < seuil.\n",plus_grand,plus_petit);
+
+  return EXIT_SUCCESS;
+}
+
+\end{verbatim}
+\end{correction}
+
+\section{Trace d'un programme avec fonctions (\textit{4 points})}
+\label{tableau_sans_zero}
+
+Simulez
+  l'exécution du programme, en réalisant sa \textbf{trace} : l'exécution
+  du programme est représenté par un tableau \textbf{par appel de fonction}, à $n + 2$ colonnes : la
+  première colonne étant le numéro de la ligne exécutée, les $n$
+  colonnes suivantes, les colonnes des $n$ variables de la fonction ($n$ à
+  déterminer) et la dernière colonne, la colonne servant à
+  l'affichage à l'écran du programme. Seules les lignes modifiant l'état mémoire du programme sont à reporter dans le tableau.
+  Notez bien que l'utilisateur doit saisir deux entiers. Vous considèrerez, comme indiqué en commentaires, qu'il saisit 4 puis 3.
+
+\begin{small}
+\begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declarations constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+int puissance(int base,int exposant);
+
+int main()
+{
+    int x;
+    int y;
+    
+    printf("Entrez les valeurs de la base puis de l'exposant : ");
+    scanf("%d",&x); /* 4 est saisi par l'utilisateur */
+    scanf("%d",&y); /* 3 est saisi par l'utilisateur */
+    
+    printf("%d exposant %d = %d\n",x,y,puissance(x,y));
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions de fonctions utilisateurs */
+int puissance(int base,int exposant)
+{
+    int i; /* var. boucle */
+    int produit = 1; /* resultat */
+
+    for(i = 0;i < exposant;i = i + 1)
+    {
+        produit = produit * base;
+    }
+
+    return produit;
+}
+\end{listing}
+\end{small}
+
+  \begin{correction}
+    La correction est donnée dans le tableau \ref{simulation}.
+    \begin{table}[h]
+      \begin{tiny}
+	\begin{center}
+		\begin{tabular}[h]{|c|c|c|c|c|c|c|c|c|c|}
+                  \hline
+			ligne & tab[0] & tab[1] & tab[2] & tab[3] & tab[4]& taille & nouvelle\_taille & i & Affichage (sortie écran) \\ 
+		\hline
+           initialisation  &0 &1 &0 &2 &3 &5 &0 &? &  \\ \hline
+			16 &  &  &  &  &  &  &  &0 &  \\ \hline
+                        23 &  &  &  &  &  &  &  &1 &  \\ \hline
+			20 &1 &  &  &  &  &  &  &  &  \\ \hline
+			21 &  &  &  &  &  &  &1 &  &  \\ \hline
+			23 &  &  &  &  &  &  &  &2 &  \\ \hline
+			23 &  &  &  &  &  &  &  &3 &  \\ \hline
+			20 &  &2 &  &  &  &  &  &  &  \\ \hline
+			21 &  &  &  &  &  &  &2 &  &  \\ \hline
+			23 &  &  &  &  &  &  &  &4 &  \\ \hline
+			20 &  &  &3 &  &  &  &  &  &  \\ \hline
+			21 &  &  &  &  &  &  &3 &  &  \\ \hline
+			23 &  &  &  &  &  &  &  &5 &  \\ \hline
+			27 &  &  &  &  &  &3 &  &  &  \\ \hline
+			30 &  &  &  &  &  &  &  &  & taille : 3(passage à la ligne) \\ \hline
+			31 &  &  &  &  &  &  &  &0 &  \\ \hline
+			30 &  &  &  &  &  &  &  &  & 1(espace) \\ \hline
+			34 &  &  &  &  &  &  &  &1 &  \\ \hline
+			30 &  &  &  &  &  &  &  &  & 2(espace) \\ \hline
+			34 &  &  &  &  &  &  &  &2 &  \\ \hline
+			30 &  &  &  &  &  &  &  &  & 3(espace) \\ \hline
+			34 &  &  &  &  &  &  &  &3 &  \\ \hline
+			36 &  &  &  &  &  &  &  &  & (passage à la ligne) \\ \hline
+		\end{tabular}
+		\caption{Trace du programme donné à l'exercice \ref{tableau_sans_zero}.}
+		\label{simulation}
+	\end{center}
+      \end{tiny}
+    \end{table}
+  \end{correction}
+
+\section{Écriture de fonctions (\textit{5 $\times$ 1 point})}
+
+\begin{enumerate}
+\item Écrire la fonction \verb|carre| qui prend en entrée un réel et qui renvoie le carré de ce réel.
+\item Écrire la fonction \verb|majeure| qui prend en entrée un entier représentant l'age en années d'une personne et affiche si cette personne est majeure ou mineure.
+\item Écrire la fonction \verb|demande_taille| qui demande à
+  l'utilisateur sa taille en centimètres, et qui renvoie cette valeur.
+% \item Écrire la fonction \verb|rectangle_d_etoiles| qui prend en
+%   entrée la longueur et la largeur en nombre d'étoiles (caractère
+%   \verb|'*'|) du rectangle,
+%   et qui affiche le rectangle d'étoiles.
+\item Écrire la fonction qui prend en entrée un entier \verb|n| et qui renvoie : \[\sum_{i=0}^{i=n-1} (\sum_{j=0}^{j=n-1}i+j)\]
+\item Écrire la fonction qui prend en entrée un entier \verb|n| et qui renvoie : \[\sum_{i=0}^{i=n-1} (\sum_{j=0}^{j=i-1}i+j)\]
+\end{enumerate}

@@ -1,0 +1,9 @@
+\beamer@endinputifotherversion {3.10pt}
+\select@language {french}
+\beamer@sectionintoc {2}{Survol du contenu du cours (ce semestre)}{3}{0}{1}
+\beamer@sectionintoc {3}{Architecture de von Neumann}{17}{0}{2}
+\beamer@sectionintoc {4}{Repr\IeC {\'e}sentation des informations}{27}{0}{3}
+\beamer@sectionintoc {5}{Cycle d'ex\IeC {\'e}cution}{34}{0}{4}
+\beamer@sectionintoc {6}{Instructions}{41}{0}{5}
+\beamer@sectionintoc {7}{Trace d'ex\IeC {\'e}cution}{49}{0}{6}
+\beamer@sectionintoc {8}{D\IeC {\'e}mos et fin}{60}{0}{7}
