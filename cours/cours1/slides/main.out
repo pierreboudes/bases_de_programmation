@@ -1,7 +1,11 @@
-\BOOKMARK [2][]{Outline0.2}{Survol du contenu du cours \(ce semestre\)}{}% 1
-\BOOKMARK [2][]{Outline0.3}{Architecture de von Neumann}{}% 2
-\BOOKMARK [2][]{Outline0.4}{Repr\351sentation des informations}{}% 3
-\BOOKMARK [2][]{Outline0.5}{Cycle d'ex\351cution}{}% 4
-\BOOKMARK [2][]{Outline0.6}{Instructions}{}% 5
-\BOOKMARK [2][]{Outline0.7}{Trace d'ex\351cution}{}% 6
-\BOOKMARK [2][]{Outline0.8}{D\351mos et fin}{}% 7
+\BOOKMARK [2][]{Outline0.1}{Introduction : langages et programmes}{}% 1
+\BOOKMARK [2][]{Outline0.3}{Architecture mat\351rielle et langage machine}{}% 2
+\BOOKMARK [3][]{Outline0.3.1.14}{Architecture de von Neumann}{Outline0.3}% 3
+\BOOKMARK [3][]{Outline0.3.2.24}{Repr\351sentation des informations}{Outline0.3}% 4
+\BOOKMARK [3][]{Outline0.3.3.30}{Ex\351cution des instructions}{Outline0.3}% 5
+\BOOKMARK [2][]{Outline0.4}{Premiers pas en langage C}{}% 6
+\BOOKMARK [3][]{Outline0.4.1.55}{La programmation structur\351e}{Outline0.4}% 7
+\BOOKMARK [3][]{Outline0.4.2.66}{Variables imp\351ratives et affectation}{Outline0.4}% 8
+\BOOKMARK [3][]{Outline0.4.3.72}{L'instruction de contr\364le if}{Outline0.4}% 9
+\BOOKMARK [2][]{Outline0.5}{D\351mos et fin}{}% 10
+\BOOKMARK [2][]{Outline0.6}{Liens utiles}{}% 11

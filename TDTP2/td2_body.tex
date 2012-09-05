@@ -2,40 +2,21 @@
 
 \newcommand{\commentaire}[1]{}
 
-\entete{Travaux dirigés 4 : la structure de contrôle \C{for}}
+\entete{Travaux dirigés 2 : la structure de contrôle \C{for}}
 
-L'objectif de ce TD est de vous familiariser avec la notion
+\vspace{-1cm}
+L'objectif de ce TD TP est de vous familiariser avec la notion
 d'itération en programmation. On parle communément de
-``boucle''. Cette notion sera illustrée sur des problèmes de comptage
+\emph{boucle}. Cette notion sera illustrée sur des problèmes de comptage
 et de répétition d'actions. 
 
-\begin{correction}
-  Note aux chargés de TD.
-  \begin{itemize}
-  \item En cours, ils ont vu des notions de compilation (analyse
-    lexicale, syntaxique, sémantique) et la structure de contrôle
-    itérative \C{for}. Sa sémantique a été donnée en langage machine. 
-
-  \item Nous poursuivons les exercices type. Ils doivent
-    savoir résoudre/reproduire les exos marqués exercices type et
-    \textbf{faire leur trace sur un exemple quelconque}.
-
-  \item Le code leur est toujours donné avec les commentaires, en
-    suivant scrupuleusement l'indentation choisie. Ils doivent bien
-    comprendre que le code et les commentaires sont
-    indissociables. N'hésitez pas à ajouter des commentaires en
-    fonction des difficultés rencontrées dans votre groupe.
-
-  \item Insister sur la pertinence des noms des variables. Une
-    déclaration par ligne, pour pouvoir commenter la variable.
-  \end{itemize}
-\end{correction}
 
 \section{Itération : l'instruction \C{for}}
 
-\subsection{Rappel}
+%\subsection{Rappel}
 
 Soit le programme suivant :
+{\small
 \begin{listing}{1}
 /* déclaration de fonctionalités supplémentaires */
 #include <stdlib.h> /* EXIT_SUCCESS */
@@ -49,9 +30,9 @@ Soit le programme suivant :
 int main()
 {
     /* déclaration et initialisation variables */
-    int i; /* var. de boucle */
+    int i; /* variable de boucle */
 
-    for(i = 0;i < 5;i = i + 1)
+    for(i = 0; i < 5; i = i + 1)
     {
         printf("i = %d\n",i);
     }
@@ -64,6 +45,7 @@ int main()
 
 /* definitions des fonctions utilisateurs */
 \end{listing}
+}
 
 \begin{enumerate}
 \item Quelle est la signification de chaque argument du \verb|for|~?
@@ -159,7 +141,7 @@ int main()
 
     for(i = 0; i < 3; i = i + 1)
     {
-        printf("(%d,%d) ",i,i);
+        printf("(%d,%d) ", i, i);
     }
     /* i >= 3 */
 
@@ -178,7 +160,7 @@ int main()
   \item \verb|0 1 2 0 1 2 3|.
   \end{itemize}
   De combien de boucles avez-vous besoin~? De combien de variables de
-  boucles avez-vous besoin~?
+  boucles~?
 
   \begin{correction}
     2 boucles à la suite, 1 seule variable (on la réutilise)
@@ -190,7 +172,7 @@ int main()
   \end{itemize}
   
   De combien de boucles avez-vous besoin~? De combien de variables de
-  boucles avez-vous besoin~? Quelle est la différence de structuration
+  boucles~? Quelle est la différence de structuration
   des boucles entre le point 4 et le point 5~?
 
   \begin{correction}
@@ -214,11 +196,11 @@ int main()
     int i; /* var. de boucle */
     int j; /* var. de boucle */
 
-    for(i = 0;i < 3;i = i + 1)
+    for(i = 0; i < 3; i = i + 1)
     {
-        for(j = 0;j < 3;j = j + 1)
+        for(j = 0; j < 3; j = j + 1)
         {
-            printf("(%d,%d) ",i,j);
+            printf("(%d,%d) ", i, j);
         }
         /* j >= 3 */
     }
@@ -239,10 +221,10 @@ int main()
 \subsection{Exercice type : calcul de $\Sigma_1^n i$}
 
 Écrire un programme qui calcule et affiche la somme des entiers de 1 à
-n : $\Sigma_1^n i$. n est un entier quelconque. 
+$n$ : $\Sigma_1^n i$, où $n$ est un entier quelconque (tester avec
+différentes valeurs). 
 
 \begin{correction}
-
 \begin{verbatim}
 /* déclaration de fonctionalités supplémentaires */
 #include <stdlib.h> /* EXIT_SUCCESS */
@@ -256,17 +238,18 @@ n : $\Sigma_1^n i$. n est un entier quelconque.
 int main()
 {
     /* déclaration et initialisation variables */
+    int n = 4;
     int somme = 0; /* élément neutre pour l'addition */
     int i; /* var. de boucle */
 
-    for(i = 1;i <= 4;i = i + 1) /* i allant de 1 à 4 */
+    for(i = 1; i <= n; i = i + 1) /* i allant de 1 à n */
     {
         /* ajoute i à la somme partielle */
         somme = somme + i;
     }
-    /* i > 4 */
+    /* i > n */
 
-    /* somme vaut 0 + 1 + 2 + 3 + 4 */
+    /* somme vaut 0 + 1 + ... + n */
     printf("somme = %d\n",somme);
 
     return EXIT_SUCCESS;
@@ -276,33 +259,131 @@ int main()
 \end{verbatim}
 \end{correction}
 
-\subsection{Affichage de n fois "Coucou''}
+Comment feriez vous pour écrire le même programme en assembleur (amil)
+?
+\begin{correction}
+Le plus facile est d'appliquer le schéma se traduction du for (vu en
+cours) au for
+précédent (en laissant la variable $i$ dans un registre ou en la
+stockant dans la mémoire).  Voici quelques (anciennes) corrections
+plus détaillées (attention, elles partent de i = 0) mais il ne faut pas passer plus que cinq-dix minutes
+sur cet exercice. Il suffit de laisser les étudiants y réfléchir un peu, puis
+donner la structure du programme.
 
-Écrire un programme qui affiche n fois la chaîne de caractères \verb|"Coucou\n"|.
+La correction suivante reprend la traduction en assembleur (\C{gcc
+  -S}) d'un \C{while (...) {...}}, ou d'une boucle \C{for( i = 0; i <=
+  n; i = i + 1)} en C. L'algorithme consiste en copier la formule de
+la somme :
+\begin{itemize}
+\item la somme vaut $0$,  $i$ vaut $0$.
+\item Tant que $i \leq n$, ajouter $x_i$ à la somme puis ajouter $1$ à
+  $i$.
+\end{itemize}
+
+Le programme est alors :
+
+\listinginput{1}{progs/gauss1.ail}
+\begin{figure}[tbp]
+  \centering \input{progs/gauss1.tex}
+  \caption{Somme des entiers de $0$ à $3$}
+  \label{fig:gauss1}
+\end{figure}
+
+
+La boucle incrémente $i$. Dans amil, à cause de la difficulté à écrire
+des tests tels que $i \leq n$, il serait plus rapide sur cet exercice
+de décrémenter $n$ jusqu'à $0$ comme à la question précédente :
+
+\begin{itemize}
+\item $x$ vaut $n$, la somme vaut $0$
+\item Tant que $x \geq 0$, ajouter $x$ à la somme et décrementer $x$.
+\end{itemize}
+
+Cette réponse est correcte et on peut encourager dans un premier temps
+les étudiants qui cherchent dans cette direction, mais, pour les
+préparer à la suite du cours, il faut leur donner la correction qui
+incrémente l'indice.
+
+Parmi les autres programmes corrects possibles, des étudiants peuvent
+même penser à la formule de Gauss $\sum^n_{i = 0} i = \frac{n (n +
+  1)}{2}$. 
+
+
+Solution de Gauss (trace figure~\ref{fig:gauss3}).
+
+\listinginput{1}{progs/gauss3.ail}
+    \begin{figure}[tbp]
+      \centering
+      \input{progs/gauss3.tex}
+      \caption{Somme des entiers de $0$ à $3$ (3)}
+      \label{fig:gauss3}
+    \end{figure}
+\end{correction}
+
+
+
+% \newcommand{\TPshortName}{TP4}
+% \input{../communs/preambule_tp.tex}
+
+\section{Affichage de figures géométriques}
+
+% Les exercices suivants utilisent le caractère \verb|*| (étoile) pour dessiner des figures géométriques simples, appelées figures d'étoiles.
+
+\subsection{Exercice type : affichage d'un rectangle d'étoiles}
+
+Écrire un programme qui, étant données deux variables,
+\verb|longueur| et \verb|largeur|, initialisées à des valeurs
+strictement positives quelconques,affiche  un rectangle d'étoiles ayant pour
+longueur \verb|longueur| étoiles et largeur \verb|largeur|
+étoiles. Exemple :
+\begin{verbatim}
+Affichage d'un rectangle d'etoiles de longueur 6 et largeur 3.
+******
+******
+******
+\end{verbatim}
 
 \begin{correction}
-On n'introduit pas de var pour n car c'est une constante. Ils vont
-voir les constantes symboliques en C. 
+Durée 3/4 d'heure ?
+
+Les algos sont à faire (les extraire du code).
+
+Vous pouvez dans un premier temps supprimer la boucle la plus imbriquée en leur demandant d'afficher un rectangle de longueur exactement ``************''.
+
 \begin{verbatim}
-/* déclaration de fonctionalités supplémentaires */
+/* declaration de fonctionnalites supplementaires */
 #include <stdlib.h> /* EXIT_SUCCESS */
 #include <stdio.h> /* printf */
 
-/* déclaration constantes et types utilisateurs */
+/* declaration constantes et types utilisateurs */
 
-/* déclaration de fonctions utilisateurs */
+/* declaration de fonctions utilisateurs */
 
 /* fonction principale */
 int main()
 {
-    /* déclaration et initialisation variables */
+    /* declaration et initialisation variables */
+    int largeur = 3; /* largeur du rectangle en nb d'etoiles */
+    int longueur = 6; /* longueur du rectangle en nb d'etoiles */
     int i; /* var. de boucle */
+    int j; /* var. de boucle */
 
-    for(i = 0;i < 5;i = i + 1)
+    printf("Affichage d'un rectangle d'etoiles de longueur %d et largeur %d.\n",longueur,largeur);
+
+    for(i = 0;i < largeur;i = i + 1) /* chaque ligne d'étoiles */
     {
-        printf("Coucou\n");
+        /* affiche longueur etoiles */
+        for(j = 0;j < longueur;j = j + 1) /* chaque colonne d'etoiles */
+        {
+            /* affiche une etoile */
+            printf("*");
+        }
+        /* j >= longueur */
+
+        /* passe a la ligne suivante */
+        printf("\n");
     }
-    /* i >= 5 */
+    /* i >= largeur */
 
     return EXIT_SUCCESS;
 }
@@ -311,6 +392,138 @@ int main()
 \end{verbatim}
 \end{correction}
 
+\subsection{Exercice type : affichage d'un demi-carré d'étoiles}
+
+Écrire un programme qui affiche, étant donnée la variable,
+\verb|cote|, initialisée à une valeur quelconque, un demi-carré d'étoiles (triangle rectangle isocèle) ayant pour
+longueur de côté \verb|cote| étoiles. Exemple :
+\begin{verbatim}
+Affichage d'un demi-carre d'etoiles de cote 5.
+*
+**
+***
+****
+*****
+\end{verbatim}
+
+\begin{correction}
+Durée 3/4 d'heure ?
+
+Les algos sont à faire (les extraire du code).
+
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    /* declaration et initialisation variables */
+    int cote = 2; /* cote du demi-carré en nb d'etoiles */
+    int i; /* var. de boucle */
+    int j; /* var. de boucle */
+
+    printf("Affichage d'un demi-carre d'etoiles de cote %d.\n",cote);
+
+    for(i = 1;i <= cote;i = i + 1) /* chaque numero de ligne d'étoiles */
+    {
+        /* affiche autant d'etoiles que le numero de ligne */
+        for(j = 0;j < i;j = j + 1) /* chaque colonne d'etoiles */
+        {
+            /* affiche une etoile */
+            printf("*");
+        }
+        /* j >= i */
+
+        /* passe a la ligne suivante */
+        printf("\n");
+    }
+    /* i > cote */
+
+    return EXIT_SUCCESS;
+}
+
+/* definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\section{Exercices facultatifs}
+\subsection{Affichage d'un demi-carré droit d'étoiles}
+
+
+Écrire un programme qui affiche un demi-carré droit d'étoiles de côté spécifié par l'utilisateur. Exemple d'exécution :
+\begin{small}
+\begin{verbatim}
+Entrer la taille du demi-carré :
+5
+Affichage d'un demi-carre droit d'etoiles de cote 5.
+    *
+   **
+  ***
+ ****
+*****
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+\begin{verbatim}
+/* declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int cote; /* cote du demi-carré droit en nb d'etoiles a saisir par l'utilisateur*/
+    int i; /* var. de boucle */
+    int j; /* var. de boucle */
+
+    /* saisie cote */
+    printf("Entrer la taille du demi-carré :\n");
+    scanf("%d",&cote);
+
+    /* affichage du demi-carre droit */
+    printf("Affichage d'un demi-carre droit d'etoiles de cote %d.\n",cote);
+
+    for(i = 1;i <= cote;i = i + 1) /* chaque numero de ligne d'étoiles */
+    {
+        /* affiche les blancs */
+        for(j = 0;j < cote - i;j = j + 1) /* chaque colonne de blancs */
+        {
+            /* affiche un blanc */
+            printf(" ");
+        }
+        /* j >= cote - i */
+
+        /* affiche autant d'etoiles que le numero de ligne */
+        for(j = 0;j < i;j = j + 1) /* chaque colonne d'etoiles */
+        {
+            /* affiche une etoile */
+            printf("*");
+        }
+        /* j >= i */
+
+        /* passe a la ligne suivante */
+        printf("\n");
+    }
+    /* i > cote */
+
+    return EXIT_SUCCESS;
+}
+
+/* definition de fonctions utilisateurs */
+
+\end{verbatim}
+\end{correction}
 
 \subsection{Calcul de la somme d'une série d'entiers saisie par l'utilisateur}
 
@@ -318,7 +531,7 @@ int main()
 composent sa série, lit la série d'entiers et affiche la somme des
 valeurs de la série. 
 
-\paragraph{Rappel :} l'instruction 
+\paragraph{Indication :} l'instruction 
 \verb+scanf("%d", &a)+
 permet de réaliser une saisie utilisateur d'un entier dont la valeur
 sera affectée à la variable \texttt{a} (comme toute variable, \texttt{a} doit
@@ -371,5 +584,5 @@ int main()
 
 %%% Local Variables: 
 %%% mode: latex
-%%% TeX-master: "td4"
+%%% TeX-master: "td2"
 %%% End: 

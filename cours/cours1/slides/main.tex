@@ -2,8 +2,11 @@
 \input{communs/slides_style}
 
 %%% Titre -- Cours 1
-\title{Éléments d'informatique -- Cours 1. Éléments d'architecture des
-ordinateurs, mini-assembleur}
+\title{Éléments d'informatique -- Cours 1. Introduction\\ L'instruction de contrôle \C{if}}
+
+% Éléments d'architecture des
+% ordinateurs, mini-assembleur\\La programmation
+%   structurée en langage C\\ L'instruction de contrôle \C{if} premier programme C, if else}
 \author{Pierre Boudes}
 \date{\today}
 
@@ -20,39 +23,123 @@ ordinateurs, mini-assembleur}
 	\end{center}
 \end{frame}
 
-\section[Plan]{}
-\frame[label=plan]{\tableofcontents}
-
-  \section[Plan du cours]{Survol du contenu du cours (ce semestre)}
+\section[Langages et programmes]{Introduction : langages et programmes}
 \begin{frame}
-  \frametitle{Survol du contenu du cours (ce semestre)\nowrite}
-\pause
-  \begin{itemize}
-  \item Éléments d'architecture des ordinateurs (+mini-assembleur)\pause
-  \item Éléments de systèmes d'exploitation\pause
-\item Programmation structurée impérative (éléments de langage C)\pause
-\begin{itemize}
-  \item Structure d'un programme C
-  \item Variables : déclaration (et initialisation), affectaction
-  \item Évaluation d'expressions\pause
-  \item Instructions de contrôle : if, for, while\pause
-  \item Types de données : entiers, caractères,
-    réels, tableaux, types composés (enregistrements)\pause
-  \item Fonctions d'entrées/sorties (scanf/printf)\pause
-  \item Écriture et appel de fonctions\pause
-  \item Débogage\pause
-\end{itemize}
-\item Notions de compilation
-  \begin{itemize}
-  \item Analyse lexicale, analyse syntaxique, analyse sémantique
-  \item préprocesseur du compilateur C (include, define)
-   \item Édition de lien\pause
-  \end{itemize}
-\item Algorithmes élémentaires\pause
-\item Méthodologie de résolution, manipulation sous linux
-\end{itemize}
+  \frametitle{Langages et programmes}
+
+\begin{columns}
+\column[T]{4.5cm}
+\structure{Humains}\\
+\only<2-2>{
+\alert{communiquent entre eux en langage naturel}
+}
+\uncover<3->{
+\alert{langage naturel}
+}
+\column[T]{3.5cm}
+\uncover<7->{\alert{Langage de programmation}}
+\begin{tikzpicture}
+\useasboundingbox (0,0) rectangle (2,4.3);
+\begin{scope}[shift={(6.5,3)}]%computer 3
+\draw[ultra thick, rounded corners=4pt,fill=blue!15] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\begin{scope}[shift={(5,2.5)}]%computer 1
+\draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\begin{scope}[shift={(5.6,1.9)}]%computer 2
+\draw[ultra thick, rounded corners=4pt,fill=blue!20] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\begin{scope}[shift={(-3,2.5)}]%hum 1
+  \draw[ultra thick,fill=pink] (0,0.9) circle (0.3cm); \draw[draw,line
+  width=1.1mm,fill=pink, rotate=45, rounded corners=4pt] (-0.7, -0.15)
+  rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+  \draw[draw=none,fill=blue, rotate=45, rounded corners=4pt] (-0.7,
+  -0.15) rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+\end{scope}
+\begin{scope}[shift={(-4,1)}]%hum 2
+  \draw[ultra thick,fill=LightSalmon] (0,0.9) circle (0.3cm); \draw[draw,line
+  width=1.1mm,fill=pink, rotate=45, rounded corners=4pt] (-0.7, -0.15)
+  rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+  \draw[draw=none,fill=DarkTurquoise, rotate=45, rounded corners=4pt] (-0.7,
+  -0.15) rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+\end{scope}
+\begin{scope}[shift={(-2,1)}]%hum 3
+  \draw[ultra thick,fill=DarkRed] (0,0.9) circle (0.3cm); \draw[draw,line
+  width=1.1mm,fill=pink, rotate=45, rounded corners=4pt] (-0.7, -0.15)
+  rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+  \draw[draw=none,fill=DarkGreen, rotate=45, rounded corners=4pt] (-0.7,
+  -0.15) rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+\end{scope}
+\only<3-6>{
+\draw[draw,line width=4mm,->,yellow](-2,3)--node [black] (4,3) {utilisent} (4,3);
+}
+\only<4-6>{%programment
+\draw[draw,line width=4mm,->,Goldenrod](-1.9,2.5)--node [black] (4,3) {programment} (4.1,2.5);
+}
+\only<5-6>{%binaire
+\draw [draw=none,text=blue] (4.7,3.5) node {01101} -- +(-0.2,-0.4)
+node {10100};
+\draw [draw=none,text=blue] (7,1.5) node {10101} -- +(-0.5,-0.4) node
+{00101};
+\draw [draw=none,text=red] (-2,3.5) node {!!?} -- +(-0.2,-0.4)
+node {??};
+}
+\only<6-6>{%asm
+\draw [draw=none,text=DarkGreen] (5.1,4.1) node {\C{movb 0x65, \%eax}};
+\draw [draw=none,text=DarkGreen] (4.1,1.2) node {\C{movl \%eax, \%edx}};
+}
+
+\only<7->{%source
+\draw[draw,line width=4mm,->,Goldenrod](-1.9,2.5)--node [black]
+(0.4,3) {programment} (0.3,2.5);
+\node [rectangle, draw, fill=blue!20, 
+text width=3em, text centered, minimum height=4.6em] at (1.2,2.5) {};
+\node [rectangle, draw, fill=blue!20, 
+    text width=3em, text centered, minimum height=4.6em] at (1.1,2.6)
+    {};
+\node[line width=0mm,Goldenrod,rotate=60] at (1.1,2.6) {\Large\textbf{source}};
+\node at (1.1,1.9) {\C{prog.c}};
+}
+\only<8->{%traduction prise en charge par un programme
+\begin{scope}[shift={(2.4,2.2)},black!30]%computer 4
+\draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\draw[draw,line width=4mm,->,blue!20](2,2.5)--node [black] (4,3)
+{traduction} (4.1,2.5);
+}
+\only<9->{%algorithme
+\node [draw, text badly ragged, cloud,cloud ignores aspect, cloud
+puffs=11, fill=green!20,text width=2cm]
+at (-3.1,3) {algorithmes\\ \alert{(pseudocode)}};
+}
+\end{tikzpicture}
+\column[T]{4.5cm}
+\structure{Ordinateurs}\\
+\only<2-2>{
+\alert{obéissent à des instructions en langage machine}
+}
+\uncover<3->{
+\alert{langage machine}
+}
+\end{columns}
+\uncover<10->{
+Dans ce cours : surtour du \textbf{langage C}, du pseudocode pour mettre au
+point les algorithmes et un petit peu
+d'un langage assembleur \emph{jouet} (amil) pour expliquer le
+langage C.
+}
 \end{frame}
 
+\section[Plan]{}
+\frame[label=plan]{\tableofcontents}
 
 \begin{frame}
   \begin{quote}
@@ -62,19 +149,61 @@ ordinateurs, mini-assembleur}
 \end{quote}
 \end{frame}
 
-\section{Architecture de von Neumann}
+\section[Langage machine]{Architecture matérielle et langage machine}
+\subsection{Architecture de von Neumann}
 \begin{frame}
-  \frametitle{Architecture de von Neumann}
+  \frametitle{Architecture de von Neumann\nowrite}
   \begin{itemize}
   \item John William Mauchly et John Eckert autant (ou plus) que
     vN\pause
   \item Qu'est-ce que c'est ?\pause
     \begin{itemize}      
-  \item L'idée d'une machine à \alert{programme
-      stocké}\pause
-\item  Une machine réalisée, l'ancêtre de nos processeurs\pause
-\end{itemize}
+    \item L'idée d'une machine à \alert{programme
+        stocké}\pause
+    \item  Une machine réalisée, l'ancêtre de tous nos processeurs\pause
+    \end{itemize}
   \item De quoi  cette machine est-elle faite ?\pause
+  \begin{columns}[t]
+  \begin{column}{4cm}
+\centering
+\structure{Machine de vN}
+
+  \begin{tikzpicture}[draw=gray, line width=2pt]
+    \useasboundingbox (.9,0) rectangle (4,2.5);
+    \draw[very thin] (-.2,-1.9) rectangle (5.5,2.48);
+    % memoire
+    \node at (4.5,2.3) {mémoire};
+    \draw[top color=blue!20] (4,-1.8) rectangle (5,2);
+    \draw[loosely dashed, white](3.95,-1.8) -- (5.05,-1.8);
+%    \draw[draw=none,fill=blue!20] (4,-2) rectangle (5,2);
+    \foreach \y in {1,2,...,7} {
+      \draw[draw=blue!40, line width=1pt] (4,2 - \y/2) -- (5, 2 -
+      \y/2);
+      \node[red] at (5.2, 2 - \y/2 + 0.25) {\y};
+    }
+\only<7->{%uc
+    \node at (1,1.65) {UC};
+    \draw[rounded corners=4pt] (0, -1.35) rectangle (2,1.35);
+    \foreach \y in {-1.3,-0.7,...,1} {
+      \draw[left color=red!20, right color=blue!20] (0.125,\y + 0.2)
+      rectangle (0.925,\y + 0.6);
+      \draw[left color=red!20, right color=blue!20] (1.075,\y + 0.2) 
+      rectangle (1.875,\y + 0.6);
+    }
+}
+    \only<8->{%bus
+    \draw[draw=none,fill=gray] (2,-0.6) rectangle (4,0.6);
+    \draw[draw=none,fill=blue!20] (2,-0.5) rectangle (4,-0.05);
+%    \draw[<->,blue!50] (2,-0.25) -- (4,-0.25); trop chargé.
+    \draw[draw=none,fill=red!20] (2,0.05) rectangle (4,0.5);
+    \node at (3,0.9) {bus};
+    \node[red!40!black!60] at (3, 0.3) {adresses};
+    \node[blue!40!black!60] at (3, -0.25) {données};
+}
+  \end{tikzpicture}
+  \end{column}
+  \begin{column}{6.5cm}
+\vspace{-0.5cm}
     \begin{itemize}
     \item De mémoire (une suite de cases numérotées)\pause
     \item d'une \alert{unité de calcul}, travaillant sur des \alert{registres}\pause
@@ -83,22 +212,24 @@ ordinateurs, mini-assembleur}
     \item \sout{De périphériques} (on oublie !)\pause
     \item La mémoire contient le programme et les données.
     \end{itemize}
+\end{column}
+\end{columns}
   \end{itemize}
 \end{frame}
+%\end{document}
 
-
-\section{Représentation  des informations}
+\subsection{Représentation  des informations}
 
 \begin{frame}
   \frametitle{Représentation en binaire des informations}
-  \pause
+%  \pause
   \begin{definition}[bit]
     \begin{itemize}
     \item Le chiffre binaire, ou \emph{bit}, est l'équivalent binaire
       de nos chiffres décimaux. Il peut valoir soit $0$ soit $1$. Un
       bit est une \alert{quantité élémentaire d'information} (oui ou non,
       ouvert ou fermé, etc.).\pause
-    \item L'information manipulée par un ordinateur est consituée de
+    \item L'information manipulée par un ordinateur est faite de
       bits.\pause
 \item Les cases mémoires et les registres contiennent des \alert{mots mémoire}
   : des suite de $n$ bits, où $n$ est fixé une fois pour toute par
@@ -108,13 +239,13 @@ ordinateurs, mini-assembleur}
   machine plus pratique pour les humains. 
    \end{itemize}
   \end{definition}
-\pause Nous en verrons un peu plus sur les codages en binaire des données
+\pause Vous en verrez plus sur les codages en binaire des données
 dans un autre cours.
 \end{frame}
 
-\section{Cycle d'exécution}
+\subsection{Exécution des instructions}
 \begin{frame}
-  \frametitle{Cycle d'exécution}
+  \frametitle{Cycle d'exécution\nowrite}
 \pause
 \begin{itemize}
   \item Le registre \alert{compteur de programme} (CP) contient l'adresse du mot mémoire
@@ -130,10 +261,9 @@ dans un autre cours.
 \end{itemize}
 \end{frame}
 
-\section{Instructions}
 \begin{frame}
-  \frametitle{Instructions}
-Une instruction type comporte un \alert{code d'opération} et, si nécessaire, une
+  \frametitle{Instructions\nowrite}
+Une instruction machine  type comporte un \alert{code d'opération} et, si nécessaire, une
 ou deux \emph{opérandes} (ou \emph{arguments} de l'opération).
 
 \pause
@@ -171,10 +301,10 @@ et les nombres $3$ et $5$ sont les opérandes.
 \end{frame}
 
 
-\section{Trace d'exécution}
+%\subsection{Trace d'exécution}
 \begin{frame}[fragile]
 \frametitle{Trace d'exécution\nowrite}
-On simule pas à pas l'exécution du programme.\pause
+On simule pas à pas l'exécution du programme.
 \begin{columns}[t]
   \begin{column}{3.5cm}
 \newcommand{\N}[1]{\structure{\scriptsize #1.}}
@@ -223,11 +353,226 @@ On simule pas à pas l'exécution du programme.\pause
 \end{tabular}
   \end{column}
 \end{columns}
+\end{frame}
 
+
+\section[Le langage C]{Premiers pas en langage C}
+\subsection{La programmation structurée}
+\begin{frame}
+  \frametitle{La programmation structurée}
+  
+  \begin{definition}[Programmation structurée]
+    Programmer par \structure{blocs} d'instructions en combinant ces blocs de trois manières :\pause
+    \begin{enumerate}
+    \item exécuter les blocs les uns à la suite des autres (\structure{séquence})\pause
+    \item si une certaine condition est vraie, exécuter un bloc sinon
+      en exécuter un autre (\structure{sélection})\pause
+    \item recommencer l'exécution d'un bloc tant qu'une certaine
+      condition est vraie (\structure{répétition}).\pause
+    \end{enumerate}
+    Un bloc peut lui-même être une combinaison de blocs (ou juste une instruction).
+  \end{definition}
+\pause La sélection et la répétition sont assurées par des
+\structure{instructions de contrôle}. 
+  \pause Tout programme en langage machine peut
+  être transformé en un programme structuré (Böhm-Jacopini 1966).
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Nécessité d'une traduction\nowrite}
+  Les langages structurés, dits de haut niveau, nécessitent une \alert{traduction
+  en langage machine}.\pause
+
+Cette traduction est assurée par un programme particulier : un compilateur
+ (traduction une fois pour toute) ou un interprète (traduction à
+ chaque exécution).\pause
+
+ La traduction suit des règles précises et systématiques. À chaque
+ instruction du langage correspond un \structure{schéma de
+   traduction}. C'est ce schéma qui donne sont sens (son effet) à
+ l'instruction.
+\end{frame}
+%\subsection{Structure d'un programme C}
+\begin{frame}[fragile]
+  \frametitle{Construction d'un programme C\nowrite}
+\structure{Code source}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+
+/* Declaration des constantes et types utilisateurs */
+
+/* Declaration des fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    ...
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+\end{lstlisting}
+
+Les commentaires sont ignorés lors de la traduction en langage machine.
+\end{frame}
+
+\subsection{Variables impératives et affectation}
+\begin{frame}[fragile]
+  \frametitle{Traduction de l'affectation}
+  \begin{columns}
+ \begin{column}[t]{2.5cm}
+\structure{Code source}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
+...
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int x = 5;
+ 
+
+   
+    x = 3 * x + 1;
+    ...
+\end{lstlisting}
+\end{column}
+\pause
+\begin{column}[t]{6.5cm}
+\hfill\structure{Schéma de traduction}\\[.3cm]
+\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged,
+text width=5.4cm]
+\tikzstyle{line} = [draw, thick, -latex']
+\begin{tikzpicture}[node distance=1.5cm]
+\useasboundingbox (-4,-2) rectangle (3,1.5);
+\uncover<2-2> {%
+\node [amil,cloud, cloud ignores aspect, cloud puffs = 15, fill=green!20] (avant) {Les déclarations ne sont pas traduites en
+    instructions, mais en réservations mémoires};
+}
+\uncover<3-> {%
+\node [amil,fill=green!20] (avant) {\emph{$x$ est une case mémoire de
+    type entier qui contient initialement 5}};
+\draw [draw, thick, green] (-7.1,-0.5) rectangle (-5.2, -0.1) --
+(-5.2,-0.3); \draw [ thick, green, ->] (-5.2,-0.3)  -> (avant);
+}
+\uncover<4-4>{%
+  \node [amil,cloud, cloud ignores aspect, cloud puffs = 15, below of=avant,node distance=2cm] (eval) {l'affectation est traduite par
+    l'évaluation d'une expression et  une écriture en mémoire};
+}
+\uncover<5->{%
+  \node [amil,below of=avant] (eval) {\emph{évaluation de l'expression
+    $3 x + 1$ dans un registre}};
+\draw [draw, thick, blue] (-6.4,-1.84) rectangle (-4.7, -1.44) --
+(-4.7,-1.64) ; \draw[ thick, blue, ->] (-4.7,-1.64)  -- (eval.west);
+}
+\uncover<6->{%
+  \node [amil,below of=eval,node distance=1.1cm] (eval) {\emph{écriture du résultat à l'adresse
+  de $x$}};
+\draw [draw, thick, blue] (-7.1,-1.84) rectangle (-6.5, -1.44);
+\draw  [thick, blue, ->]   (-6.8,-1.84) -- (eval.west);
+}
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\subsection{L'instruction de contrôle if}
+\begin{frame}[fragile]
+  \frametitle{L'instruction de contrôle if}
+
+\structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
+\{\emph{\colorbox{red!20}{bloc2}}\}}.
+\medskip
+
+\pause
+  \begin{columns}
+\begin{column}[t]{5cm}
+\structure{Code source}
+\begin{verbatim}
+/* avant */
+if (age < 18)
+{
+  permis = 0;
+}
+else
+{
+  permis = 1;
+}
+/* après */
+\end{verbatim}
+   \end{column}
+\pause
+   \begin{column}[t]{4cm}
+\structure{Schéma de traduction}\\[.3cm]
+\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+
+\tikzstyle{line} = [draw, thick, -latex']
+\begin{tikzpicture}[node distance=.7cm]
+  \node [amil] (avant) {\emph{avant}};
+  \node [amil,below of=avant] (eval) {évalue la condition};
+  \node [amil,below of =eval,fill=orange!20] (selection) {saute si elle est fausse};
+  \uncover<4->{%
+    \node [amil,below of =selection,fill=green!20] (bloc1) {bloc1};
+    \node [amil,below of =bloc1,fill=orange!20] (saut1) {saut};
+  }
+  \node [amil,below of =saut1,fill=red!20](bloc2) {bloc2};
+  \node [amil,below of =bloc2] (apres) {\emph{après}};
+  \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
+\uncover<4->{\path [line] (saut1) -| ++(2.4,0) |-  (apres);}
+\end{tikzpicture}
+\end{column}
+\end{columns}
 \end{frame}
 
 \section[Démos]{Démos et fin}
 \begin{frame}
   \frametitle{Démos et fin}
 \end{frame}
+
+
+\section[Références]{Liens utiles}
+\begin{frame}
+\frametitle{Liens utiles\nowrite}
+
+  \begin{itemize} 
+\item ma page : \url{http://www-lipn.univ-paris13.fr/~boudes/}
+\item sites pour apprendre à développer :
+  \begin{itemize}
+  \item \url{http://www.siteduzero.com/} (chercher langage C)
+  \item \url{http://www.developpez.com/} (chercher langage C)
+  \end{itemize}
+\item Le nouveau cours de terminal S :
+  \url{https://science-info-lycee.fr}
+\item Un livre de la BU: \emph{Le livre du C, premier langage (pour les
+  vrais débutants en programmation)}, Claude Delannoy.
+  \end{itemize} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Liens utiles\nowrite}
+\begin{itemize} 
+\item Polycopiés :
+  \begin{itemize}
+  \item le cours I3 de Laure Petrucci :\\
+    {\small\url{http://www-lipn.univ-paris13.fr/~petrucci/polys.html}}
+  \item le cours de Anne Canteaut :\\
+    {\small\url{http://www-roc.inria.fr/secret/Anne.Canteaut/COURS_C/}}
+  \item le cours de Bernard Cassagne :\\
+    {\small\url{http://clips.imag.fr/commun/bernard.cassagne/Introduction_ANSI_C.html}}
+  \item le cours de Henri Garreta : \\
+    {\small\url{http://www.dil.univ-mrs.fr/~garreta/generique/}}
+  \end{itemize}
+\item Logiciels
+  \begin{itemize}
+  \item codeblocks : \url{http://www.codeblocks.org/}
+  \item ubuntu : \url{http://www.ubuntu-fr.org/}
+  \item virtualbox : \url{http://www.virtualbox.org/}
+  \end{itemize}
+  \end{itemize} 
+\end{frame}
+
 \end{document}

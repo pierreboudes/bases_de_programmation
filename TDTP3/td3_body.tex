@@ -1,0 +1,159 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux dirigés  3 : variables impératives et structure de contrôle  \emph{if}}
+
+L'objectif de ce TD est de vous familiariser avec l'écriture de programmes simples en langage C : calcul artihmétique, affichage de résultats et exécution conditionnelle d'instructions. Il aborde les mêmes notions que le TD 1, mais en utilisant le langage C.
+
+
+
+\section{Déclaration et affectation de variables impératives}
+
+\subsection{Trace de programme en C}
+
+Soit le programme suivant :
+\begin{listing}{1}
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Declaration des constantes et types utilisateurs */
+
+/* Declaration des fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int x;
+
+    x = 3;
+    x = x + 1;
+    printf("x = %d\n", x);
+
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+  
+\end{listing}
+
+\begin{enumerate}
+\item Que fait ce programme ?
+  \begin{correction}
+    \begin{itemize}
+    \item Il déclare la variable impérative \verb|x| (occupe un espace memoire)
+    \item Il affecte 3 à la variable \verb|x|
+    \item Affecte à x la valeur de l'expression (x + 1) qui vaut 4 : la sous-expression x s'évalue comme la valeur de la variable (3), plus un. 
+    \item Affiche la valeur de l'expression x qui s'évalue comme la valeur de la variable, cad 4.
+    \end{itemize}
+  \end{correction}
+\item Donner la traduction des instructions aux lignes 15 et 16 en langage amil.
+  \begin{correction}
+    \begin{itemize}
+    \item[] CP vaut 1
+    \item[\#]  Soit la var x correspondant à la case mémoire d'adresse 10 (initialisation).
+    \item[\#] affecte 3 a la var x
+    \item[1] valeur 3 r0
+    \item[2] ecriture r0 10
+    \item[\#] x = x + 1
+    \item[3] lecture 10 r0
+    \item[4] valeur 1 r1
+    \item[5] add r1 r0 \# r0 vaut l'expression x + 1
+    \item[6] ecriture r0 10 \# affecte la valeur de l'expression à x
+    \end{itemize}
+  \end{correction}
+\item Donner la trace du programme C. Pour cela vous utiliserez un tableau comportant 1 colonne pour le numéro de ligne + autant de colonnes que de variables utilisées dans le programme + 1 colonne pour l'affichage éventuel du programme.
+  \begin{correction}
+    Il est très important qu'ils sachent faire une trace d'un programme C. Ils seront évalués dessus pendant les colles et aux examens. Le choix de la numérotation des lignes n'est pas imposé. On va d'habitude au plus court. Par contre, la numérotation doit être donnée explicitement dans le code.
+
+trace :\\
+\begin{verbatim}
+ligne          | x | sortie (affichage a l'ecran)
+-------------------------------------------------
+initialisation | ? |
+15             | 3 |
+16             | 4 |
+17             |   |  x = 4
+renvoie EXIT_SUCCESS
+\end{verbatim}
+  \end{correction}
+\end{enumerate}
+
+\section{Execution conditionnelle d'instructions :  \emph{if}}
+
+EXERCICE RESTANT.
+
+\subsection{Exercice type : Quel temps fait-il ?}
+
+En vous inspirant du codage du genre vu en cours (1 pour MASCULIN, 2
+pour FÉMININ), proposez un codage pour indiquer si le temps est
+COUVERT, ENSOLEILLÉ ou PLUVIEUX.
+Écrivez un programme principal qui, étant donné le temps affecté à une
+variable, affiche le temps qu'il fait.
+
+\begin{correction}
+\begin{verbatim}
+Exemple : Soit temps = 1 avec 0 COUVERT, 1 ENSOLEILLÉ et 2 PLUVIEUX.
+Affiche ``Le temps est ensoleillé.''
+
+Algo :
+    /* Codage :
+       0 COUVERT
+       1 ENSOLEILLE
+       2 PLUVIEUX
+    */
+si temps = 0 alors affiche couvert
+si temps = 1 alors affiche ensoleille
+si temps = 2 alors affiche pluvieux 
+
+les cas sont mutuellement exclusifs.
+\end{verbatim}
+\begin{verbatim}
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+/* Declaration des constantes et types utilisateurs */
+
+/* Declaration des fonctions utilisateurs */
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation variables */
+    int temps = 1; /* temps qu'il fait */
+
+    /* si temps = 0 alors affiche couvert */ 
+    if(temps == 0) /* COUVERT */
+    {
+        printf("Le temps est couvert.\n");
+    }
+
+    /* si temps = 1 alors affiche ensoleille */ 
+    if(temps == 1) /* ENSOLEILLE */
+    {
+        printf("Le temps est ensoleille.\n");
+    }
+
+    /* si temps = 2 alors affiche pluvieux */ 
+    if(temps == 2) /* PLUVIEUX */
+    {
+        printf("Le temps est pluvieux.\n");
+    }
+    
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td3"
+%%% End: 

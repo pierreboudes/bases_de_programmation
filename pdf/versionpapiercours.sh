@@ -32,9 +32,9 @@ i=$1;
 	cp papier.pdf "../../../pdf/cours${i}_papier.pdf";
 	cd ../../../;
     fi
-    if [ -f "TD${i}/td${i}_body.tex" ]
+    if [ -f "TDTP${i}/td${i}_body.tex" ]
     then
-	echo "pdf du TD de la semaine ${i}";
+	echo "pdf du TDTP de la semaine ${i}";
 	cd TD${i};
 #	pdflatex "td${i}" 1> /dev/null;
 #	pdflatex "td${i}_corr" 1> /dev/null;
@@ -42,20 +42,4 @@ i=$1;
 	cp "td${i}_corr.pdf" ../pdf/;
 	cd ../;
     fi
-    if [ -f "TP${i}/tp${i}_body.tex" ]
-    then
-	echo "pdf du TP de la semaine ${i}";
-	cd TP${i};
-#	pdflatex "tp${i}" 1> /dev/null;
-#	pdflatex "tp${i}_corr" 1> /dev/null;
-	cp "tp${i}.pdf" ../pdf/;
-	cp "tp${i}_corr.pdf" ../pdf/;
-	cd ../pdf/;
-    fi    
-    if [ -f "TD${i}etTP${i}.tex" ]
-    then
-	echo "pdf pour reprographie du TD/TP de la semaine ${i}";
-	pdflatex "TD${i}etTP${i}";
-    fi
 
-	
