@@ -1,8 +1,9 @@
-\documentclass[xcolor=svgnames]{beamer}
+\documentclass[xcolor=pdftex,svgnames,table]{beamer}
+%\usepackage[table]{xcolor}
 \input{communs/slides_style}
 
-%%% Titre -- Cours 4
-\title{Éléments d'informatique -- Cours 4. Compilation. Instruction de contrôle \C{for}.}
+%%% Titre -- Cours 2
+\title{Algorithmique et programmation -- Cours 2. Compilation. Instruction de contrôle \C{for}.}
 \author{Pierre Boudes}
 \date{\today}
 
@@ -20,64 +21,113 @@
 \end{frame}
 
 
-
-%%%%%%%%%%%%%%%%%%%%
- \section*{Contenu du cours}
 \begin{frame}
-%  \frametitle{Contenu du cours (rappel)}
- \begin{itemize}
-  \item \emph{Éléments d'architecture des ordinateurs (+mini-assembleur)}\nowrite
-  \item \emph{Éléments de systèmes d'exploitation}
-\item Programmation structurée impérative (éléments de langage C)
-\begin{itemize}
-  \item \emph{Structure d'un programme C}
-  \item \emph{Variables : déclaration (et initialisation), affectaction}
-  \item \alert{Évaluation d'expressions}
-  \item \alert{Instructions de contrôle} : \emph{if}, \alert{for}, while
-  \item Types de données : entiers, caractères,
-    réels, tableaux, enregistrements
-  \item \alert{Fonctions d'entrées/sorties (scanf/printf)}
-  \item Écriture et appel de fonctions
-  \item Débogage
-\end{itemize}
-\item \alert{Notions de compilation
-  \begin{itemize}
-  \item Analyse lexicale, analyse syntaxique, analyse sémantique
-  \item préprocesseur du compilateur C (include, define)
-   \item Édition de lien
-  \end{itemize}}
-\item Algorithmes élémentaires
-\item Méthodologie de résolution, manipulation sous linux
-\end{itemize}
-\end{frame}
+  \frametitle{Langages et programmes (reloaded)}
 
-\section[Plan]{}
+\begin{columns}
+\column[T]{4.5cm}
+\structure{Humains}\\
+\alert{langage naturel}
+\column[T]{3.5cm}
+\alert{Langage de programmation}
+\begin{tikzpicture}
+\useasboundingbox (0,0) rectangle (2,4.3);
+\begin{scope}[shift={(6.5,3)}]%computer 3
+\draw[ultra thick, rounded corners=4pt,fill=blue!15] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\begin{scope}[shift={(5,2.5)}]%computer 1
+\draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\begin{scope}[shift={(5.6,1.9)}]%computer 2
+\draw[ultra thick, rounded corners=4pt,fill=blue!20] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\begin{scope}[shift={(-3,2.5)}]%hum 1
+  \draw[ultra thick,fill=pink] (0,0.9) circle (0.3cm); \draw[draw,line
+  width=1.1mm,fill=pink, rotate=45, rounded corners=4pt] (-0.7, -0.15)
+  rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+  \draw[draw=none,fill=blue, rotate=45, rounded corners=4pt] (-0.7,
+  -0.15) rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+\end{scope}
+\begin{scope}[shift={(-4,1)}]%hum 2
+  \draw[ultra thick,fill=LightSalmon] (0,0.9) circle (0.3cm); \draw[draw,line
+  width=1.1mm,fill=pink, rotate=45, rounded corners=4pt] (-0.7, -0.15)
+  rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+  \draw[draw=none,fill=DarkTurquoise, rotate=45, rounded corners=4pt] (-0.7,
+  -0.15) rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+\end{scope}
+\begin{scope}[shift={(-2,1)}]%hum 3
+  \draw[ultra thick,fill=DarkRed] (0,0.9) circle (0.3cm); \draw[draw,line
+  width=1.1mm,fill=pink, rotate=45, rounded corners=4pt] (-0.7, -0.15)
+  rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+  \draw[draw=none,fill=DarkGreen, rotate=45, rounded corners=4pt] (-0.7,
+  -0.15) rectangle (0.7, 0.15) (-0.15, -0.7) rectangle (0.15, 0.7) ;
+\end{scope}
+% \only<3-6>{
+% \draw[draw,line width=4mm,->,yellow](-2,3)--node [black] (4,3) {utilisent} (4,3);
+% }
+% \only<4-6>{%programment
+% \draw[draw,line width=4mm,->,Goldenrod](-1.9,2.5)--node [black] (4,3) {programment} (4.1,2.5);
+% }
+% \only<5-6>{%binaire
+% \draw [draw=none,text=blue] (4.7,3.5) node {01101} -- +(-0.2,-0.4)
+% node {10100};
+% \draw [draw=none,text=blue] (7,1.5) node {10101} -- +(-0.5,-0.4) node
+% {00101};
+% \draw [draw=none,text=red] (-2,3.5) node {!!?} -- +(-0.2,-0.4)
+% node {??};
+% }
+% \only<6-6>{%asm
+% \draw [draw=none,text=DarkGreen] (5.1,4.1) node {\C{movb 0x65, \%eax}};
+% \draw [draw=none,text=DarkGreen] (4.1,1.2) node {\C{movl \%eax, \%edx}};
+% }
+
+\draw[draw,line width=4mm,->,Goldenrod](-1.9,2.5)--node [black]
+(0.4,3) {programment} (0.3,2.5);
+\node [rectangle, draw, fill=blue!20, 
+text width=3em, text centered, minimum height=4.6em] at (1.2,2.5) {};
+\node [rectangle, draw, fill=blue!20, 
+    text width=3em, text centered, minimum height=4.6em] at (1.1,2.6)
+    {};
+\node[line width=0mm,Goldenrod,rotate=60] at (1.1,2.6) {\Large\textbf{source}};
+\node at (1.1,1.9) {\C{prog.c}};
+\begin{scope}[shift={(2.4,2.2)},black!30]%computer 4
+\draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
+\draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
+-0.4) -- (1, 0) -- cycle;  
+\end{scope}
+\draw[draw,line width=4mm,->,blue!20](2,2.5)--node [black] (4,3)
+{traduction} (4.1,2.5);
+\only<2->{%algorithme
+\node [draw, text badly ragged, cloud,cloud ignores aspect, cloud
+puffs=11, fill=green!20,text width=2cm]
+at (-3.1,3) {algorithmes\\ \alert{(pseudocode)}};
+}
+\end{tikzpicture}
+\column[T]{4.5cm}
+\structure{Ordinateurs}\\
+\alert{langage machine}
+\end{columns}
+Pour le moment nous nous concentrons sur les rudiments de langage C.
+\uncover<2->{
+Mais ne perdons pas de vue que si savoir s'exprimer est nécessaire, il
+faut aussi savoir réfléchir à ce que nous faisons faire à nos
+programmes. \alert{Écrivez vos algorithmes !}
+}
+\end{frame}
+ 
+%PLAN
 \frame[label=plan]{\tableofcontents}
 
 
-\begin{frame}
-  \frametitle{Liens utiles}
-
-  \begin{itemize} 
-\item ma page : \url{http://www-lipn.univ-paris13.fr/~boudes/}
-\item Un livre de la BU: \emph{Le livre du C, premier langage (pour les
-  vrais débutants en programmation)}, Claude Delannoy.
-\item \url{http://www.siteduzero.com/} (chercher langage C)
-\item \url{http://www.developpez.com/} (chercher langage C)
-\item le cours de Anne Canteaut :\\ {\small\url{http://www-roc.inria.fr/secret/Anne.Canteaut/COURS_C/}}
-\item le cours de Bernard Cassagne :\\ {\small\url{http://clips.imag.fr/commun/bernard.cassagne/Introduction_ANSI_C.html}}
-\item le cours de Henri Garreta  : \\
-{\small\url{http://www.dil.univ-mrs.fr/~garreta/generique/}}
-\item codeblocks : \url{http://www.codeblocks.org/}
-\item ubuntu : \url{http://www.ubuntu-fr.org/}
-\item virtualbox : \url{http://www.virtualbox.org/}
-  \end{itemize} 
-\end{frame}
- 
-
 \section{Compilation}
 \begin{frame}
-  \frametitle{Compilation}
+  \frametitle{Compilation\nowrite}
 \begin{itemize} 
 \item  \structure{Compiler} un programme c'est traduire un texte (\structure{code
   source}) d'un langage de haut niveau (langage C) en code de bas
@@ -96,7 +146,7 @@ langage interprété, l'étape de traduction a lieu à chaque exécution.}\pause
 \end{frame}
 
 \begin{frame}
-  \frametitle{Compilation}
+  \frametitle{Compilation\nowrite}
  
 Les cinq grandes étapes de la compilation :
 
@@ -132,12 +182,13 @@ Erreur détectée uniquement au moment de l'analyse sémantique :\\
 \subsection{Analyse syntaxique}
 \begin{frame}
   \frametitle{Analyse syntaxique}
-\begin{block}{Analyse syntaxique} 
+\begin{block}{Analyse syntaxique\youwrite} 
 trouve la structure syntaxique, (arbre
   syntaxique), et teste l'appartenance au langage. 
 \end{block}
 \pause
-Exemple : dans l'expression \C{x = 3 * x + 1}, est-ce que la sous-suite  \C{x + 1} correspond à une structure syntaxique ?
+Exemple : dans l'expression \C{x = 3 * x + 1}, est-ce que la
+sous-suite  \C{x + 1} correspond à une structure syntaxique ? 
 \pause
 \begin{center}
 \C{
@@ -165,7 +216,7 @@ child {node {+}
 \subsection{Analyse sémantique}
 \begin{frame}
 \frametitle{Analyse sémantique}
-\begin{block}{Analyse sémantique}
+\begin{block}{Analyse sémantique\youwrite}
   trouver le sens des différentes actions
   voulues par le programmeur.
   \begin{itemize}
@@ -191,20 +242,22 @@ aucun sens, etc.
 \subsection{Génération du code}
 \begin{frame}
 \frametitle{Génération du code}
-\begin{block}{Génération du code}
-  encodage en assembleur, optimisations et allocations des registres, traduction en code objet. 
+\begin{block}{Génération du code\youwrite}
+  encodage en assembleur, optimisations et allocations des registres,
+  traduction en \structure{code objet} (du code machine non exécutable
+  en l'état). 
 \end{block}
 \end{frame}
 
 \subsection{Édition de liens}
 \begin{frame}
 \frametitle{Édition de liens}
-\begin{block}{Édition de liens}
+\begin{block}{Édition de liens\youwrite}
   le code objet des fonctions externes
   (bibliothèques) est ajouté à l'exécutable. Le point d'entrée dans le
   programme est choisi (\C{main}). Insertion de données de débogage (option \C{$-$g}).
 \end{block}
-\pause
+\pause%\nowrite
 \begin{description}
 \item[code source] Oublie de \C{stdio.h} et utilisation de \C{printf}.
 \item[compilation] \C{warning: incompatible implicit declaration of built-in function ‘printf’}
@@ -233,7 +286,8 @@ aucun sens, etc.
 \node [right of = source] (nothing1) {};
 \node [right of = nothing1] (nothing2) {};
 \uncover<3->{\node [block, below of =nothing2] (pre) {\C{.c} (à l'écran)};
-{\small \node [node distance=13em, draw, rounded corners,text width=10em, right of =pre] { Le préprocesseur enlève les commentaires et exécute les instructions commençant par un dièse : \C{\#define} (rechercher-remplacer) et \C{\#include} (insertion de fichier).};}}
+{\small \node [node distance=13em, draw, rounded corners,text
+  width=10em, right of =pre] {Le \alert{préprocesseur} \hfill\youwrite\\ enlève les commentaires et exécute les instructions commençant par un dièse : \C{\#define} (rechercher-remplacer) et \C{\#include} (insertion de fichier).};}}
 \uncover<4->{\node [block, below of =pre] (asm) {\C{source.i}};}
 \uncover<5->{\node [block, below of =asm] (obj) {\C{source.o}};}
 \node [block, below of =obj] (exe) {exécutable};
@@ -265,20 +319,23 @@ aucun sens, etc.
 
 \begin{frame}
   \frametitle{Rappel sur la programmation structurée \nowrite}
-  \begin{definition}[Programmation structurée]
-    Programmer par \structure{blocs} d'instructions en combinant ces blocs de trois manières :
     \begin{enumerate}
-    \item exécuter les blocs les uns à la suite des autres (\structure{séquence})
+    \item Exécuter les blocs les uns à la suite des autres (\structure{séquence})
     \item si une certaine condition est vraie, exécuter un bloc sinon
       en exécuter un autre (\structure{sélection})
     \item recommencer l'exécution d'un bloc tant qu'une certaine
       condition est vraie (\structure{répétition}).
     \end{enumerate}
     Un bloc peut lui-même contenir une combinaison de blocs.
-  \end{definition}
 \pause
 Aujourd'hui nous allons voir une première forme de répétition en C, le
-\C{for}. Avant cela nous revenons sur la sélection  (le \C{if} ou \C{if else}).
+\C{for} qui sert pour exprimer \youwrite:
+\begin{itemize}
+  \item la répétition un nombre fixé de fois \alert{répéter $n$ fois}
+  \item l'itération sur un ensemble de cas (d'autres langages plus
+    modernes ont le     \C{for each} pour itérer sur un ensemble
+    d'éléments). \alert{Pour chaque entier de $1$ à $n$ faire \ldots}
+\end{itemize}
 \end{frame}
 
 \subsection{Rappels sur l'instruction de contrôle if}
@@ -333,7 +390,7 @@ else
 
 \subsection{L'instruction de contrôle for}
 \begin{frame}[fragile]
-  \frametitle{L'instruction de contrôle for}
+  \frametitle{L'instruction de contrôle for\youwrite}
 
 \structure{Syntaxe :}\\
  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}}) 
@@ -378,14 +435,9 @@ La variable \C{i} est appelée \alert{variable de boucle}, elle doit être préa
  \end{columns}
 \end{frame}
 
-\section{Démos}
-\begin{frame}
-  \frametitle{Démos}
-\end{frame}
-
-\section{Trace}
+\subsection{Trace}
 \begin{frame}[fragile]
-  \frametitle{Trace}
+  \frametitle{Trace\nowrite}
 \begin{columns}
   \begin{column}[b]{4cm}
  \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\scriptsize]
@@ -408,33 +460,106 @@ int main()
 \begin{column}[b]{4cm}
  \scriptsize
 \pause
+\rowcolors[\hline]{2}{green!25}{yellow!50} \arrayrulecolor{blue!75!gray}
   \begin{tabular}{|r|c|l|}
 \hline
-    ligne & \C{i} & sortie écran \\ \hline
+    ligne & \C{i} & sortie écran \\
 \pause
-   initialisation & ? &  \\ \hline
+   initialisation & ? &  \\
 \pause
-  6 & 0 & \\ \hline
+  6 & 0 & \\ 
 \pause
-  8 &  & \C{etape 0} \\ \hline
+  8 &  & \C{etape 0} \\
 \pause
-  9 & 1 & \\ \hline
+  9 & 1 & \\ 
 \pause
-  8 &  & \C{etape 1} \\ \hline
+  8 &  & \C{etape 1} \\
 \pause
-  9 & 2 & \\ \hline
+  9 & 2 & \\ 
 \pause
-  8 &  & \C{etape 2} \\ \hline
+  8 &  & \C{etape 2} \\
 \pause
-  9 & 3 & \\ \hline
+  9 & 3 & \\ 
 \pause
-  10 & & \C{i vaut 3} \\ \hline
+  10 & & \C{i vaut 3} \\ 
 \pause
-12 & \multicolumn{2}{|c|}{Renvoie \C{EXIT\_SUCCESS}} \\ \hline
+12 & & Renvoie \C{EXIT\_SUCCESS} \\ 
 \end{tabular}
   \end{column}
  \end{columns}
 \end{frame}
+
+\section{Algorithmes élémentaires}
+\newcounter{savedenumi}
+
+\begin{frame}
+  \frametitle{Algorithmes : quels outils pour quels problèmes\nowrite}
+\pause
+\begin{columns}
+ \begin{column}[t]{0.59\linewidth}
+  \begin{enumerate}
+    \item  Traiter des cas spécifiques 
+      \begin{itemize}
+      \item \alert{\C{if else}} (différencier)
+      \item \alert{\C{\#define}} constantes symboliques (nommer)
+ %     \item arbre de décision (organiser)
+     \end{itemize}\pause
+    \item Parcourir/générer des cas\pause
+      \begin{itemize}
+      \item \alert{boucle \C{for}} (rarement while)
+%      \item tableaux
+      \end{itemize}\pause
+   \item Composer des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+        \pause
+      \item \alert{accumulateur} (à initialiser)
+      \end{itemize}\pause
+\setcounter{savedenumi}{\value{enumi}}
+\end{enumerate}
+\end{column}\hspace{-1cm}
+\pause
+\begin{column}[t]{0.59\linewidth}
+\begin{enumerate}
+\setcounter{enumi}{\value{savedenumi}}
+   \item Sélectionner des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+        \item \alert{\C{if}}  (sélectionner/traiter)
+      \end{itemize}\pause
+    \item[3'.] Dénombrer des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+          \pause
+        \item \alert{compteur} (à initialiser à 0)
+      \end{itemize}
+%     \item Rechercher un cas\pause
+%       \begin{itemize}
+%         \item boucle \alert{\C{while}}, conditions booléennes, \C{if}
+%       \end{itemize}\pause
+%     \item[2'.] Parcourir/générer : une \emph{ligne} mais aussi une \emph{surface}, un \emph{volume}...\pause
+%       \begin{itemize}
+%         \item imbriquer les boucles (var. $\neq$)
+%       \end{itemize}\pause
+%     \item Boucle événementielle
+%   \begin{itemize}
+% \item boucle \alert{while}
+%   \end{itemize}\pause
+%     \item Attente active 
+%   \begin{itemize}
+% \item boucle \alert{while}
+%   \end{itemize}
+\end{enumerate}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Démos}
+\begin{frame}
+  \frametitle{Démos}
+\end{frame}
+
+
 \section{printf/scanf (1)}
 \begin{frame}[fragile]
   \frametitle{printf/scanf (1) \nowrite}
@@ -445,7 +570,7 @@ int main()
 dans le texte à afficher est substitué par la valeur formatée d'un
 \alert{paramètre supplémentaire} de la fonction. Le caractère suivant le
 symbole \verb+%+ 
-détaille la conversion à utiliser.  La conversion  \verb+%d+
+signale le format à utiliser.  Un \verb+%d+
 met une valeur au format \alert{entier décimal}.
 \pause
 \item Exemples :
@@ -467,11 +592,6 @@ affiche \C{(31, -4)} et un saut de ligne.
   l'utilisateur, nous utiliserons \alert{\C{scanf}}.
 \item Exemple : \verb+scanf("%d", &x)+
 \end{itemize}
-\end{frame}
-
-\section*{Démos}
-\begin{frame}
-  \frametitle{Démos}
 \end{frame}
 
 \end{document}

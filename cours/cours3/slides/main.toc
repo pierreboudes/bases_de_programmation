@@ -1,9 +1,0 @@
-\beamer@endinputifotherversion {3.10pt}
-\select@language {french}
-\beamer@sectionintoc {3}{La programmation structur\IeC {\'e}e}{5}{0}{1}
-\beamer@sectionintoc {4}{Programmation en C}{13}{0}{2}
-\beamer@subsectionintoc {4}{1}{Structure d'un programme C}{13}{0}{2}
-\beamer@subsectionintoc {4}{2}{Variables imp\IeC {\'e}ratives et traduction de l'affectation}{14}{0}{2}
-\beamer@subsectionintoc {4}{3}{L'instruction de contr\IeC {\^o}le if}{20}{0}{2}
-\beamer@sectionintoc {5}{D\IeC {\'e}mos}{24}{0}{3}
-\beamer@sectionintoc {6}{Divers}{25}{0}{4}

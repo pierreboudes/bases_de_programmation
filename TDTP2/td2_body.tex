@@ -108,13 +108,14 @@ i = 4
 i vaut 5 après l'exécution de la boucle.
 \end{verbatim}
 \end{correction}
-\item Modifiez le programme afin que la séquence affichée soit exactement (on passera à la ligne juste avant la fin du programme):
+\item Modifiez le programme afin que la séquence affichée soit
+  exactement (faire cinq programmes) :
   \begin{itemize}
-  \item \verb|0 1 2 3 4|
-  \item \verb|1 2 3 4|
-  \item \verb|1 2 3 4 5|
+  \item \verb|0 1 2 3 4|,
+  \item \verb|1 2 3 4|,
+  \item \verb|1 2 3 4 5|,
   \item \verb|1 3 5|
-  \item \verb|(0,0) (1,1) (2,2)|.
+  \item puis, enfin \verb|(0,0) (1,1) (2,2)|.
   \end{itemize}
   \begin{correction}
     Ici, les corrections peuvent se faire plus ou moins rapidement, en
@@ -122,7 +123,7 @@ i vaut 5 après l'exécution de la boucle.
     demande la modif d'un ou de plusieurs arguments afin d'insister
     sur leur rôle. 
 
-Pour \verb|1 2 3 4 5|, c'est soit i < 6 ou i <=5. Ca dépend du problème.
+Pour \verb|1 2 3 4 5|, c'est soit \verb|i < 6| soit \verb|i <=5|. Ca dépend du problème.
 \begin{verbatim}
 /* correction (0,0) (1,1) (2,2)*/
 /* déclaration de fonctionalités supplémentaires */
@@ -156,8 +157,8 @@ int main()
   \end{correction}
 \item Modifiez le programme afin que la séquence affichée soit~:
   \begin{itemize}
-  \item \verb|0 1 2 0 1 2|.
-  \item \verb|0 1 2 0 1 2 3|.
+  \item \verb|0 1 2 0 1 2|,
+  \item puis \verb|0 1 2 0 1 2 3|.
   \end{itemize}
   De combien de boucles avez-vous besoin~? De combien de variables de
   boucles~?
@@ -487,9 +488,9 @@ int main()
     int i; /* var. de boucle */
     int j; /* var. de boucle */
 
-    /* saisie cote */
+    /* saisie cote (optionnel) */
     printf("Entrer la taille du demi-carré :\n");
-    scanf("%d",&cote);
+    scanf("%d", &cote);
 
     /* affichage du demi-carre droit */
     printf("Affichage d'un demi-carre droit d'etoiles de cote %d.\n",cote);
@@ -558,13 +559,13 @@ int main()
 
     /* demande la taille de la serie a l'utilisateur */
     printf("Combien d'elements dans la série ? ");
-    scanf("%d",&n);
+    scanf("%d", &n);
 
     /* saisie serie (n entiers) et calcul incremental de la somme */
     for(i = 0; i < n; i = i + 1) /* chaque entier de la serie */
     {
         /* saisir sa valeur */
-        scanf("%d",&elt);
+        scanf("%d", &elt);
 
         /* l'ajoute a la somme partielle */
         somme = somme + elt;

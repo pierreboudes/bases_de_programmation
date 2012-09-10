@@ -35,11 +35,21 @@ i=$1;
     if [ -f "TDTP${i}/td${i}_body.tex" ]
     then
 	echo "pdf du TDTP de la semaine ${i}";
-	cd TD${i};
-#	pdflatex "td${i}" 1> /dev/null;
-#	pdflatex "td${i}_corr" 1> /dev/null;
-	cp "td${i}.pdf" ../pdf/;
-	cp "td${i}_corr.pdf" ../pdf/;
+	cd TDTP${i};
+	pdflatex "td${i}" 1> /dev/null;
+	pdflatex "td${i}_corr" 1> /dev/null;
+	cp "td${i}.pdf" ../pdf/"tdtp${i}.pdf";
+	cp "td${i}_corr.pdf" ../pdf/"tdtp${i}_corr.pdf";
 	cd ../;
+    fi
+    if [ -f "TD${i}/td${i}.pdf" ]
+    then
+	echo "pdf du TD de la semaine ${i}";
+	cp "TD${i}/td${i}.pdf" "pdf/tp${i}.pdf";
+    fi
+    if [ -f "TP${i}/tp${i}.pdf" ]
+    then
+	echo "pdf du TP de la semaine ${i}";
+	cp "TP${i}/tp${i}.pdf" "pdf/tp${i}.pdf";
     fi
 
