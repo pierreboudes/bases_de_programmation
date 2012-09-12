@@ -1,0 +1,110 @@
+
+\subsection{Faut-il renoncer à rembourser la dette publique ?}
+
+\begin{figure}[h!]
+    \begin{center}
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em, node distance=3.5cm]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20,  text width=5.7em, text centered, 
+    minimum height=2em,  node distance=3.2cm]
+\tikzstyle{choix} = [rectangle, inner sep=2pt,
+    text centered]
+    
+\begin{tikzpicture}[node distance = 1.7cm, auto]
+    % Place nodes
+    \node [cloud] (temps) {Comment sont les marchés ?};
+    \node [below of=temps] (fantome) {};
+    \node [left of=fantome] (fantome2) {};
+    \node [block, left of=fantome2] (panique) {Ne plus rembourser};
+    \node [cloud, right of=fantome] (inquiets) {Dette $ > 0.5$
+      PIB ?};
+    \node [block,right of=inquiets] (confiants) {Ne rien changer};
+    \node [cloud,  below left of=inquiets] (pop) {La population
+      refuse l'austérité ?};
+    \node [block, below left of=pop] (ouipop) {Ne plus
+      rembourser};
+    \node [block, below right of=pop] (nonpop) {Ne
+      rien changer};
+    \node [block, below right of=inquiets] (nondette) {Ne rien changer};
+
+   % Draw edges
+\path [line] (temps) -| node [near start, above, choix] {paniqués} (panique);
+\path [line] (temps) -- node [near start, right, choix] {inquiets} (inquiets);
+\path [line] (temps) -| node [near start, above, choix] {confiants}
+(confiants);
+\path [line] (inquiets) -- node [left, choix] {oui} (pop);
+\path [line] (inquiets) -- node [right, choix] {non} (nondette);
+\path [line] (pop) -- node [left, choix] {oui} (ouipop);
+\path [line] (pop) -- node [right, choix] {non} (nonpop);
+\end{tikzpicture}
+    \end{center}
+    \caption{Décider s'il faut continuer de rembourser la dette}
+    \label{fig:ad}
+\end{figure}
+
+
+
+Un arbre de décision
+est un graphe particulier où les n{\oe}uds sont 
+des questions et les arêtes sont les réponses à ces questions.
+Il se lit de haut en bas. On avance dans l'arbre en répondant aux
+questions. Les n{\oe}uds les plus bas jouent le rôle particulier de
+classes de réponse au problème initial. 
+
+Ici, il y a deux classes de réponse : <<~Ne plus rembourser~>> et
+<<~Ne rien changer~>>.
+Par exemple, si les marchés sont inquiets, si la dette est
+strictement supérieure à $0.5$ fois le PIB et que la population refuse
+l'austérité, alors on ne rembourse plus.
+
+
+Vous utiliserez quatre variables dont vous coderez les valeurs avec des
+constantes symboliques. Les trois premières représentent les propriétés du jour
+courant pour prendre la décision, la dernière représente la décision à
+prendre :
+  
+\begin{itemize}
+\item \verb|marches| est un entier représentant l'état des marchés,
+  elle peut valoir un entier signifiant PANIQUE, ou un entier
+  signifiant INQUIETUDE ou un entier signifiant CONFIANCE.
+\item \verb|dette| est un nombre représentant la dette en
+  pourcentage du PIB (une valeur de 50 représente 50\% du PIB).
+\item \verb|refus| est un entier représentant le refus de l'austérité
+  qui peut avoir la valeur usuelle
+ TRUE (si la population refuse l'austérité) ou la valeur usuelle FALSE (sinon).
+\item \verb|rembourser| est un entier représentant la décision à
+  prendre et peut avoir la valeur TRUE (s'il faut continuer de
+  rembourser) ou FALSE (s'il faut arrêter de rembourser). Sa valeur
+  initiale est TRUE. 
+\end{itemize}
+
+Votre programme sera en deux parties. Une première partie concernera
+la prise de décision sans affichage, en fonction
+des valeurs de \verb|marches|, \verb|dette|, \verb|refus|. Vous
+donnerez des valeurs de votre choix à ces trois variables mais le
+programme doit fonctionner pour tous les autres choix possibles. À la fin
+de cette première partie \verb|rembourser| contiendra la valeur
+correcte pour la décision prise (TRUE ou FALSE). La seconde partie
+exploitera la valeur de \verb|rembourser| pour effectuer l'affichage.
+
+\question
+Écrire le programme complet en distinguant bien les deux
+parties.\bareme{4}
+
+\begin{correction}
+\begin{figure}
+  \centering
+\begin{small}
+\listinginput{1}{marches.c}
+\end{small} 
+  \caption{Faut-il annuler la dette ? -- Corrigé.}
+  \label{fig:dropdebt}
+\end{figure}
+Correction figure~\ref{fig:dropdebt}.
+\end{correction}
+
+

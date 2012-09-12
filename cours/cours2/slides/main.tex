@@ -342,14 +342,14 @@ Aujourd'hui nous allons voir une première forme de répétition en C, le
 \begin{frame}[fragile]
   \frametitle{Rappels sur l'instruction de contrôle if \nowrite}
 
-\structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
-\{\emph{\colorbox{red!20}{bloc2}}\}}.
-\medskip
+  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
+    \{\emph{\colorbox{red!20}{bloc2}}\}}.
+  \medskip
 
-%\pause
+  % \pause
   \begin{columns}
     \begin{column}[t]{5cm}
-\structure{Code source}
+      \structure{Code source}
 \begin{verbatim}
 /* avant */
 if (age < 18)
@@ -362,45 +362,45 @@ else
 }
 /* après */
 \end{verbatim}
-   \end{column}
-\pause
-   \begin{column}[t]{4cm}
-\structure{Schéma de traduction}\\[.3cm]
-\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+    \end{column}
+    \pause
+    \begin{column}[t]{4cm}
+      \structure{Schéma de traduction}\\[.3cm]
+      \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
 
-\tikzstyle{line} = [draw, thick, -latex']
-\begin{tikzpicture}[node distance=.7cm]
-  \node [amil] (avant) {avant};
-  \node [amil,below of=avant] (eval) {évalue la condition};
-  \node [amil,below of =eval,fill=orange!20] (selection) {saute si elle est fausse};
- % \uncover<4->{%
-    \node [amil,below of =selection,fill=green!20] (bloc1) {bloc1};
-    \node [amil,below of =bloc1,fill=orange!20] (saut1) {saute après};
-  %}
-  \node [amil,below of =saut1,fill=red!20](bloc2) {bloc2};
-  \node [amil,below of =bloc2] (apres) {après};
-  \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
-%\uncover<4->{
-\path [line] (saut1) -| ++(2.4,0) |-  (apres);
-%}
-\end{tikzpicture}
-\end{column}
-\end{columns}
+      \tikzstyle{line} = [draw, thick, -latex']
+      \begin{tikzpicture}[node distance=.7cm]
+        \node [amil] (avant) {avant};
+        \node [amil,below of=avant] (eval) {évalue la condition};
+        \node [amil,below of =eval,fill=orange!20] (selection) {saute si elle est fausse};
+        % \uncover<4->{%
+        \node [amil,below of =selection,fill=green!20] (bloc1) {bloc1};
+        \node [amil,below of =bloc1,fill=orange!20] (saut1) {saute après};
+        % }
+        \node [amil,below of =saut1,fill=red!20](bloc2) {bloc2};
+        \node [amil,below of =bloc2] (apres) {après};
+        \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
+        % \uncover<4->{
+        \path [line] (saut1) -| ++(2.4,0) |-  (apres);
+        % }
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \subsection{L'instruction de contrôle for}
 \begin{frame}[fragile]
   \frametitle{L'instruction de contrôle for\youwrite}
 
-\structure{Syntaxe :}\\
- \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}}) 
-\{\emph{\colorbox{green!20}{bloc}}\}}.
-\medskip
+  \structure{Syntaxe :}\\
+  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}}) 
+    \{\emph{\colorbox{green!20}{bloc}}\}}.
+  \medskip
 
-\pause
+  \pause
   \begin{columns}
     \begin{column}[t]{6cm}
-\structure{Code source}
+      \structure{Code source}
 \begin{verbatim}
 /* avant */
 for (i = 0; i < 5; i = i + 1)
@@ -410,29 +410,29 @@ for (i = 0; i < 5; i = i + 1)
 }
 /* après */
 \end{verbatim}
-La variable \C{i} est appelée \alert{variable de boucle}, elle doit être préalablement déclarée comme toute autre variable.
+      La variable \C{i} est appelée \alert{variable de boucle}, elle doit être préalablement déclarée comme toute autre variable.
 
-   \end{column}
-\uncover<3->{
-   \begin{column}[t]{4cm}
-\structure{Schéma de traduction}\\[.3cm]
-\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
-\tikzstyle{line} = [draw, thick, -latex']
-     \begin{tikzpicture}[node distance=.7cm]
-       \node [amil] (avant) {avant};
-       \node [amil,below of=avant] (instruction1) {instruction 1};
-       \node [amil,below of =instruction1,fill=orange!20] (saut1) {saute à la condition};
-       \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
-\uncover<4->{\node [amil,below of =bloc,fill=yellow!20] (instruction2) {instruction 2};}
-       \node [amil,below of =instruction2](eval) {évalue la condition};
-       \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
-       \node [amil,below of =sautcond] (apres) {après};
-       \path [line] (saut1) -| ++(2.6,0) |-  (eval);
-       \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
-     \end{tikzpicture}
-   \end{column}
-}
- \end{columns}
+    \end{column}
+    \uncover<3->{
+      \begin{column}[t]{4cm}
+        \structure{Schéma de traduction}\\[.3cm]
+        \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+        \tikzstyle{line} = [draw, thick, -latex']
+        \begin{tikzpicture}[node distance=.7cm]
+          \node [amil] (avant) {avant};
+          \node [amil,below of=avant] (instruction1) {instruction 1};
+          \node [amil,below of =instruction1,fill=orange!20] (saut1) {saute à la condition};
+          \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
+          \uncover<4->{\node [amil,below of =bloc,fill=yellow!20] (instruction2) {instruction 2};}
+          \node [amil,below of =instruction2](eval) {évalue la condition};
+          \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
+          \node [amil,below of =sautcond] (apres) {après};
+          \path [line] (saut1) -| ++(2.6,0) |-  (eval);
+          \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
+        \end{tikzpicture}
+      \end{column}
+    }
+  \end{columns}
 \end{frame}
 
 \subsection{Trace}

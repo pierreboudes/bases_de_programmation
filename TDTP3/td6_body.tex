@@ -1,0 +1,155 @@
+% -*- coding: utf-8 -*-
+
+\newcommand{\commentaire}[1]{}
+
+\entete{Travaux dirigés 6 : type booléen en C; structures de contrôle
+  \emph{for} et \emph{while}}
+
+\begin{correction}
+  Note aux chargés de TD.
+  \begin{itemize}
+  \item En cours, ils ont vu l'évaluation d'expressions booléennes. Les constantes symboliques TRUE et FALSE ont été introduites. Le ``while'' a été présenté et utilisé avec des expressions booléennes utilisant les connecteurs logiques \verb|&&|, \verb||||.
+  \item La fin du TD (1h, 1h30) doit être consacré à la préparation du TP, qui est un peu long.
+  \end{itemize}
+\end{correction}
+
+\section{Évaluation d'expressions booléennes}
+\label{intro}
+
+Soit le programme suivant :
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf */
+
+#define FALSE 0
+#define TRUE 1
+
+/* Declaration de fonctions utilisateurs */
+
+int main()
+{
+    int beau_temps = TRUE;
+    int pas_de_vent = FALSE;
+
+    printf("%d\n",beau_temps && pas_de_vent);
+    printf("%d\n",beau_temps || pas_de_vent);
+    printf("%d\n",! beau_temps || pas_de_vent);
+    printf("%d\n",! (! beau_temps || pas_de_vent) == (beau_temps && ! pas_de_vent));
+
+    return EXIT_SUCCESS;
+}
+
+/* Definition de fonctions utilisateurs */
+\end{verbatim}
+
+\begin{enumerate}
+\item Qu'affiche le programme ?
+  \begin{correction}
+\begin{verbatim}
+0
+1
+0
+1 /* toujours vrai : théorème de De Morgan : NON (a OU b) = NON a ET NON b */
+\end{verbatim}
+  \end{correction}
+
+\section{Boucles \textit{for} ou \textit{while} ?}
+
+Ces boucles ont exactement la même sémantique et on peut facilement
+réécrire l'une en l'autre. Par convention, on préfère utiliser la
+boucle \textit{for} lorsque l'on connaît le nombre d'itérations à
+l'avance ; on utilise \textit{while} dans le cas contraire, lorsque le nombre
+d'itérations n'est pas connu à l'avance. Par exemple, pour faire la
+somme des éléments d'un tableau on utilisera \textit{for} et pour
+trouver un élément dans un tableau, ne sachant pas où il se trouve, on
+choisira \textit{while}. L'intérêt de respecter cette convention est
+que la lecture d'un programme est facilité en indiquant à quoi sert la
+boucle.
+
+Résoudre les problèmes suivants en utilisant soit \textit{for}, soit \textit{while}.
+
+\subsection{Élévation à la puissance}
+
+Écrire un programme qui demande à l'utilisateur d'entrer deux nombres
+entiers $x$ et $n \geq 0$ puis calcule $x^n$ et affiche le résultat.
+\begin{correction}
+Trivial (for).
+\end{correction}
+\subsection{Test de primalité}
+
+Écrire un programme qui demande à l'utilisateur d'entrer un
+nombre entier positif $n$, teste si $n$ est premier puis affiche le
+résultat. 
+
+\begin{correction}
+Le faire avec un while plutôt qu'un for.
+\begin{verbatim}
+#define TRUE 1
+#define FALSE 0
+...
+int main()
+{
+  int premier = TRUE;
+  int n;
+  int d = 2;
+ 
+  /* saisie */
+  printf("n?");
+  scanf("%d",&n);
+
+  /* test de primalite */
+  while (premier && (d < n))
+  {
+     if (n % d == 0)
+     {
+        premier = FALSE;
+     }
+     d = d + 1;
+  }
+
+  /* affichage */
+  if (premier)
+  {
+    printf("%d est premier\n", n);
+  }
+  else
+  {
+    printf("%d n'est pas premier, car divisible par %d\n", n, d - 1);
+  }
+
+
+  return EXIT_SUCCESS;
+}
+\end{verbatim}
+\end{correction}
+
+\section{Carré d'étoiles}
+
+Écrire un programme qui demande à l'utilisateur d'entrer un nombre
+entier positif $n$ et affiche un carré creux d'étoiles de côté $n$.
+Exemple (l'utilisateur entre 4):
+\begin{verbatim}
+n? 4
+****
+*  *
+*  *
+****
+\end{verbatim}
+
+\begin{correction}
+\begin{verbatim}
+  double for et un if comme ça :
+ if ( (i == 0) || (j == 0) || (i == n - 1) || (j == n - 1) )
+ {
+   printf("*");
+ }
+ else
+ {
+   printf(" ");
+ }
+\end{verbatim}
+\end{correction}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td6"
+%%% End: 

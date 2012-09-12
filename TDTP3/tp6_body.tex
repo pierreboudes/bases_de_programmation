@@ -1,0 +1,203 @@
+% -*- coding: utf-8 -*-
+
+% \renewcommand{\labelitemi}{$\bullet$}
+
+% \newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 6 : évaluation d'expressions booléennes; la structure de contrôle ``while''}
+
+\vspace{-1em}L'objectif de ce TP est de vous familiariser avec les expressions booléennes et leur utilisation avec la structure de contrôle ``while''.
+
+\section{Le nombre secret}
+
+Nous voulons programmer le jeu du nombre à découvrir. Le joueur doit
+deviner un nombre secret choisit par l'ordinateur entre 0 et \verb|NB_MAX| (une constante du programme). S'il propose un nombre trop
+grand, l'ordinateur lui répond "Plus petit", s'il propose trop petit, l'ordinateur lui répond "Plus grand". Dans ces deux cas, il
+est invité à proposer un autre nombre. Le jeu s'arrête quand il devine juste.
+Un exemple d'exécution de ce jeu pourrait être :
+\begin{verbatim}
+Votre choix ?
+8
+Plus petit.
+Votre choix ?
+4
+Plus petit.
+Votre choix ?
+2
+Vous avez trouvé le nombre secret.
+\end{verbatim}
+
+\begin{enumerate}
+\item Proposez un algorithme en français pour le jeu.
+\item Traduisez-le en langage C et exécutez-le.
+\item Pourquoi préférez-vous une boucle \verb|while| ici ?
+\end{enumerate}
+
+Pour rendre le jeu intéressant, l'ordinateur doit choisir le nombre secret \emph{au hasard}. La librairie C standard propose des fonctions renvoyant des nombres pseudo-aléatoires\footnote{http://fr.wikipedia.org/wiki/Générateur\_de\_nombres\_pseudo-aléatoires} déclarées dans \C{<stdlib.h>}. L'ordinateur va utiliser la fonction :
+	\C{int rand();}
+qui renvoie un nombre pseudo-aléatoire entier entre 0 et la constante
+\verb|RAND_MAX| (égale à 2147483647) inclus. Pour renvoyer un nombre
+pseudo-aléatoire entre 0 et \verb|NB_MAX|, \verb|NB_MAX| inclus
+($\verb|NB_MAX| << \verb|RAND_MAX|$), il suffit de calculer le reste
+de la division entière de \C{rand()} par \verb|(NB_MAX + 1)|,
+c'est-à-dire le nombre renvoyé par rand()  modulo \verb|(NB_MAX + 1)|
+(opérateur \% en C). rand vient de random qui veut dire aléatoire en anglais.
+
+Un exemple de programme illustrant l'utilisation de rand pour
+engendrer un nombre pseudo-aléatoire est le suivant :
+\begin{small}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS, rand, srand */
+#include <time.h> /* time */
+
+#define NB_MAX 15 /* nombre secret entre 0 et NB_MAX inclus */
+
+int main()
+{
+    int nombre_secret; /* nombre secret à deviner */
+
+    /* initialisation du générateur de nombres pseudo-aléatoires */
+    srand(time(NULL)); /* à ne faire qu'une fois */
+
+    /* tirage du nombre secret */
+    nombre_secret = rand() % (NB_MAX + 1); /* entre 0 et NB_MAX inclus */
+
+    /* manche joueur ... */
+
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS, rand, srand */
+#include <stdio.h> /* printf, scanf */
+#include <time.h> /* time */
+
+#define TRUE 1
+#define FALSE 0
+
+#define NB_MAX 15 /* nombre secret entre 0 et NB_MAX inclus */
+
+/* declaration de fonctions utilisateurs */
+
+int main()
+{
+    int nombre_secret; /* nombre secret à deviner */
+    int choix; /* choix de l'utilisateur pour le nombre secret */
+    int pas_trouve = TRUE; /* TRUE si pas trouvé nombre secret */
+
+    /* initialisation du générateur de nombres pseudo-aléatoires */
+    srand(time(NULL)); /* à ne faire qu'une fois */
+
+    /* tirage du nombre secret */
+    nombre_secret = rand() % (NB_MAX + 1); /* entre 0 et NB_MAX inclus */
+
+    /* manche joueur */
+    while(pas_trouve) /* pas trouvé nombre secret */
+    {
+        /* demande nombre à l'utilisateur */
+        printf("Votre choix (nombre entre 0 et %d) ?\n",NB_MAX);
+        scanf("%d",&choix);
+        
+        if(choix == nombre_secret) /* trouvé */
+        {
+            pas_trouve = FALSE;
+        }
+        else /* pas trouvé */
+        {
+            /* donne indice */
+            if(choix > nombre_secret)
+            {
+                printf("Plus petit.\n");
+            }
+            else
+            {
+                printf("Plus grand.\n");
+            }
+        }
+    }
+    /* trouvé nombre secret */
+
+    printf("Vous avez trouvé le nombre secret.\n");
+
+    return EXIT_SUCCESS;
+}
+
+/* Definition de fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+
+\section{Évaluation d'expressions booléennes}
+\label{sec:exo2}
+
+Une table de vérité donne la valeur d'une ou de plusieurs expressions
+booléennes, construits à partir de variables et d'opérateurs booléens,
+en fonction des valeurs des variables booléennes. Un exemple de table
+de vérité pour l'expression \textit{a OU b} est donné dans le tableau
+ci-dessous (avec F : faux et V : vrai) :
+
+\begin{center}
+
+\begin{tabular}[h]{|c|c|c|}
+\hline
+a & b & a OU b\\
+\hline
+F & F & F\\
+\hline
+F & V & V\\
+\hline
+V & F & V\\
+\hline
+V & V & V\\
+\hline
+\end{tabular}
+\end{center}
+
+Écrire un programme qui demande à l'utilisateur les valeurs de deux variables booléennes \verb|a| et \verb|b| et qui affiche
+à l'écran la ligne correspondante de la table de vérité de l'ensemble des
+expressions : a ET b, a OU b, NON a, NON b, NON a ET b. Cette ligne à
+afficher (qui aura 7 colonnes) est déterminée par la valeur des deux
+variables a et b. Pour une indentation correcte des colonnes, vous pouvez utiliser dans printf
+  \verb|``\t''| qui affiche une tabulation.
+
+Voici deux exemples de sortie :
+\begin{verbatim}
+entrez deux valeurs booleennes : 1 0
+a       b       a ET b  a OU b  NON a   NON b   NON a ET b
+1       0       0       1       0       1       0
+
+entrez deux valeurs booleennes : -12 0
+a       b       a ET b  a OU b  NON a   NON b   NON a ET b
+-12     0       0       1       0       1       0
+\end{verbatim}
+
+\begin{correction}
+\begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* declaration constantes et types utilisateurs */
+
+/* declaration de fonctions utilisateurs */
+
+int main()
+{
+    int a; /* booléen */
+    int b; /* booléen */
+
+    printf("Entrez deux valeurs booléennes : ");
+    scanf("%d",&a);
+    scanf("%d",&b);
+
+    printf("a\tb\ta ET b\ta OU b\tNON a\tNON b\tNON a ET b\n");
+    printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n",a,b,a && b,a || b,!a,!b,!a && b);
+
+    return EXIT_SUCCESS;
+}
+
+/* Definition de fonctions utilisateurs */
+\end{verbatim}
+\end{correction}
+

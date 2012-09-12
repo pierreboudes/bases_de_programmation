@@ -3,8 +3,8 @@
 %\usepackage[table]{xcolor}
 \input{communs/slides_style}
 
-%%% Titre -- Cours 6
-\title{Éléments d'informatique -- Cours 6. Boucle while,
+%%% Titre -- Cours 5
+\title{Algorithmique et programmation -- Cours 3. Boucle while,
 expressions booléennes. Algorithmes élémentaires.}
 
 \author{Pierre Boudes}
@@ -23,43 +23,146 @@ expressions booléennes. Algorithmes élémentaires.}
 	\end{center}
 \end{frame}
 
-\section[Plan]{}
 \frame[label=plan]{\tableofcontents}
 
-\section[Plan du cours]{semestre}
-\begin{frame}
-  \frametitle{Ce semestre\nowrite}
-
-  \begin{itemize}
-  \item \color{DarkGreen}  Éléments d'architecture des ordinateurs (+mini-assembleur)
-  \item Éléments de systèmes d'exploitation
-\item Programmation structurée impérative (éléments de langage C)
+\section{printf/scanf (1)}
+\begin{frame}[fragile]
+  \frametitle{printf/scanf (1) \nowrite}
 \begin{itemize}
-  \item  \color{DarkGreen} Structure d'un programme C
-  \item Variables : déclaration (et initialisation), affectaction
-  \item Évaluation d'expressions, \alert{expressions booléennes}
-  \item Instructions de contrôle : if, for, \alert{while}
-  \item \structure{Types de données :} entiers,  \structure{caractères,
-    réels,} tableaux, \structure{struct}
-  \item Fonctions d'entrées/sorties (scanf/printf)
-\item \structure{Écriture et appel de fonctions}
-  \item \structure{Débogage}
-\end{itemize}
-\item Notions de compilation
+\item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
+  (\emph{print formatted}). 
+\item Chaque \verb+%+ 
+dans le texte à afficher est substitué par la valeur formatée d'un
+\alert{paramètre supplémentaire} de la fonction. Le caractère suivant le
+symbole \verb+%+ 
+signale le format à utiliser.  Un \verb+%d+
+met une valeur au format \alert{entier décimal}.
+\pause
+\item Exemples :
   \begin{itemize}
-  \item  \color{DarkGreen} Analyse lexicale, analyse syntaxique, analyse sémantique;
-  préprocesseur du C (include, define);
-  Édition de lien
-  \end{itemize}
-\item \alert{Algorithmes élémentaires}
-\item Méthodologie de résolution, manipulation sous linux
+\item
+    \verb+printf("Bonjour\n")+ 
+affiche \C{Bonjour} et un saut de
+    ligne\pause
+\item
+    \verb+printf("i vaut %d\n", i)+ 
+affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
+ligne)\pause
+\item
+    \verb+printf("(%d, %d)\n", 31, -4)+ 
+affiche \C{(31, -4)} et un saut de ligne.
+ \end{itemize}
+\pause
+\item Réciproquement pour faire entrer dans le programme une donnée saisie par
+  l'utilisateur, nous utiliserons \alert{\C{scanf}}.
+\item Exemple : \verb+scanf("%d", &x)+
 \end{itemize}
- \end{frame}
+\end{frame}
+
+
+
+%\subsection{Rappels sur l'instruction de contrôle if}
+\begin{frame}[fragile]
+  \frametitle{Rappels sur l'instruction de contrôle if \nowrite}
+
+  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
+    \{\emph{\colorbox{red!20}{bloc2}}\}}.
+  \medskip
+
+  % \pause
+  \begin{columns}
+    \begin{column}[t]{5cm}
+      \structure{Code source}
+\begin{verbatim}
+/* avant */
+if (age < 18)
+{
+  permis = 0;
+}
+else
+{
+  permis = 1;
+}
+/* après */
+\end{verbatim}
+    \end{column}
+    \pause
+    \begin{column}[t]{4cm}
+      \structure{Schéma de traduction}\\[.3cm]
+      \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+
+      \tikzstyle{line} = [draw, thick, -latex']
+      \begin{tikzpicture}[node distance=.7cm]
+        \node [amil] (avant) {avant};
+        \node [amil,below of=avant] (eval) {évalue la condition};
+        \node [amil,below of =eval,fill=orange!20] (selection) {saute si elle est fausse};
+        % \uncover<4->{%
+        \node [amil,below of =selection,fill=green!20] (bloc1) {bloc1};
+        \node [amil,below of =bloc1,fill=orange!20] (saut1) {saute après};
+        % }
+        \node [amil,below of =saut1,fill=red!20](bloc2) {bloc2};
+        \node [amil,below of =bloc2] (apres) {après};
+        \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
+        % \uncover<4->{
+        \path [line] (saut1) -| ++(2.4,0) |-  (apres);
+        % }
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{L'instruction de contrôle for}
+\begin{frame}[fragile]
+  \frametitle{Rappels sur l'instruction de contrôle for\nowrite}
+
+  \structure{Syntaxe :}\\
+  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}}) 
+    \{\emph{\colorbox{green!20}{bloc}}\}}.
+  \medskip
+
+  \pause
+  \begin{columns}
+    \begin{column}[t]{6cm}
+      \structure{Code source}
+\begin{verbatim}
+/* avant */
+for (i = 0; i < 5; i = i + 1)
+{
+  printf("%d\n", i);
+  ...
+}
+/* après */
+\end{verbatim}
+      La variable \C{i} est appelée \alert{variable de boucle}, elle doit être préalablement déclarée comme toute autre variable.
+
+    \end{column}
+    \uncover<3->{
+      \begin{column}[t]{4cm}
+        \structure{Schéma de traduction}\\[.3cm]
+        \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+        \tikzstyle{line} = [draw, thick, -latex']
+        \begin{tikzpicture}[node distance=.7cm]
+          \node [amil] (avant) {avant};
+          \node [amil,below of=avant] (instruction1) {instruction 1};
+          \node [amil,below of =instruction1,fill=orange!20] (saut1) {saute à la condition};
+          \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
+          \uncover<4->{\node [amil,below of =bloc,fill=yellow!20] (instruction2) {instruction 2};}
+          \node [amil,below of =instruction2](eval) {évalue la condition};
+          \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
+          \node [amil,below of =sautcond] (apres) {après};
+          \path [line] (saut1) -| ++(2.6,0) |-  (eval);
+          \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
+        \end{tikzpicture}
+      \end{column}
+    }
+  \end{columns}
+\end{frame}
+
 
 \section[while]{L'instruction de contrôle while}
-\subsection{Syntaxe}
+\subsection{Syntaxe et sémantique}
 \begin{frame}[fragile]
-  \frametitle{L'instruction de contrôle while}
+  \frametitle{L'instruction de contrôle while\youwrite}
 
 \structure{Syntaxe :}\\
  \C{while (\emph{condition}) 
@@ -78,6 +181,8 @@ while ( ... )
 }
 /* après */
 \end{verbatim}
+\uncover<4->{Pour assurer la terminaison, le bloc du while doit
+  modifier la condition.}
   \end{column}
 \uncover<3->{
    \begin{column}[t]{4cm}
@@ -99,7 +204,7 @@ while ( ... )
  \end{columns}
 \end{frame}
 
-\subsection{Trace}
+%\subsection{Trace}
 \begin{frame}[fragile]
   \frametitle{Trace}
 \begin{columns}
@@ -163,11 +268,12 @@ L'utilisateur saisit 6071.
     \C{for}).\pause
 \item Par convention, les programmeurs préfèrent utiliser un \C{for} lorsque
   le nombre d'itérations est connu à l'avance. Par exemple, pour
-  faire la somme des éléments d'un tableau. Dans le cas contraire, les
+  parcourir un ensemble de cas. Dans le cas contraire, les
   programmeurs utilisent un \C{while}. Par exemple, pour chercher un
-  élément dans un tableau.\pause
+  cas particulier.\pause
 \item Maintenant que nous avons le \C{while}, il est possible qu'un
   programme ne termine jamais (\C{Ctrl-C}).
+\item \emph{L'arrêt des programmes est indécidable}.
   \end{itemize}
 \end{frame}
 
@@ -213,7 +319,7 @@ booléennes}, pouvant être \emph{Vrai}, \emph{Faux}  ou :\pause
 \item En langage C, les
   expressions booléennes sont de type entier (\C{int}), l'entier \emph{zéro}
   joue le rôle du Faux, l'entier \emph{un} joue le rôle du Vrai et tout
-  entier différent de zéro est évalué a vrai.\pause
+  entier différent de zéro est évalué à vrai.\pause
 
 \item On se donne deux
   constantes symboliques :
@@ -235,7 +341,7 @@ int main()
 \end{frame}
 
 
-\section{Algorithmique élémentaire}
+\section{Algorithmes élémentaires}
 \newcounter{savedenumi}
 
 \begin{frame}
@@ -253,7 +359,7 @@ int main()
     \item Parcourir/générer des cas\pause
       \begin{itemize}
       \item \alert{boucle \C{for}} (rarement while)
-      \item tableaux
+      \item tableaux \emph{(plus tard)}
       \end{itemize}\pause
    \item Composer des cas
       \begin{itemize}
@@ -261,11 +367,10 @@ int main()
         \pause
       \item \alert{accumulateur} (à initialiser)
       \end{itemize}\pause
-    \item[3'.] Dénombrer des cas
+   \item Sélectionner des cas
       \begin{itemize}
         \item boucles (parcourir/générer)
-          \pause
-        \item \alert{compteur} (à initialiser à 0)
+        \item \alert{\C{if}}  (sélectionner/traiter)
       \end{itemize}
 \setcounter{savedenumi}{\value{enumi}}
 \end{enumerate}
@@ -273,17 +378,18 @@ int main()
 \pause
 \begin{column}[t]{0.59\linewidth}
 \begin{enumerate}
-\setcounter{enumi}{\value{savedenumi}}
-   \item Sélectionner des cas
+    \item[3'.] Dénombrer des cas
       \begin{itemize}
         \item boucles (parcourir/générer)
-        \item \alert{\C{if}}  (sélectionner/traiter)
+          \pause
+        \item \alert{compteur} (à initialiser à 0)
       \end{itemize}\pause
+\setcounter{enumi}{\value{savedenumi}}
     \item Rechercher un cas\pause
       \begin{itemize}
         \item boucle \alert{\C{while}}, conditions booléennes, \C{if}
       \end{itemize}\pause
-    \item[2'.] Parcourir/générer : une \emph{ligne} mais aussi une \emph{surface}, un \emph{volume}...\pause
+    \item[2'.] Parcourir/générer : une \emph{ligne} mais aussi une \emph{surface}, un \emph{volume}\dots\pause
       \begin{itemize}
         \item imbriquer les boucles (var. $\neq$)
       \end{itemize}\pause
@@ -314,7 +420,7 @@ int main()
 \end{frame}
 
 
-\subsection{Boucle événementielle}
+\subsection{Autres usages du while : boucle événementielle et attente active}
 
 \begin{frame}[fragile]
 \frametitle{Boucle principale en programmation événementielle}
@@ -336,7 +442,6 @@ Jeu de calcul mental (additionner deux nombres au hasard)\nowrite
 \lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={53-59},numbers=left,firstnumber=53]{../demo/addition.c}
 \end{frame}
 
-\subsection{Attente active}
 \begin{frame}[fragile]
   \frametitle{Boucle d'attente active}
 La boucle sert à attendre qu'une condition externe devienne vraie, le
@@ -351,38 +456,6 @@ programme teste continuellement cette condition.
 
 \section{Démos}
 \begin{frame}
-  \frametitle{Démos}
+  \frametitle{Démos et utilisation de codeblocks}
 \end{frame}
-
-\section{Premier partiel}
-\begin{frame}
-  \frametitle{Premier partiel}
-  \begin{itemize}
-\item Au \alert{premier partiel}, il est probable que vous ayez :
-  \begin{itemize}
-    \item  à compléter un programme fourni et question de
-      cours
-    \item simuler l'exécution (faire une trace) 
-      d'un programme fourni et question de compréhension
-    \item Deux exercices avec des boucles (for
-      ou while)
-    \item Un autre sur if et constantes symboliques (arbre de décision)\pause
-  \end{itemize}
-
-\item Au \alert{second \emph{partiel}} (au moins la moitié de votre note d'UE) :
-\begin{itemize}
-\item mêmes types d'exercices avec différents types de données (\C{int},
-  \C{char}, \C{double}, \C{struct})  et des fonctions
-\item le programme à modifier et la trace sont avec fonctions
-\item un exercice porte spécialement sur les structures
-\item exercice supplémentaire : déclarer/définir des fonctions
-  avec $\frac{1}{2}$pt  par déclaration juste et $\frac{1}{2}$pt par
-  définition juste.\pause
-\end{itemize}
-    \item
-\alert{Gérez votre temps, apprenez à lire un sujet et ne rien oublier.} \structure{Nous
-testons vos acquis pas votre propension à paniquer !}
- \end{itemize}
-\end{frame}
-
 \end{document}
