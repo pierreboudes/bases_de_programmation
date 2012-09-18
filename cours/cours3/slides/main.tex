@@ -65,8 +65,8 @@ affiche \C{(31, -4)} et un saut de ligne.
 \begin{frame}[fragile]
   \frametitle{Rappels sur l'instruction de contrôle if \nowrite}
 
-  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
-    \{\emph{\colorbox{red!20}{bloc2}}\}}.
+  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!30}{bloc1}}\} else 
+    \{\emph{\colorbox{red!30}{bloc2}}\}}.
   \medskip
 
   % \pause
@@ -89,18 +89,17 @@ else
     \pause
     \begin{column}[t]{4cm}
       \structure{Schéma de traduction}\\[.3cm]
-      \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
-
+      \tikzstyle{amil}=[rectangle, draw,  fill=blue!30, text badly ragged, text width=3.7cm]
       \tikzstyle{line} = [draw, thick, -latex']
       \begin{tikzpicture}[node distance=.7cm]
         \node [amil] (avant) {avant};
         \node [amil,below of=avant] (eval) {évalue la condition};
-        \node [amil,below of =eval,fill=orange!20] (selection) {saute si elle est fausse};
+        \node [amil,below of =eval,fill=orange!30] (selection) {saute si elle est fausse};
         % \uncover<4->{%
-        \node [amil,below of =selection,fill=green!20] (bloc1) {bloc1};
-        \node [amil,below of =bloc1,fill=orange!20] (saut1) {saute après};
+        \node [amil,below of =selection,fill=green!30] (bloc1) {bloc1};
+        \node [amil,below of =bloc1,fill=orange!30] (saut1) {saute après};
         % }
-        \node [amil,below of =saut1,fill=red!20](bloc2) {bloc2};
+        \node [amil,below of =saut1,fill=red!30](bloc2) {bloc2};
         \node [amil,below of =bloc2] (apres) {après};
         \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
         % \uncover<4->{
@@ -116,8 +115,8 @@ else
   \frametitle{Rappels sur l'instruction de contrôle for\nowrite}
 
   \structure{Syntaxe :}\\
-  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}}) 
-    \{\emph{\colorbox{green!20}{bloc}}\}}.
+  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!30}{instruct2}}) 
+    \{\emph{\colorbox{green!30}{bloc}}\}}.
   \medskip
 
   \pause
@@ -139,16 +138,16 @@ for (i = 0; i < 5; i = i + 1)
     \uncover<3->{
       \begin{column}[t]{4cm}
         \structure{Schéma de traduction}\\[.3cm]
-        \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+        \tikzstyle{amil}=[rectangle, draw,  fill=blue!30, text badly ragged, text width=3.7cm]
         \tikzstyle{line} = [draw, thick, -latex']
         \begin{tikzpicture}[node distance=.7cm]
           \node [amil] (avant) {avant};
           \node [amil,below of=avant] (instruction1) {instruction 1};
-          \node [amil,below of =instruction1,fill=orange!20] (saut1) {saute à la condition};
-          \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
-          \uncover<4->{\node [amil,below of =bloc,fill=yellow!20] (instruction2) {instruction 2};}
+          \node [amil,below of =instruction1,fill=orange!30] (saut1) {saute à la condition};
+          \node [amil,below of =saut1,fill=green!30] (bloc) {bloc};
+          \uncover<4->{\node [amil,below of =bloc,fill=yellow!30] (instruction2) {instruction 2};}
           \node [amil,below of =instruction2](eval) {évalue la condition};
-          \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
+          \node [amil,below of =eval,fill=orange!30](sautcond) {saute si elle est vraie};
           \node [amil,below of =sautcond] (apres) {après};
           \path [line] (saut1) -| ++(2.6,0) |-  (eval);
           \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
@@ -166,7 +165,7 @@ for (i = 0; i < 5; i = i + 1)
 
 \structure{Syntaxe :}\\
  \C{while (\emph{condition}) 
-\{\emph{\colorbox{green!20}{bloc}}\}}.
+\{\emph{\colorbox{green!30}{bloc}}\}}.
 \medskip
 
 \pause
@@ -187,14 +186,14 @@ while ( ... )
 \uncover<3->{
    \begin{column}[t]{4cm}
 \structure{Schéma de traduction}\\[.3cm]
-\tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
+\tikzstyle{amil}=[rectangle, draw,  fill=blue!30, text badly ragged, text width=3.7cm]
 \tikzstyle{line} = [draw, thick, -latex']
      \begin{tikzpicture}[node distance=.7cm]
        \node [amil] (avant) {avant};
-      \node [amil,below of =avant,fill=orange!20] (saut1) {saut};
-       \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
+      \node [amil,below of =avant,fill=orange!30] (saut1) {saut};
+       \node [amil,below of =saut1,fill=green!30] (bloc) {bloc};
       \node [amil,below of =bloc](eval) {évalue la condition};
-       \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
+       \node [amil,below of =eval,fill=orange!30](sautcond) {saute si elle est vraie};
        \node [amil,below of =sautcond] (apres) {après};
        \path [line] (saut1) -| ++(2.6,0) |-  (eval);
        \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
