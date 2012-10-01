@@ -13,10 +13,7 @@
 int main()
 {
     int debut; /* debut en temps standard */
-    int duree = 0; /* duree en secondes, attention les artificiers
-		    * amateurs noteront qu'il est nécessaire
-		    * d'initialiser sa valur à 0. Ne pas tester sans
-		    * initialisation ! */
+    int duree; /* duree en secondes */
     int tictac = TAC;
  
     printf("Auto-destruction en cours, ctrl-C pour desamorcer !\n");

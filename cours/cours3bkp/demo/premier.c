@@ -28,28 +28,25 @@ int main()
 	{
 	    continuer = FALSE;
 	}
-	else 
+	/* test de primalite */
+	d = 2;
+	while ( premier && (d < n) ) /* sans diviseur < d */
 	{
-	    /* test de primalite */
-	    d = 2;
-	    while ( premier && (d < n) ) /* sans diviseur < d */
+	    if (n % d == 0) /* d divise n */
 	    {
-		if (n % d == 0) /* d divise n */
-		{
-		    printf("%d est divisible par %d\n", n, d);
-		    premier = FALSE;
-		}
-		d = d + 1; /* candidat diviseur suivant */
+		printf("divisible par %d\n", d);
+		premier = FALSE;
 	    }
-	    
-	    if (premier)
-	    {
-		printf("%d est premier\n", n);
-	    }
-	    else
-	    {
-		printf("%d n'est  pas premier\n", n);
-	    }
+	    d = d + 1; /* candidat diviseur suivant */
+	}
+
+	if (premier)
+	{
+	    printf("%d est premier\n", n);
+	}
+	else
+	{
+	    printf("%d n'est  pas premier\n", n);
 	}
     }
     /* Valeur fonction */
