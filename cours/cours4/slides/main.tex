@@ -1,8 +1,8 @@
 \documentclass[xcolor=pdftex,svgnames,table]{beamer}
 \input{communs/slides_style}
 
-%%% Titre -- cours 8
-\title{Éléments d'informatique -- Cours 7. Fonctions (1)}
+%%% Titre -- cours 4
+\title{Algorithmique et programmation -- Fonctions (1)}
 \author{Pierre Boudes}
 \date{\today}
 
@@ -36,6 +36,17 @@
 \section[Plan]{}
 \frame[label=plan]{\frametitle{Plan de la séance\nowrite}\tableofcontents}
 
+\section[Démo]{Démo}
+\begin{frame}
+  \frametitle{Démo\nowrite}
+
+  \begin{itemize}
+    \item Calcul de $3 - |x|$ ?\pause
+     \item Calcul de $|x| + |y| + |z|$ ?\pause
+     \item Plusieurs façons de trouver \C{abs(x)}.
+  \end{itemize}
+\end{frame}
+
 
 \section[Introduction]{Définition et intérêt des fonctions en informatique}
 \begin{frame}
@@ -63,39 +74,42 @@ Intérêt des fonctions  :
 \end{frame}
 
 \section{Analogie mathématique}
-\begin{frame}
-  \frametitle{Analogie mathématique \nowrite}
- \begin{itemize}
-\item De même que le terme \emph{variable} peut avoir deux sens
-    différents en informatique et en mathématiques, le terme
-    \emph{fonction} recouvre des réalités différentes.\pause
+ \begin{frame}
+   \frametitle{Analogie mathématique \nowrite}
+%  \begin{itemize}
+% \item De même que le terme \emph{variable} peut avoir deux sens
+%     différents en informatique et en mathématiques, le terme
+%     \emph{fonction} recouvre des réalités différentes.\pause
+% \item Pour les fonctions, les deux notions sont historiquement très
+%     proches. C'est bien pour écrire des fonctions mathématiques que
+%     les fonctions informatiques ont été introduites.\pause
 
-\item Pour les fonctions, les deux notions sont historiquement très
-    proches. C'est bien pour écrire des fonctions mathématiques que
-    les fonctions informatiques ont été introduites.\pause
+% \item Mais qu'est-ce qu'une fonction mathématique ?
+%  \end{itemize}
+% \end{frame}
 
-\item Mais qu'est-ce qu'une fonction mathématique ?
- \end{itemize}
-\end{frame}
-
-\subsection{La notion mathématique de fonction}
-\begin{frame}
-  \frametitle[En maths]{La notion mathématique de
-    fonction}
- Une fonction mathématique est :\pause
-  \begin{itemize}
-  \item Une courbe ? \pause
-  \item Une expression avec inconnues ($x^2 + 1$), une formule ?\pause
-  \item Un terme dans une algèbre de fonctions ($f\circ g$, $f'$)
-    ?\pause
-  \item Une relation entre deux ensembles, entrées et sorties, telle
-    que chaque entrée est en relation avec au plus une sortie
-    (toujours la même). Le graphe de la fonction.\pause
-  \end{itemize}
-\pause
+% \subsection{La notion mathématique de fonction}
+% \begin{frame}
+%   \frametitle[En maths]{La notion mathématique de
+%     fonction}
+%  Une fonction mathématique est :\pause
+%   \begin{itemize}
+%   \item Une courbe ? \pause
+%   \item Une expression avec inconnues ($x^2 + 1$), une formule ?\pause
+%   \item Un terme dans une algèbre de fonctions ($f\circ g$, $f'$)
+%     ?\pause
+%   \item Une relation entre deux ensembles, entrées et sorties, telle
+%     que chaque entrée est en relation avec au plus une sortie
+%     (toujours la même). Le graphe de la fonction.\pause
+%   \end{itemize}
+%\pause
 \begin{block}{À retenir} 
   En mathématiques, la manière dont la fonction est calculée ne fait
-  pas partie de l'objet défini. Une fonction est une boîte noire.
+  pas partie de l'objet défini. Une fonction est une boîte noire.\\ 
+  \pause En
+  informatique, on utilise les fonctions comme des boîtes noires mais
+  le mécanisme à l'œuvre dans la boîte, l'algorithme employé, doit
+  être clairement décrit pour définir la fonction.
 \end{block}
 
 \end{frame}
@@ -106,17 +120,19 @@ Intérêt des fonctions  :
 \pause
 \begin{itemize}
 \item \structure{Déclarer} : comme les variables, les fonctions
-  doivent être déclarées avant usage pour fixer \alert{le nombre} et le type
+  doivent être déclarées avant usage pour fixer le nombre et le type
   des arguments et de la sortie.\pause
 \item \structure{Appeler} : utiliser une fonction, faire appel à son
-  résultat en fixant les valeurs des arguments (paramètres effectifs).\pause
+  résultat en fixant les valeurs des arguments (paramètres
+  effectifs). Un appel de fonction est une expression qui s'évalue en la
+  valeur de retour de la fonction.\pause
 \item \structure{Définir} : décrire le corps de la fonction, c'est à
   dire la suite d'instructions qui constitue son calcul (sur des
-  paramètres formels).
+  paramètres formels) qui se termine par le retour d'une valeur.
 \end{itemize}
 \end{frame}
 
-\subsection{Appeler des fonctions}
+\subsection{Faire appel à des fonctions}
 \begin{frame}[fragile]
   \frametitle{Utiliser des fonctions : appeler}
 
@@ -134,10 +150,11 @@ int main ()
   z = %\only<2->{\colorbox{yellow}{maximum}}%(x, y);%\pause%
   z = 2 + maximum(3 * 2, z);%\pause%
   x = maximum(maximum(3, y) + 1, z - 1);
+  x = maximum( -x, x);
 \end{lstlisting}
 \pause
-Chaque entrée prend une valeur en fonction de l'expression passée en
-argument. La fonction prend alors sa valeur de sortie.
+Chaque entrée prend une valeur effective fixée par l'expression passée en
+argument. L'appel de fonction prend alors sa valeur de sortie.
 %\pause
 %\structure{Remarque :} \C{printf} et \C{scanf} sont des fonctions (un peu spéciales).
 \end{frame}
@@ -145,16 +162,18 @@ argument. La fonction prend alors sa valeur de sortie.
 \subsection{Créer des fonctions : déclarer, définir}
 \begin{frame}[fragile]
   \frametitle{Créer des fonctions (1)  déclarer}
-Déclarer une fonction c'est donner son prototype (ou signature), c'est
-à dire son nom, le type de ses arguments, le type de sa sortie.\pause
+Déclarer une fonction c'est donner son nom, le type de ses arguments et
+le type de sa sortie. De cette façon :
 \begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
 type_sortie nom_fonction(type1 param1, ..., typen paramn);
 \end{lstlisting}
-\pause
+\pause On décrit ainsi l'interface de la fonction, sans expliciter
+l'intérieur de la boîte. On parle encore de \emph{signature} 
+  ou, en C, de \emph{prototype}.
 \begin{block}{Remarque} 
   Seule la déclaration des types est importante pour
   l'analyse sémantique. Cependant, le choix de noms de paramètres
-  explicites fournit une documentation minimale.
+  explicites fournit une documentation minimale. 
 \end{block}
 
 
@@ -169,6 +188,7 @@ int puissance(int base, int exposant);
 \pause
 \textbf{La déclaration doit se trouver avant tout appel.}
 \end{frame}
+
 \begin{frame}[fragile]
   \frametitle{Créer des fonctions (2)  définir}
 \pause
@@ -178,7 +198,7 @@ la fonction, dite valeur de retour, valeur renvoyée.\pause
 \begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
 type_sortie nom_fonction(type1 param1, ..., typen paramn)
 {
-  /* declaration et initialisation variables */
+  /* declaration et initialisation des autres variables */
  
   /* instructions */
 }
@@ -201,7 +221,7 @@ La définition est obligatoire pour que l'édition de liens réussise et que l'e
     \frametitle{Variables locales, portée, durée}
 
     Le corps de la fonction peut déclarer des variables additionnelles,
-    qui sont locales à la fonction (portée) et se voient allouer un
+    qui sont locales à la fonction (portée locale) et se voient allouer un
     espace mémoire pour chaque appel de la fonction (durée).
 
     \begin{block}{Remarque} \C{main} est une fonction (appelée au lancement du
@@ -225,13 +245,13 @@ La définition est obligatoire pour que l'édition de liens réussise et que l'e
   etc. ou éventuellement par un verbe conjugué : par exemple \C{est\_}
   pour des fonctions à valeur de test (\C{est\_majeur},
   \C{est\_premier}, \ldots...)
-
+\pause
 Exceptions : la fonction est connue sous un autre nom
   (\C{factorielle}, \C{racine(x)}, \C{moyenne(...)}) 
 \end{block}
 \end{frame}
 
-\subsection{Traces}
+\section{Traces}
 \begin{frame}
   \frametitle{Traces}
 
@@ -265,64 +285,8 @@ chaque fonction que l'on a défini (les fonctions utilisateur, pas les fonctions
           \end{tabular}
 }
 \end{frame}
-
-
-
-
-% \subsection[Utiliser des fonctions de bibliothèques]{Utiliser les
-%   fonctions d'une bibliothèque}
-% \begin{frame}[fragile]
-%   \frametitle{Utiliser les fonctions d'une bibliothèque (math.h)}
-% Utilisation de la bibliothèque math.h 
-% \begin{verbatim}
-% $ man math
-% \end{verbatim}
-%   \begin{block}{Déclarer}
-%     \begin{lstlisting}[basicstyle=\ttfamily\small] 
-% #include <math.h>
-%      \end{lstlisting}
-%   \end{block}
-
-%   \begin{block}{Appeler}
-%   \begin{lstlisting}[basicstyle=\ttfamily\small] 
-%   double x;
-
-%   x = log(3.5);
-%     \end{lstlisting}  
-%   \end{block}
-
-%   \begin{block}{Définir}
-% \begin{verbatim}
-% $ gcc -lm -Wall prog.c -o prog.exe
-% \end{verbatim}
-%  \end{block}
-% \end{frame}
-
-%\subsection[Procédures]{Fonctions sans valeurs de retour (void)}
-\begin{frame}[fragile]
-  \frametitle{Fonctions sans valeurs de retour (void)}
-
-On parle plutôt de procédure ou de routine car l'analogie avec les
-fonctions mathématiques est perdu.
-
- \begin{block}{Déclarer}
-    \begin{lstlisting}[basicstyle=\ttfamily\small] 
-void afficher_valeurs(int x, int y);
-     \end{lstlisting}
-  \end{block}
-
-  \begin{block}{Appeler}
-  \begin{lstlisting}[basicstyle=\ttfamily\small] 
-afficher_valeurs(5, 3);
-   \end{lstlisting}  
-  \end{block}
-
-  \begin{block}{Définir}
-Comme d'habitude mais pas de \C{return} (ou \C{return sans argument}).
-\end{block}
-\end{frame}
-
-\subsection[Procédures]{Fonctions sans valeurs de retour (void)}
+\section[Procédures et fonctions]{Procédures et fonctions sans arguments}
+\subsection{Fonctions sans arguments}
 \begin{frame}[fragile]
   \frametitle{Fonctions sans arguments}
 
@@ -350,12 +314,38 @@ Comme d'habitude.
 \end{frame}
 
 
-% \section[Démos]{Démos et fin}
-% \begin{frame}
-%   \frametitle{Démos et fin}
-% \end{frame}
+\subsection[Procédures]{Fonctions sans valeurs de retour (void)}
+\begin{frame}[fragile]
+  \frametitle{Fonctions sans valeurs de retour (void)}
+
+On parle plutôt de procédure ou de routine car l'analogie avec les
+fonctions mathématiques est perdue.
+
+ \begin{block}{Déclarer}
+    \begin{lstlisting}[basicstyle=\ttfamily\small] 
+void afficher_valeurs(int x, int y);
+     \end{lstlisting}
+  \end{block}
+
+  \begin{block}{Appeler}
+  \begin{lstlisting}[basicstyle=\ttfamily\small] 
+afficher_valeurs(5, 3);
+   \end{lstlisting}  
+  \end{block}
+
+  \begin{block}{Définir}
+Comme d'habitude mais pas de \C{return} (ou \C{return sans argument}).
+\end{block}
+\end{frame}
+
+
+
+\section[Démos]{Démos et fin}
+\begin{frame}
+  \frametitle{Démos et fin}
+\end{frame}
 \end{document}
 
 % revenir sur :
 %-l'appel au cours suivant : paramètre et expression, pile d'appel.
-%-la grammaire des identificateurs
+%-la grammaire des identificateurs, la grammaire des expressions.

@@ -1,0 +1,460 @@
+%\documentclass[draft]{beamer}
+\documentclass[xcolor=pdftex,svgnames,table]{beamer}
+%\usepackage[table]{xcolor}
+\input{communs/slides_style}
+
+%%% Titre -- Cours 5
+\title{Algorithmique et programmation -- Cours 3. Boucle while,
+expressions booléennes. Algorithmes élémentaires.}
+
+\author{Pierre Boudes}
+\date{\today}
+
+\begin{document}
+
+%% Page de titre et licence CC.
+\begin{frame}
+	\titlepage
+	\vfill
+	\begin{center}
+		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+		{\tiny\CcNote{\CcLongnameByNcSa}}
+		\vspace*{-2.5ex}
+	\end{center}
+\end{frame}
+
+\frame[label=plan]{\tableofcontents}
+
+\section{printf/scanf (1)}
+\begin{frame}[fragile]
+  \frametitle{printf/scanf (1) \nowrite}
+\begin{itemize}
+\item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
+  (\emph{print formatted}). 
+\item Chaque \verb+%+ 
+dans le texte à afficher est substitué par la valeur formatée d'un
+\alert{paramètre supplémentaire} de la fonction. Le caractère suivant le
+symbole \verb+%+ 
+signale le format à utiliser.  Un \verb+%d+
+met une valeur au format \alert{entier décimal}.
+\pause
+\item Exemples :
+  \begin{itemize}
+\item
+    \verb+printf("Bonjour\n")+ 
+affiche \C{Bonjour} et un saut de
+    ligne\pause
+\item
+    \verb+printf("i vaut %d\n", i)+ 
+affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
+ligne)\pause
+\item
+    \verb+printf("(%d, %d)\n", 31, -4)+ 
+affiche \C{(31, -4)} et un saut de ligne.
+ \end{itemize}
+\pause
+\item Réciproquement pour faire entrer dans le programme une donnée saisie par
+  l'utilisateur, nous utiliserons \alert{\C{scanf}}.
+\item Exemple : \verb+scanf("%d", &x)+
+\end{itemize}
+\end{frame}
+
+
+
+%\subsection{Rappels sur l'instruction de contrôle if}
+\begin{frame}[fragile]
+  \frametitle{Rappels sur l'instruction de contrôle if \nowrite}
+
+  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!30}{bloc1}}\} else 
+    \{\emph{\colorbox{red!30}{bloc2}}\}}.
+  \medskip
+
+  % \pause
+  \begin{columns}
+    \begin{column}[t]{5cm}
+      \structure{Code source}
+\begin{verbatim}
+/* avant */
+if (age < 18)
+{
+  permis = 0;
+}
+else
+{
+  permis = 1;
+}
+/* après */
+\end{verbatim}
+    \end{column}
+    \pause
+    \begin{column}[t]{4cm}
+      \structure{Schéma de traduction}\\[.3cm]
+      \tikzstyle{amil}=[rectangle, draw,  fill=blue!30, text badly ragged, text width=3.7cm]
+      \tikzstyle{line} = [draw, thick, -latex']
+      \begin{tikzpicture}[node distance=.7cm]
+        \node [amil] (avant) {avant};
+        \node [amil,below of=avant] (eval) {évalue la condition};
+        \node [amil,below of =eval,fill=orange!30] (selection) {saute si elle est fausse};
+        % \uncover<4->{%
+        \node [amil,below of =selection,fill=green!30] (bloc1) {bloc1};
+        \node [amil,below of =bloc1,fill=orange!30] (saut1) {saute après};
+        % }
+        \node [amil,below of =saut1,fill=red!30](bloc2) {bloc2};
+        \node [amil,below of =bloc2] (apres) {après};
+        \path [line] (selection) -| ++(2.6,0) |-  (bloc2);
+        % \uncover<4->{
+        \path [line] (saut1) -| ++(2.4,0) |-  (apres);
+        % }
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{L'instruction de contrôle for}
+\begin{frame}[fragile]
+  \frametitle{Rappels sur l'instruction de contrôle for\nowrite}
+
+  \structure{Syntaxe :}\\
+  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!30}{instruct2}}) 
+    \{\emph{\colorbox{green!30}{bloc}}\}}.
+  \medskip
+
+  \pause
+  \begin{columns}
+    \begin{column}[t]{6cm}
+      \structure{Code source}
+\begin{verbatim}
+/* avant */
+for (i = 0; i < 5; i = i + 1)
+{
+  printf("%d\n", i);
+  ...
+}
+/* après */
+\end{verbatim}
+      La variable \C{i} est appelée \alert{variable de boucle}, elle doit être préalablement déclarée comme toute autre variable.
+
+    \end{column}
+    \uncover<3->{
+      \begin{column}[t]{4cm}
+        \structure{Schéma de traduction}\\[.3cm]
+        \tikzstyle{amil}=[rectangle, draw,  fill=blue!30, text badly ragged, text width=3.7cm]
+        \tikzstyle{line} = [draw, thick, -latex']
+        \begin{tikzpicture}[node distance=.7cm]
+          \node [amil] (avant) {avant};
+          \node [amil,below of=avant] (instruction1) {instruction 1};
+          \node [amil,below of =instruction1,fill=orange!30] (saut1) {saute à la condition};
+          \node [amil,below of =saut1,fill=green!30] (bloc) {bloc};
+          \uncover<4->{\node [amil,below of =bloc,fill=yellow!30] (instruction2) {instruction 2};}
+          \node [amil,below of =instruction2](eval) {évalue la condition};
+          \node [amil,below of =eval,fill=orange!30](sautcond) {saute si elle est vraie};
+          \node [amil,below of =sautcond] (apres) {après};
+          \path [line] (saut1) -| ++(2.6,0) |-  (eval);
+          \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
+        \end{tikzpicture}
+      \end{column}
+    }
+  \end{columns}
+\end{frame}
+
+
+\section[while]{L'instruction de contrôle while}
+\subsection{Syntaxe et sémantique}
+\begin{frame}[fragile]
+  \frametitle{L'instruction de contrôle while\youwrite}
+
+\structure{Syntaxe :}\\
+ \C{while (\emph{condition}) 
+\{\emph{\colorbox{green!30}{bloc}}\}}.
+\medskip
+
+\pause
+  \begin{columns}
+    \begin{column}[t]{6cm}
+\structure{Code source}
+\begin{verbatim}
+/* avant */
+while ( ... )
+{
+ ...
+}
+/* après */
+\end{verbatim}
+\uncover<4->{Pour assurer la terminaison, le bloc du while doit
+  modifier la condition.}
+  \end{column}
+\uncover<3->{
+   \begin{column}[t]{4cm}
+\structure{Schéma de traduction}\\[.3cm]
+\tikzstyle{amil}=[rectangle, draw,  fill=blue!30, text badly ragged, text width=3.7cm]
+\tikzstyle{line} = [draw, thick, -latex']
+     \begin{tikzpicture}[node distance=.7cm]
+       \node [amil] (avant) {avant};
+      \node [amil,below of =avant,fill=orange!30] (saut1) {saut};
+       \node [amil,below of =saut1,fill=green!30] (bloc) {bloc};
+      \node [amil,below of =bloc](eval) {évalue la condition};
+       \node [amil,below of =eval,fill=orange!30](sautcond) {saute si elle est vraie};
+       \node [amil,below of =sautcond] (apres) {après};
+       \path [line] (saut1) -| ++(2.6,0) |-  (eval);
+       \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
+     \end{tikzpicture}
+   \end{column}
+}
+ \end{columns}
+\end{frame}
+
+%\subsection{Trace}
+\begin{frame}[fragile]
+  \frametitle{Trace}
+\begin{columns}
+  \begin{column}[t]{3.7cm}
+ \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\scriptsize]
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int x;
+    int nb = 1; /* nombre de chiffres */
+
+    printf("Entrer un nombre positif ");
+    scanf("%d", &x);
+    
+    while (x > 9) /* tant que x a plus d'un chiffre */
+    {
+        x = x / 10; /* enlever un chiffre a x */
+        nb = nb + 1; /* compter un chiffre de plus */
+    }
+    printf("ce nombre a %d chiffres decimaux\n", nb);
+    
+    /* Valeur fonction */
+    return EXIT_SUCCESS;
+}
+\end{lstlisting}
+\vspace{.4cm}
+  \end{column}
+\begin{column}[t]{4cm}
+\scriptsize
+\pause
+L'utilisateur saisit 6071.
+
+\rowcolors[\hline]{2}{green!25}{yellow!50} %\arrayrulecolor{green!75!gray}
+\begin{tabular}{|r|c|c|l|}
+\hline
+    ligne & \C{x} & \C{nb} & sortie écran \pause \\ \hline
+  initialis.& ? &  1 & \pause \\
+7 &  &  & \C{Entrer\ldots}\pause \\
+8 &  6071 &  & \pause\\
+12 &  607 &  & \pause \\
+13 &   & 2 & \pause\\
+12 &  60 &  & \pause\\
+13 &   & 3 & \pause \\
+12 &  6 &  & \pause\\
+13 &   & 4 &  \pause \\
+15 & & & \C{ce nombre a 4...}\pause \\ 
+18 & \multicolumn{3}{c}{Renvoie \C{EXIT\_SUCCESS}}
+\end{tabular}
+ \end{column}
+\end{columns}
+\end{frame}
+
+\subsection{For ou while ?}
+\begin{frame}
+  \frametitle{For ou while ?}
+
+  \begin{itemize}
+  \item Un \C{for} peut toujours être simulé par un \C{while} et le
+    code machine sera identique. Il suffit d'introduire un
+    \alert{compteur de boucle} (la variable de boucle du
+    \C{for}).\pause
+\item Par convention, les programmeurs préfèrent utiliser un \C{for} lorsque
+  le nombre d'itérations est connu à l'avance. Par exemple, pour
+  parcourir un ensemble de cas. Dans le cas contraire, les
+  programmeurs utilisent un \C{while}. Par exemple, pour chercher un
+  cas particulier.\pause
+\item Maintenant que nous avons le \C{while}, il est possible qu'un
+  programme ne termine jamais (\C{Ctrl-C}).
+\item \emph{L'arrêt des programmes est indécidable}.
+  \end{itemize}
+\end{frame}
+
+\section{Expressions booléennes}
+
+\subsection{Syntaxe}
+\begin{frame}
+  \frametitle{Expressions booléennes}
+Les \emph{conditions} employées dans les structures de contrôle
+(\C{if}, \C{for} ou \C{while}) sont des \alert{expressions
+booléennes}, pouvant être \emph{Vrai}, \emph{Faux}  ou :\pause
+  \begin{itemize}
+   \item des inégalités entre expressions arithmétiques
+      \begin{align*}
+        \text{\emph{inégalité}} &\mathrel{:=} e_1 \mathrel{\C{<}} e_2
+        \mid e_1 \mathrel{\C{>}} e_2 \mid e_1 \mathrel{\C{!=}}  e_2 \\
+&\mid e_1 \mathrel{\C{<=}}  e_2  \mid e_1 \mathrel{\C{>=}} e_2  \mid e_1 \mathrel{\C{==}} e_2
+      \end{align*}
+\pause
+      \item ou des combinaisons logiques d'expressions booléennes :
+        \begin{align*}
+          \text{\emph{condition}} &\mathrel{:=}  (\text{\emph{condition}}) \mathrel{\C{\&\&}}
+          (\text{\emph{condition}}) \tag{et} \\
+&\mid (\text{\emph{condition}}) \mathrel{\C{||}}
+          (\text{\emph{condition}})\tag{ou} \\
+&\mid {\C{!}}(\text{\emph{condition}}) \tag{non}\\
+&\mid \text{\emph{Vrai}} \mid \text{\emph{Faux}} \mid
+\text{\emph{inégalité}}\tag{cas de base}
+        \end{align*}
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Constantes}
+\begin{frame}[fragile]
+  \frametitle{Constantes booléennes}
+  \begin{itemize}
+    \item
+ Certains langages possédent un type booléen (admettant deux
+  valeurs \emph{true} et \emph{false}) pour les expressions
+  booléennes.\pause
+
+\item En langage C, les
+  expressions booléennes sont de type entier (\C{int}), l'entier \emph{zéro}
+  joue le rôle du Faux, l'entier \emph{un} joue le rôle du Vrai et tout
+  entier différent de zéro est évalué à vrai.\pause
+
+\item On se donne deux
+  constantes symboliques :
+\begin{lstlisting}[escapechar={\%},basicstyle=\scriptsize\ttfamily]
+/* Declaration des constantes et types utilisateur */
+#define TRUE 1
+#define FALSE 0
+
+int main()
+{
+    int continuer = TRUE; /* faut-il continuer ?*/
+
+    while (continuer)
+    {
+        ...
+\end{lstlisting}
+
+  \end{itemize}
+\end{frame}
+
+
+\section{Algorithmes élémentaires}
+\newcounter{savedenumi}
+
+\begin{frame}
+  \frametitle{Algorithmes : quels outils pour quels problèmes}
+\pause
+\begin{columns}
+ \begin{column}[t]{0.59\linewidth}
+  \begin{enumerate}
+    \item  Traiter des cas spécifiques 
+      \begin{itemize}
+      \item \alert{\C{if else}} (différencier)
+      \item \alert{\C{\#define}} constantes symboliques (nommer)
+      \item arbre de décision (organiser)
+     \end{itemize}\pause
+    \item Parcourir/générer des cas\pause
+      \begin{itemize}
+      \item \alert{boucle \C{for}} (rarement while)
+      \item tableaux \emph{(plus tard)}
+      \end{itemize}\pause
+   \item Composer des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+        \pause
+      \item \alert{accumulateur} (à initialiser)
+      \end{itemize}\pause
+   \item Sélectionner des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+        \item \alert{\C{if}}  (sélectionner/traiter)
+      \end{itemize}
+\setcounter{savedenumi}{\value{enumi}}
+\end{enumerate}
+\end{column}\hspace{-1cm}
+\pause
+\begin{column}[t]{0.59\linewidth}
+\begin{enumerate}
+    \item[3'.] Dénombrer des cas
+      \begin{itemize}
+        \item boucles (parcourir/générer)
+          \pause
+        \item \alert{compteur} (à initialiser à 0)
+      \end{itemize}\pause
+\setcounter{enumi}{\value{savedenumi}}
+    \item Rechercher un cas\pause
+      \begin{itemize}
+        \item boucle \alert{\C{while}}, conditions booléennes, \C{if}
+      \end{itemize}\pause
+    \item[2'.] Parcourir/générer : une \emph{ligne} mais aussi une \emph{surface}, un \emph{volume}\dots\pause
+      \begin{itemize}
+        \item imbriquer les boucles (var. $\neq$)
+      \end{itemize}\pause
+    \item Boucle événementielle
+  \begin{itemize}
+\item boucle \alert{while}
+  \end{itemize}\pause
+    \item Attente active 
+  \begin{itemize}
+\item boucle \alert{while}
+  \end{itemize}
+\end{enumerate}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\subsection{Recherche d'un diviseur (test de primalité)}
+
+\begin{frame}[fragile]
+\frametitle{Recherche d'un diviseur (test de primalité)}
+
+\begin{block}{Exemple}
+  Le programme cherche un entier supérieur à $1$ qui divise $n$, s'il n'en trouve pas
+ de plus petit que $n$, alors $n$ est premier (ou bien $n = 1$).\nowrite
+\end{block}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={31-50},numbers=left,firstnumber=31]{../demo/premier.c}
+\end{frame}
+
+
+\subsection{Autres usages du while : boucle événementielle et attente active}
+
+\begin{frame}[fragile]
+\frametitle{Boucle principale en programmation événementielle}
+
+Le programme lit les événements
+(les actions de l'utilisateur) et les traite, continuellement, dans
+une boucle.
+
+\begin{block}{Remarque}
+ \C{scanf} est un \alert{appel système bloquant} (processus en attente).
+\end{block}
+\begin{block}{Exemple}
+Jeu de calcul mental (additionner deux nombres au hasard)\nowrite
+\end{block}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={16-16},numbers=left,firstnumber=16]{../demo/addition.c}
+\onslide*<2->{\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={22-23},numbers=left,firstnumber=22]{../demo/addition.c}}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={31-32},numbers=left,firstnumber=31]{../demo/addition.c}
+\onslide*<2->{\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={34-35},numbers=left,firstnumber=34]{../demo/addition.c}}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={53-59},numbers=left,firstnumber=53]{../demo/addition.c}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Boucle d'attente active}
+La boucle sert à attendre qu'une condition externe devienne vraie, le
+programme teste continuellement cette condition. 
+\pause
+\begin{block}{Exemple}
+  \emph{Tic tac boum}, est-ce que 10 secondes sont écoulées ?\nowrite
+\end{block}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={19-23},numbers=left,firstnumber=19]{../demo/tictacboum.c}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={42-44},numbers=left,firstnumber=42]{../demo/tictacboum.c}
+\end{frame}
+
+\section{Démos}
+\begin{frame}
+  \frametitle{Démos et utilisation de codeblocks}
+\end{frame}
+\end{document}

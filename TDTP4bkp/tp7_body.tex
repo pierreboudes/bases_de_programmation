@@ -1,0 +1,160 @@
+% -*- coding: utf-8 -*-
+
+% \renewcommand{\labelitemi}{$\bullet$}
+
+% \newcommand{\commentaire}[1]{}
+
+\entete{Travaux pratiques 7 : qu'y a-t-il au menu ?}
+% -*- coding: utf-8 -*-
+
+\begin{correction}
+  Note aux chargés de TD.
+  \begin{itemize}
+  \item L'objectif du TP est de les familiariser avec les fonctions au
+    travers d'un des points présenté en cours : la structuration du
+    code. Ils créent un menu permettant l'exécution de différents
+    sous-problèmes qu'il sont déjà résolus en TP, chaque sous-problème
+    étant implanté dans une fonction. La refactorisation du code sera
+    faite plus tard, pour le moment on s'en tient à des fonctions
+    utilisateur qui
+    sont toutes appelées dans le main et n'appellent pas d'autres
+    fonctions utilisateur.
+  \item On incite ici les étudiants à structurer, indenter et
+    commenter correctement leur code, sans quoi ils ne viendront pas à
+    bout de ce type d'exercice.
+  \end{itemize}
+\end{correction}
+
+Dans les TP précédents vous avez réalisé plusieurs programmes en C
+effectuant chacun une tâche. Le but de ce TP est d'utiliser des
+fonctions pour commencer à réunir plusieurs de ces programmes en un
+seul, dans lequel l'utilisateur choisira la tâche à effectuer dans un
+menu. À la fin de l'exécution d'une tâche, le menu est à nouveau
+affiché pour laisser le choix à l'utilisateur d'exécuter d'autres
+tâche ou de quitter le programme. Un exemple d'exécution est donné
+plus bas.
+
+\section{Un menu}
+% \begin{itemize}
+% \item À partir du début de votre arborescence, créez le répertoire
+%   TP8~: \verb|mkdir TP8|  
+% \item Allez dans ce répertoire pour y mettre des fichiers : 
+%   \verb|cd TP8| 
+% \item Créez un nouveau fichier source pour le langage C : 
+%   \verb|gedit menu1.c &| ou \verb|emacs menu1.c &| 
+% \item Après avoir fini d'écrire votre programme, enregistrez le
+%   fichier source sur le disque dur (la mémoire secondaire). 
+% \item Créez un programme exécutable en lançant la compilation et
+%   l'édition de liens : \verb|gcc -Wall menu1.c -o menu1| 
+% \item Quand l'étape précédente a réussi, exécutez le programme pour
+%   vérifier qu'il fonctionne : \verb|./menu1| ou \verb|menu1| 
+% \end{itemize}
+
+% Vous pouvez utiliser à tout moment la commande ``ls'' (list directory)
+% pour voir la liste des fichiers d'un répertoire. 
+
+ Dans un répertoire \verb|TP7|, écrire et
+tester le programme \verb|menu1.c|(sans fonctions) de manière à ce que :
+\begin{enumerate}\item 
+  le programme affiche un menu proposant $3$ choix représentés par des
+  entiers : ($1$) tester si un entier est premier, ($2$) deviner un nombre ou ($0$)
+  quitter. L'utilisateur fera son choix en entrant un entier.
+\item Si cet entier est $0$, mettre fin au programme. 
+\item Sinon : si cet entier est $1$ afficher << premier : non
+  disponible >>, si c'est $2$, <<deviner un nombre : non disponible >> sinon
+  << choix non disponible >>, puis boucler à l'étape $1$.
+\end{enumerate}
+
+\section{Des programmes}
+\begin{itemize}
+\item Dans votre répertoire \verb|TP7|, créer le programme
+  \verb|premier.c| qui teste si un nombre entré par l'utilisateur est
+  premier (voir TD). Vérifier que votre programme fonctionne.
+\item Dans votre répertoire \verb|TP6| (ou celui de votre binôme) doit se
+  trouver le programme réalisant le jeu \emph{deviner un nombre}. Vérifier que celui-ci
+  est correctement indenté et commenté, et qu'il fonctionne.
+\end{itemize}
+
+\section{Intégration des programmes dans le menu en utilisant les fonctions}
+Remarque : pour copier/coller sous un système unix vous pouvez :
+(copier) sélectionner le texte à copier à l'aide de la souris;
+(coller) effectuer un clic du milieu (bouton-molette) à l'endroit où
+vous souhaitez coller.
+
+
+\begin{itemize}
+\item Enregistrer le fichier \verb|menu1.c| sous le nom \verb|menu2.c|.
+\item Dans \verb|premier.c|, extraire le code relatif au problème et
+  intégrer-le à la bonne place dans votre \verb|menu2.c| : déclarer
+  une fonction \C{int est\_premier(int n)} et la définir. Cette
+  fonction renverra la constante symbolique \C{TRUE} si $n$ est
+  premier et \C{FALSE} (valeur 0) sinon. Faire en sorte que le
+  traitement du choix 1 de l'utilisateur utilise cette fonction pour
+  déterminer si un nombre est premier.
+  \item Faire la même chose avec \emph{deviner un nombre}.
+
+  \item Tester \verb|menu2.c| et s'il vous reste du temps ajouter des
+    choix dans le menu, inspirés par les différents problèmes que vous
+    avez déjà résolus dans les TP précédents (<< factorielle >>,
+   << rectangle d'étoiles >>, << majeur/mineur >>).
+\end{itemize}
+
+
+\begin{multicols}{2} 
+\footnotesize\setlength{\columnseprule}{0.3pt}
+\begin{verbatim}
+****************** MENU ******************
+*                                        *
+*   1) Tester si un nombre est premier   *
+*   2) Deviner un nombre                 *
+*   0) QUITTER                           *
+*                                        *
+************************** votre choix : 1
+Donner un nombre entier positif : 34
+Le nombre 34 n'est pas premier, 2 divise 34
+\end{verbatim}
+\begin{verbatim}
+****************** MENU ******************
+*                                        *
+*   1) Tester si un nombre est premier   *
+*   2) Deviner un nombre                 *
+*   0) QUITTER                           *
+*                                        *
+************************** votre choix : 2
+\end{verbatim}
+\begin{verbatim}
+Votre choix ?
+8
+Plus petit.
+Votre choix ?
+4
+Plus petit.
+Votre choix ?
+2
+Vous avez trouvé le nombre secret.
+\end{verbatim}
+\begin{verbatim}
+****************** MENU ******************
+*                                        *
+*   1) Tester si un nombre est premier   *
+*   2) Deviner un nombre                 *
+*   0) QUITTER                           *
+*                                        *
+************************** votre choix : 0
+\end{verbatim}
+\begin{verbatim}
+Sayonara
+\end{verbatim}\\[2cm]
+ ~
+\end{multicols}
+
+\begin{correction}
+Correction avec d'autres fonctions ajoutées au menu. La correction est légérement différente de ce qui est demandé.
+
+  \listinginput{1}{menu3.c}
+\end{correction}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tp7"
+%%% End: 
