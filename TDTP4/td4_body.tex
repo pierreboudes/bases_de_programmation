@@ -312,6 +312,159 @@ int binomial(int n, int p)
 \end{verbatim}
 \end{correction}
 
+
+\section{Programmer avec des fonctions et procédures}
+Dans les exercices suivants, l'objectif est de mettre au point des programmes entiers en y apportant vos
+propres fonctions et procédures. La méthode pour y arriver : découper le
+programmes en tâches simples à mettre en œuvre et 
+progresser par étapes en  testant régulièrement votre code (même s'il
+est incomplet).
+
+Pour chaque exercice, vous pouvez faire plus ou moins de fonctions et
+procédures selon si vous découpez le travail en de plus ou moins gros
+morceaux. Lorsqu'on découpe une tâche en beaucoup de morceaux on parle
+de \emph{code ravioli}. Par exemple, pour afficher des motifs
+d'étoiles vous pouvez déclarer et définir les procédures suivantes :
+\begin{small}
+\begin{verbatim}
+/* afficher_ligne(5) affiche "*****\n" */
+void afficher_ligne(int nb_etoiles);
+/* afficher_etoile() affiche "*" */
+void afficher_etoile();
+/* afficher_espace() affiche " " */
+void afficher_espace();
+/* afficher_etoile() affiche "\n" */
+void finir_ligne();
+\end{verbatim}
+\end{small}
+
+
+Lorsque c'est possible, exercez vous à produire du code ravioli en
+rajoutant des fonctions et procédures (par exemple, utiliser \verb+afficher_ligne(n)+
+au lieu d'une boucle for pour afficher $n$ étoiles et un retour à la ligne). Puis, réciproquement, à
+supprimer les sous-tâches qui vous paraissent exagérées (par exemple, remplacer un appel
+à \verb+afficher_espace()+ par un appel direct à \verb+printf(" ")+.)
+
+
+\subsection{Encore un triangle d'étoiles}
+Pippo a commencé à écrire un procédure qui permet d'afficher un
+triangle d'étoiles. Comme c'est un peu compliqué, il progresse par étapes
+et fait en sorte de pouvoir tester son code le plus tôt possible, même
+s'il n'est pas terminé.  Bien entendu, le principal reste à
+faire. Vous pouvez récupérer ce programme sur la page web du cours. À vous de
+le compléter. 
+
+\begin{figure}[tb]
+  \begin{small}
+\begin{verbatim}
+#include <stdlib.h>
+#include <stdio.h>
+
+void afficher_triangle(int cote);
+
+int main() {
+    int i; /* var de boucle */
+
+    /* testons différentes tailles de triangles */
+    for (i = 2; i <= 10; i += 2) {
+        printf("\n\nafficher_triangle(%d)\n", i);
+        afficher_triangle(i);
+    }
+    return EXIT_SUCCESS;
+} 
+
+void afficher_triangle(int cote) {
+    int i; /* var de boucle */
+
+    /* il faudrait deja arriver a faire un carre ! */
+    for (i = 0; i < cote; i = i + 1) {/* pour chaque ligne */
+        /* afficher une ligne de cote etoiles. Faire une sous-procedure ? */
+        printf("*<-- %d -->*\n", cote);
+    }
+}
+\end{verbatim}
+\vspace{-0.5cm}
+  \end{small}
+  \caption{Programme de Pippo pour mettre au point la fonction afficher triangle}
+\label{fig:triangle}
+\end{figure}
+
+
+
+
+\subsection{Population de lapins}
+
+Un couple de lapins a sa première portée à deux mois, puis une portée
+tous les mois. Chaque portée est un couple de lapins. Tous les couples
+ainsi obtenus se reproduisent de la même manière.\footnote{Merci à Laure Petrucci pour
+    cet exercice et à  Lionel Allorge pour le dessin de lapin en cc-by-sa.}
+
+\newcommand{\plapin}{\includegraphics[scale=0.05]{320px-Lapin01.png}}
+\newcommand{\mlapin}{\includegraphics[scale=0.08]{320px-Lapin01.png}}
+\newcommand{\glapin}{\includegraphics[scale=0.11]{320px-Lapin01.png}}
+
+\begin{center}
+  \begin{tabular}{l c l}
+    1er septembre & \plapin \plapin &(deux jeunes
+    lapins) \\
+    1er octobre &\mlapin \mlapin& (deux lapins d'un mois)\\
+    1er novembre &\plapin \plapin \quad \glapin \glapin& (deux vieux
+    et leurs deux petits)\\
+    1er décembre & \plapin \plapin   \quad  \mlapin \mlapin  \quad
+    \glapin \glapin & \\
+    1er janvier&\plapin \plapin \plapin \plapin   \quad  \mlapin
+    \mlapin  \quad \glapin \glapin \glapin \glapin   & 
+  \end{tabular}
+\end{center}
+\begin{newenu}
+\item   On distinguera le nombre de couples de nouveaux lapins
+\verb+nouveaux+, le nombre de couples de lapins ayant un mois,
+\verb+un_mois+, et le nombre de couples de lapins ayant 2 mois ou
+plus, \verb+vieux+. Calculer (à la main) le nombre de couples de
+lapins de chaque type, ainsi que leur nombre total, pour les 10
+premiers mois.
+\item Écrire un algorithme \verb+nb_lapins(nb_mois, nb_couples)+
+  calculant le nombre de lapins obtenus au bout de \verb+nb_mois+ mois
+  à partir de \verb+nb_couples+ couples jeunes, et renvoyant le
+  résultat.
+\item À combien s'élève la population au bout de 24 mois ?
+\item Écrire un algorithme \verb+lapins_un_milliard+ calculant au bout
+  de combien de temps les lapins sont plus d’un milliard (on supposera
+  qu’aucun lapin ne meurt pendant cette période), en partant d’un
+  couple de jeunes lapins.
+\item Mettre en œuvre ces algorithmes dans un programme C.
+\end{newenu} 
+
+\paragraph{Les lapins disparaissent !} Cinq couples de jeunes lapins se sont
+installé sur une île déserte et on fondé une communauté. Les premiers
+mois tout se passe normalement, mais à partir du septième mois, des
+lapins disparaissent après avori donné naissance à toutes les portées
+: exactement un cinquième des vieux lapins,
+quatre cinquièmes des lapins venant d'avoir deux mois et neuf dixièmes des
+nouveaux lapins survivent (par arrondi inférieur), tous les autres disparaissent. Ceci tous les mois, sans que la cause ne soit connue
+(certains scientifiques lapins mettent en cause la nourriture
+transgénique ou les antibiotiques large spectre, d'autres lapins évoquent une famille de renards, et d'autres encore pensent que les
+services secrets humains ont découvert le plan d'invasion de la Terre
+par les
+lapins et ont pris des contre-mesures).
+
+\begin{lastenu}
+  \item Tenir compte de ces nouvelles données dans la simulation. Que
+    se passe t'il ?
+\item Afficher la population de lapin obtenue à chaque nouveau mois
+  sous forme graphique sur une ligne. Par exemple, un couple de
+  nouveaux lapins sera affiché par le caractère point "\verb+.+'', un couple de lapins d'un
+  mois par le caractère "\verb+o+'', un vieux couple de lapins par le
+  caractère "\verb+#+".
+\item Combien de lapins sont nés sur l'île ?
+\end{lastenu}
+
+\begin{correction}wq
+  \begin{small}
+    \verbatiminput{lapins.c}
+    \end{small}
+\end{correction}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "td4"
