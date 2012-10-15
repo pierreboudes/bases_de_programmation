@@ -14,8 +14,8 @@ int main()
     int x = 1;
     int y = 2;
     
-    permute_valeurs(x,y); /* fail */
-    printf("x = %d et y = %d\n",x, y);
+    permute_valeurs(x,y);
+    printf("x = %d et y = %d\n",x,y);
     
     /* Valeur fonction */
     return EXIT_SUCCESS;

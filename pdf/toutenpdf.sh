@@ -29,8 +29,6 @@ do
 	cp papier.pdf "../../../pdf/cours${i}_papier.pdf";
 	cd ../../../;
     fi
-done;
-exit;
     if [ -f "TD${i}/td${i}_body.tex" ]
     then
 	echo "pdf du TD de la semaine ${i}";
@@ -49,12 +47,14 @@ exit;
 	pdflatex "tp${i}_corr" 1> /dev/null;
 	cp "tp${i}.pdf" ../pdf/;
 	cp "tp${i}_corr.pdf" ../pdf/;
-	cd ../pdf/;
+	cd ..;
     fi    
     if [ -f "TD${i}etTP${i}.tex" ]
     then
+	cd pdf;
 	echo "pdf pour reprographie du TD/TP de la semaine ${i}";
 	pdflatex "TD${i}etTP${i}";
+	cd ..;
     fi
 done;
 	

@@ -19,7 +19,7 @@ int main()
     n = lapins_un_milliard(1);
     printf("apres %d mois il y plus d'un milliard de lapins, exactement : %d\n", n, simuler_population(n, 1));
 #else
-    printf("nb_lapins apres 50 mois : %d\n", simuler_population(50, 1));
+    printf("nb_lapins apres 50 mois : %d\n", simuler_population(50, 5));
 #endif
 
     /* valeur fonction */
@@ -72,7 +72,7 @@ void afficher_population(int nouveaux, int un_mois, int vieux)
     int i;    
     for (i = 0; i < nouveaux ; i = i + 1)
     {
-	printf("<img392>");
+	printf(".");
     }
     if (nouveaux > 0) 
     {
@@ -80,7 +80,7 @@ void afficher_population(int nouveaux, int un_mois, int vieux)
     }
     for (i = 0; i < un_mois ; i = i + 1)
     {
-	printf("<img393>");
+	printf("o");
     }
     if (un_mois > 0)
     {
@@ -88,7 +88,7 @@ void afficher_population(int nouveaux, int un_mois, int vieux)
     }
     for (i = 0; i < vieux ; i = i + 1)
     {
-	printf("<img394>");
+	printf("#");
     }
     if (vieux > 0)
     {
