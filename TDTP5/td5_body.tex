@@ -2,60 +2,58 @@
 
 \newcommand{\commentaire}[1]{}
 
-\entete{Travaux dirigés 9 : fonctions et
+\entete{Travaux dirigés 5 : fonctions et
   procédures (2)}
 
-\vspace{-2cm}
 
 % \begin{correction}
 %   Note aux chargés de TD : blabla.
 % \end{correction}
-\section{Trace de fonctions}
+% \section{Trace de fonctions}
+% \begin{newenu}
+% \item  Faire la trace du programme suivant.
+% \end{newenu}
+% {
+% \footnotesize
+% \listinginput{1}{echange.c}
+% }
 
-\begin{newenu}
-\item  Faire la trace du programme suivant.
-\end{newenu}
-{
-\footnotesize
-\listinginput{1}{echange.c}
-}
 
+% \begin{correction}
+% L'échange des valeurs de \C a et \C b a lieu, par contre
+% l'échange des valeurs de \C x et \c y n'a pas lieu, puisque
+% permute\_valeurs n'accède pas aux cases mémoires du main seulement à
+% ses propres cases mémoires.
 
-\begin{correction}
-L'échange des valeurs de \C a et \C b a lieu, par contre
-l'échange des valeurs de \C x et \c y n'a pas lieu, puisque
-permute\_valeurs n'accède pas aux cases mémoires du main seulement à
-ses propres cases mémoires.
+%   \paragraph{Trace.}
 
-  \paragraph{Trace.}
-
-  \begin{table}[h]
-        \setlength{\unitlength}{\tabcolsep}
-       \begin{tabular}[t]{|r|c|c|l|}
-          \multicolumn{4}{l}{\C{main()}}\\ \hline
-          ligne & x & y & Affichage (sortie écran) \\ \hline
-          initialisation  & 1 & 2 & \\ \hline
-          17 &   & & \\ \hline
-          \multicolumn{4}{r|}{
-            \put(1,0){\noindent
-              \begin{tabular}[t]{|r|c|c|c|l|}
-                \multicolumn{5}{l}{\C{permute\_valeurs(1, 2)}}\\ \hline
-                ligne & a & b & aux & Affichage \\ \hline
-                initialisation  & 1 & 2 & ? & \\ \hline
-                29 &  &  & 1 & \\ \hline
-                30 & 2 &  &  & \\ \hline
-                31 &  &  1  &  & \\ \hline
-                32 &\multicolumn{4}{|l|}{ne renvoie rien}\\ \hline
-              \end{tabular}
-            }}\\ \hline
-          18  &  &  & \C{x = 1 et y = 2} \\ \hline
-          21 &\multicolumn{3}{|l|}{SORTIE AVEC SUCCÈS}\\ \hline
-        \end{tabular}
-\hfill
-       \caption{Trace du programme de l'exercice 1.}
-        \label{simulation}
-   \end{table}                 
-  \end{correction}
+%   \begin{table}[h]
+%         \setlength{\unitlength}{\tabcolsep}
+%        \begin{tabular}[t]{|r|c|c|l|}
+%           \multicolumn{4}{l}{\C{main()}}\\ \hline
+%           ligne & x & y & Affichage (sortie écran) \\ \hline
+%           initialisation  & 1 & 2 & \\ \hline
+%           17 &   & & \\ \hline
+%           \multicolumn{4}{r|}{
+%             \put(1,0){\noindent
+%               \begin{tabular}[t]{|r|c|c|c|l|}
+%                 \multicolumn{5}{l}{\C{permute\_valeurs(1, 2)}}\\ \hline
+%                 ligne & a & b & aux & Affichage \\ \hline
+%                 initialisation  & 1 & 2 & ? & \\ \hline
+%                 29 &  &  & 1 & \\ \hline
+%                 30 & 2 &  &  & \\ \hline
+%                 31 &  &  1  &  & \\ \hline
+%                 32 &\multicolumn{4}{|l|}{ne renvoie rien}\\ \hline
+%               \end{tabular}
+%             }}\\ \hline
+%           18  &  &  & \C{x = 1 et y = 2} \\ \hline
+%           21 &\multicolumn{3}{|l|}{SORTIE AVEC SUCCÈS}\\ \hline
+%         \end{tabular}
+% \hfill
+%        \caption{Trace du programme de l'exercice 1.}
+%         \label{simulation}
+%    \end{table}                 
+%   \end{correction}
 
 % \begin{lastenu}
 % \item  Faire la trace du programme suivant et expliquer.
@@ -72,38 +70,105 @@ ses propres cases mémoires.
 %   cette procédure.
 % \end{lastenu}
 
-\section{Le menu avec fonctions et procédures}
+%\section{Des procédures au menu}
 
-\begin{minipage}[t]{.5 \linewidth}
-  Dans cet exercice vous compléterez le menu écrit en TP. Vous
-  travaillerez sur trois parties du programme :
+
+Durant les séances précédentes vous avez réalisé plusieurs programmes en C
+effectuant chacun une tâche. Le but ici est d'utiliser des
+fonctions pour commencer à réunir plusieurs de ces programmes en un
+seul, dans lequel l'utilisateur choisira la tâche à effectuer dans un
+menu. À la fin de l'exécution d'une tâche, le menu est à nouveau
+affiché pour laisser le choix à l'utilisateur d'exécuter d'autres
+tâche ou de quitter le programme. Un exemple d'exécution est donné
+plus bas.
+
+Comme vous allez écrire un gros programme dans un seul fichier source, il est
+essentiel que vous structuriez bien votre fichier source, et que
+celui-ci soit correctement indenté. Si vous n'aimez pas gérer vous
+même l'indentation apprenez à utiliser l'éditeur de texte \C{emacs} et son
+indentation automatique.
+
+Vous travaillerez sur trois parties du programme :
   \begin{itemize}
   \item les déclarations du début du programme (fonctionnalités,
     constantes, fonctions),
   \item les définitions de fonctions,
   \item la fonction principale (\C{main}).
   \end{itemize}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{.4\linewidth}
-{\footnotesize
+
+Vous ferez en sorte de pouvoir \textbf{tester votre programme le plus tôt
+possible et le plus souvent possible}, quitte à afficher à l'utilisateur que certaines choses ne
+sont pas disponibles / pas terminées. 
+
+\begin{multicols}{2} 
+\footnotesize\setlength{\columnseprule}{0.3pt}
 \begin{verbatim}
 ****************** MENU ******************
 *                                        *
 *   1) Tester si un nombre est premier   *
-*   2) Calcul de factorielle             *
-*   3) Deviner un nombre                 *
-*   4) Motif d'etoiles                   *
-*                                        *
+*   2) Deviner un nombre                 *
 *   0) QUITTER                           *
 *                                        *
-************************** votre choix :
+************************** votre choix : 1
+Donner un nombre entier positif : 34
+Le nombre 34 n'est pas premier, 2 divise 34
 \end{verbatim}
-}
-\end{minipage}
-%\pagebreak
-\begin{lastenu}
-\item Déclarer et définir une procédure qui affichera le menu.
+\begin{verbatim}
+****************** MENU ******************
+*                                        *
+*   1) Tester si un nombre est premier   *
+*   2) Deviner un nombre                 *
+*   0) QUITTER                           *
+*                                        *
+************************** votre choix : 2
+\end{verbatim}
+\begin{verbatim}
+Votre choix ?
+8
+Plus petit.
+Votre choix ?
+4
+Plus petit.
+Votre choix ?
+2
+Vous avez trouvé le nombre secret.
+\end{verbatim}
+\begin{verbatim}
+****************** MENU ******************
+*                                        *
+*   1) Tester si un nombre est premier   *
+*   2) Deviner un nombre                 *
+*   0) QUITTER                           *
+*                                        *
+************************** votre choix : 0
+\end{verbatim}
+\begin{verbatim}
+Sayonara
+\end{verbatim}\\[2cm]
+ ~
+\end{multicols}
+
+\begin{newenu}
+\item Commencer par faire en sorte que   :
+  \begin{enumerate}
+  \item le programme affiche un menu proposant $3$ choix représentés
+    par des entiers : ($1$) tester si un entier est premier, ($2$)
+    deviner un nombre ou ($0$) quitter. L'utilisateur fera son choix
+    en entrant un entier.
+  \item Si cet entier est $0$, mettre fin au programme.
+  \item Si cet entier est $1$ ou $2$ afficher <<  non
+    disponible >>, puis boucler à l'étape $1$.
+  \end{enumerate}
+% \begin{correction}
+% Correction avec d'autres fonctions ajoutées au menu. La correction est légérement différente de ce qui est demandé.
+
+%   \listinginput{1}{menu3.c}
+% \end{correction}
+
+Il est recommandé de découper ce programme en fonctions et procédures.
+\begin{itemize}
+\item Déclarer et définir une procédure \verb+afficher_menu()+ qui
+  affichera le menu. Tester là.
   \begin{correction}
     C'est tout bête.
 {\footnotesize
@@ -125,11 +190,13 @@ void afficher_menu()
     printf("*                                        *\n");
     printf("************************** votre choix :");
 }
-\end{verbatim}
+\end{verbatim} 
 }
 \end{correction}
 
-\item Déclarer et définir une fonction \C{choix\_utilisateur}, sans paramètres qui renverra une valeur entière saisie par l'utilisateur.
+\item Déclarer et définir une fonction \C{choix\_utilisateur()}, sans
+  paramètres qui renverra une valeur entière saisie par
+  l'utilisateur. Tester là.
 
   \begin{correction}
 {\footnotesize
@@ -144,10 +211,13 @@ int choix_utilisateur()
 }
   \end{correction}
 
-\item Déclarer et définir une fonction \C{executer\_menu} qui :
+\item Déclarer et définir une fonction \C{executer\_menu()} qui :
   \begin{itemize}
-  \item affichera le menu à l'utilisateur et réalisera la saisie de son choix;
-  \item lorsque ce choix est 1, appelera une fonction non encore définie \C{menu\_premier};
+  \item affichera le menu à l'utilisateur et réalisera la saisie de
+    son choix (avec les fonctions et procédures précédentes);
+  \item lorsque ce choix est 1, appelera une procédure
+    \C{menu\_premier()} (pendant la mise au point du programme, faîtes
+    en sorte que cette procédure affiche "non disponible") ;
     \item puis, lorsque ce choix est différent de $0$, renverra \C{TRUE} et lorsque ce choix est égal à zéro renverra \C{FALSE}.
   \end{itemize}
 
@@ -181,53 +251,8 @@ int executer_menu()
 \end{verbatim}
 }
   \end{correction}
-\item Déclarer et définir une procédure \C{menu\_premier} qui traitera
-  le choix 1, et qui fera appel à la fonction \C{est\_premier}
-  (dont vous rappellerez la définition et la déclaration) et à la
-  fonction \C{choix\_utilisateur} pour le choix de l'entier.
-  \begin{correction}
-{\footnotesize
-\begin{verbatim}
-void menu_premier()
-{
-    int p;
-
-    printf("Donner un nombre : ");
-    p = choix_utilisateur();
-    
-    if (est_premier(p))
-    {
-        printf("Le nombre %d est premier\n", p);
-    }
-    else
-    {
-        printf("Le nombre %d n'est pas premier\n", p);      
-    }
-}
-
-Rappel :
-int est_premier(int n)
-{
-    int i = 2;
-    int premier = TRUE;
-
-    while (premier && i < n) 
-    {   
-        if (n % i == 0) 
-        {
-           premier = FALSE;
-        }
-        i = i + 1;
-    }
-    return premier;
-}
-\end{verbatim}
-}
-  \end{correction}
-\item Écrire le \C{main} de telle sorte qu'il fasse appel à la fonction
+\item Modifier  la fonction \C{main} de telle sorte qu'elle fasse appel à la fonction
   \C{executer\_menu} tant que celle-ci renvoie \C{TRUE}.
-
-
 \begin{correction}
 {\footnotesize
 \begin{verbatim}
@@ -251,155 +276,75 @@ int main()
 \end{verbatim}
 }
   \end{correction}
+\end{itemize}
+\end{newenu}
 
-\item Faire la trace de votre programme dans le cas où l'utilisateur
-  saisit $1$ puis $3$ puis $0$.
-\begin{correction}
-Avant de faire la trace il nous faut des numéros de ligne :
+\section{Ajouts de fonctionnalités}
+Vous pouvez maintenant commencer à programmer quelques unes des
+  tâches que propose le menu. Si vous possédez des programmes
+  réalisant ces tâches, inspirez vous en (copier/coller).
+
+\begin{lastenu}
+    \item Redéfinir la procédure \C{menu\_premier()} de manière à tester
+      si un nombre choisi par l'utilisateur est premier. Elle fera
+      appel à une fonction \C{est\_premier()}
+  (dont vous retrouverez la définition et la déclaration dans le TD 4) et à la
+  fonction \C{choix\_utilisateur()} pour le choix de l'entier.
+  \begin{correction}
 {\footnotesize
-\listinginput{1}{td5_menu_pour_trace.c}
+\begin{verbatim}
+void menu_premier()
+{
+    int p;
+
+    printf("Donner un nombre : ");
+    p = choix_utilisateur();
+    
+    if (est_premier(p))
+    {
+        printf("Le nombre %d est premier\n", p);
+    }
+    else
+    {
+        printf("Le nombre %d n'est pas premier\n", p);      
+    }
 }
 
-On peut maintenant faire la trace (Table~\ref{trace2}
-page~\pageref{trace2}). La trace est donnée en entier, mais 
-inutile de tout faire. Disons qu'à partir du second appel à
-\C{executer\_menu}  c'est un peu superflu. 
-  \begin{table}[h]
-       \scriptsize\hspace{-2cm}
-        \setlength{\unitlength}{\tabcolsep}
-       \begin{tabular}[t]{|r|c|l|}
-          \multicolumn{3}{l}{\C{main()}}\\ \hline
-          ligne & encore & Affichage\\ \hline
-          initialisation  & 1 (vrai) & \\ \hline
-          36 &  & \\ \hline
-         \multicolumn{3}{r|}{
-            \put(1,0){\noindent
-              \begin{tabular}[t]{|r|c|l|}
-                \multicolumn{3}{l}{\C{executer\_menu()}}\\ \hline
-                ligne & choix & Affichage \\ \hline
-                init.  & ? & \\ \hline
-                75 &  & \\ \hline
-                \multicolumn{3}{r|}{
-                  \put(1,0){\noindent
-                    \begin{tabular}[t]{|r|l|}
-                      \multicolumn{2}{l}{\C{afficher\_menu()}}\\ \hline
-                      ligne & Affichage \\ \hline
-                      initialisation & \\ \hline
-                      51 & \C{*}\ldots \\ \hline
-                      \vdots & \vdots \\ \hline
-                      60 & \ldots \C{* votre choix : } \\ \hline
-                      61 &\multicolumn{1}{|l|}{ne renvoie rien}\\ \hline
-                    \end{tabular}
-                  }}\\ \hline
-                76 &  & \\ \hline
-                \multicolumn{3}{r|}{
-                  \put(1,0){\noindent
-                    \begin{tabular}[t]{|r|c|l|}
-                      \multicolumn{3}{l}{\C{choix\_utilisateur()} saisie 1}\\ \hline
-                      ligne & choix & Affichage \\ \hline
-                      initialisation  & ? & \\ \hline
-                      66  & 1 & \\ \hline
-                      67 &\multicolumn{2}{|l|}{renvoie 1}\\ \hline
-                    \end{tabular}
-                  }}\\ \hline
-                76 & 1 & \\ \hline
-                80 & & \\ \hline
-                \multicolumn{3}{r|}{
-                  \put(1,0){\noindent
-                         \begin{tabular}[t]{|r|c|l|}
-                           \multicolumn{3}{l}{\C{menu\_premier()}}\\ \hline
-                           ligne & p & Affichage \\ \hline
-                           initialisation  & ? & \\ \hline
-                           96 &  & \ldots un nombre : \\ \hline
-                           97 &  & \\ \hline
-                           \multicolumn{3}{r|}{
-                             \put(1,0){\noindent
-                               \begin{tabular}[t]{|r|c|l|}
-                                 \multicolumn{3}{l}{\C{choix\_utilisateur()} saisie 1}\\ \hline
-                                 ligne & choix & Affichage \\ \hline
-                                 initialisation  & ? & \\ \hline
-                                 66  & 3 & \\ \hline
-                                 67 &\multicolumn{2}{|l|}{renvoie 3}\\ \hline
-                               \end{tabular}                        
-                             }} \\ \hline
-                           97 & 3 & \\ \hline
-                           98 & & \\ \hline
-                           \multicolumn{3}{r|}{
-                             \put(1,0){\noindent
-                                 \begin{tabular}[t]{|r|c|c|c|l|}
-                                   \multicolumn{5}{l}{\C{est\_premier(3)}}\\ \hline
-                                   ligne & n & i & premier & Affichage \\ \hline
-                                   init.  & 3 & 2 & 1 (vrai) & \\ \hline
-                                   120 &  & 3 & & \\ \hline
-                                   122 &\multicolumn{4}{|l|}{renvoie vrai (1)}\\ \hline
-                                 \end{tabular}
-                             }} \\ \hline                           
-                           100 & & \ldots 3 est premier \\ \hline
-                           106 &\multicolumn{2}{|l|}{ne renvoie rien}\\ \hline
-                         \end{tabular}
-                  }}\\ \hline
-                86 &\multicolumn{2}{|l|}{renvoie vrai (1)}\\ \hline
-              \end{tabular}              
-            }
-          }\\ \hline
-          36 & 1 (vrai) & \\ \hline
-          36 &  & \\ \hline
-          \multicolumn{3}{r|}{
-            \put(1,0){\noindent
-        \begin{tabular}[t]{|r|c|l|}
-          \multicolumn{3}{l}{\C{executer\_menu()}}\\ \hline
-          ligne & choix & Affichage \\ \hline
-          initialisation  & ? & \\ \hline
-          75 &  & \\ \hline
-                \multicolumn{3}{r|}{
-                  \put(1,0){\noindent
-                    \begin{tabular}[t]{|r|l|}
-                      \multicolumn{2}{l}{\C{afficher\_menu()}}\\ \hline
-                      ligne & Affichage \\ \hline
-                      initialisation & \\ \hline
-                      51 & \C{*}\ldots \\ \hline
-                      \vdots & \vdots \\ \hline
-                      60 & \ldots \C{* votre choix : } \\ \hline
-                      61 &\multicolumn{1}{|l|}{ne renvoie rien}\\ \hline
-                    \end{tabular}
-                  }}\\ \hline
-          76 &  & \\ \hline
-                \multicolumn{3}{r|}{
-                  \put(1,0){\noindent
-                    \begin{tabular}[t]{|r|c|l|}
-                      \multicolumn{3}{l}{\C{choix\_utilisateur()} saisie 0}\\ \hline
-                      ligne & choix & Affichage \\ \hline
-                      initialisation  & ? & \\ \hline
-                      66  & 0 & \\ \hline
-                      67 &\multicolumn{2}{|l|}{renvoie 0}\\ \hline
-                    \end{tabular}
-                  }}\\ \hline
-          76  & 0 & \\ \hline
-          86 &\multicolumn{2}{|l|}{renvoie faux (0)}\\ \hline
-        \end{tabular}              
-            }
-          } \\ \hline
-          36 & 0 (faux) & \\ \hline
-          40 & & Bye bye \\ \hline
-          43 &\multicolumn{2}{|l|}{SUCCÈS}\\ \hline
-        \end{tabular}
-        \caption{Trace du programme de l'exercice 2.}
-        \label{trace2}
-   \end{table}
- \end{correction}
-\item Modifier votre fonction \C{choix\_utilisateur} de telle sorte
+/* Rappel : */
+int est_premier(int n)
+{
+    int i = 2;
+    int premier = TRUE;
+
+    while (premier && i < n) 
+    {   
+        if (n % i == 0) 
+        {
+           premier = FALSE;
+        }
+        i = i + 1;
+    }
+    return premier;
+}
+\end{verbatim}
+}
+  \end{correction}
+\item Modifier votre fonction \C{choix\_utilisateur()} de telle sorte
   que :
   \begin{itemize}
   \item elle prenne en argument deux paramètres entiers $a$ et $b$;
   \item si l'utilisateur saisit un nombre $n\in [a, b]$ la fonction
     retourne $n$ sans générer d'affichage;
 \item si l'utilisateur saisit un nombre $n\not\in [a, b]$ l'intervalle
-  de saisie soit affiché à l'utilisateur et la saisie redemandée,
+  de saisie est affiché à l'utilisateur et la saisie redemandée,
   jusqu'à cinq fois.
-  \end{itemize}
+\item si au bout de cinq fois l'utilisateur n'a toujours pas donné un
+  nombre dans l'intervalle, la procédure renvoie $a$.
+\item Tester. Quel est le problème lorsque l'utilisateur saisie autre chose
+  que des chiffres au clavier ? Nous corrigerons ça un peu plus loin.
+\end{itemize}
 
     \begin{correction}
-Au delà de cinq essais, c'est la dernière saisie utilisateur qui est renvoyée.
 {\footnotesize
 \begin{verbatim}
 int choix_utilisateur(int a, int b)
@@ -414,94 +359,56 @@ int choix_utilisateur(int a, int b)
        scanf("%d", &choix);
        compteur = compteur - 1;
    }
+   if ( (choix < a) || (choix > b) ) {
+       choix = a;
+   }
    return choix;
 }
 \end{verbatim}
 }
-IL faut aussi modifier les appels à cette fonction. Pour la fonction \C{executer\_menu} on donne l'intervalle $[0, 3]$ (à supposer que ces quatres choix soient traités). Pour la procédure \C{menu\_premier}, on donne l'intervalle $[1, \text{\C{INT\_MAX}}]$ (charger \C{limits.h} pour \C{INT\_MAX}).
+IL faut aussi modifier les appels à cette fonction. Pour la fonction
+\C{executer\_menu()} on donne l'intervalle $[0, 3]$ (à supposer que
+ces quatres choix soient traités). Pour la procédure
+\C{menu\_premier()}, on donne l'intervalle $[1, \text{\C{INT\_MAX}}]$
+(charger \C{limits.h} pour définir la constante symbolique \C{INT\_MAX}, la plus grande valeur que
+peut prendre un entier).
     \end{correction}
-
-\end{lastenu}
-
-On se donne la procédure suivante :
-{\footnotesize
-\begin{verbatim}
-void afficher_motif(int cote)
-{
-    int ligne; /* numero de ligne, de bas en haut */
-    int colonne; /* numero de colonne, de gauche a droite */
-    for (ligne = cote - 1; ligne >= 0; ligne = ligne - 1) /* pour chaque ligne */
-    {
-        for (colonne = 0; colonne < cote; colonne = colonne + 1) /* pour chaque colonne */
-        {
-            if (motif(colonne, ligne)) /* le point appartient au motif */
-            {
-                printf("* ");  
-            }
-            else /* le point n'appartient pas au motif */
-            {
-                printf("  "); 
-            }   
-        }
-        printf("\n"); /* ligne suivante */
-    }
-}
-\end{verbatim}
-}
-
-\begin{lastenu}
-  \item Définir la fonction motif de telle sorte qu'un appel à     \C{afficher\_motif(5)} affiche :
-{\footnotesize
-\begin{verbatim}
-*       * 
-*     *   
-*   *     
-* *       
-* * * * * 
-\end{verbatim}
-}
-
+\item Ajouter le nécessaire à votre programme pour pouvoir jouer à
+  deviner un nombre.
 \begin{correction}
-Facile : 
-{\footnotesize
-\begin{verbatim}
-int motif(int x, int y)
-{
-    return x == y
-        || x == 0
-        || y == 0;
-}
-\end{verbatim}
-}
-\end{correction}
+Il faut écrire une procédure \C{menu\_deviner()}, qui fera appel à une fonction \C{tirage\_aleatoire} puis en boucle à \C{choix\_utilisateur} sur l'intervalle dans lequel le nombre est tiré (de 0 à une constante symbolique).
 
-  \item Écrire les fonctions nécessaires au traitement du choix 2 et
-    du choix 3 du menu sur le modèle du traitement du choix 1.
-
-\begin{correction}
-Il faut écrire une procédure \C{menu\_deviner}, qui fera appel à une fonction \C{tirage\_aleatoire} puis en boucle à \C{choix\_utilisateur} sur l'intervalle dans lequel le nombre est tiré (de 0 à une constante symbolique).
-
-Le code complet du programme à la fin du TD (mais personne ne va finir non ?) :
+Un code complet du programme à la fin du TD (mais personne ne va finir non ?) :
 {\footnotesize
 \listinginput{1}{td5_menu.c}
 }
-
 \end{correction}
-\end{lastenu}
+\item Ajouter une entrée dans le menu pour la simulation d'une
+  population de lapins.
+\item Comme vous l'aviez remarqué, la fonction \C{choix\_utilisateur()}
+  échoue à redemander un nombre si l'utilisateur saisit autre chose
+  que des chiffres.  Vous pouvez corriger ça en utilisant le code
+  suivant à la place de \verb+scanf("%d", &choix).+
+{\small
+\begin{verbatim}
+char saisie[256]; /* declaration d'un chaine qui nous servira de
+                   * "tampon" */
 
-\section{En travaux pratiques}
-Le programme de ce TD est à reprendre en TP.  Votre code doit être correctement indenté, sinon il sera
-difficile d'y trouver vos erreurs. Vous pouvez utiliser la commande
-\verb|astyle menu.c| ou \verb|~boudes/pub/bin/astyle menu.c| qui
-indentera correctement votre code. Alternative:
-l'éditeur de texte \verb|emacs|, beaucoup plus puissant que
-\verb|gedit|, gère parfaitement l'indentation. 
+fgets(saisie, 256, stdin); /* preleve la ligne tapee par
+                              l'utilisateur et la place dans le
+                                  tampon */
+sscanf(saisie, "%d", &choix); /* tente de reconnaitre un entier
+                                 dans le tampon */
+\end{verbatim}
+}
 
-Ajouter au menu une entrée \verb|calculette| et une 
-procédure \verb|calculette| qui affichera le résultat d'une 
+\item Ajouter au menu une entrée \verb|calculette| et écrire une 
+procédure \verb|calculette()| qui affichera le résultat d'une 
 expression \verb|nombre opération nombre| entrée par l'utilisateur, où les nombres
 sont des \verb|double| et l'opération un caractère parmi
-\verb|+, -, *, /|.  Indication :
+\verb|+, -, *, /|.  
+
+Indication : vous pouvez vous inspirer du code suivant :
 {\footnotesize
 \begin{verbatim}
 ...
@@ -512,5 +419,11 @@ if ('+' == op)/* faire une addition */
 }
 \end{verbatim}
 }
-Des questions supplémentaires sont disponibles sur la
-page web du cours.
+\end{lastenu}
+% Des questions supplémentaires sont disponibles sur la
+% page web du cours.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td5"
+%%% End: 

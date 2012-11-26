@@ -68,8 +68,6 @@ int main()
     return EXIT_SUCCESS;
 }
 
-
-
 /* Definitions de fonctions utilisateurs */
 void afficher_menu()
 {
@@ -81,6 +79,7 @@ void afficher_menu()
     printf("*   4) Motif d'etoiles                   *\n");
     printf("*   5) Calculette                        *\n");
     printf("*                                        *\n");
+
     printf("*   0) QUITTER                           *\n");
     printf("*                                        *\n");
     printf("************************** votre choix : ");
@@ -88,15 +87,26 @@ void afficher_menu()
 
 int choix_utilisateur(int a, int b)
 {
-   int compteur = 5; /* compteur du nombre d'essais */
+   int compteur = 0; /* compteur du nombre d'essais */
    int choix = 0; /* choix de l'utilisateur */
+   char saisie[256]; /* declaration d'un chaine qui nous servira de
+		      * "tampon" */
+   choix = a - 1;
 
-   scanf("%d", &choix);
-   while ((compteur > 0) &&  ((choix < a) || (choix > b)))
+   while ((compteur < 5) &&  ((choix < a) || (choix > b)))
    {
-       printf("Le nombre doit etre entre %d et %d (inclus) : ", a, b);
-       scanf("%d", &choix);
-       compteur = compteur - 1;
+       if (compteur > 0) {
+	   printf("Le nombre doit etre entre %d et %d (inclus) : ", a, b);
+       }
+       fgets(saisie, 256, stdin); /* preleve la ligne tapee par
+				     l'utilisateur et la place dans le
+				     tampon */
+       sscanf(saisie, "%d", &choix); /* tente de reconnaitre un entier
+					dans le tampon */
+       compteur = compteur + 1;
+   }
+   if ((choix < a) || (choix > b)) {
+       choix = a;
    }
    return choix;
 }
@@ -323,7 +333,6 @@ void afficher_motif(int cote)
 
 int motif(int colonne, int ligne)
 {
-    return (0 == colonne) 
-	|| (0 == ligne) 
-	|| (ligne == colonne);
+    return (0 == (colonne + ligne) % 2) 
+	|| (colonne < 5);
 }

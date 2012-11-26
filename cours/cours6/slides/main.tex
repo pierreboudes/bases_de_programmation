@@ -3,11 +3,8 @@
 %\usepackage[table]{xcolor}
 \input{communs/slides_style}
 
-%%% Titre -- Cours 5
-\title{Éléments d'informatique -- Cours 5. Tableaux.
-%, while,
-%  expressions booléennes.
-}
+
+\title{ Algorithmique et programmation -- Cours 6. Structurer les données.}
 \author{Pierre Boudes}
 \date{\today}
 
@@ -15,80 +12,20 @@
 
 %% Page de titre et licence CC.
 \begin{frame}
-	\titlepage
-	\vfill
-	\begin{center}
-		\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
-		{\tiny\CcNote{\CcLongnameByNcSa}}
-		\vspace*{-2.5ex}
-	\end{center}
+        \titlepage
+        \vfill
+        \begin{center}
+                \CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]
+                {\tiny\CcNote{\CcLongnameByNcSa}}
+                \vspace*{-2.5ex}
+        \end{center}
 \end{frame}
 
 \section[Plan]{}
 \frame[label=plan]{\tableofcontents}
 
-\section{printf/scanf (1)}
-\begin{frame}[fragile]
-  \frametitle{printf/scanf (1)}
-\begin{itemize}
-\item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
-  (\emph{print formatted}). 
-\item Chaque \verb+%+
-  dans le texte à afficher est substitué par la valeur formatée d'un
-  \alert{paramètre supplémentaire} de la fonction (autant de
-  paramètres supplémentaires que de \verb+%+
-). Le caractère suivant le symbole \verb+%+
-  détaille la conversion à utiliser.  La conversion \verb+%d+
-  met une valeur au format \alert{entier décimal}.  \pause
-\item Exemples :
-  \begin{itemize}
-\item
-    \verb+printf("Bonjour\n")+ 
-affiche \C{Bonjour} et un saut de
-    ligne\pause
-\item
-    \verb+printf("i vaut %d\n", i)+ 
-affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
-ligne)\pause
-\item
-    \verb+printf("(%d, %d)\n", 31, -4)+ 
-affiche \C{(31, -4)} et un saut de ligne. Remarquez qu'il y a deux
-paramètres en plus
- \end{itemize}
-\pause
-\item Réciproquement pour faire entrer dans le programme une donnée saisie par
-  l'utilisateur, nous utiliserons \alert{\C{scanf}}.
-\item Exemple : \verb+scanf("%d", &x)+
-\end{itemize}
-\end{frame}
 
-\section{Mémoire et tableaux}
-\subsection{La mémoire, les variables, les octets}
-\begin{frame}
-  \frametitle{La mémoire, les octets}
-
-  \begin{itemize}\item 
-    La mémoire vive, ou mémoire de travail est un dispositif
-    électronique dans lequel sont stockées les données en cours de
-    traitement. Les données y sont codées en binaire (comme dans le
-    reste de l'ordinateur), à l'aide de bits ($0$ ou $1$) regroupés en
-    \alert{octets} (groupes de 8 bits).
-\pause
-\item    Du point de vue logiciel la mémoire se présente comme une
-    succession d'octets, numérotés par les entiers à partir de
-    $0$. La mémoire est ainsi un grand tableau, dont chaque case (ou
-    cellule) renferme un octets. Les numéros sont les adresses
-    des cases.
-\pause
-\end{itemize}
-\begin{tabular}{r|c|c|c| c }
-  \hline
-  Adresses : & $0$ & $1$ & $2$ & \ldots \\ \hline
-  octets (valeurs) :  & {\small 01000110} & {\small 11010111} & {\small 00000001} & \ldots \\
-  \hline
-\end{tabular}
-\end{frame}
-
+\section{Mémoire et tableaux en C}
 %\subsection{Mémoire et variables (rappels)}
 \begin{frame}
   \frametitle{Mémoire et variables (rappels)\nowrite}
@@ -104,21 +41,74 @@ paramètres en plus
 \item C'est le codage machine des entiers en binaire qui sera employé pour manipuler cette donnée. 
    \end{itemize}\pause
   \end{itemize}
-  \begin{block}{Remarque.\youwrite} 
+  \begin{block}{Remarque.} 
     La  taille d'un \C{int} est en principe exactement celle d'un mot
-    mémoire, c'est à dire 4 ou 8 octets. Nous
-    verrons au cours suivant d'autres types de données, leurs tailles
-    et codages. Quoi qu'il en soit, le
-    compilateur prend en charge ces aspects et nous aurons rarement à
-    nous en soucier en programmant.
+    mémoire, c'est à dire 4 ou 8 octets. 
 \end{block}
 \end{frame} 
 
-\subsection{Tableaux}
 \begin{frame}[fragile]
-  \frametitle{Tableaux et mémoire}
-  
+  \frametitle{Déclarations multiples et répétitives ?}
+  \begin{lstlisting}
+int main () {
+    int i;    
+    /* repeter des declarations ? */
+    for (i = 0; i < 1024; i = i + 1) {
+        int X_i; /* marchera pas */
+    }
+    int somme = 0;
+    /* saisie */
+    for (i = 0; i < 1024; i = i + 1) {
+        printf("X_i ?");
+        scanf("%d", &X_i);
+    }
+    /* calcul */
+    for (i = 0; i < 1024; i = i + 1) {
+        somme  = somme + X_i;
+    }
+    return EXIT_SUCCESS;
+}
+  \end{lstlisting}
+\pause
+Solution : faire un tableau.
+\end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Solution : un tableau}
+  \begin{lstlisting}
+int main () {
+    int i;    
+    int X[1024]; /* 1024 variables ! */
+    int somme = 0;
+    /* saisie */
+    for (i = 0; i < 1024; i = i + 1) {
+        printf("X[%d] ?", i);
+        scanf("%d", &X[i]);
+    }
+    /* calcul */
+    for (i = 0; i < 1024; i = i + 1) {
+        somme  = somme + X[i];
+    }
+    return EXIT_SUCCESS;
+}
+  \end{lstlisting}
+\end{frame}
+
+\subsection{Déclaration d'un tableau en C}
+\begin{frame}[fragile]
+  \frametitle{Déclaration d'un tableau statique unidimensionnel}
+  \begin{itemize}
+\item    Du point de vue logiciel la mémoire se présente comme une
+    succession d'octets, numérotés par les entiers à partir de
+    $0$. 
+\pause
+\end{itemize}
+\begin{tabular}{r|c|c|c| c }
+  \hline
+  Adresses : & $0$ & $1$ & $2$ & \ldots \\ \hline
+  octets (valeurs) :  & {\small 01000110} & {\small 11010111} & {\small 00000001} & \ldots \\
+  \hline
+\end{tabular}
 \begin{itemize}
   \item En C, on peut réserver plusieurs espaces mémoires contigus pour des données de même type en une seule déclaration :\pause
     \begin{lstlisting}
@@ -126,7 +116,6 @@ paramètres en plus
     \end{lstlisting}
 \end{itemize}
 \pause
-
 {
 \scriptsize
 \begin{tabular}{r| c| c|c|c|c| c|c|c|c| c|c|c|c| c}
@@ -139,16 +128,11 @@ paramètres en plus
 \uncover<6->{\emph{Identificateur}: & \ldots & \multicolumn{4}{|c|}{\C{toto[0]}} &  \multicolumn{4}{|c|}{\C{toto[1]}} &  \multicolumn{4}{|c|}{\C{toto[2]}} & \ldots  }
 \end{tabular}\medskip
 }
-\pause
-\begin{itemize}
-\item C'est ce qu'on appelle un tableau, statique, unidimensionnel. \pause
   \begin{itemize}
-    \item Sa taille doit être connue au moment de la compilation (statique)\pause
+    \item La taille doit être connue à de la compilation\pause
     \item Les cases sont accessibles, comme s'il s'agissait de variables, à l'aide des identificateurs \C{toto[0]}, \C{toto[1]}, \C{toto[2]}\pause
-\item   La numérotation commence à zéro. Si $n$ est le nombre de cases du tableau la dernière case est donc numérotée $n - 1$. 
+    \item   La numérotation commence à zéro. Si $n$ est la taille la dernière case est donc numérotée $n - 1$. 
   \end{itemize}
-
-\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -163,10 +147,9 @@ a effectué un accès à une case mémoire qui ne lui était pas réservée
 (mais il faut beaucoup s'écarter des bons indices du tableau).
 \end{frame}
 
-\subsection{Exemples et trace}
+%\subsection{Exemples et trace}
 \begin{frame}[fragile]
   \frametitle{Premier exemple}
-\pause
 \begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily]
 int main()
 {
@@ -184,7 +167,7 @@ int main()
 
 \begin{frame}[fragile]
   \frametitle{Second exemple}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+\begin{lstlisting}[basicstyle=\ttfamily\small]
 int main()
 {
   /* Declaration et initialisation de variables */
@@ -192,7 +175,7 @@ int main()
   int i; /* var. de boucle */
 \end{lstlisting}
 \pause
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+\begin{lstlisting}[basicstyle=\ttfamily\small]
   for (i = 0; i < 3; i = i + 1) /* pour chaque case */
   {
     printf("tab[%d] = %d\n", i, tab[i]);
@@ -239,7 +222,7 @@ int main()
   \end{tabular}
 \end{frame}
 
-\subsection{Pour aller plus loin}
+\subsection{Pour aller plus loin en C}
 \begin{frame}
   \frametitle{Pour aller plus loin\nowrite}
 
@@ -252,213 +235,275 @@ int main()
   \item  Les variables dont la valeur est une adresse s'appellent des \alert{pointeurs}; 
 \item La notation \emph{esperluette}, \C{\&x}, donne accès à l'adresse d'une variable;
 \item La notation \emph{étoile}, \C{*tab}, ne s'applique qu'à une adresse, elle donne alors accès à la valeur contenue à cette adresse. 
-\item Les expressions \C{tab[i]} et  \C{*(tab + i)} sont identiques en C.
-  \end{itemize}
+\item Les expressions \C{tab[i]} et  \C{*(tab + i)} sont identiques en
+  C.
+  \end{itemize}\pause
+\item Pour les grands tableaux, il est nécessaire d'allouer dynamiquement l'espace mémoire.\pause
+\item Si on ne veut pas s'ennuyer avec les pointeurs (et l'allocation)
+  on peut emballer nos tableaux statiques dans des \structure{struct}.
+
 \end{itemize}
 \end{frame}
 
-% \section*{Démos}
-% \begin{frame}
-%   \frametitle{Démos}
-% \end{frame}
 
-% \section[while]{L'instruction de contrôle while}
-% \subsection{Syntaxe}
-% \begin{frame}[fragile]
-%   \frametitle{L'instruction de contrôle while}
-
-% \structure{Syntaxe :}\\
-%  \C{while (\emph{condition}) 
-% \{\emph{\colorbox{green!20}{bloc}}\}}.
-% \medskip
-
-% \pause
-%   \begin{columns}
-%     \begin{column}[t]{6cm}
-% \structure{Code source}
-% \begin{verbatim}
-% /* avant */
-% while ( ... )
-% {
-%  ...
-% }
-% /* après */
-% \end{verbatim}
-%   \end{column}
-% \uncover<3->{
-%    \begin{column}[t]{4cm}
-% \structure{Schéma de traduction}\\[.3cm]
-% \tikzstyle{amil}=[rectangle, draw,  fill=blue!20, text badly ragged, text width=3.7cm]
-% \tikzstyle{line} = [draw, thick, -latex']
-%      \begin{tikzpicture}[node distance=.7cm]
-%        \node [amil] (avant) {avant};
-%       \node [amil,below of =avant,fill=orange!20] (saut1) {saute à la condition};
-%        \node [amil,below of =saut1,fill=green!20] (bloc) {bloc};
-%       \node [amil,below of =bloc](eval) {évalue la condition};
-%        \node [amil,below of =eval,fill=orange!20](sautcond) {saute si elle est vraie};
-%        \node [amil,below of =sautcond] (apres) {après};
-%        \path [line] (saut1) -| ++(2.6,0) |-  (eval);
-%        \path [line] (sautcond) -| ++(2.4,0) |-  (bloc);
-%      \end{tikzpicture}
-%    \end{column}
-% }
-%  \end{columns}
-% \end{frame}
-
-% \subsection{Trace}
-% \begin{frame}[fragile]
-%   \frametitle{Trace}
-% \begin{columns}
-%   \begin{column}[t]{3.7cm}
-%  \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\scriptsize]
-% int main()
-% {
-%     /* Declaration et initialisation des variables */
-%     int x;
-%     int nb = 1; /* nombre de chiffres */
-
-%     printf("Entrer un nombre positif ");
-%     scanf("%d", &x);
-    
-%     while (x > 9) /* tant que x a plus d'un chiffre */
-%     {
-%         x = x / 10; /* enlever un chiffre a x */
-%         nb = nb + 1; /* compter un chiffre de plus */
-%     }
-%     printf("ce nombre a %d chiffres decimaux\n", nb);
-    
-%     /* Valeur fonction */
-%     return EXIT_SUCCESS;
-% }
-% \end{lstlisting}
-% \vspace{.4cm}
-%   \end{column}
-% \begin{column}[t]{4cm}
-% \scriptsize
-% \pause
-% L'utilisateur saisit 6071.
-
-% \rowcolors[\hline]{2}{green!25}{yellow!50} %\arrayrulecolor{green!75!gray}
-% \begin{tabular}{|r|c|c|l|}
-% \hline
-%     ligne & \C{x} & \C{nb} & sortie écran \pause \\ \hline
-%   initialis.& ? &  1 & \pause \\
-% 7 &  &  & \C{Entrer\ldots}\pause \\
-% 8 &  6071 &  & \pause\\
-% 12 &  607 &  & \pause \\
-% 13 &   & 2 & \pause\\
-% 12 &  60 &  & \pause\\
-% 13 &   & 3 & \pause \\
-% 12 &  6 &  & \pause\\
-% 13 &   & 4 &  \pause \\
-% 15 & & & \C{ce nombre a 4...}\pause \\ 
-% 18 & \multicolumn{3}{c}{Renvoie \C{EXIT\_SUCCESS}}
-% \end{tabular}
-%  \end{column}
-% \end{columns}
-% \end{frame}
-
-% \subsection{For ou while ?}
-% \begin{frame}
-%   \frametitle{For ou while ?}
-
-%   \begin{itemize}
-%   \item Un \C{for} peut toujours être simulé par un \C{while} et le
-%     code machine sera identique. Il suffit d'introduire un
-%     \alert{compteur de boucle} (la variable de boucle du
-%     \C{for}).\pause
-% \item Par convention, les programmeurs préfèrent utiliser un \C{for} lorsque
-%   le nombre d'itérations est connu à l'avance. Par exemple, pour
-%   faire la somme des éléments d'un tableau. Dans le cas contraire, les
-%   programmeurs utilisent un \C{while}. Par exemple, pour chercher un
-%   élément dans un tableau.\pause
-% \item Maintenant que nous avons le \C{while}, il est possible qu'un
-%   programme ne termine jamais (\C{Ctrl-C}).
-%   \end{itemize}
-% \end{frame}
-
-% \section{Expressions booléennes}
-
-% \subsection{Syntaxe}
-% \begin{frame}
-%   \frametitle{Expressions booléennes}
-% Les \emph{conditions} employées dans les structures de contrôle
-% (\C{if}, \C{for} ou \C{while}) sont des \alert{expressions
-% booléennes}, pouvant être \emph{Vrai}, \emph{Faux}  ou :\pause
-%   \begin{itemize}
-%    \item des inégalités entre expressions arithmétiques
-%       \begin{align*}
-%         \text{\emph{inégalité}} &\mathrel{:=} e_1 \mathrel{\C{<}} e_2
-%         \mid e_1 \mathrel{\C{>}} e_2 \mid e_1 \mathrel{\C{!=}}  e_2 \\
-% &\mid e_1 \mathrel{\C{<=}}  e_2  \mid e_1 \mathrel{\C{>=}} e_2  \mid e_1 \mathrel{\C{==}} e_2
-%       \end{align*}
-% \pause
-%       \item ou des combinaisons logiques d'expressions booléennes :
-%         \begin{align*}
-%           \text{\emph{condition}} &\mathrel{:=}  (\text{\emph{condition}}) \mathrel{\C{\&\&}}
-%           (\text{\emph{condition}}) \tag{et} \\
-% &\mid (\text{\emph{condition}}) \mathrel{\C{||}}
-%           (\text{\emph{condition}})\tag{ou} \\
-% &\mid {\C{!}}(\text{\emph{condition}}) \tag{non}
-%         \end{align*}
-%   \end{itemize}
-% \end{frame}
-
-
-% \subsection{Constantes}
-% \begin{frame}[fragile]
-%   \frametitle{Constantes booléennes}
-%   \begin{itemize}
-%     \item
-%  Certains langages possédent un type booléen (admettant deux
-%   valeurs \emph{true} et \emph{false}) pour les expressions
-%   booléennes.\pause
-
-% \item En langage C, les
-%   expressions booléennes sont de type entier (\C{int}), l'entier \emph{zéro}
-%   joue le rôle du Faux, l'entier \emph{un} joue le rôle du Vrai et tout
-%   entier différent de zéro est évalué a vrai.\pause
-
-% \item On se donne deux
-%   constantes symboliques :
-% \begin{lstlisting}[escapechar={\%},basicstyle=\scriptsize\ttfamily]
-% /* Declaration des constantes et types utilisateur */
-% #define TRUE 1
-% #define FALSE 0
-
-% int main()
-% {
-%     int continuer = TRUE; /* faut-il continuer ?*/
-
-%     while (continuer)
-%     {
-%         ...
-% \end{lstlisting}
-
-%   \end{itemize}
-% \end{frame}
-
-\section{Démos}
+\subsection{Les tableaux : une structure de données}
 \begin{frame}
-  \frametitle{Démos}
-\end{frame}
-
-
-\section{En TP}
-\begin{frame}
-  \frametitle{Interrogation (durée 1h)}
-  
-Soient deux tableaux d'entiers \C{ligne} et \C{colonne}, initialisés à des valeurs de votre choix de l'intervalle $[0,4]$. Les tailles de ces deux tableaux seront fixées par des constantes symboliques, respectivement \C{N} et \C{M}. 
-
-Écrire un programme qui :
-\begin{itemize}
-\item affiche la somme de chaque case du tableau \C{ligne} avec chaque
-  case du tableau \C{colonne}; 
-\item compte le nombre de fois où cette somme vaut $5$ et affiche le résultat à l'écran.
-\end{itemize} 
-
+  \frametitle{La structure de donnée tableau}
+    Les tableaux sont surtout une manière très naturelle d'organiser
+    des données de même type. \structure{Beaucoup d'algorithmes utilisent des tableaux.}
 \pause
-\alert{Les interrogations de TP seront un peu plus faciles !}
-
+  \begin{itemize}
+\item On peut accéder très rapidement à
+  n'importe quel élément si on connaît son indice, 
+on peut aussi  très simplement parcourir un tableau;
+ \item supprimer ou insérer un élément sont des opérations
+    plus lentes, comme y chercher un élément si le tableau n'est pas préalablement
+    classé dans un certain ordre. \pause \alert{Connaissez vous la recherche
+    dichotomique ?}\pause
+\item Classer un tableau peut prendre plus de temps, parce que 
+  classer des éléments prend du temps qu'ils
+    soient sous forme de tableau ou non. \pause \alert{Connaissez vous un
+    algorithme de tri (rangement sous forme classée) ?} Exploite t'il
+    la structure de tableau ou une autre structure ?
+  \end{itemize}
 \end{frame}
+
+\section{Les chaînes de caractères}
+\begin{frame}[fragile]
+  \frametitle{Les chaînes de caractères}
+  \begin{itemize}
+    \item Une chaîne de caractère est un tableau de caractère, terminé
+      par le caractère spécial de code ascii zéro (on parle de
+      sentinelle), \alert{\C{$\backslash 0$}}.
+\item Plutôt que d'écrire : 
+  \begin{lstlisting}
+char nom[7] = {'m','o','n',' ','n','o','m'};
+  \end{lstlisting}
+\item on peut utiliser directement :
+  \begin{lstlisting}
+char nom[8] = "mon nom";
+  \end{lstlisting}
+\item Le huitième caractère, \C{$\backslash 0$} sert à délimiter le
+  texte. 
+\item On peut même écrire :
+  \begin{lstlisting}
+char nom[] = "mon nom";  /* 8 cases */
+  \end{lstlisting}
+\item Avec printf et scanf  on utilise \C{\%s}.
+\item Pour les entrées on utiliser surtout  \C{fgets} :
+  \begin{lstlisting}
+fgets(nom, 64, stdin); /* lit 63 car. maxi */
+  \end{lstlisting}
+  \end{itemize}
+\end{frame}
+
+\section{Les enregistrements (struct)}
+
+\begin{frame}[fragile]
+  \frametitle{Autre problème de données multiples}
+\begin{verbatim}
+Entrer la première fraction : -1 / 42
+...
+\end{verbatim}
+\pause
+Quel type de sortie donner à la fonction de saisie ?
+  \begin{lstlisting}
+int[2] saisir_fraction(); /* error: (syntaxe) */
+int * saisir_fraction(); /* probleme avec la memoire */
+  \end{lstlisting}
+
+Il nous faut \emph{emballer} ces deux entiers.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Les enregistrements ou  « struct »}
+\begin{itemize}
+\item Une structure \emph{empaquette} plusieurs valeurs nommées et s'utilise comme un \alert{type}. \pause
+\item Chacune des valeurs est accessible à l'aide d'un nom, choisi au
+  moment de  la  déclaration de la structure. On parle des \alert{champs} de la
+  structure.\pause
+\item Un type structure doit être déclaré avant d'être
+  utilisé. Ne pas confondre : \textbf{déclaration de variable} (dans une
+  fonction), \textbf{déclaration de type structure} et  \textbf{déclaration de fonction}.
+\pause
+\item Les valeurs des champs sont accessibles individuellement à l'aide de la
+  \alert{notation pointée}. \pause
+\item On peut aussi manipuler globalement la valeur d'une donnée de
+  type structure. Par exemple : faire une affectation entre variables
+  d'un même type structure (copie les champs, y compris les tableaux statiques).
+\end{itemize}
+\end{frame}
+
+\subsection[Déclaration]{Déclaration d'un type utilisateur struct}
+\begin{frame}[fragile]
+  \frametitle{Déclaration d'un type utilisateur struct}
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily\small] 
+struct bulletin_s  {
+  double temperature; /* temperature de l'air */
+  int force;          /* force du vent (Beaufort) */
+}; /* <-- attention ';' (cas particulier) */
+\end{lstlisting}
+\pause
+\begin{itemize}
+\item Cette déclaration est placée en dehors de toute fonction, entre
+les définitions de constantes symboliques (\verb|#define ...|) et les
+déclarations de fonctions utilisateur.
+\pause
+\item L'effet de cette déclaration est de signaler au compilateur qu'un nouveau
+type est disponible et comment il peut être utilisé (liste des champs). Aucun espace mémoire n'est réservé à ce moment
+(ce n'est pas une déclaration de variable).
+\item \pause \alert{Attention au point-vigule final}.
+\end{itemize}
+\end{frame}
+
+\subsection[Utilisation]{Utilisation d'un type utilisateur struct}
+\begin{frame}[fragile]
+  \frametitle{Utilisation d'un type utilisateur struct: variables}
+
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily\small] 
+int main()
+{
+    struct bulletin_s x = {0.5, 4};
+    struct bulletin_s y;
+    
+    y = x; /* copie globale */
+    x.temperature = 13.4; /* modif. d'un champ */
+    ...
+}
+\end{lstlisting}
+\pause
+\begin{itemize}
+\item Initialisation:  syntaxe proche de celle des tableaux.
+\pause
+\item la déclaration d'une variable de type structure reprend le mot
+  clé \verb|struct| et le nom donné à la structure.
+\pause
+\item On accéde aux éléments d'une structure à l'aide de la notation
+  pointée :
+\verb|nom_variable.nom_champ|
+\end{itemize}
+\end{frame}
+
+%\section{Type utilisateur struct et fonctions (utilisateur)}
+\begin{frame}[fragile]
+  \frametitle{Utilisation d'un type utilisateur struct: fonctions}
+
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily\small] 
+/* declaration de fonctions utilisateur */
+struct bm_s moyenne_bm(struct bm_s x, struct bm_s y);
+\end{lstlisting}
+\pause
+On emploie \verb|struct nom_struct|, comme pour une déclaration de variable.
+\begin{lstlisting}[escapechar={\%},basicstyle=\ttfamily\small] 
+
+/* definitions des fonctions utilisateur */
+struct bm_s moyenne_bm(struct bm_s x, struct bm_s y)
+{
+    struct bm_s nouveau_bm;
+
+    nouveau_bm.temperature = (x.temperature 
+                              + y.temperature) / 2.0;
+    nouveau_bm.force = (x.force + y.force) / 2;
+
+    return nouveau_bm;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Avec typedef}
+  On utilise souvent \alert{typedef} pour se passer du mot clé struct et
+  donner un véritable nom de type à la structure.
+
+\begin{lstlisting}
+typedef struct bm_s {
+   double temperature;
+   int force;
+} bm_t; /* <-- bm_t === struct bm_s */
+
+bm_t moyenne_bm(bm_t x,  bm_t y);
+\end{lstlisting}
+\end{frame}
+
+%\subsection[Intérêt]{Intérêt des structures (enregistrements)}
+\begin{frame}
+  \frametitle{Intérêt des structures (enregistrements)}
+
+Intérêt des structures  :
+  \begin{itemize}
+   \item \structure{lisibilité} : regrouper un ensemble
+      de données dans un même type, nommé de façon explicite,
+      facilite la relecture du code;\pause
+  \item \structure{augmente les possibilités} : les structures permettent d'écrire des
+    fonctions qui retournent plusieurs valeurs, en l'absence de pointeurs.\pause
+    \item \structure{modularité} : on peut rajouter des champs très
+      facilement, avec très peu de modifications.\pause
+    \item \structure{Incontournables :} les langages orientés objets
+      généralisent la notion de structure. Un objet est une structure
+      dont les champs peuvent être aussi bien des données que des
+      fonctions (hors programme).
+  \end{itemize}
+\end{frame}
+
+%\subsection[Quelques erreurs]{Quelques erreurs communes}
+\begin{frame}[fragile]
+  \frametitle{Erreurs communes}
+
+\begin{itemize}
+\item Message d'erreur \emph{étrange} :
+\begin{lstlisting}[numbers=left,basicstyle=\ttfamily\small,firstnumber=7] 
+struct bm_s  {
+  double temperature; /* temperature de l'air */
+  int force;          /* force du vent (Beaufort) */
+}
+
+/* Declaration des fonctions utilisateur */
+void afficher_bm(struct bm_s);
+\end{lstlisting}
+{\small
+\begin{verbatim}
+14: error: two or more data types in declaration specifiers
+\end{verbatim}
+}
+\pause
+\alert{Oubli du point-virgule !}
+\pause
+\item Champ inexistant :
+\begin{lstlisting}[numbers=left,basicstyle=\ttfamily\small,firstnumber=22] 
+  x.toto = 3; /* erreur: pas de champs toto */
+\end{lstlisting}
+{\small
+\begin{verbatim}
+prog.c: In function ‘main’:
+prog.c:22: error: ‘struct bm_s’ has no member named ‘toto’
+\end{verbatim}
+}
+\end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}[fragile]
+  \frametitle{Conclusion}
+  \begin{itemize}
+    \item Un tableau est un \alert{lot de  déclarations
+      identiques}, numérotées.
+\item Une structure  \alert{regroupe
+      des variables  de différents types},
+      dûment nommées. \pause
+\item Pour les tableaux (ou les chaînes) comme pour les structures,
+  on ne peut pas utiliser les opérations usuelles : comparaisons, test
+  d'égalité, opérations arithmétiques. Il faut introduire des
+  fonctions spécifiques.\pause
+\item On évitera de passer des tableaux à des fonctions (pointeur, mémoire), on les
+  emballera avant dans des structures :
+  \begin{lstlisting}
+#define TAILLE_MAX 1024
+typedef struct tableau_s {
+    int taille;  /* maximum TAILLE_MAX */
+    int t[TAILLE_MAX];
+} tableau_t;
+  \end{lstlisting}
+  \end{itemize}
+\end{frame}
+
 \end{document}

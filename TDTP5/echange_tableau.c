@@ -15,6 +15,8 @@ int main()
     int t[N] = {0, 10};
     int i;
     
+
+
     permute_valeurs(tab);
 
     /* Affichage */

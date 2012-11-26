@@ -1,0 +1,10 @@
+* Liste d'exercices de révision
+** Il y a une seconde il était / dans une seconde il sera.
+** affichage figure d'etoiles, liste de numeros etc.
+** test de primalité (mais math), somme d'une série
+** écriture de fonctions (déclaration définition)
+*** carré, cube
+*** est majeur, est premier
+*** ajouter un main pour tester des fonctions, ou bien une procédure autotest()
+
+

@@ -1,8 +1,8 @@
 \documentclass[xcolor=svgnames]{beamer}
 \input{communs/slides_style}
 
-%%% Titre -- Cours 11
-\title{Éléments d'informatique -- Cours 11.\\ Pile d'appel, fonctions récursives.}
+%%% Titre -- Cours 7-8
+\title{Algorithmique et programmation -- Cours 7 et 8.\\ Première partie, fonctions récursives et révisions.}
 \author{Pierre Boudes}
 \date{\today}
 
@@ -20,38 +20,203 @@
 \end{frame}
 
 
-\section[Plan du cours]{Contenu du semestre}
-\begin{frame}
-  \frametitle{Ce semestre\nowrite}
-
-  \begin{itemize}
-  \item Éléments d'architecture des ordinateurs (+mini-assembleur)
-  \item Éléments de systèmes d'exploitation
-\item Programmation structurée impérative (éléments de langage C)
-\begin{itemize}
-  \item Structure d'un programme C
-  \item Variables : déclaration (et initialisation), affectaction
-  \item Évaluation d'expressions, expressions booléennes
-  \item Instructions de contrôle : if, for, while
-  \item Types de données : entiers,  caractères,
-    réels, tableaux, struct
-  \item Fonctions d'entrées/sorties (scanf/printf)
-\item Écriture et appel de fonctions
-  \item Débogage
-\end{itemize}
-\item Notions de compilation
-  \begin{itemize}
-  \item  Analyse lexicale, analyse syntaxique, analyse sémantique;
-  préprocesseur du C (include, define);
-  Édition de lien
-  \end{itemize}
-\item Algorithmes élémentaires
-\item Méthodologie de résolution, manipulation sous linux
-\end{itemize}
- \end{frame}
-
 \section[Plan]{}
 \frame[label=plan]{\tableofcontents}
+
+
+
+\section{Contrôle}
+\begin{frame}
+  \frametitle{Contenu du contrôle}
+  \begin{itemize}
+  \item Au dernier contrôle, vous aurez le mêmes types
+    d'exercices qu'au premier contrôle, sans QCM, avec différents types de données
+    (\C{int}, \C{char}, \C{double}, tableaux, \C{struct}) et des fonctions.
+\begin{itemize}
+\item Commenter, compléter un programme (cours)
+\item utiliser les principales structures de contrôle : if, for, while
+\item un exercice porte sur la structuration de données (struct ou tableaux)
+\end{itemize}
+\item le programme à modifier/compléter et l'exercice sur les données sont forcément avec fonctions
+ \item
+\alert{Gérez votre temps, apprenez à lire un sujet et ne rien oublier.} \structure{Nous
+testons vos acquis, allez à l'essentiel !}
+ \end{itemize}
+\end{frame}
+
+\section{Rappels}
+  \subsection{Structure et contenu d'un programme C}
+\begin{frame}[fragile]
+  \frametitle{Structure et contenu d'un programme C}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+...
+
+/* Declaration des constantes et types utilisateurs */
+...
+
+/* Declaration des fonctions utilisateurs */
+...
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    ...
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Directives préprocesseur}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+/* Declaration de fonctionnalites supplementaires */
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+#include %\colorbox{yellow}{<math.h>}% /* pow, sqrt */ /* bibliotheque */
+
+/* Declaration des constantes et types utilisateurs */
+#define %\colorbox{yellow}{N 5}% /* constante symbolique */
+#define TRUE 1
+#define FALSE 0
+
+/* Declaration des fonctions utilisateurs */
+...
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int %\colorbox{yellow}{donnee[N];}%
+    ...
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Types utilisateurs struct}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+...
+/* Declaration des constantes et types utilisateurs */
+...
+%\colorbox{gray}{typedef}% struct paire_s {
+    int g; /* gauche */
+    int d; /* droite */
+} %\colorbox{gray}{paire\_t}% %\colorbox{yellow}{;}%
+
+/* Declaration des fonctions utilisateurs */
+...
+
+/* Fonction principale */
+int main()
+{
+    /* Declaration et initialisation des variables */
+    struct paire_s meschaussures = {37, 44};
+    ...
+    /* valeur fonction */
+    return EXIT_SUCCESS;
+}
+
+/* Definitions des fonctions utilisateurs */
+...
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Fonctions : déclarations (type), appels, définitions}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+...
+/* Declaration des fonctions utilisateurs */
+int factorielle(int n);                /*     Z -> Z    */
+int pgcd(int a, int b);                /* Z x Z -> Z    */ 
+double neper(int ordre);               /*     Z -> R    */
+void afficher_paire(%\colorbox{gray}{paire\_t}% x);        /* paire -> rien */
+int saisie_choix();                   /*  rien -> Z    */
+
+/* Fonction principale */
+int main() 
+{
+    ...
+    afficher_paire(meschaussures); /* appel */
+    ...
+}
+
+/* Definitions des fonctions utilisateurs */
+double neper(int n) /* definition de la fonction neper */
+{
+    ...
+    somme = somme + 1.0 / factorielle(k); /* appel */
+    ...
+    return somme;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fonctions récursives}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+...
+/* Declaration des fonctions utilisateurs */
+...
+double neper(int ordre);               /*     Z -> R    */
+...
+
+/* Fonction principale */
+int main()
+{
+   ...
+}
+
+/* Definitions des fonctions utilisateurs */
+double neper(int n) /* definition de la fonction neper */
+{
+   if (n > 1)
+   {
+       return 1.0 / factorielle(n)  + neper(n - 1); /* appel recursif */
+   ...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Pointeurs, paramètres par adresses}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize,escapechar={\%}] 
+...
+/* Declaration des fonctions utilisateurs */
+...
+void echanger(int *a, int *b);
+double sommer_tableau(double t[], int taille);
+
+/* Fonction principale */
+int main()
+{
+   int x = 3;
+   int y = 5;
+   double t[3] = {3.4, 1.2, 1.1};
+   double somme;
+   echanger(&x, &y); /* x = 5 et y = 3 */
+   somme = sommer_tableau(t, 3); 
+   ...
+}
+...
+\end{lstlisting}
+\end{frame}
+
 
 \section{Pile d'appel (rappels)}
 \subsection{Rappel sur les fonctions en C}
@@ -63,85 +228,7 @@
     \item \structure{définition}  (code, paramètres formels)
     \item \structure{appel} (paramètres effectifs, \textbf{espace mémoire})
   \end{itemize}
-Voyons de manière plus précise cette question d'espace mémoire.
-\end{frame}
-
-\subsection{Traces et mémoire}
-\begin{frame}
-  \frametitle{Traces et mémoire \nowrite}
-\noindent \structure{Rappel :} 
-nous faisons la trace de chaque appel de chaque fonction que
-l'on a défini (pas les fonctions externes, comme printf). 
-
-\begin{columns}
-\column[T]{6cm}
-La trace d'un programme donne schématiquement ce type de dessin
-\begin{itemize}
-  \item<3-> verticalement, c'est le temps
-  \item<3-> et horizontalement, l'occupation mémoire
-  \item<4-> un appel de fonction occupe une portion de mémoire, puis la
-    libère. 
-\item<5-> la trace représente réellement ce qui arrive dans vos programmes.
-\end{itemize}
- \uncover<6->{
-\structure{Un appel de fonction peut-il modifier la mémoire d'une
-  fonction appelante ?}}
-
-\column[T]{4.5cm}
-\vspace{-.5cm}
-\small
-\only<2->{\noindent\begin{tikzpicture}
-\tikzstyle{every node}=[anchor=base]
-\only<3->{\tikzset{axis/.style={fill=none}}}
-\only<2>{\tikzset{axis/.style={color=white,fill=white,draw=white}}}
-% Axis
-  \draw[axis,arrows = ->] (-.7,5.9) -- (4.2,5.9);
-  \draw(4.1,6) node[axis,anchor=base east] {mémoire};
-  \draw[axis,arrows = ->] (-.6,6.1) -- (-.6,-.5);
-  \draw(-.8,-.2) node[axis,rotate=-90,anchor=base east] {temps};
-%
- \draw (0, 5.6) node {main()};
-  \filldraw[fill=LightGreen,draw=Green] (-0.5,-0.25) rectangle
-  (1,5.5); 
-  \draw[pattern color=Green, pattern=north east lines,draw=none] (-0.5,-0.25) rectangle
-  (0,5.5); 
- \draw (0.25, 5.25) node {\C{x}};
-  \draw[draw=Green] (0.5,-0.25) -- (0.5,5.5);
-  \draw (0.75, 5.25) node {\C{y}};
-%
- \draw (1.75, 5.1) node {max(1,2)};
-  \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (1,4) rectangle (2.5,5); 
-  \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (1,4) rectangle
-  (1.5,5); 
-  \draw (2.25, 4.75) node {\C{b}};
-  \draw[draw=DarkGoldenrod] (2,4) -- (2,5); 
-  \draw (1.75, 4.75) node {\C{a}};
-%
-  \draw (1.75, 3.6) node {\C{f(8)}};
-  \filldraw[fill=PowderBlue,draw=RoyalBlue]
-  (1,0) rectangle (2.5,3.5); 
-  \draw[pattern color=RoyalBlue, pattern=north east lines,draw=none]
-  (1,0) rectangle  (1.5,3.5); 
-  \draw (1.75, 3.25) node {\C{z}};
-  \draw[draw=RoyalBlue] (2,0) -- (2,3.5); 
-  \draw (2.25, 3.25) node {\C{r}};
-%
-  \draw (3, 3.1) node {\C{g(2)}};
-  \filldraw[fill=Salmon,draw=Crimson] (2.5,2) rectangle(3.5,3); 
-  \draw[pattern color=Crimson, pattern=north east lines,draw=none]
-  (2.5,2) rectangle  (3,3);
-  \draw (3.25, 2.75) node {\C{n}};
-%
-  \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (2.5,.5) rectangle
-  (4,1.5); 
-  \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (2.5,.5) rectangle
-  (3,1.5); 
-  \draw (3.25, 1.6) node {max(2,-1)};
-  \draw (3.25, 1.25) node {\C{a}};
-  \draw[draw=DarkGoldenrod] (3.5,.5) -- (3.5,1.5);
-  \draw (3.75, 1.25) node {\C{b}};
-\end{tikzpicture}}
-  \end{columns}
+Nous reviendrons sur cette question d'espace mémoire un peu plus tard aujourd'hui.
 \end{frame}
 
 \subsection{Pile d'appel}
@@ -153,9 +240,8 @@ On parle de \alert{pile d'appel} car les appels de fonctions
 s'empilent... \emph{comme sur une pile
     d'assiettes.}
 
-\uncover<13->{
-\structure{Peut-on avoir deux assiettes identiques dans la pile ? (La même
-  fonction avec des contenus différents)}}
+\structure{Peut-on avoir deux éléments identiques dans la pile ? (La même
+  fonction avec des paramètres éventuellement différents)}
 
 % de contenus différents
 \column[T]{7.5cm}
@@ -170,7 +256,7 @@ s'empilent... \emph{comme sur une pile
   \draw[axis,arrows = ->] (-.6,6.1) -- (-.6,-.5);
   \draw(-.8,-.2) node[axis,anchor=base east] {temps};
 %
-\uncover<1,3->{
+
   \draw (0, 5.6) node[fonction] {main()};
   \filldraw[fill=LightGreen,draw=Green] (-0.5,-0.25) rectangle
   (1,5.5); 
@@ -179,9 +265,7 @@ s'empilent... \emph{comme sur une pile
  \draw (0.25, 5.25) node {\C{x}};
   \draw[draw=Green] (0.5,-0.25) -- (0.5,5.5);
   \draw (0.75, 5.25) node {\C{y}};
-}
 %
-\uncover<1,4,12->{
  \draw (1.75, 5.1) node[fonction] {max(1,2)};
   \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (1,4) rectangle (2.5,5); 
   \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (1,4) rectangle
@@ -189,9 +273,7 @@ s'empilent... \emph{comme sur une pile
   \draw (2.25, 4.75) node {\C{b}};
   \draw[draw=DarkGoldenrod] (2,4) -- (2,5); 
   \draw (1.75, 4.75) node {\C{a}};
-}
 %
-\uncover<1,6-10,12->{
   \draw (1.75, 3.6) node[fonction] {\C{f(8)}};
   \filldraw[fill=PowderBlue,draw=RoyalBlue]
   (1,0) rectangle (2.5,3.5); 
@@ -200,17 +282,13 @@ s'empilent... \emph{comme sur une pile
   \draw (1.75, 3.25) node {\C{z}};
   \draw[draw=RoyalBlue] (2,0) -- (2,3.5); 
   \draw (2.25, 3.25) node {\C{r}};
-}
 %
-\uncover<1,7,12->{
   \draw (3, 3.1) node[fonction] {\C{g(2)}};
   \filldraw[fill=Salmon,draw=Crimson] (2.5,2) rectangle(3.5,3); 
   \draw[pattern color=Crimson, pattern=north east lines,draw=none]
   (2.5,2) rectangle  (3,3);
   \draw (3.25, 2.75) node {\C{n}};
-}
 %
-\uncover<1,9,12->{
   \filldraw[fill=LightGoldenrod, draw=DarkGoldenrod] (2.5,.5) rectangle
   (4,1.5); 
   \draw[pattern color=DarkGoldenrod, pattern=north east lines,draw=none] (2.5,.5) rectangle
@@ -219,7 +297,7 @@ s'empilent... \emph{comme sur une pile
   \draw (3.25, 1.25) node {\C{a}};
   \draw[draw=DarkGoldenrod] (3.5,.5) -- (3.5,1.5);
   \draw (3.75, 1.25) node {\C{b}};
-}
+
 \end{tikzpicture}
 \end{columns}
 \end{frame}
@@ -235,14 +313,13 @@ s'empilent... \emph{comme sur une pile
     appel à la fonction \emph{elle-même}.
   \end{block}
 
-\pause
+
 Il y a une forte analogie avec les maths : $(n + 1)! = (n + 1) \times n!$
 
-\pause
 \begin{alertblock}{Terminaison}
   Il faut un cas de base qui ne déclenche pas d'appel récursif.
 \end{alertblock}
-\pause
+
 Comme
   dans :
 \begin{align*}
@@ -296,8 +373,8 @@ int factorielle(int n)
 \begin{frame}[fragile]
   \frametitle{Récursion (2). Pour aller plus loin\nowrite}
   \begin{itemize}
-  \item Outre les exemples mathématiques directs comme factorielle, de nombreux problèmes sont beaucoup plus facile à résoudre de manière récursive. À au moins un moment du raisonnement, on suppose que l'on dispose déjà de la fonction qui résout le problème et on l'applique à un cas << plus petit >>.\pause
-  \item On apprend ici la programmation impérative où un élément central est le changement d'état des cases mémoires (et les effets de bord comme vous le verrez au second semestre). En \structure{programmation fonctionnelle}, l'accent est mis sur les fonctions sans effets de bord, et la récursion occupe le tout premier plan, notamment pour faire ce que l'on a l'habitude de faire avec des boucles en programmation impérative.\pause
+  \item Outre les exemples mathématiques directs comme factorielle, de nombreux problèmes sont beaucoup plus facile à résoudre de manière récursive. À au moins un moment du raisonnement, on suppose que l'on dispose déjà de la fonction qui résout le problème et on l'applique à un cas << plus petit >>.
+  \item On apprend ici la programmation impérative où un élément central est le changement d'état des cases mémoires (et les effets de bord comme vous le verrez au second semestre). En \structure{programmation fonctionnelle}, l'accent est mis sur les fonctions sans effets de bord, et la récursion occupe le tout premier plan, notamment pour faire ce que l'on a l'habitude de faire avec des boucles en programmation impérative.
 \item \alert{Un appel récursif peut être indirect}, c'est à dire effectué dans le code d'une fonction auxilliaire.
  \end{itemize}
 \end{frame}
@@ -409,6 +486,7 @@ double faire_moyenne_aux(double somme, int n)
 }
 \end{lstlisting}
 \end{frame}
+
 
 \end{document}
 

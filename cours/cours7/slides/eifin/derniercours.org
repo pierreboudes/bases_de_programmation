@@ -1,0 +1,784 @@
+#+TITLE:     Toujours un peu plus loin
+#+AUTHOR:    Pierre Boudes <boudes@univ-paris13.fr>
+#+EMAIL:     boudes@univ-paris13.fr
+#+LANGUAGE:  fr
+#+LATEX_HEADER: \usepackage{tikz}
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: http://www-lipn.univ-paris13.fr/~boudes/
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger, xcolor=svgnames]
+#+BEAMER_FRAME_LEVEL: 3
+#+BEAMER_HEADER_EXTRA: \usetheme{classic}
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Plan}\tableofcontents[currentsection]\end{frame}}
+#+MATHJAX: align:"left" mathml:t path:"http://www-lipn.univ-paris13.fr/~boudes/MathJax/MathJax.js"
+#+STYLE: <style type="text/css">html {font-size: 24pt;}</style>
+
+
+
+
+* Retour sur la structuration de données et les tableaux
+
+** Quelques questions de programmation usuelles sur les tableaux
+*** Somme des éléments d'un tableau
+Soit un tableau de nombres. Calculer la somme de ses éléments.
+**** Algorithme
+1. Créer une variable =somme= de type nombre et la mettre initialement à zéro
+2. Pour chaque élément du tableau ajouter cet élément à la somme :
+  + pour l'ajout on peut utiliser 
+    #+begin_src C :results none :exports source
+    somme += t[i];
+    #+end_src
+  + pour le parcours on utilise un =for=
+3. retourner =somme=
+*** Somme en C
+   :PROPERTIES:
+   :BEAMER_envargs: [t]
+   :END:
+**** Code C 						     
+#+name: csomme
+#+begin_src C :includes <stdio.h> :results output :exports both
+  int t[5] = {8, 9, 3, 6, 7};
+  int somme = 0;
+  int i;
+  for (i = 0; i < 5; i += 1) {
+    somme += t[i]; /* comme somme = somme + t[i] */
+  }
+  printf("somme = %d\n", somme);  
+#+end_src
+      
+**** Affichage
+#+results: csomme
+
+*** Remarques
+- Par convention, le parcours se fait de gauche à droite (des plus petits
+  indices aux plus grands)
+- l'algorithme employé revient à calculer : \[(((((0 + 8) + 9) + 3) + 4) + 7).\]
+- Le zéro est l'élément neutre de la somme, si on avait à faire un produit on utiliserait $\ldots$
+
+*** Maximum des éléments d'un tableau 
+Soit un tableau de nombres. Calculer le maximum de ses éléments.
+**** Algorithme
+- adaptation du précédent (parcours avec mise à jour de la valeur du maximum).
+- Mais quelle valeur initiale donner à la variable maximum ?
+  Deux solutions :
+  1) on prend le premier élément =t[0]= comme valeur initiale du maximum
+  2) ou on prend une valeur représentant $-\infty$ (neutre pour le maximum) 
+  \[ max(\ldots max(max(max(-\infty, 8), 9), 3)\ldots, 7)\]
+
+*** Concaténation
+Soient deux tableaux =t1= et =t2=. Réunir leurs éléments en seul
+nouveau tableau, comme illustré.
+#+headers: :file concat1.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 800 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'latex)) "latex" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,-1.25) rectangle (9,1.75);
+  \draw[fill=green!20, draw=green] (0,1)  rectangle  (2,1.5); \draw (0, 1.25) node [left] {\Large\sf t1};
+  \foreach \x in {0,0.5, ..., 2} {\draw[green] (\x,1) -- (\x,1.5);}
+  \draw[fill=blue!20, draw=blue] (0,0) rectangle (3,0.5); \draw (0, 0.25) node [left] {\Large\sf t2};
+  \foreach \x in {0,0.5, ..., 3} {\draw[blue] (\x,0) -- (\x,.5);}
+  \draw[fill=green!20, draw=none]  (0,-1)  rectangle (2,-.5);
+  \draw[fill=blue!20, draw=none] (2,-1)  rectangle  (5,-.5);
+  \draw[fill=none, draw=black] (0,-1) rectangle (5,-.5); \draw (0, -.75) node [left] {\Large\sf concat\'enation};
+  \foreach \x in {0,0.5, ..., 5} {\draw[black] (\x,-1) -- (\x,-.5);}
+  \end{tikzpicture}
+#+end_src
+
+#+CAPTION: Concaténation des tableaux t1 et t2
+#+ATTR_HTML: alt="concatenation1" title="Concaténation des tableaux t1 et t2" align="center"
+#+ATTR_LaTeX: scale=0.3
+[[file:concat1.png]]
+**** Algorithme ?
+
+*** Concaténation: cas des chaînes de caractères
+Même chose pour des chaînes de caractères (il faut traiter différement la dernière case).
+#+headers: :file concat1chaines.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'latex)) "latex" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,-1.25) rectangle (9,1.75);
+  \draw[fill=green!20, draw=green] (0,1)  rectangle  (2,1.5); \draw (0, 1.25) node [left] {\Large\sf s1};
+  \draw[fill=yellow, draw=green] (2,1)  rectangle  (2.5, 1.5); \draw  (2.5, 1.25) node [left, xshift=1mm] {\large\verb+\0+};
+  \foreach \x in {0,0.5, ..., 2} {\draw[green] (\x,1) -- (\x,1.5);}
+  \draw[fill=blue!20, draw=blue] (0,0) rectangle (3, 0.5); \draw (0, 0.25) node [left] {\Large\sf s2};
+  \draw[fill=yellow, draw=blue] (3,0)  rectangle  (3.5, 0.5); \draw  (3.5, .25) node [left, xshift=1mm] {\large\verb+\0+};
+  \foreach \x in {0,0.5, ..., 3} {\draw[blue] (\x,0) -- (\x,.5);}
+  \draw[fill=green!20, draw=none]  (0,-1)  rectangle (2,-.5);
+  \draw[fill=blue!20, draw=none] (2,-1)  rectangle  (5,-.5);
+  \draw[fill=none, draw=black] (0,-1) rectangle (5,-.5); \draw (0, -.75) node [left] {\Large\sf concat\'enation};
+  \draw[fill=yellow, draw=black] (5, -1)  rectangle  (5.5, -.5); \draw (5.5, -.75) node [left, xshift=1mm] {\large\verb+\0+};
+  \foreach \x in {0,0.5, ..., 5} {\draw[black] (\x,-1) -- (\x,-.5);}
+  \end{tikzpicture}
+#+end_src
+
+#+CAPTION: Concaténation des chaînes s1 et s2
+#+ATTR_HTML: alt="concatenation1" title="Concaténation des chaînes s1 et s2" align="center"
+#+ATTR_LaTeX: scale=0.3
+[[file:concat1chaines.png]]
+
+*** Tirage avec remise
+Soit un entier =n= et un tableau =t= de taille au moins =n=. Produire
+un nouveau tableau de taille =n= fait d'éléments de =t= tirés au hasard, avec remise.
+**** Algorithme
+1. Créer un tableau =s= de taille =n=
+2. Pour chaque indice =i= entre =0= et =n - 1= tirer un élément de =t= au hasard et le 
+   placer dans =s[i]= comme ceci :
+   1. tirer un indice =j= au hasard entre =0= et =taille(t) - 1=
+   2. affecter la valeur =t[j]= à =s[i]=
+3. retourner le tableau =s=.
+*** Tirage sans remise
+Même question que précédemment mais sans remise. L'algorithme n'est
+plus le même, car il faut mettre de côté les éléments déjà tirés pour
+ne pas les tirer à nouveau : 
+ 1. tirer un élément de =t= copier sas valeur dans =s= et le *mettre de côté*
+
+Comment mettre de côté un élément ?
+
+
+*** Mélanger un tableau
+On utilise le tirage avec remise.
+
+*** Partitionner un tableau
+Soit un tableau contenant des éléments ayant une couleur, rouge ou
+vert (par exemple, des boules de billard). Ranger le tableau de manière à placer tous les éléments rouges
+en premier, puis les éléments verts ensuite.
+
+
+**** Algorithme
+1. On partage le tableau en deux parties : la partie déjà rangée et la partie pas encore rangée.
+   un indice =i= signale le début dans le tableau de la partie pas encore rangée.
+   Au début la partie rangée est vide, =i= vaut 0.
+2. Tant que la partie pas encore rangée contient des éléments, 
+   - on range
+    l'élément =t[i]= dans la partie rouge ou la partie verte, selon sa couleur.
+   - on incrémente =i=.
+
+*** Éléments
+Pour coder la couleur on utilisera un entier et des constantes
+symboliques. 
+#+name: couleur
+#+begin_src C :includes <stdlib.h> <stdio.h> :results output :exports both
+  #define ROUGE 0
+  #define VERT 1
+  typedef struct boule_s {
+    int couleur;
+    int numero;
+  } element_t;
+  void afficher_boule(struct boule_s x) {
+    if (ROUGE == x.couleur) {
+      printf("boule rouge %d\n", x.numero);
+    } 
+    if (VERT == x.couleur) {
+      printf("boule verte %d\n", x.numero);
+    }
+    else{  printf("boule verte %d\n", x.numero);};
+  }
+  int main() {
+    element_t tab[3] = {{ROUGE, 1}, {VERT, 3}, {VERT, 42}};
+    afficher_boule(tab[2]);
+    return EXIT_SUCCESS;
+  }
+#+end_src
+
+**** Sortie 						     
+#+results: couleur
+: boule verte 42
+
+
+** Emballer les tableaux dans des struct
+*** Un type tableau facile à manipuler 
+- On manipule des tableaux d'éléments (des =int= ou des =boule_t=),
+  d'une taille maximale =TABLEAU_MAX= fixée à l'avance, en les emballant
+  dans un type structure.
+#+begin_src C
+#define TABLEAU_MAX 64
+typedef int element_t;
+typedef struct {
+  element_t t[TABLEAU_MAX];
+  int taille;
+} tableau_t;
+#+end_src
+- De cette façon chaque variable de type =tableau_t= contient un
+  tableau =t= de 64 cases et un entier =taille= qui détermine combien
+  de ces cases contiennent des données utiles au programme.
+
+#+headers: :file tab1.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'LaTeX)) "LaTeX" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,0.25) rectangle (9,2.25);
+    \draw[fill=black!20, draw=black!20] (0,1) rectangle (8, 1.5);
+    \foreach \x in {0,0.5, ..., 8} {\draw[white] (\x, 1) -- (\x, 1.5);}
+  \draw[fill=green!20, draw=green] (0,1)  rectangle  (2,1.5); \draw (0, 1.25) node [left] {\Large\tt x.t : };
+  \foreach \x in {0,0.5, ..., 2} {\draw[green] (\x,1) -- (\x,1.5);}
+  \node at (1,0.5) {\Large\tt x.taille};
+  \draw [<->, draw=green!80!black!20, thick] (0, 0.75) -- (2,0.75);
+  \draw [<->, draw=black, thick] (0, 1.75) -- (8, 1.75);
+  \node at (4,2) {\Large\tt TABLEAU\_MAX};
+  \node at (1.25,1.20) {\Large\tt a};
+  \node at (4.25,1.20) {\Large\tt b};
+  \end{tikzpicture}
+#+end_src
+
+#+CAPTION: Tableau statique emballé dans un struct, =x.taille= vaut 4, /a/ fait officiellement partie du tableau, /b/ non.
+#+ATTR_HTML: alt="tab1" title="Tableau statique emballé dans un struct" align="center" +ATTR_LaTeX: scale=0.3
+[[file:tab1.png]]
+
+- pour les chaînes de caractère il faut décider si on compte la
+  sentinelle =\0= dans la taille. Le mieux est que la taille
+  corresponde au nombre de caractères utiles (on ne compte la
+  sentinelle).
+
+#+headers: :file tab1chaine.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'LaTeX)) "LaTeX" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,0.25) rectangle (9,2.25);
+    \draw[fill=black!20, draw=black!20] (0,1) rectangle (8, 1.5);
+    \foreach \x in {0,0.5, ..., 8} {\draw[white] (\x, 1) -- (\x, 1.5);}
+  \draw[fill=green!20, draw=green] (0,1)  rectangle  (2,1.5); \draw (0, 1.25) node [left] {\Large\tt x.t : };
+  \foreach \x in {0,0.5, ..., 2} {\draw[green] (\x,1) -- (\x,1.5);}
+  \draw[fill=yellow, draw=black!20] (2,1)  rectangle  (2.5, 1.5); \draw  (2.5, 1.25) node [left, xshift=1mm] {\large\verb+\0+};
+  \node at (1,0.5) {\Large\tt x.taille};
+  \draw [<->, draw=green!80!black!20, thick] (0, 0.75) -- (2,0.75);
+  \draw [<->, draw=black, thick] (0, 1.75) -- (8, 1.75);
+  \node at (4,2) {\Large\tt TABLEAU\_MAX};
+  \node at (1.25,1.20) {\Large\tt a};
+  \node at (4.25,1.20) {\Large\tt b};
+  \end{tikzpicture}
+#+end_src
+
+#+CAPTION: Tableau statique emballé dans un struct, =x.taille= vaut 4, /a/ fait officiellement partie du tableau, /b/ non.
+#+ATTR_HTML: alt="tab1chaine" title="Tableau statique emballé dans un struct" align="center" +ATTR_LaTeX: scale=0.3
+[[file:tab1chaine.png]]
+
+
+*** Copie de tableau
+
+Un tableau (statique) emballé dans un struct revient à avoir déclaré
+autant de variables que de cases de tableau dans le struct. Ainsi on
+peut copier tout le contenu d'un tableau en faisant juste une
+affectation. 
+
+
+#+name: copie
+#+begin_src C :includes <tableau.c> <stdio.h> :flags -I"/Users/boudes/Documents/svn-licences/trunk/UE_I3/cours/cours7/slides" :results output :exports both
+  tableau_t x = {{8, 9, 3, 6, 7}, 5};
+  tableau_t y = {{0, 1}, 2};
+
+  y = x;/* copie complete */
+  afficher_tableau(y);
+#+end_src
+      
+**** Affichage
+#+results: copie
+: OK
+: 8 9 3 6 7
+
+
+
+*** Concaténation
+
+Pour la concaténation, dans le cas général comme dans le cas de
+tableaux contenant des chaînes (c'est à dire ayant une sentinelle), la
+seule nouveauté avec le type tableau emballé dans un struct est qu'il
+faut veiller à ne pas déborder de la taille maximale d'un tableau pour
+l'écriture du résultat. La concaténation sera donc limitée à une somme
+des tailles des tableaux =t1= et =t2= pas trop grande (inférieure à
+=TABLEAU_MAX= dans le cas général).
+
+#+headers: :file concat2.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'latex)) "latex" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,-1.25) rectangle (9,1.75);
+  \foreach \y in {-0.5, 0.5, 1.5} {
+    \draw[fill=black!20, draw=black!20] (0,\y) rectangle (8, \y - 0.5);
+    \foreach \x in {0,0.5, ..., 8} {\draw[white] (\x,\y) -- (\x,\y - 0.5);}
+  }
+  \draw[fill=green!20, draw=green] (0,1)  rectangle  (2,1.5); \draw (0, 1.25) node [left] {\Large\sf t1};
+  \foreach \x in {0,0.5, ..., 2} {\draw[green] (\x,1) -- (\x,1.5);}
+  \draw[fill=blue!20, draw=blue] (0,0) rectangle (3,0.5); \draw (0, 0.25) node [left] {\Large\sf t2};
+  \foreach \x in {0,0.5, ..., 3} {\draw[blue] (\x,0) -- (\x,.5);}
+  \draw[fill=green!20, draw=none]  (0,-1)  rectangle (2,-.5);
+  \draw[fill=blue!20, draw=none] (2,-1)  rectangle  (5,-.5);
+  \draw[fill=none, draw=black] (0,-1) rectangle (5,-.5); \draw (0, -.75) node [left] {\Large\sf concat\'enation};
+  \foreach \x in {0,0.5, ..., 5} {\draw[black] (\x,-1) -- (\x,-.5);}  
+  \end{tikzpicture}
+#+end_src
+
+#+CAPTION: Concaténation des tableaux t1 et t2
+#+ATTR_HTML: alt="concatenation2" title="Concaténation des tableaux t1 et t2" align="center"
+#+ATTR_LaTeX: scale=0.3
+[[file:concat2.png]]
+
+#+headers: :file concat2chaines.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'latex)) "latex" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,-1.25) rectangle (9,1.75);
+  \foreach \y in {-0.5, 0.5, 1.5} {
+    \draw[fill=black!20, draw=black!20] (0,\y) rectangle (8, \y - 0.5);
+    \foreach \x in {0,0.5, ..., 8} {\draw[white] (\x,\y) -- (\x,\y - 0.5);}
+  }
+  \draw[fill=green!20, draw=green] (0,1)  rectangle  (2,1.5); \draw (0, 1.25) node [left] {\Large\sf s1};
+  \draw[fill=yellow, draw=black!20] (2,1)  rectangle  (2.5, 1.5); \draw  (2.5, 1.25) node [left, xshift=1mm] {\large\verb+\0+};
+  \foreach \x in {0,0.5, ..., 2} {\draw[green] (\x,1) -- (\x,1.5);}
+  \draw[fill=blue!20, draw=blue] (0,0) rectangle (3, 0.5); \draw (0, 0.25) node [left] {\Large\sf s2};
+  \draw[fill=yellow, draw=black!20] (3,0)  rectangle  (3.5, 0.5); \draw  (3.5, .25) node [left, xshift=1mm] {\large\verb+\0+};
+  \foreach \x in {0,0.5, ..., 3} {\draw[blue] (\x,0) -- (\x,.5);}
+  \draw[fill=green!20, draw=none]  (0,-1)  rectangle (2,-.5);
+  \draw[fill=blue!20, draw=none] (2,-1)  rectangle  (5,-.5);
+  \draw[fill=none, draw=black] (0,-1) rectangle (5,-.5); \draw (0, -.75) node [left] {\Large\sf concat\'enation};
+  \draw[fill=yellow, draw=black!20] (5, -1)  rectangle  (5.5, -.5); \draw (5.5, -.75) node [left, xshift=1mm] {\large\verb+\0+};
+  \foreach \x in {0,0.5, ..., 5} {\draw[black] (\x,-1) -- (\x,-.5);}
+  \end{tikzpicture}
+#+end_src
+
+#+CAPTION: Concaténation des chaînes s1 et s2
+#+ATTR_HTML: alt="concatenation2chaines" title="Concaténation des chaînes s1 et s2" align="center"
+#+ATTR_LaTeX: scale=0.3
+[[file:concat2chaines.png]]
+
+
+*** Mélanger un tableau, ou tirage sans remise
+Adaptation du tirage avec remise, mais en mettant de côté =t[j]=.
+****  Mettre l'élément =t[j]= de côté
+Avec notre type structure pour les tableaux, il est facile de mettre de côté un élément :
+ - on remplace =x.t[j]= par =x.t[x.taille - 1]=
+ - on décrémente =x.taille=
+  
+** Limitations 
+*** Limitation exagérée de l'espace mémoire
+  Capacité limitée $\longrightarrow$ *attention aux débordements !*
+- Avec la solution retenue jusque là, la taille maximale des tableaux
+  est limitée par =TABLEAU_MAX=.  Par exemple, la concaténation devra
+  échouer lorsque le résultat est plus grand que =TABLEAU_MAX=
+- Augmenter =TABLEAU_MAX= n'est pas une bonne solution si on doit
+  manipuler des tableaux de tailles très différentes (on consomme
+  inutilement de l'espace mémoire).
+- Pour échapper à cette limitation, il faut *allouer dynamiquement la
+  mémoire*, c'est à dire faire des réservations mémoire à l'exécution
+  du programme au lieu de les faire au moment de la compilation. Voir plus loin.
+*** Nombre exagéré de copies de variables 
+- Lorsqu'on passe un tableau alloué statiquement et emballé dans un
+  struct comme paramètre à une fonction, tout son contenu est copié
+  (les =TABLEAU_MAX= cases). C'est une bonne chose, car cela respecte
+  le fonctionnement habituel pour le passage de paramètres (où ce sont
+  les valeurs des paramètres qui sont passées), mais s'il ne s'agit
+  que de lire le tableau sans le modifier, c'est inutilement coûteux en temps et en espace.
+
+** L'allocation dymanique en deux mots : /malloc/ et /free/
+
+Vous ne serez pas interrogés sur l'allocation dynamique dans ce cours.
+*** réservation = =malloc=(taille espace)
+  Crée une nouvelle réservation d'espace mémoire d'une durée de vie non limitée. 
+  - réserve des portions de mémoire auprès du système d'exploitation 
+  - découpe les portions demandées dans ces espaces mémoires.
+*** =free=(réservation)
+  Annule une réservation d'espace mémoire. 
+- La mémoire est aussi libérée à la fin de l'exécution.
+- Oublier de libérer des
+  réservation c'est créer des processus qui vont
+  peu à peu surcharger le système en s'allouant toute la mémoire. On parle de *fuite mémoire*
+
+* Pointeurs
+
+Un pointeur est une variable dont la valeur est une adresse mémoire.
+Si =n= est une variable =&n= est l'adresse de la case mémoire associée
+et si =p= est un pointeur sur une case mémoire, =*p= est le contenu de
+cette case (et =*p= peut être utilisé comme une case mémoire). Avec
+cette notation =*p=, on dit qu'on /déréférence/ le pointeur =p= (on
+obtient la valeur pointée). On parle également d'/indirection/ : on ne
+donne pas directement la valeur cherché, on fournit un moyen indirect de
+l'atteindre en donnant son adresse. 
+
+#+name: point1
+#+begin_src C :includes <stdlib.h> <stdio.h> :results output :exports both
+  int *p; /* <-- Déclaration d'un pointeur. la case mémoire pointée contiendra un entier. */
+  int n = 1;
+  int m = 2;
+  printf("n = %d, m = %d, p = %p\n", n , m, p);
+  printf("adresse de n : %p\n", &n); /* affichage d'adresses mémoires (ou de pointeurs) */
+  printf("adresse de m : %p\n", &m);
+  p = &n; /* p pointe sur la case mémoire de n */
+  printf("p = %p, valeur pointée par p: %d\n", p, *p); /* *p = la case pointée par p */
+  *p = 42;   
+  p = &m;
+  printf("n = %d, m = %d, p = %p, *p = %d\n", n , m, p, *p);
+#+end_src
+
+**** Affichage
+#+results: point1
+: n = 1, m = 2, p = 0x0
+: adresse de n : 0x7fff66b5f8c4
+: adresse de m : 0x7fff66b5f8c0
+: p = 0x7fff66b5f8c4, valeur pointée par p: 1
+: n = 42, m = 2, p = 0x7fff66b5f8c0, *p = 2
+
+** Passage de paramètres par adresses
+Lors de l'exécution d'un appel de fonction les paramètres effectifs
+sont évalués et les valeurs trouvées servent à initialiser les
+paramètres formels de la fonction. Passer des variables comme
+paramètres effectifs à une fonction =f= ne conduit pas à pouvoir modifier ces variables dans
+le code de la fonction =f=, puisque seules leurs valeurs sont
+communiquées. Les espaces mémoires des fonctions apparaissent ainsi isolés les uns
+des autres. 
+
+
+#+headers: :file tracepile1.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'latex)) "latex" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,-0.5) rectangle (9,6.5);
+  \tikzstyle{every node}=[anchor=base]
+% Axis
+  \draw[axis,arrows = ->] (-.7,5.9) -- (4.2,5.9);
+  \draw(4.1,6) node[axis,anchor=base east] {mémoire};
+  \draw[axis,arrows = ->] (-.6,6.1) -- (-.6,-.5);
+  \draw(-.8,-.2) node[axis,rotate=-90,anchor=base east] {temps};
+%
+ \draw (0, 5.6) node {main()};
+  \filldraw[fill=green!30,draw=green] (-0.5,-0.25) rectangle
+  (1,5.5); 
+  \draw[pattern color=green, pattern=north east lines,draw=none] (-0.5,-0.25) rectangle
+  (0,5.5); 
+ \draw (0.25, 5.25) node {\C{x}};
+  \draw[draw=green] (0.5,-0.25) -- (0.5,5.5);
+  \draw (0.75, 5.25) node {\C{y}};
+%
+ \draw (1.75, 5.1) node {max(1,2)};
+  \filldraw[fill=blue!50, draw=blue] (1,4) rectangle (2.5,5); 
+  \draw[pattern color=blue, pattern=north east lines,draw=none] (1,4) rectangle
+  (1.5,5); 
+  \draw (2.25, 4.75) node {\C{b}};
+  \draw[draw=blue] (2,4) -- (2,5); 
+  \draw (1.75, 4.75) node {\C{a}};
+%
+  \draw (1.75, 3.6) node {\C{f(8)}};
+  \filldraw[fill=yellow!50,draw=yellow]
+  (1,0) rectangle (2.5,3.5); 
+  \draw[pattern color=yellow, pattern=north east lines,draw=none]
+  (1,0) rectangle  (1.5,3.5); 
+  \draw (1.75, 3.25) node {\C{z}};
+  \draw[draw=yellow] (2,0) -- (2,3.5); 
+  \draw (2.25, 3.25) node {\C{r}};
+%
+  \draw (3, 3.1) node {\C{g(2)}};
+  \filldraw[fill=red!50,draw=red] (2.5,2) rectangle(3.5,3); 
+  \draw[pattern color=red, pattern=north east lines,draw=none]
+  (2.5,2) rectangle  (3,3);
+  \draw (3.25, 2.75) node {\C{n}};
+%
+  \filldraw[fill=blue!50, draw=blue] (2.5,.5) rectangle
+  (4,1.5); 
+  \draw[pattern color=blue, pattern=north east lines,draw=none] (2.5,.5) rectangle
+  (3,1.5); 
+  \draw (3.25, 1.6) node {max(2,-1)};
+  \draw (3.25, 1.25) node {\C{a}};
+  \draw[draw=blue] (3.5,.5) -- (3.5,1.5);
+  \draw (3.75, 1.25) node {\C{b}};
+\end{tikzpicture}
+#+end_src
+
+#+RESULTS:
+#+BEGIN_LaTeX
+[[file:tracepile1.png]]
+#+END_LaTeX
+
+#+CAPTION: Pile d'appel : les paramètres sont passés par valeur
+#+ATTR_HTML: alt="tracepile1" title="Pile d'appel " align="center"
+#+ATTR_LaTeX: scale=0.3
+[[file:tracepile1.png]]
+
+
+Une méthode très utilisée pour contourner cette isolation est de
+transmettre les adresses des variables entre fonctions. Ainsi si
+=main()= appelle une fonction =f()= en lui passant en paramètre
+l'adresse d'une variable =n= de =main()=, alors =f()= pourra modifier
+la valeur de la variable =n= (l'exemple est donné en exercice, plus
+bas). Notez bien que cela ne contredit pas le fait que ce sont les
+valeurs des paramètres effectifs qui sont transmises, une adresse est
+une valeur.
+
+#+headers: :file tracepile2.png :fit yes 
+#+headers: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 1000
+#+headers: :results (if (and (boundp 'backend) (eq backend 'latex)) "latex" "file")
+#+begin_src latex :exports results :noweb yes :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+  \draw[fill=none, very thin, draw=black!10] (-3,3) rectangle (9,6.5);
+  \tikzstyle{every node}=[anchor=base]
+ \draw (0, 5.6) node {main()};
+  \filldraw[fill=green!30,draw=green] (-0.5, 3.25) rectangle
+  (1,5.5); 
+  \draw[pattern color=green, pattern=north east lines,draw=none] (-0.5,3.25) rectangle
+  (0,5.5); 
+ \draw (0.25, 5.25) node (x) {\C{x}};
+  \draw[draw=green] (0.5, 3.25) -- (0.5,5.5);
+  \draw (0.75, 5.25) node {\C{y}};
+%
+ \draw (1.75, 5.1) node {f(0xfb)};
+  \filldraw[fill=blue!50, draw=blue] (1,4) rectangle (2.5,5); 
+  \draw[pattern color=blue, pattern=north east lines,draw=none] (1,4) rectangle
+  (1.5,5); 
+  \draw (1.75, 4.75) node (a) {\C{a}};
+\node (bx) at (x) [yshift=-5mm] {};
+\draw[thick,->] (a) to[out=190,in=270] (bx);
+\end{tikzpicture}
+#+end_src
+
+#+RESULTS:
+#+BEGIN_LaTeX
+[[file:tracepile2.png]]
+#+END_LaTeX
+
+#+CAPTION: Pile d'appel : passage de l'adresse d'une variable 
+#+ATTR_HTML: alt="tracepile2" title="Pile d'appel et pointeurs" align="center"
+#+ATTR_LaTeX: scale=0.3
+[[file:tracepile2.png]]
+
+
+
+*** Pointeurs et tableaux
+
+Lorsqu'on déclare un tableau, par exemple avec l'instruction =int
+t[4]=, on déclare en réalité 5 /variables/ : 
+- les 4 cases du tableau =t[0]=, =t[1]=, =t[2]=, =t[3]=
+- et la variable =t= qui est en réalité un pointeur sur la première
+  case du tableau (c'est à dire que =t= est égal à =&(t[0])=).
+La notation =t[i]= peut quant à elle s'appliquer à n'importe quel
+pointeur =t=, il n'est pas nécessaire qu'il provienne d'une
+déclaration de tableau. Sans rentrer dans les détails, si =p= est un
+pointeur, =p[0]= est équivalent à =*p=, et =p + 1= est la case mémoire
+/suivant/ celle pointée par =p= et =p[1]= est le contenu de cette
+case, etc.
+
+On peut bien entendu passer en argument =t= à une fonction =f=, ceci
+aura pour effet de faire connaître à cette fonction l'adresse de =t=,
+on l'on pourra alors accèder aux cases du tableau normalement par la
+notation =t[i]=. Le paramètre formel qui reçoit la valeur de =t= dans
+la fonction =f= doit alors avoir un type de pointeur : =void f(...,
+int *t, ...)=. Lorsqu'il s'agit de définir le type d'un tel paramètre
+formel on peut également écrire (uniquement dans une déclaration de fonction) : 
+=void f(..., int t[], ...)=.
+
+*** Pointeurs et struct
+
+Pour éviter de copier tout un struct on peut préférer passer son
+adresse en paramètre à une fonction, plutôt que sa valeur. Pour ce cas
+relativement fréquent, où il faut dérérencer un pointeur avant
+d'accèder aux champs d'un struct, le C possède une notation
+particulière =p->a=. Si =p= est un pointeur sur un struct alors =(*p)=
+est le struct pointé, =(*p).a= est le champs =a= de ce struct et
+=p->a= est une autre notation pour =(*p).a=.
+
+
+*** Éviter les copies inutiles
+
+Une variable passée en paramètre à une fonction vera sa valeur copiée
+dans la variable représentant le paramètre formel. Si ces variables
+occupent de grands espaces mémoire, ce qui est le cas avec le type
+=tableau_t=, le temps de copie va un peu ralentir le programme.
+
+ Passer les tableaux en paramètre aux fonctions par adresse, permet
+d'éviter de recopier leurs contenus. On dit que les fonctions
+travaillent en place sur les tableaux. 
+
+
+
+* Exercices
+
+
+*** algorithmes sur les tableaux
+
+Voici un programme complet utilisant des tableaux emballés dans des
+struct et calculant la somme des éléments d'un tableau. Pour toutes
+les questions suivantes vous pouvez travailler sur le même fichier
+source.
+
+#+name: somme1
+#+begin_src C :includes <stdlib.h> <stdio.h> :results output :exports both
+  #define TABLEAU_MAX 64
+  typedef int element_t;
+  
+  typedef struct {
+    element_t t[TABLEAU_MAX];
+    int taille;
+  } tableau_t;
+  
+  void afficher_element(element_t e);
+  void afficher_tableau(tableau_t t);
+  element_t somme(tableau_t x);
+  
+  int main() {
+    tableau_t x = {{0, 8, 4, 1, 7}, 5};
+  
+    printf("Tableau : ");
+    afficher_tableau(x);
+    printf("Somme : ");
+    afficher_element(somme(x));
+    printf("\n");
+    return EXIT_SUCCESS;
+  }
+  
+  void afficher_element(element_t e) {
+    printf("%d", e);
+  }
+  
+  void afficher_tableau(tableau_t x) {
+    int i;
+    for (i = 0; i < x.taille; i += 1) {
+      afficher_element(x.t[i]);
+      printf(" ");
+    }
+    printf("\n");
+  }
+  
+  element_t somme(tableau_t x) {
+    int i;
+    element_t somme = 0;
+    for (i = 0; i < x.taille; i += 1) {
+      somme += x.t[i];
+    }
+    return somme;  
+  }  
+#+end_src 
+
+#+results: somme1
+: Tableau : 0 8 4 1 7 
+: Somme : 20
+
+*Question A.* Supposons que les éléments de nos tableaux soient
+ maintenant des nombres à virgule et non des entiers. Que devez-vous
+ changer dans ce programme ?
+
+*Question B.* L'affectation permet de copier un tableau lorsqu'il est
+ emballé dans un struct. Est-ce que toutes les cases sont copiées ou
+ seulement =x.taille= cases ? Mettre en évidence ce fait par un
+ programme.
+
+*Question C.* Ajouter (déclarer et définir et ajouter un appel dans le
+ main) une fonction =moyenne()= calculant la moyenne des éléments d'un
+ tableau. Faire appel à la fonction =somme=. De quel type doit être sa sortie ?
+ Si =x= est un tableau dans le main, combien de copie complètes de =x= déclenchera l'appel =moyenne(x)= ?
+
+*Question D.* Voici une version /en place/ de la fonction =afficher_tableau=. Que signifie /en place/ ?
+
+#+name: enplace1
+#+begin_src C :results none
+  void afficher_tableau_sanscopier(int t[], int taille) {
+    int i;
+    for (i = 0; i < taille; i += 1) {
+      afficher_element(t[i]);
+      printf(" ");
+    }
+    printf("\n");
+  }  
+#+end_src
+
+*Question E.* Voici une autre version d'un =afficher_tableau= en place
+ qui exploite cette fois-ci la nature de struct du type =tableau_t=.
+ On l'appelle en lui passant l'adresse d'une variable
+ =tableau_t=. Remplacer la fonction =afficher_tableau= de votre
+ programme par celle-ci. Tester le programme. Réécrire également la
+ fonction somme et la fonction moyenne dans ce style. 
+
+#+name: enplace1
+#+begin_src C :results none
+  void afficher_tableau(tableau_t *p) {
+    int i;
+    for (i = 0; i < p->taille; i += 1) {
+      afficher_element(p->t[i]);
+      printf(" ");
+    }
+    printf("\n");
+  }  
+#+end_src
+
+
+*Question F.* Écrire une fonction réalisant la concaténation de deux
+ tableaux. Pouvez-vous lui donner le type suivant (sa déclaration) ?
+=tableau_t concatener(tableau_t *x, tableau_t *y);=
+
+*Question G.* Écrire une fonction qui vérifie que chaque élément d'un
+ tableau y apparaît une seule fois (tableau sans
+ répétition). Avez-vous besoin de savoir comment est fait le type
+ element_t ?
+
+*Question H.* On suppose maintenant que les éléments sout des boules
+ de couleur (deux couleurs possibles, rouge ou vert) portant un numéro
+ (voir le type =boule_s= plus haut). Modifier les fonctions
+ d'affichage de somme et de moyenne de manière à afficher la couleur
+ et le numéro et à caluler uniquement sur les numéros (somme des
+ numéros etc.). 
+
+*Question I.* Écrire une fonction réalisant la partition d'un
+ tableau, de plusieurs façons. Commencez par utiliser des tableaux
+ auxilliaires, puis faîtes un algorithme en place.
+
+*Question J.* Écrire deux fonctions réalisant le tirage avec remise et
+ le tirage sans remise d'un tableau de =n= éléments parmis =x= où =x=
+ est un tableau d'éléments de au moins =n= éléments.
+
+*** Afficher paire
+*Question K.* /Créer/ (déclarer) un type structure paire contenant deux
+entiers =g= et =d= (pour gauche et droite) et /créer/ (déclarer et
+définir) une procédure =afficher_paire()= qui affichera les valeurs
+d'une paire. tester dans un petit programme.
+
+#+begin_src C
+struct paire_s x = {37, 44};
+/* x correpond à la paire g = 37, d = 44 */
+afficher_paire(x); /* affichera : gauche 37, droite 44 */
+#+end_src
+
+
+
+
+*** Pointeurs : passage d'argument par adresse
+*Question L.* En ne modifiant que le code (la définition) de la fonction =f()=, faire en
+ sorte que le programme suivant n'affiche que des bonnes notes.
+
+#+name: point2
+#+begin_src C :includes <stdlib.h> <stdio.h> :results output :exports both
+  void f(int *p);
+  
+  int main() {
+    int n = 5;
+    f(&n); /* f connaît l'adresse de n, f peut donc modifier n */
+    printf("votre note %d/20\n", n);
+  
+    return EXIT_SUCCESS;
+  }
+  
+  void f(int *p) {
+    if (*p < 15) { /* faire quelque chose ! */
+    }
+  }
+  
+#+end_src
+
+**** Sortie 						     
+#+results: point2
+: votre note 5/20
+
+
+
+
+

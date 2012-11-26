@@ -2,7 +2,7 @@
 
 
 * Programmer pour apprendre
- http://worrydream.com/LearnableProgramming/
+  http://worrydream.com/LearnableProgramming/
 
 * The environment
 ** Read the vocabulary

@@ -17,7 +17,8 @@ int main()
     printf("nb_lapins apres 24 mois : %d\n", simuler_population(24, 1));
     /* depasser le milliard a partir d'un couple en */
     n = lapins_un_milliard(1);
-    printf("apres %d mois il y plus d'un milliard de lapins, exactement : %d\n", n, simuler_population(n, 1));
+    printf("apres %d mois il y plus d'un milliard de lapins, exactement : %d\n", 
+	   n, simuler_population(n, 1));
 #else
     printf("nb_lapins apres 50 mois : %d\n", simuler_population(50, 5));
 #endif
@@ -38,25 +39,25 @@ int simuler_population(int nb_mois, int nb_couples)
 #endif
     int i; /* var boucle */
     for (i = 1; i <= nb_mois; i = i + 1) {
-	/* les un_mois sont maintenant vieux (de deux_mois) */
-	vieux = vieux + un_mois;
-	/* il y a nb de vieux naissances */
-	naissances =  2 * (vieux / 2);
-	/* les ex-nouveaux ont un mois */
-	un_mois = nouveaux;	
-	/* les naissances font les nouveaux */
-	nouveaux = naissances;
+        /* les un_mois sont maintenant vieux (de deux_mois) */
+        vieux = vieux + un_mois;
+        /* il y a nb de vieux naissances */
+        naissances =  2 * (vieux / 2);
+        /* les ex-nouveaux ont un mois */
+        un_mois = nouveaux;     
+        /* les naissances font les nouveaux */
+        nouveaux = naissances;
 #if DISPARITION
-	tot_naissances = tot_naissances + naissances;
-	if (i >= 7) {
-	    /* 4/5 des vieux meurent */
-	    vieux = vieux / 5;
-	    /* 2/5 des un_mois */
-	    un_mois = 4 * un_mois / 5;
-	    nouveaux = 9 * nouveaux / 10;
-	}
-	printf("|%2d| ", i);
-	afficher_population(nouveaux, un_mois, vieux);	
+        tot_naissances = tot_naissances + naissances;
+        if (i >= 7) {
+            /* 4/5 des vieux meurent */
+            vieux = vieux / 5;
+            /* 2/5 des un_mois */
+            un_mois = 4 * un_mois / 5;
+            nouveaux = 9 * nouveaux / 10;
+        }
+        printf("|%2d| ", i);
+        afficher_population(nouveaux, un_mois, vieux);  
 #endif
     }
     /* population de lapins après nb_mois */
@@ -72,38 +73,38 @@ void afficher_population(int nouveaux, int un_mois, int vieux)
     int i;    
     for (i = 0; i < nouveaux ; i = i + 1)
     {
-	printf(".");
+        printf(".");
     }
     if (nouveaux > 0) 
     {
-	printf(" ");
+        printf(" ");
     }
     for (i = 0; i < un_mois ; i = i + 1)
     {
-	printf("o");
+        printf("o");
     }
     if (un_mois > 0)
     {
-	printf(" ");
+        printf(" ");
     }
     for (i = 0; i < vieux ; i = i + 1)
     {
-	printf("#");
+        printf("#");
     }
     if (vieux > 0)
     {
-	printf(" ");
+        printf(" ");
     }
     printf("|%d|\n", nouveaux + un_mois + vieux);
 }
 
 int lapins_un_milliard(int nb_couples)
 {
-/* one ne recode pas la simulation ce qui fait des calculs inutiles */
+/* on ne recode pas la simulation ce qui fait des calculs inutiles */
     int n = 0;
     /* dépasser le milliard */
     while (simuler_population(n, nb_couples) < 1000000000) {
-	n =n + 1;
+        n =n + 1;
     }
 
     return n;

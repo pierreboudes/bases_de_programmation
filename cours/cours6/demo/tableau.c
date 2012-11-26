@@ -8,6 +8,7 @@
 # define M 4
 
 /* Declaration des fonctions utilisateur */
+int[2] saisir_fraction(); 
 
 /* Fonction principale */
 int main()
@@ -54,3 +55,5 @@ int main()
 }
 
 /* Definition des fonctions utilisateur */
+int[2] saisir_fraction() {   
+}

@@ -1,0 +1,1213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<title>Toujours un peu plus loin</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Toujours un peu plus loin"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-11-23 13:48:41 CET"/>
+<meta name="author" content="Pierre Boudes &lt;boudes@univ-paris13.fr&gt;"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<style type="text/css">html {font-size: 24pt;}</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://www-lipn.univ-paris13.fr/~boudes/MathJax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+            config: ["MMLorHTML.js"], jax: ["input/TeX"],
+        //  jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "left",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="http://www-lipn.univ-paris13.fr/~boudes/"> UP </a>
+ |
+ <a accesskey="H" href="http://www-lipn.univ-paris13.fr/~boudes/"> HOME </a>
+</div>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Toujours un peu plus loin</h1>
+
+
+
+
+
+<div id="table-of-contents">
+<h2>Table des mati&egrave;res</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Retour sur la structuration de données et les tableaux</a>
+<ul>
+<li><a href="#sec-1-1">1.1 Quelques questions de programmation usuelles sur les tableaux</a>
+<ul>
+<li><a href="#sec-1-1-1">1.1.1 Somme des éléments d'un tableau</a></li>
+<li><a href="#sec-1-1-2">1.1.2 Somme en C</a></li>
+<li><a href="#sec-1-1-3">1.1.3 Remarques</a></li>
+<li><a href="#sec-1-1-4">1.1.4 Maximum des éléments d'un tableau</a></li>
+<li><a href="#sec-1-1-5">1.1.5 Concaténation</a></li>
+<li><a href="#sec-1-1-6">1.1.6 Concaténation: cas des chaînes de caractères</a></li>
+<li><a href="#sec-1-1-7">1.1.7 Tirage avec remise</a></li>
+<li><a href="#sec-1-1-8">1.1.8 Tirage sans remise</a></li>
+<li><a href="#sec-1-1-9">1.1.9 Mélanger un tableau</a></li>
+<li><a href="#sec-1-1-10">1.1.10 Partitionner un tableau</a></li>
+<li><a href="#sec-1-1-11">1.1.11 Éléments</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">1.2 Emballer les tableaux dans des struct</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1 Un type tableau facile à manipuler</a></li>
+<li><a href="#sec-1-2-2">1.2.2 Copie de tableau</a></li>
+<li><a href="#sec-1-2-3">1.2.3 Concaténation</a></li>
+<li><a href="#sec-1-2-4">1.2.4 Mélanger un tableau, ou tirage sans remise</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3 Limitations</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1 Limitation exagérée de l'espace mémoire</a></li>
+<li><a href="#sec-1-3-2">1.3.2 Nombre exagéré de copies de variables</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-4">1.4 L'allocation dymanique en deux mots : <i>malloc</i> et <i>free</i></a>
+<ul>
+<li><a href="#sec-1-4-1">1.4.1 réservation = =malloc=(taille espace)</a></li>
+<li><a href="#sec-1-4-2">1.4.2 =free=(réservation)</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Pointeurs</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Passage de paramètres par adresses</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1 Pointeurs et tableaux</a></li>
+<li><a href="#sec-2-1-2">2.1.2 Pointeurs et struct</a></li>
+<li><a href="#sec-2-1-3">2.1.3 Éviter les copies inutiles</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Exercices</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-3-1">3.1 algorithmes sur les tableaux</a></li>
+<li><a href="#sec-3-2">3.2 Afficher paire</a></li>
+<li><a href="#sec-3-3">3.3 Pointeurs : passage d'argument par adresse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Retour sur la structuration de données et les tableaux</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Quelques questions de programmation usuelles sur les tableaux</h3>
+<div class="outline-text-3" id="text-1-1">
+
+
+</div>
+
+<div id="outline-container-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Somme des éléments d'un tableau</h4>
+<div class="outline-text-4" id="text-1-1-1">
+
+<p>Soit un tableau de nombres. Calculer la somme de ses éléments.
+</p><ul>
+<li id="sec-1-1-1-1">Algorithme<br/>
+<ol>
+<li>Créer une variable <code>somme</code> de type nombre et la mettre initialement à zéro
+</li>
+<li>Pour chaque élément du tableau ajouter cet élément à la somme :
+<ul>
+<li>pour l'ajout on peut utiliser 
+
+
+
+<pre class="src src-C">somme += t[i];
+</pre>
+
+</li>
+<li>pour le parcours on utilise un <code>for</code>
+</li>
+</ul>
+
+</li>
+<li>retourner <code>somme</code>
+</li>
+</ol>
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Somme en C</h4>
+<div class="outline-text-4" id="text-1-1-2">
+
+<ul>
+<li id="sec-1-1-2-1">Code C<br/>
+
+
+
+<pre class="src src-C"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">t</span>[5] = {8, 9, 3, 6, 7};
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">somme</span> = 0;
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+<span style="color: #a020f0;">for</span> (i = 0; i &lt; 5; i += 1) {
+  somme += t[i]; <span style="color: #b22222;">/* </span><span style="color: #b22222;">comme somme = somme + t[i] </span><span style="color: #b22222;">*/</span>
+}
+printf(<span style="color: #8b2252;">"somme = %d\n"</span>, somme);  
+</pre>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-1-2-2">Affichage<br/>
+<pre class="example">
+somme = 33
+</pre>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Remarques</h4>
+<div class="outline-text-4" id="text-1-1-3">
+
+<ul>
+<li>Par convention, le parcours se fait de gauche à droite (des plus petits
+  indices aux plus grands)
+</li>
+<li>l'algorithme employé revient à calculer : \[(((((0 + 8) + 9) + 3) + 4) + 7).\]
+</li>
+<li>Le zéro est l'élément neutre de la somme, si on avait à faire un produit on utiliserait \(\ldots\)
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4"><span class="section-number-4">1.1.4</span> Maximum des éléments d'un tableau</h4>
+<div class="outline-text-4" id="text-1-1-4">
+
+<p>Soit un tableau de nombres. Calculer le maximum de ses éléments.
+</p><ul>
+<li id="sec-1-1-4-1">Algorithme<br/>
+<ul>
+<li>adaptation du précédent (parcours avec mise à jour de la valeur du maximum).
+</li>
+<li>Mais quelle valeur initiale donner à la variable maximum ?
+  Deux solutions :
+<ol>
+<li>on prend le premier élément <code>t[0]</code> comme valeur initiale du maximum
+</li>
+<li>ou on prend une valeur représentant \(-\infty\) (neutre pour le maximum) 
+</li>
+</ol>
+
+<p>  \[ max(\ldots max(max(max(-\infty, 8), 9), 3)\ldots, 7)\]
+</p></li>
+</ul>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5"><span class="section-number-4">1.1.5</span> Concaténation</h4>
+<div class="outline-text-4" id="text-1-1-5">
+
+<p>Soient deux tableaux <code>t1</code> et <code>t2</code>. Réunir leurs éléments en seul
+nouveau tableau, comme illustré.
+</p>
+
+
+
+<div class="figure">
+<p><img src="concat1.png" alt="concatenation1" title="Concaténation des tableaux t1 et t2" align="center" /></p>
+<p>Concaténation des tableaux t1 et t2</p>
+</div>
+<ul>
+<li id="sec-1-1-5-1">Algorithme ?<br/>
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6"><span class="section-number-4">1.1.6</span> Concaténation: cas des chaînes de caractères</h4>
+<div class="outline-text-4" id="text-1-1-6">
+
+<p>Même chose pour des chaînes de caractères (il faut traiter différement la dernière case).
+</p>
+
+
+
+<div class="figure">
+<p><img src="concat1chaines.png" alt="concatenation1" title="Concaténation des chaînes s1 et s2" align="center" /></p>
+<p>Concaténation des chaînes s1 et s2</p>
+</div>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-7" class="outline-4">
+<h4 id="sec-1-1-7"><span class="section-number-4">1.1.7</span> Tirage avec remise</h4>
+<div class="outline-text-4" id="text-1-1-7">
+
+<p>Soit un entier <code>n</code> et un tableau <code>t</code> de taille au moins <code>n</code>. Produire
+un nouveau tableau de taille <code>n</code> fait d'éléments de <code>t</code> tirés au hasard, avec remise.
+</p><ul>
+<li id="sec-1-1-7-1">Algorithme<br/>
+<ol>
+<li>Créer un tableau <code>s</code> de taille <code>n</code>
+</li>
+<li>Pour chaque indice <code>i</code> entre <code>0</code> et <code>n - 1</code> tirer un élément de <code>t</code> au hasard et le 
+   placer dans <code>s[i]</code> comme ceci :
+<ol>
+<li>tirer un indice <code>j</code> au hasard entre <code>0</code> et <code>taille(t) - 1</code>
+</li>
+<li>affecter la valeur <code>t[j]</code> à <code>s[i]</code>
+</li>
+</ol>
+
+</li>
+<li>retourner le tableau <code>s</code>.
+</li>
+</ol>
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-1-8" class="outline-4">
+<h4 id="sec-1-1-8"><span class="section-number-4">1.1.8</span> Tirage sans remise</h4>
+<div class="outline-text-4" id="text-1-1-8">
+
+<p>Même question que précédemment mais sans remise. L'algorithme n'est
+plus le même, car il faut mettre de côté les éléments déjà tirés pour
+ne pas les tirer à nouveau : 
+</p><ol>
+<li>tirer un élément de <code>t</code> copier sas valeur dans <code>s</code> et le <b>mettre de côté</b>
+</li>
+</ol>
+
+
+<p>
+Comment mettre de côté un élément ?
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-9" class="outline-4">
+<h4 id="sec-1-1-9"><span class="section-number-4">1.1.9</span> Mélanger un tableau</h4>
+<div class="outline-text-4" id="text-1-1-9">
+
+<p>On utilise le tirage avec remise.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-1-10" class="outline-4">
+<h4 id="sec-1-1-10"><span class="section-number-4">1.1.10</span> Partitionner un tableau</h4>
+<div class="outline-text-4" id="text-1-1-10">
+
+<p>Soit un tableau contenant des éléments ayant une couleur, rouge ou
+vert (par exemple, des boules de billard). Ranger le tableau de manière à placer tous les éléments rouges
+en premier, puis les éléments verts ensuite.
+</p>
+
+<ul>
+<li id="sec-1-1-10-1">Algorithme<br/>
+<ol>
+<li>On partage le tableau en deux parties : la partie déjà rangée et la partie pas encore rangée.
+   un indice <code>i</code> signale le début dans le tableau de la partie pas encore rangée.
+   Au début la partie rangée est vide, <code>i</code> vaut 0.
+</li>
+<li>Tant que la partie pas encore rangée contient des éléments, 
+<ul>
+<li>on range
+    l'élément <code>t[i]</code> dans la partie rouge ou la partie verte, selon sa couleur.
+</li>
+<li>on incrémente <code>i</code>.
+</li>
+</ul>
+
+</li>
+</ol>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-1-11" class="outline-4">
+<h4 id="sec-1-1-11"><span class="section-number-4">1.1.11</span> Éléments</h4>
+<div class="outline-text-4" id="text-1-1-11">
+
+<p>Pour coder la couleur on utilisera un entier et des constantes
+symboliques. 
+</p>
+
+
+<pre class="src src-C"><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">ROUGE</span> 0
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">VERT</span> 1
+<span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">boule_s</span> {
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">couleur</span>;
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">numero</span>;
+} <span style="color: #228b22;">element_t</span>;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">afficher_boule</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">boule_s</span> <span style="color: #a0522d;">x</span>) {
+  <span style="color: #a020f0;">if</span> (ROUGE == x.couleur) {
+    printf(<span style="color: #8b2252;">"boule rouge %d\n"</span>, x.numero);
+  } 
+  <span style="color: #a020f0;">if</span> (VERT == x.couleur) {
+    printf(<span style="color: #8b2252;">"boule verte %d\n"</span>, x.numero);
+  }
+  <span style="color: #a020f0;">else</span>{  printf(<span style="color: #8b2252;">"boule verte %d\n"</span>, x.numero);};
+}
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
+  <span style="color: #228b22;">element_t</span> <span style="color: #a0522d;">tab</span>[3] = {{ROUGE, 1}, {VERT, 3}, {VERT, 42}};
+  afficher_boule(tab[2]);
+  <span style="color: #a020f0;">return</span> EXIT_SUCCESS;
+}
+</pre>
+
+
+<ul>
+<li id="sec-1-1-11-1">Sortie<br/>
+<pre class="example">
+boule verte 42
+</pre>
+
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Emballer les tableaux dans des struct</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+</div>
+
+<div id="outline-container-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Un type tableau facile à manipuler</h4>
+<div class="outline-text-4" id="text-1-2-1">
+
+<ul>
+<li>On manipule des tableaux d'éléments (des <code>int</code> ou des <code>boule_t</code>),
+  d'une taille maximale <code>TABLEAU_MAX</code> fixée à l'avance, en les emballant
+  dans un type structure.
+</li>
+</ul>
+
+
+
+
+<pre class="src src-C"><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">TABLEAU_MAX</span> 64
+<span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">element_t</span>;
+<span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> {
+  <span style="color: #228b22;">element_t</span> <span style="color: #a0522d;">t</span>[TABLEAU_MAX];
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">taille</span>;
+} <span style="color: #228b22;">tableau_t</span>;
+</pre>
+
+<ul>
+<li>De cette façon chaque variable de type <code>tableau_t</code> contient un
+  tableau <code>t</code> de 64 cases et un entier <code>taille</code> qui détermine combien
+  de ces cases contiennent des données utiles au programme.
+</li>
+</ul>
+
+
+
+
+
+
+<div class="figure">
+<p><img src="tab1.png" alt="tab1" title="Tableau statique emballé dans un struct" align="center" +ATTR_LaTeX: scale=0.3 /></p>
+<p>Tableau statique emballé dans un struct, <code>x.taille</code> vaut 4, <i>a</i> fait officiellement partie du tableau, <i>b</i> non.</p>
+</div>
+
+<ul>
+<li>pour les chaînes de caractère il faut décider si on compte la
+  sentinelle <code>\0</code> dans la taille. Le mieux est que la taille
+  corresponde au nombre de caractères utiles (on ne compte la
+  sentinelle).
+</li>
+</ul>
+
+
+
+
+
+
+<div class="figure">
+<p><img src="tab1chaine.png" alt="tab1chaine" title="Tableau statique emballé dans un struct" align="center" +ATTR_LaTeX: scale=0.3 /></p>
+<p>Tableau statique emballé dans un struct, <code>x.taille</code> vaut 4, <i>a</i> fait officiellement partie du tableau, <i>b</i> non.</p>
+</div>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Copie de tableau</h4>
+<div class="outline-text-4" id="text-1-2-2">
+
+
+<p>
+Un tableau (statique) emballé dans un struct revient à avoir déclaré
+autant de variables que de cases de tableau dans le struct. Ainsi on
+peut copier tout le contenu d'un tableau en faisant juste une
+affectation. 
+</p>
+
+
+
+
+<pre class="src src-C"><span style="color: #228b22;">tableau_t</span> <span style="color: #a0522d;">x</span> = {{8, 9, 3, 6, 7}, 5};
+<span style="color: #228b22;">tableau_t</span> <span style="color: #a0522d;">y</span> = {{0, 1}, 2};
+
+y = x;<span style="color: #b22222;">/* </span><span style="color: #b22222;">copie complete </span><span style="color: #b22222;">*/</span>
+afficher_tableau(y);
+</pre>
+
+
+<ul>
+<li id="sec-1-2-2-1">Affichage<br/>
+<pre class="example">
+8 9 3 6 7
+</pre>
+
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Concaténation</h4>
+<div class="outline-text-4" id="text-1-2-3">
+
+
+<p>
+Pour la concaténation, dans le cas général comme dans le cas de
+tableaux contenant des chaînes (c'est à dire ayant une sentinelle), la
+seule nouveauté avec le type tableau emballé dans un struct est qu'il
+faut veiller à ne pas déborder de la taille maximale d'un tableau pour
+l'écriture du résultat. La concaténation sera donc limitée à une somme
+des tailles des tableaux <code>t1</code> et <code>t2</code> pas trop grande (inférieure à
+<code>TABLEAU_MAX</code> dans le cas général).
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="concat2.png" alt="concatenation2" title="Concaténation des tableaux t1 et t2" align="center" /></p>
+<p>Concaténation des tableaux t1 et t2</p>
+</div>
+
+
+
+
+
+<div class="figure">
+<p><img src="concat2chaines.png" alt="concatenation2chaines" title="Concaténation des chaînes s1 et s2" align="center" /></p>
+<p>Concaténation des chaînes s1 et s2</p>
+</div>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> Mélanger un tableau, ou tirage sans remise</h4>
+<div class="outline-text-4" id="text-1-2-4">
+
+<p>Adaptation du tirage avec remise, mais en mettant de côté <code>t[j]</code>.
+</p><ul>
+<li id="sec-1-2-4-1">Mettre l'élément <code>t[j]</code> de côté<br/>
+Avec notre type structure pour les tableaux, il est facile de mettre de côté un élément :
+<ul>
+<li>on remplace <code>x.t[j]</code> par <code>x.t[x.taille - 1]</code>
+</li>
+<li>on décrémente <code>x.taille</code>
+</li>
+</ul>
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Limitations</h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+</div>
+
+<div id="outline-container-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Limitation exagérée de l'espace mémoire</h4>
+<div class="outline-text-4" id="text-1-3-1">
+
+<p>  Capacité limitée \(\longrightarrow\) <b>attention aux débordements !</b>
+</p><ul>
+<li>Avec la solution retenue jusque là, la taille maximale des tableaux
+  est limitée par <code>TABLEAU_MAX</code>.  Par exemple, la concaténation devra
+  échouer lorsque le résultat est plus grand que <code>TABLEAU_MAX</code>
+</li>
+<li>Augmenter <code>TABLEAU_MAX</code> n'est pas une bonne solution si on doit
+  manipuler des tableaux de tailles très différentes (on consomme
+  inutilement de l'espace mémoire).
+</li>
+<li>Pour échapper à cette limitation, il faut <b>allouer dynamiquement la   mémoire</b>, c'est à dire faire des réservations mémoire à l'exécution
+  du programme au lieu de les faire au moment de la compilation. Voir plus loin.
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Nombre exagéré de copies de variables</h4>
+<div class="outline-text-4" id="text-1-3-2">
+
+<ul>
+<li>Lorsqu'on passe un tableau alloué statiquement et emballé dans un
+  struct comme paramètre à une fonction, tout son contenu est copié
+  (les <code>TABLEAU_MAX</code> cases). C'est une bonne chose, car cela respecte
+  le fonctionnement habituel pour le passage de paramètres (où ce sont
+  les valeurs des paramètres qui sont passées), mais s'il ne s'agit
+  que de lire le tableau sans le modifier, c'est inutilement coûteux en temps et en espace.
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> L'allocation dymanique en deux mots : <i>malloc</i> et <i>free</i></h3>
+<div class="outline-text-3" id="text-1-4">
+
+
+<p>
+Vous ne serez pas interrogés sur l'allocation dynamique dans ce cours.
+</p>
+</div>
+
+<div id="outline-container-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> réservation = =malloc=(taille espace)</h4>
+<div class="outline-text-4" id="text-1-4-1">
+
+<p>  Crée une nouvelle réservation d'espace mémoire d'une durée de vie non limitée. 
+</p><ul>
+<li>réserve des portions de mémoire auprès du système d'exploitation 
+</li>
+<li>découpe les portions demandées dans ces espaces mémoires.
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2"><span class="section-number-4">1.4.2</span> =free=(réservation)</h4>
+<div class="outline-text-4" id="text-1-4-2">
+
+<p>  Annule une réservation d'espace mémoire. 
+</p><ul>
+<li>La mémoire est aussi libérée à la fin de l'exécution.
+</li>
+<li>Oublier de libérer des
+  réservation c'est créer des processus qui vont
+  peu à peu surcharger le système en s'allouant toute la mémoire. On parle de <b>fuite mémoire</b>
+</li>
+</ul>
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Pointeurs</h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+Un pointeur est une variable dont la valeur est une adresse mémoire.
+Si <code>n</code> est une variable <code>&amp;n</code> est l'adresse de la case mémoire associée
+et si <code>p</code> est un pointeur sur une case mémoire, <code>*p</code> est le contenu de
+cette case (et <code>*p</code> peut être utilisé comme une case mémoire). Avec
+cette notation <code>*p</code>, on dit qu'on <i>déréférence</i> le pointeur <code>p</code> (on
+obtient la valeur pointée). On parle également d'<i>indirection</i> : on ne
+donne pas directement la valeur cherché, on fournit un moyen indirect de
+l'atteindre en donnant son adresse. 
+</p>
+
+
+
+<pre class="src src-C"><span style="color: #228b22;">int</span> *<span style="color: #a0522d;">p</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&lt;-- D&#233;claration d'un pointeur. la case m&#233;moire point&#233;e contiendra un entier. </span><span style="color: #b22222;">*/</span>
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span> = 1;
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">m</span> = 2;
+printf(<span style="color: #8b2252;">"n = %d, m = %d, p = %p\n"</span>, n , m, p);
+printf(<span style="color: #8b2252;">"adresse de n : %p\n"</span>, &amp;n); <span style="color: #b22222;">/* </span><span style="color: #b22222;">affichage d'adresses m&#233;moires (ou de pointeurs) </span><span style="color: #b22222;">*/</span>
+printf(<span style="color: #8b2252;">"adresse de m : %p\n"</span>, &amp;m);
+p = &amp;n; <span style="color: #b22222;">/* </span><span style="color: #b22222;">p pointe sur la case m&#233;moire de n </span><span style="color: #b22222;">*/</span>
+printf(<span style="color: #8b2252;">"p = %p, valeur point&#233;e par p: %d\n"</span>, p, *p); <span style="color: #b22222;">/* </span><span style="color: #b22222;">*p = la case point&#233;e par p </span><span style="color: #b22222;">*/</span>
+*p = 42;   
+p = &amp;m;
+printf(<span style="color: #8b2252;">"n = %d, m = %d, p = %p, *p = %d\n"</span>, n , m, p, *p);
+</pre>
+
+
+<ul>
+<li id="sec-2-1">Affichage<br/>
+<pre class="example">
+n = 1, m = 2, p = 0x0
+adresse de n : 0x7fff6730a9c4
+adresse de m : 0x7fff6730a9c0
+p = 0x7fff6730a9c4, valeur pointée par p: 1
+n = 42, m = 2, p = 0x7fff6730a9c0, *p = 2
+</pre>
+
+
+</li>
+</ul>
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Passage de paramètres par adresses</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>Lors de l'exécution d'un appel de fonction les paramètres effectifs
+sont évalués et les valeurs trouvées servent à initialiser les
+paramètres formels de la fonction. Passer des variables comme
+paramètres effectifs à une fonction <code>f</code> ne conduit pas à pouvoir modifier ces variables dans
+le code de la fonction <code>f</code>, puisque seules leurs valeurs sont
+communiquées. Les espaces mémoires des fonctions apparaissent ainsi isolés les uns
+des autres. 
+</p>
+
+
+
+
+
+<div class="figure">
+<p><img src="tracepile1.png" alt="tracepile1" title="Pile d'appel " align="center" /></p>
+<p>Pile d'appel : les paramètres sont passés par valeur</p>
+</div>
+
+
+<p>
+Une méthode très utilisée pour contourner cette isolation est de
+transmettre les adresses des variables entre fonctions. Ainsi si
+<code>main()</code> appelle une fonction <code>f()</code> en lui passant en paramètre
+l'adresse d'une variable <code>n</code> de <code>main()</code>, alors <code>f()</code> pourra modifier
+la valeur de la variable <code>n</code> (l'exemple est donné en exercice, plus
+bas). Notez bien que cela ne contredit pas le fait que ce sont les
+valeurs des paramètres effectifs qui sont transmises, une adresse est
+une valeur.
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="tracepile2.png" alt="tracepile2" title="Pile d'appel et pointeurs" align="center" /></p>
+<p>Pile d'appel : passage de l'adresse d'une variable</p>
+</div>
+
+
+
+
+</div>
+
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Pointeurs et tableaux</h4>
+<div class="outline-text-4" id="text-2-1-1">
+
+
+<p>
+Lorsqu'on déclare un tableau, par exemple avec l'instruction <code>int t[4]</code>, on déclare en réalité 5 <i>variables</i> : 
+</p><ul>
+<li>les 4 cases du tableau <code>t[0]</code>, <code>t[1]</code>, <code>t[2]</code>, <code>t[3]</code>
+</li>
+<li>et la variable <code>t</code> qui est en réalité un pointeur sur la première
+  case du tableau (c'est à dire que <code>t</code> est égal à <code>&amp;(t[0])</code>).
+</li>
+</ul>
+
+<p>La notation <code>t[i]</code> peut quant à elle s'appliquer à n'importe quel
+pointeur <code>t</code>, il n'est pas nécessaire qu'il provienne d'une
+déclaration de tableau. Sans rentrer dans les détails, si <code>p</code> est un
+pointeur, <code>p[0]</code> est équivalent à <code>*p</code>, et <code>p + 1</code> est la case mémoire
+<i>suivant</i> celle pointée par <code>p</code> et <code>p[1]</code> est le contenu de cette
+case, etc.
+</p>
+<p>
+On peut bien entendu passer en argument <code>t</code> à une fonction <code>f</code>, ceci
+aura pour effet de faire connaître à cette fonction l'adresse de <code>t</code>,
+on l'on pourra alors accèder aux cases du tableau normalement par la
+notation <code>t[i]</code>. Le paramètre formel qui reçoit la valeur de <code>t</code> dans
+la fonction <code>f</code> doit alors avoir un type de pointeur : <code>void f(..., int *t, ...)</code>. Lorsqu'il s'agit de définir le type d'un tel paramètre
+formel on peut également écrire (uniquement dans une déclaration de fonction) : 
+<code>void f(..., int t[], ...)</code>.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Pointeurs et struct</h4>
+<div class="outline-text-4" id="text-2-1-2">
+
+
+<p>
+Pour éviter de copier tout un struct on peut préférer passer son
+adresse en paramètre à une fonction, plutôt que sa valeur. Pour ce cas
+relativement fréquent, où il faut dérérencer un pointeur avant
+d'accèder aux champs d'un struct, le C possède une notation
+particulière <code>p-&gt;a</code>. Si <code>p</code> est un pointeur sur un struct alors <code>(*p)</code>
+est le struct pointé, <code>(*p).a</code> est le champs <code>a</code> de ce struct et
+<code>p-&gt;a</code> est une autre notation pour <code>(*p).a</code>.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> Éviter les copies inutiles</h4>
+<div class="outline-text-4" id="text-2-1-3">
+
+
+<p>
+Une variable passée en paramètre à une fonction vera sa valeur copiée
+dans la variable représentant le paramètre formel. Si ces variables
+occupent de grands espaces mémoire, ce qui est le cas avec le type
+<code>tableau_t</code>, le temps de copie va un peu ralentir le programme.
+</p>
+<p>
+ Passer les tableaux en paramètre aux fonctions par adresse, permet
+d'éviter de recopier leurs contenus. On dit que les fonctions
+travaillent en place sur les tableaux. 
+</p>
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Exercices</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-4">
+<h4 id="sec-3-1"><span class="section-number-4">3.1</span> algorithmes sur les tableaux</h4>
+<div class="outline-text-4" id="text-3-1">
+
+
+<p>
+Voici un programme complet utilisant des tableaux emballés dans des
+struct et calculant la somme des éléments d'un tableau. Pour toutes
+les questions suivantes vous pouvez travailler sur le même fichier
+source.
+</p>
+
+
+
+<pre class="src src-C"><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">TABLEAU_MAX</span> 64
+<span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">element_t</span>;
+
+<span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> {
+  <span style="color: #228b22;">element_t</span> <span style="color: #a0522d;">t</span>[TABLEAU_MAX];
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">taille</span>;
+} <span style="color: #228b22;">tableau_t</span>;
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">afficher_element</span>(<span style="color: #228b22;">element_t</span> <span style="color: #a0522d;">e</span>);
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">afficher_tableau</span>(<span style="color: #228b22;">tableau_t</span> <span style="color: #a0522d;">t</span>);
+<span style="color: #228b22;">element_t</span> <span style="color: #0000ff;">somme</span>(<span style="color: #228b22;">tableau_t</span> <span style="color: #a0522d;">x</span>);
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
+  <span style="color: #228b22;">tableau_t</span> <span style="color: #a0522d;">x</span> = {{0, 8, 4, 1, 7}, 5};
+
+  printf(<span style="color: #8b2252;">"Tableau : "</span>);
+  afficher_tableau(x);
+  printf(<span style="color: #8b2252;">"Somme : "</span>);
+  afficher_element(somme(x));
+  printf(<span style="color: #8b2252;">"\n"</span>);
+  <span style="color: #a020f0;">return</span> EXIT_SUCCESS;
+}
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">afficher_element</span>(<span style="color: #228b22;">element_t</span> <span style="color: #a0522d;">e</span>) {
+  printf(<span style="color: #8b2252;">"%d"</span>, e);
+}
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">afficher_tableau</span>(<span style="color: #228b22;">tableau_t</span> <span style="color: #a0522d;">x</span>) {
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+  <span style="color: #a020f0;">for</span> (i = 0; i &lt; x.taille; i += 1) {
+    afficher_element(x.t[i]);
+    printf(<span style="color: #8b2252;">" "</span>);
+  }
+  printf(<span style="color: #8b2252;">"\n"</span>);
+}
+
+<span style="color: #228b22;">element_t</span> <span style="color: #0000ff;">somme</span>(<span style="color: #228b22;">tableau_t</span> <span style="color: #a0522d;">x</span>) {
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+  <span style="color: #228b22;">element_t</span> <span style="color: #a0522d;">somme</span> = 0;
+  <span style="color: #a020f0;">for</span> (i = 0; i &lt; x.taille; i += 1) {
+    somme += x.t[i];
+  }
+  <span style="color: #a020f0;">return</span> somme;  
+}  
+</pre>
+
+
+<pre class="example">
+Tableau : 0 8 4 1 7 
+Somme : 20
+</pre>
+
+
+<p>
+<b>Question A.</b> Supposons que les éléments de nos tableaux soient
+ maintenant des nombres à virgule et non des entiers. Que devez-vous
+ changer dans ce programme ?
+</p>
+<p>
+<b>Question B.</b> L'affectation permet de copier un tableau lorsqu'il est
+ emballé dans un struct. Est-ce que toutes les cases sont copiées ou
+ seulement <code>x.taille</code> cases ? Mettre en évidence ce fait par un
+ programme.
+</p>
+<p>
+<b>Question C.</b> Ajouter (déclarer et définir et ajouter un appel dans le
+ main) une fonction <code>moyenne()</code> calculant la moyenne des éléments d'un
+ tableau. Faire appel à la fonction <code>somme</code>. De quel type doit être sa sortie ?
+ Si <code>x</code> est un tableau dans le main, combien de copie complètes de <code>x</code> déclenchera l'appel <code>moyenne(x)</code> ?
+</p>
+<p>
+<b>Question D.</b> Voici une version <i>en place</i> de la fonction <code>afficher_tableau</code>. Que signifie <i>en place</i> ?
+</p>
+
+
+
+<pre class="src src-C"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">afficher_tableau_sanscopier</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">t</span>[], <span style="color: #228b22;">int</span> <span style="color: #a0522d;">taille</span>) {
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+  <span style="color: #a020f0;">for</span> (i = 0; i &lt; taille; i += 1) {
+    afficher_element(t[i]);
+    printf(<span style="color: #8b2252;">" "</span>);
+  }
+  printf(<span style="color: #8b2252;">"\n"</span>);
+}  
+</pre>
+
+
+<p>
+<b>Question E.</b> Voici une autre version d'un <code>afficher_tableau</code> en place
+ qui exploite cette fois-ci la nature de struct du type <code>tableau_t</code>.
+ On l'appelle en lui passant l'adresse d'une variable
+ <code>tableau_t</code>. Remplacer la fonction <code>afficher_tableau</code> de votre
+ programme par celle-ci. Tester le programme. Réécrire également la
+ fonction somme et la fonction moyenne dans ce style. 
+</p>
+
+
+
+<pre class="src src-C"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">afficher_tableau</span>(<span style="color: #228b22;">tableau_t</span> *<span style="color: #a0522d;">p</span>) {
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+  <span style="color: #a020f0;">for</span> (i = 0; i &lt; p-&gt;taille; i += 1) {
+    afficher_element(p-&gt;t[i]);
+    printf(<span style="color: #8b2252;">" "</span>);
+  }
+  printf(<span style="color: #8b2252;">"\n"</span>);
+}  
+</pre>
+
+
+
+<p>
+<b>Question F.</b> Écrire une fonction réalisant la concaténation de deux
+ tableaux. Pouvez-vous lui donner le type suivant (sa déclaration) ?
+<code>tableau_t concatener(tableau_t *x, tableau_t *y);</code>
+</p>
+<p>
+<b>Question G.</b> Écrire une fonction qui vérifie que chaque élément d'un
+ tableau y apparaît une seule fois (tableau sans
+ répétition). Avez-vous besoin de savoir comment est fait le type
+ element<sub>t</sub> ?
+</p>
+<p>
+<b>Question H.</b> On suppose maintenant que les éléments sout des boules
+ de couleur (deux couleurs possibles, rouge ou vert) portant un numéro
+ (voir le type <code>boule_s</code> plus haut). Modifier les fonctions
+ d'affichage de somme et de moyenne de manière à afficher la couleur
+ et le numéro et à caluler uniquement sur les numéros (somme des
+ numéros etc.). 
+</p>
+<p>
+<b>Question I.</b> Écrire une fonction réalisant la partition d'un
+ tableau, de plusieurs façons. Commencez par utiliser des tableaux
+ auxilliaires, puis faîtes un algorithme en place.
+</p>
+<p>
+<b>Question J.</b> Écrire deux fonctions réalisant le tirage avec remise et
+ le tirage sans remise d'un tableau de <code>n</code> éléments parmis <code>x</code> où <code>x</code>
+ est un tableau d'éléments de au moins <code>n</code> éléments.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-4">
+<h4 id="sec-3-2"><span class="section-number-4">3.2</span> Afficher paire</h4>
+<div class="outline-text-4" id="text-3-2">
+
+<p><b>Question K.</b> <i>Créer</i> (déclarer) un type structure paire contenant deux
+entiers <code>g</code> et <code>d</code> (pour gauche et droite) et <i>créer</i> (déclarer et
+définir) une procédure <code>afficher_paire()</code> qui affichera les valeurs
+d'une paire. tester dans un petit programme.
+</p>
+
+
+
+<pre class="src src-C"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">paire_s</span> <span style="color: #a0522d;">x</span> = {37, 44};
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">x correpond &#224; la paire g = 37, d = 44 </span><span style="color: #b22222;">*/</span>
+afficher_paire(x); <span style="color: #b22222;">/* </span><span style="color: #b22222;">affichera : gauche 37, droite 44 </span><span style="color: #b22222;">*/</span>
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-4">
+<h4 id="sec-3-3"><span class="section-number-4">3.3</span> Pointeurs : passage d'argument par adresse</h4>
+<div class="outline-text-4" id="text-3-3">
+
+<p><b>Question L.</b> En ne modifiant que le code (la définition) de la fonction <code>f()</code>, faire en
+ sorte que le programme suivant n'affiche que des bonnes notes.
+</p>
+
+
+
+<pre class="src src-C"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">int</span> *<span style="color: #a0522d;">p</span>);
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
+  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span> = 5;
+  f(&amp;n); <span style="color: #b22222;">/* </span><span style="color: #b22222;">f conna&#238;t l'adresse de n, f peut donc modifier n </span><span style="color: #b22222;">*/</span>
+  printf(<span style="color: #8b2252;">"votre note %d/20\n"</span>, n);
+
+  <span style="color: #a020f0;">return</span> EXIT_SUCCESS;
+}
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">int</span> *<span style="color: #a0522d;">p</span>) {
+  <span style="color: #a020f0;">if</span> (*p &lt; 15) { <span style="color: #b22222;">/* </span><span style="color: #b22222;">faire quelque chose ! </span><span style="color: #b22222;">*/</span>
+  }
+}
+
+</pre>
+
+
+<ul>
+<li id="sec-3-3-1">Sortie<br/>
+<pre class="example">
+votre note 5/20
+</pre>
+
+
+
+
+
+
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-11-23 13:48:41 CET</p>
+<p class="author">Auteur: Pierre Boudes &lt;boudes@univ-paris13.fr&gt;</p>
+<p class="creator">Org version 7.8.11 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
