@@ -3,8 +3,184 @@
 ** affichage figure d'etoiles, liste de numeros etc.
 ** test de primalité (mais math), somme d'une série
 ** écriture de fonctions (déclaration définition)
-*** carré, cube
-*** est majeur, est premier
-*** ajouter un main pour tester des fonctions, ou bien une procédure autotest()
+*** carré, cube (resultat direct)
+*** est majeur, est premier (if)
+*** somme, produit, minimum, maximum, factorielle, neper (accumulation)
+*** afficher rectangle, menu, etc.(procédure)
+*** saisie, nb aleatoire (void en entrée)
+*** binomial (appeler d'aures fonctions)
+*** ajouter un main pour tester des fonctions, ou bien une procédure autotest() 
+** Tableaux, chaînes, structs
+*** somme, produit, minimum, maximum, moyenne, initialisation à zéro, initialisation alétoire
+*** nb d'occurences
+*** Tirage au hasard (mot de passe)
+insister un peu sur srand, rand.
+-> Générer un mot de passe. 
 
+#+begin_src C
+  #include <stdlib.h>
+  #include <stdio.h>
+  
+  void generer_mdp(int n);
+  
+  int main() {
+    srand(time(NULL));
+    generer_mdp(12);
+    return EXIT_SUCCESS;
+  }
+  
+  void generer_mdp(int n) {
+    /* RANGE: [33-126] */
+    char c;
+    int i;
+    int j;
+  
+    printf("Mot de passe de %d caractères parmi :\n", n);
+    for (c = 33; c < 127; c += 1) {
+      printf("%c", c);
+    }
+    printf("\n");
+  
+    for (j = 0; j < 10; j += 1) {
+      printf("Proposition de mot de passe : ");
+      for (i = 0; i < n; i += 1) {
+        c = 33 + rand() % (126- 33 + 1);
+        printf("%c", c);
+      }
+      printf("\n");
+    }
+  }
+  
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Mot de passe de 12 caractères parmi :
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+Proposition de mot de passe : <Lg@U@n(~>T7
+Proposition de mot de passe : 8g&r@-f=+E!`
+Proposition de mot de passe : 66h-<otfC<:i
+Proposition de mot de passe : >~c{EH6i0HDV
+Proposition de mot de passe : /j?x{7?qt9q?
+Proposition de mot de passe : uv;8P7e:p.|1
+Proposition de mot de passe : 3JT;g8fC.anr
+Proposition de mot de passe : _O]yt6:7!^Ph
+Proposition de mot de passe : {QtE4X-gx/Q,
+Proposition de mot de passe : ]At4!0EMO.=z
+#+end_example
+
+*** canard aux olives (struct)
+partiel : struct heures minutes secondes. Ou bien jours, mois (avec
+tableau donnant le nb de jours dans chaque mois).  afficher,
+soustraire, aditionner.
+
+#+begin_src C
+  #include <stdlib.h>
+  #include <stdio.h>
+  
+  typedef struct {
+    int h;
+    int m;
+    int s;
+  } duree_t;
+  
+  void afficher(duree_t x);
+  duree_t add(duree_t x, duree_t y);
+  duree_t mult(double poids, duree_t x);
+  duree_t normaliser(duree_t x);
+  
+  int main() {
+    duree_t prep = {0,30,0};    /* tps de preparation de la farce : 30 minutes */
+    duree_t par_kg = {0,52,0};  /* tps de cuisson de la bete par kilo 52 minutes */
+    duree_t gnocchi = {0,0,40}; /* temps de preparation d'un gnocchi 40 secondes */
+    double poids = 1.94; /* poids du canard */
+    int nb_gnocchi = 180; /* 30 par personne */
+   
+    duree_t cuisson;
+    cuisson = mult(poids, par_kg);
+    
+    printf("**Recette du canard aux olives.**");
+    printf("\nTemps de préparation : ");    
+    afficher(prep);
+    printf("\n\n* Temps de cuisson ");
+    printf("\nPar kg : ");    
+    afficher(par_kg);
+    printf("\nPour un canard de %lg kg : ", poids);
+    afficher(cuisson);
+    printf("\nTemps total de la recette : ");
+    afficher(add(cuisson, prep));
+    return EXIT_SUCCESS;
+  }
+  
+  void afficher(duree_t x) {
+    printf("%2dh %2dmin %2dsec", x.h, x.m, x.s); 
+  }
+  
+  duree_t add(duree_t x, duree_t y) {
+    duree_t z;
+    z.h = x.h + y.h;
+    z.m = x.m + y.m; /* z.m risque de depasser 59 */ 
+    z.s = x.s + y.s; /* z.s risque de depasser 59 */
+  
+    /* normaliser z ici */
+    z = normaliser(z);
+    return z;
+  }
+  
+  duree_t mult(double fact, duree_t x) {
+    x.s = (x.h * 3600 + x.m * 60 + x.s) * fact;
+    x.m = 0;
+    x.h = 0;
+    return normaliser(x);
+  }
+  
+  duree_t normaliser(duree_t x) {
+      x.m += x.s / 60;
+      x.s = x.s % 60;
+      x.h += x.m / 60;
+      x.m = x.m % 60;
+      return x;
+  }  
+  
+#+end_src
+
+#+RESULTS:
+: **Recette du canard aux olives.**
+: Temps de préparation :  0h 30min  0sec
+: 
+: * Temps de cuisson 
+: Par kg :  0h 52min  0sec
+: Pour un canard de 1.94 kg :  1h 40min 52sec
+: Temps total de la recette :  2h 10min 52sec
+
+
+*** Date courante
+#+begin_src C
+#include <stdio.h>
+#include <time.h>
+
+const char * NomJourSemaine[] = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+
+const char * NomMois[] = {"janvier", "fevrier", "mars"     , "avril"  , "mai"     , "juin"    ,
+                          "juillet", "aout"   , "septembre", "octobre", "novembre", "decembre"};
+
+int main(void)
+{
+    time_t timestamp;
+    struct tm * t;
+    
+    timestamp = time(NULL);
+    t = localtime(&timestamp);
+    
+    /* Affiche la date et l'heure courante (format francais) */
+    printf("Nous sommes %s, ", NomJourSemaine[t->tm_wday]);
+    printf("le %02u %s %04u, ", t->tm_mday, NomMois[t->tm_mon], 1900 + t->tm_year);
+    printf("et il est %02uh %02umin %02usec.\n", t->tm_hour, t->tm_min, t->tm_sec);
+    
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: Nous sommes Lundi, le 26 novembre 2012, et il est 13h 52min 36sec.
 

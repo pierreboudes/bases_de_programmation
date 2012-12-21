@@ -1,0 +1,663 @@
+% -*- coding: utf-8 -*-
+\newcounter{questioncount}
+\setcounter{questioncount}{0}
+\newcommand{\question}{\addtocounter{questioncount}{1}\paragraph{Question \Alph{questioncount}.}}
+\newcommand{\commentaire}[1]{}
+\newcommand{\pt}[1]{\fbox{$#1 \operatorname{pt}$}}
+\newcommand{\bareme}[1]{}
+%\excludeversion{correction}
+%\excludeversion{baremeenv}
+
+
+\entete{Travaux dirigés 7}
+
+\section{For ou while ?}
+
+Il est demandé de résoudre les questions suivantes sans définir de
+fonctions utilisateurs, directement dans le \C{main}, et en faisant le meilleur choix entre \C{for}
+et \C{while}.
+
+\subsection{Puissances successives d'un entier}
+
+\question Écrire un programme qui demande un entier $n$ à l'utilisateur et
+calcule puis affiche $n^{10}$ ($n$ puissance dix). \bareme{2}
+\paragraph{Exemple d'exécution.} 
+\begin{small}
+\begin{verbatim}
+Donner un entier : 2
+2 exposant 10 = 1024
+\end{verbatim}
+\end{small}
+
+
+\begin{correction}
+Voir figure~\ref{fig:puissance}.
+  \begin{figure}[htbp]
+    \begin{small}
+      \begin{verbatim}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+/* declarations de constantes et types utilisateurs */
+
+/* declarations de fonctions utilisateurs */
+
+/* fonction principale */
+int main()
+{
+    int n = 0; /* base */
+    int produit = 1;
+    int i; /* var de boucle */
+
+    /* saisie */
+    printf("Donner un entier : ");
+    scanf("%d", &n);
+
+    /* calcul */
+    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
+                                     la multiplication par n */
+    {
+        produit = produit * n;
+    }
+
+    /* affichage */
+    printf("%d exposant %d = %d\n", n, 10, produit);
+
+    return EXIT_SUCCESS;
+}
+\end{verbatim}
+    \end{small}
+    \caption{Puissance dix}
+    \label{fig:puissance}
+  \end{figure}
+  \begin{baremeenv}
+    \begin{itemize}
+    \item \pt{0.5} pour la saisie meme si oublie du \&
+    \item \pt{1.5} pour le reste, zéro si pas de boucle sinon :
+      \begin{itemize}
+      \item enlever \pt{0.5} si c'est un while
+      \item enlever \pt{0.5} par problème de déclaration, d'initialisation,
+        ou d'include manquant. 
+\item enlever \pt{0.5} si erreur sur le nombre d'étapes de boucle.
+      \item on ne demande pas un affichage élaboré.
+      \end{itemize}
+    \end{itemize}
+  \end{baremeenv}
+\end{correction}
+
+\question Comment modifier simplement votre programme pour qu'il
+affiche le calcul des puissances successives de l'entier $n$ saisi,
+de $n^0$ jusqu'à $n^{10}$ ?\bareme{1}
+
+
+\paragraph{Exemple d'exécution.} 
+\begin{small}
+\begin{verbatim}
+Donner un entier : 2
+2 exposant 0 = 1
+2 exposant 1 = 2
+2 exposant 2 = 4
+...
+2 exposant 10 = 1024
+\end{verbatim}
+\end{small}
+\begin{correction}
+  Il suffit de placer l'affichage dans la boucle, au début du bloc.
+\begin{small}
+\begin{verbatim}
+    /* calcul et affichage */
+    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
+                                     la multiplication par n */
+    {
+        /* affichage */
+        printf("%d exposant %d = %d\n", n, i, produit);
+        produit = produit * n;
+    }
+    /* affichage */
+    printf("%d exposant %d = %d\n", n, 10, produit);
+\end{verbatim}
+\end{small}
+  \begin{baremeenv}
+    Compter \pt{0} pour toute autre solution. Pénalité de \pt{-0.5} si
+    n'affiche pas l'exposant ou pas la bonne valeur
+    d'exposant. Ne pas enlever de point si l'affichage ne va que
+    jusqu'à l'exposant 9.
+  \end{baremeenv}
+\end{correction}
+
+
+\question Comment modifier simplement votre programme pour qu'il
+affiche le calcul des puissances successives de l'entier $n$
+uniquement à partir de l'exposant $5$ ?\bareme{1}
+
+\paragraph{Exemple d'exécution.} 
+\begin{small}
+\begin{verbatim}
+Donner un entier : 2
+2 exposant 5 = 32
+2 exposant 6 = 64
+...
+2 exposant 10 = 1024
+\end{verbatim}
+\end{small}
+
+\begin{correction}
+il suffit d'encapsuler l'affichage de l'intérieur de boucle dans un
+test :
+\begin{small}
+\begin{verbatim}
+    /* calcul et affichage */
+    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
+                                     la multiplication par n */
+    {
+        /* affichage */
+        if (i > 4) 
+        {
+            printf("%d exposant %d = %d\n", n, i, produit);
+        }
+        produit = produit * n;
+    }
+    /* affichage */
+    printf("%d exposant %d = %d\n", n, 10, produit);
+\end{verbatim}
+\end{small}
+  \begin{baremeenv}
+    Autre solution admise : deux boucles (i allant de 0 à 4 puis i
+    allant de 5 à 9)  à la suite l'une de l'autre. Sinon zéro.
+ \end{baremeenv}
+\end{correction}
+
+\subsection{Unicité des éléments d'un tableau}
+
+Nous disposons d'un tableau $t$ de $N$ entiers. Utiliser une constante
+symbolique pour $N$. Nous souhaitons
+savoir si chaque entier apparaissant dans le tableau n'y apparaît
+qu'une seule fois, autrement dit on veut savoir si chaque entier
+est unique dans le tableau.
+
+\question Écrire un programme qui, étant donné un tableau initalisé $t$,
+  teste si le premier élément du tableau est unique et affiche
+  \C{Vrai} si c'est le cas, \C{Faux} sinon.\bareme{2}
+  \begin{correction} 
+Voir figure~\ref{fig:unicite1}.
+    \begin{figure}[htbp]
+      \begin{small}
+        \begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define N 3
+#define TRUE 1
+#define FALSE 0
+
+/* Fonction principale */
+int main()
+{
+  int t[N] = {10,10,15};
+  int unique = TRUE;
+  int i; /* var de boucle */
+
+  i = 1;
+  while (unique && (i < N)) /* tant que t[0] est unique */
+  {
+    if (t[i] == t[0]) /* t[0] n'est pas unique */
+    {
+      unique = FALSE;
+    }
+    i = i + 1; /* case suivante */
+  }
+
+  /* affichage du résultat */
+  if (unique)
+  {
+    printf("Vrai\n");
+  }
+  else
+  {
+    printf("Faux\n");
+  }
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+      \end{small}
+      \caption{Unicité des éléments d'un tableau}
+      \label{fig:unicite1}
+    \end{figure}
+
+    \begin{baremeenv}
+    \pt{2} si arrive au résultat avec une seule boucle (for ou
+    while). L'affichage doit être correct mais on accepte les
+    variantes : ''machin n'est
+    pas unique / "machin est unique'' etc.
+
+    Sinon maximum \pt{1,5} : \pt{0,5} s'il y a une seule boucle; \pt{0,5}
+    de plus si c'est un while; ajouter \pt{0,5} si utilise une
+    variable booléenne (déclarée et initialisée, et les define TRUE
+    et FALSE).      
+    \end{baremeenv}
+  \end{correction}
+
+
+\question Écrire un programme qui étant donné un tableau initialisé $t$, teste
+  si tous les éléments sont uniques et affiche \C{Vrai} si c'est le
+  cas, \C{Faux} sinon.\bareme{2}
+
+  \begin{correction} 
+Voir figure~\ref{fig:unicite2}.
+
+    \begin{figure}[htbp]
+      \begin{small}
+        \begin{listing}{1}
+#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdio.h> /* printf, scanf */
+
+/* déclaration constantes et types utilisateurs */
+#define N 4
+#define TRUE 1
+#define FALSE 0
+
+/* Fonction principale */
+int main()
+{
+  int t[N] = {10,12,15,12};
+  int unique = TRUE;
+  int i; /* var de boucle */
+  int j; /* var de boucle */
+
+  j = 0; /* premiere case */
+  while (unique && (j < N)) /* pour chaque case, verifier que la case
+  est unique */
+  { 
+    i = j + 1; /* case suivant t[j] */
+    while (unique && (i < N)) /* tant que t[j] est unique */
+    {
+      if (t[i] == t[j]) /* t[j] n'est pas unique */
+      {
+        unique = FALSE;
+      }
+      i = i + 1; /* case suivante */
+    }
+    j = j + 1; /* case suivante */
+  }
+  /* affichage du résultat */
+  if (unique)
+  {
+    printf("Vrai\n");
+  }
+  else
+  {
+    printf("Faux\n");
+  }
+  /* valeur fonction */
+  return EXIT_SUCCESS;
+}
+\end{listing}
+      \end{small}
+      \caption{Unicité de tous les éléments du tableau}
+\label{fig:unicite2}
+    \end{figure}
+
+   \begin{baremeenv}
+   \pt{2} si arrive au résultat avec deux boucles (avec affichage mais
+   variantes acceptée). 
+
+    Sinon maximum \pt{1,5} : \pt{0,5} s'il y a deux boucles avec
+   variables de boucles différentes (quelles
+   que soient les boucles et les bornes); \pt{0,5} si elles sont
+   toutes deux des while; \pt{0,5} s'il a un algorithme correct en
+   français en commentaire ou dans le texte; \pt{0,5} si utilise une
+   variable boolénnee ou deux variables booléennes. 
+   \end{baremeenv}
+  \end{correction}
+
+\section{Fractions}
+
+\question Une fraction $\frac{p}{q}$ est définie par deux entiers $p$ et $q$. Le nombre
+$q$ appelé dénominateur est nécessairement non nul et sera toujours positif, le
+nombre $p$, appelé numérateur, peut être négatif ou nul. Définir un
+type utilisateur pour les fractions (sans tenir compte des questions
+de signe qui n'ont d'importance que pour l'affichage).
+\bareme{1}
+\begin{correction}
+\begin{verbatim}
+struct fraction_s
+{
+  int num; /* nunérateur */
+  int den; /* dénominateur */
+}; /* <- n'oublie pas le point-virgule ! */
+\end{verbatim}
+ \begin{baremeenv}
+  Soit tout juste (noms arbitraires) soit faux.
+    \begin{description}
+    \item[1 pt] même si oublie du point-virgule final, ou si typedef
+    \item[zéro] sinon
+   \end{description}
+  \end{baremeenv}
+\end{correction}
+
+\question Déclarer et définir une fonction \C{multiplier\_fractions} qui
+    prend deux fractions en argument et renvoie la fraction obtenue par multiplication des deux
+    fractions (ne pas chercher à simplifier la fraction
+    obtenue). \emph{Répondre en faisant bien apparaître d'une part la
+      déclaration, d'autre part la définition.}
+\bareme{1.5}
+\begin{correction}
+Déclaration :
+\begin{verbatim}
+struct fraction_s multiplier_fractions(struct fraction_s x, 
+                                       struct fraction_s y);
+\end{verbatim}
+Définition :
+\begin{verbatim}
+struct fraction_s multiplier_fractions(struct fraction_s x, 
+                                       struct fraction_s y)
+{
+  struct fraction_s res;
+  res.num = x.num * y.num; /* produit des numérateurs "sur" */
+  res.den = x.den * y.den; /* produit des dénominateurs */
+  return res;
+}
+\end{verbatim}
+
+  \begin{baremeenv}
+    Maximum \pt{1,5}. Sinon :
+    \begin{description}
+    \item[0,5] pour la déclaration exacte.
+    \item[1] pour la définition.
+    \item[0,5] si la définition retourne effectivement un point mais
+      qui n'a pas la bonne valeur.
+    \end{description}
+  \end{baremeenv}
+\end{correction}
+
+\question Même question pour la somme de deux fractions
+    \C{additionner\_fractions}.
+\bareme{1}
+
+\begin{correction}
+Déclaration :
+\begin{verbatim}
+struct fraction_s additionner_fractions(struct fraction_s x, 
+                                        struct fraction_s y);
+\end{verbatim}
+Définition :
+\begin{verbatim}
+struct fraction_s additionner_fractions(struct fraction_s x, 
+                                        struct fraction_s y)
+{
+  struct fraction_s res;
+  res.num = x.num * y.den + y.num * x.den;
+  res.den = x.den * y.den; /* produit des dénominateurs */
+  return res;
+}
+\end{verbatim}
+
+\begin{baremeenv}
+Maximum \pt{1}.
+  \begin{description}
+  \item[0,25] pour la déclaration exacte.
+  \item[0,75] pour la définition, dont \pt[0,5] pour un dénominateur exact.
+\end{description}
+\end{baremeenv}  
+\end{correction}
+
+
+\question Déclarer et définir une procédure affichant une fraction
+passée en argument exactement comme dans l'exemple suivant où les
+fractions $\frac{34}{26}$, $\frac{-34}{26}$, $\frac{34}{1}$,
+$\frac{0}{1}$ sont affichées tour à tour :
+\begin{verbatim}
+34/26
+-34/26
+34 
+0
+\end{verbatim}
+Attention à bien respecter les deux derniers affichages.
+\bareme{1.5}
+
+\begin{correction}
+Déclaration :
+\begin{verbatim}
+void afficher_fraction(struct fraction_s x);
+\end{verbatim}
+Définition :
+\begin{verbatim}
+void afficher_fraction(struct fraction_s x);
+{
+  if (x.den == 1)
+  {
+    printf("%d\n", x.num);
+  }
+  else
+  {
+    printf("%d/%d\n", x.num, x.den);
+  }
+}
+\end{verbatim}
+\begin{baremeenv}
+Maximum \pt{1,5}.
+  \begin{description}
+  \item[0,5] pou la déclaration exacte.
+  \item[1] pour la définition, dont \pt{0,5} pour la simple présence d'un if.
+ \end{description}
+\end{baremeenv}  
+\end{correction}
+
+\question Comment feriez-vous pour simplifier automatiquement les
+fractions ? Proposer une fonction \verb|normaliser_fraction| qui
+pourra faire appel à des fonctions arithmétiques usuelles. 
+\section{Fonctions}
+\question Déclarer et définir :
+\begin{enumerate}
+\item une fonction \verb|minimum| qui prend en entrée deux nombres à virgule
+  et retourne leur minimum;\bareme{1}
+\item Une procédure \verb|afficher_ligne| qui prend en entrée un
+  entier \C{n} et un caractère \C{c} et affiche une ligne contenant
+  \C{n} fois la caractère \C{c};\bareme{1}
+\item Une fonction \verb|neper| qui prend en entrée un entier \C{n} et
+  retourne la valeur de la somme suivante :
+\[
+1 + \sum^{k = n}_{k = 1} \frac{1}{k!}.
+\]
+Vous pouvez faire appel à une
+  fonction \verb|int factorielle(int n)| calculant la factorielle de
+  son argument.\bareme{1}
+\item Une fonction \verb|saisie_utilisateur| sans paramètre qui
+  demande un entier à l'utilisateur et retourne cet entier.
+\item Une procédure \verb|tester_mes_fonctions| sans paramètre, qui
+  appelle chacune des fonctions et procédures précédentes sur des
+  paramètres de votre choix.
+\end{enumerate}
+
+
+\begin{correction}
+Déclarations :
+\begin{verbatim}
+double valeur_absolue(double x);
+void afficher_ligne(int n, char c);
+double neper(int n);
+\end{verbatim}
+
+Définitions :
+\begin{verbatim}
+double valeur_absolue(double x)
+{
+  if (x < 0)
+  {
+    return -x;
+  }
+  return x;
+}
+
+void afficher_ligne(int n, char c)
+{
+  int i;
+  for (i = 0; i < n; i = i + 1)
+  {
+    printf("%c", c);
+  }
+  printf("\n"); /* optionnel */
+}
+
+double neper(int n) /* récursive */
+{
+  if (n > 1)
+  {
+    return neper(n - 1) + 1.0/factorielle(n);
+  }
+  return 1.0;
+}
+/* alternative plus classique */
+double neper_it(int n) 
+{
+  double somme = 1.0;
+  int i;
+  for (i = 1; i <= n; i = i + 1)
+  {
+    somme = somme + 1.0/factorielle(i);
+  }
+  return somme;
+}
+
+int saisie_utilisateur() {
+  int res = 0;
+  printf("saisir un entier\n");
+  scanf("%d", &res);
+  return res;
+}
+
+
+void tester_mes_fonctions() {/* au moins un appel à chaque fonction */
+  printf("Test de la fonction valeur_absolue\n");
+  printf("|%lg| = %lg\n", -3.16, valeur_absolue(-3.16));
+  printf("|%lg| = %lg\n", 0.16, valeur_absolue(0.16));
+  printf("|%lg| = %lg\n", 0, valeur_absolue(0));
+  printf("Test de la fonction afficher_ligne\n");
+  afficher_ligne(1, 'a');
+  afficher_ligne(2, 'B');
+  afficher_ligne(3, 'c');
+  afficher_ligne(3, '.');
+  afficher_ligne(26, 'z');
+  printf("Test de la fonction neper()\n");
+  printf("neper(%d) = %lg\n", 1, neper(1));
+  printf("neper(%d) = %lg\n", 2, neper(2));
+  printf("neper(%d) = %lg\n", 10, neper(10));
+  printf("neper(%d) = %lg\n", 1000, neper(1000));
+  printf("neper(%d) = %lg\n", 100000, neper(100000));
+  printf("Vous avez saisi %d\n", saisie_utilisateur()); /* <-- expliquer */
+}
+\end{verbatim}
+
+  \begin{baremeenv}
+    On note \pt{0,5} par déclaration exacte et \pt{0,5} par définition
+    correcte (en dehors de la question de typage) en admettant comme
+    erreurs l'oublie de l'utilisation de \C{\%c} pour l'affichage d'un
+    caractère, une erreur d'indice à un près dans les boucles, un
+    problème d'arrondi entier.
+
+   On ajoute \pt{0,5} si il est fait correctement appel à  la fonction factorielle,
+   tant que la syntaxe d'appel est correct et quelle que soit les
+   paramètres et l'usage de cet appel.
+  \end{baremeenv}
+\end{correction}
+
+\section*{Bonus}
+\paragraph{Question bonus.} Au choix.  Déclarer et définir une
+fonction qui calcule le pgcd de deux entiers positifs ou nuls. Ou
+bien, déclarer et définir une procédure \verb|afficher_disque| qui
+prend en paramètre un entier \C{rayon} et affiche un disque d'étoiles
+de ce rayon.\bareme{2}
+
+
+\begin{correction}
+Voici trois corrigés, le pgcd récursif, un pgcd itératif (avec
+boucles au lieu de récursion), la procédure
+\C{afficher\_disque}.
+Déclarations :
+\begin{verbatim}
+int pgcd_r(int a, int b);
+int pgcd_i(int a, int b);
+void afficher_disque(int rayon);
+\end{verbatim}
+
+Définitions :
+\begin{verbatim}
+int pgcd_r(int a, int b)
+{
+    if (a < b)
+    {
+	return pgcd(b, a);
+    }
+    if (b == 0)
+    {
+	return a;
+    }
+    return pgcd(b,  a % b);
+}
+
+int pgcd_i(int a, int b)
+{
+    int i;
+    int min;
+    int d;
+    /* cas particuliers */
+    if (a == 0)
+    {
+	return b;
+    }
+    if (b == 0)
+    {
+	return a;
+    }
+    /* min = minimum(a, b) */
+    if (a < b)
+    {
+	min = a;
+    }
+    else
+    {
+	min = b;
+    }
+    /* diviseurs */
+    for (i = 1; i <= min; i = i + 1)
+    {
+	/* i diviseur commun ? */
+	if ( (0 == a % i) && (0 == b % i) )
+	{
+	    d = i;
+	}
+    } /* d plus grand diviseur commun */
+    return d;
+}
+
+void afficher_disque(int rayon)
+{
+    /* on balaie le carré contenant le disque, de coté = 2 rayons + 1,
+       et on affiche une étoile si la distance au centre est
+       inférieure au rayon, sinon un blanc */
+    int i;
+    int j;
+    for (i = -rayon; i <= rayon; i = i + 1)
+    {
+	for (j = -rayon; j <= rayon; j = j + 1)
+	{
+	    if ( (i*i+j*j) <= rayon*rayon )
+	    {
+		printf("*");
+	    }
+	    else
+	    {
+		printf(" ");
+	    }
+	}
+	printf("\n");
+    }	
+}
+\end{verbatim}
+\end{correction}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "td7"
+%%% End: 
