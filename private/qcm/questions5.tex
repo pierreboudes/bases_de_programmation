@@ -1,0 +1,682 @@
+# Exemple de fichier de QCM
+#
+# Syntaxe globale :
+# Les lignes commençant par '#' sont des commentaires.
+#
+# Les réponses sont situées sous les questions, avec un blanc devant. La
+# question se termine par un '!' seul sur sa ligne.
+#
+#
+# Convention : mettre la bonne réponse en premier (si il y en a une seule).
+
+@META debut=1 facile=1
+Le langage C est un langage
+ compilé
+ lu, écrit, parlé
+ interprété
+ composé
+!
+
+@META debut=1 difficile=1
++Une \emph{segmentation fault} (ou \emph{faute de segmentation}) e
+-st une erreur qui survient lorsque :
++le programme tente d'accèder à une partie de la mémoire qui ne lui
+-est pas réservée
++ le programme source a été enregistré sur le disque dur en plusieurs
+  morceaux et l'un d'entre eux ne peut pas être chargé par le
+- compilateur
+ la division du programme en zones homogènes échoue
++ le programme tente d'afficher des caractères sur une ligne qui va au delà
+- de la largeur de la fenêtre du terminal
+!
+
+@META debut=1
++Pour déclarer une variable qui sera utilisée comme variable de boucle
+- on peut utiliser l'instruction
+  \verb|int k;|
+  \verb|loop i;|
+  \verb|int loop n;|
+  \verb|int %d;|
+!
+
+@META debut=1
++Lorsqu'un programme utilise \verb|printf| ou \verb|scanf| il faut
+- qu'il contienne l'instruction préprocesseur :
+ \verb|#include <stdio.h>|
+ \verb|#include <studio.h>|
+ \verb|#include <studlib.h>|
+ \verb|#appart <stdlib.h>|
+!
+
+@META debut=1 facile=1
++Soient deux variables entières \verb|x| et \verb|y| initialisées à
+4 et 5 respectivement. L'affichage \verb|x=4 et y=5| est obtenu avec la
+-commande :
+ \verb|printf("x=%d et y=%d\n", x, y);|
+ \verb|printf("x=%d et y=%d\n, x, y");|
+ \verb|printf("x=%x et y=%y\n");|
+ \verb|printf("x=%d et y=%d\n", x y);|
+!
+
+#ARCHI ###############################################
+@META debut=1
+Un registre du processeur est :
+ une case mémoire interne au processeur qui sera manipulée directement lors des calculs
+ une unité de calcul spécialisée de l'ordinateur
+ un composant qui contient la liste des fichiers du système
+ une gamme de fréquence de fonctionnement du processeur
+!
+
+@META debut=1 facile=1
+Le bus système sert à :
+ Transférer des données et intructions entre processeur et mémoire
+ Arriver à l'heure en cours
+ Écrire des données sur le dique dur
+ transporter les processus du serveur au processeur
+!
+
+@META debut=1 facile=1
+Un bit est :
+ un chiffre binaire (0 ou 1)
+ la longueur d'un mot mémoire
+ l'instruction qui met fin à un programme
+ un battement d'horloge processeur
+!
+
+
+@META debut=1
++Après exécution du programme :
+\begin{listing}{1}
+lecture 8 r0
+valeur 3 r1
+mult r1 r0
+valeur 1 r2
+add r2 r0
+ecriture r0 8
+stop
+5
+\end{listing}
+-
+ la case mémoire 8 contiendra 16
+ la case mémoire 8 contiendra 0
+ le bus explose
+ le terminal affiche 8
+!
+
+#AFFECTATION ###############################################
+@META debut=1
++Après exécution jusqu'à la ligne 15 du programme  C :
+\begin{listing}{10}
+...
+int main() {
+    int x = 5;
+
+    x = 3 * x + 1;
+
+    ...
+}
+\end{listing}
+-
+ la variable x vaut $16$
+ la variable x vaut $-\frac{1}{2}$
+ le programme affiche x
+ le programme affiche \verb+****+
+!
+
+@META debut=1
++Après exécution jusqu'à la ligne 15 du programme  C :
+\begin{listing}{10}
+int main() {
+    int x = 5;
+    int y = 3;
+
+    x = y;
+
+    ...
+}
+\end{listing}
+-
+ la variable x vaut $3$
+ la variable y vaut $5$
+ la variable x vaut $5$ et la variable y vaut $3$
+ le programme affiche "Faux''
+!
+
+@META debut=1
++Après exécution jusqu'à la ligne 15 du programme  C :
+\begin{listing}{10}
+int main() {
+    int x = 5;
+    int y;
+
+    y = x;
+    ...
+\end{listing}
+-
+ la variable y vaut $5$
+ la variable x vaut $0$
+ la variable x vaut $5$ et la variable y vaut $0$
+ le programme affiche "Faux''
+!
+
+@META debut=1
++Après exécution jusqu'à la ligne 14 du programme  C :
+\begin{listing}{10}
+int main() {
+    int x = 5;
+
+    printf(" x  = %d\n", 2);
+
+    ...
+}
+\end{listing}
+-
+ le terminal affiche \verb+x = 2+
+ le terminal affiche \verb+x = 5+
+ le terminal affiche "Faux"
+ le terminal affiche \verb+5+
+!
+
+# #SYSTEME ###############################################
+# @META debut=1
+# +Sur un ordinateur avec un seul processeur, habituellement les processus sont
+# exécutés :
+# -
+#  tour à tour, un petit peu à chaque fois
+#  tous ensemble
+#  en parallèle, chacun dans un registre
+#  chacun son tour, après que le processus précédent a terminé
+# !
+
+# @META debut=1
+# +L'ordonnancement par tourniquet permet:
+# -
+#  d'entretenir l'illusion que les processus tournent en parallèle
+#  de ne pas perdre de temps avec la commutation de contexte
+#  d'afficher des ronds colorés à l'écran
+#  de doubler la mémoire disponible
+# !
+
+# @META debut=1
+# +La virtualisation de la mémoire permet notamment de stocker des portions inactives de la
+# mémoire de travail sur le disque dur. Mais on perd :
+# -
+#  en temps d'accès
+#  les fichiers du disque
+#  des processus
+#  certaines données de la mémoire de travail
+# !
+
+
+#COMPILATION ##########################################
+
+@META debut=1 facile=1
+Dans la commande gcc, l'option \verb|-Wall| signifie :
+ que l'on veut voir tous les avertissements
+ qu'il faut indenter le fichier source
+ qu'on veut changer alétoirement de fond d'écran
+ qu'il faut lancer un déboggueur
+!
+
+@META debut=1 difficile=1
++Quelle étape de la compilation vient d'échouer lorsqu'on a un message
+ comme celui-ci : \\
+ \verb+Undefined symbols :"_prinft"+ ou \\
+- \verb+référence indéfinie vers « prinft »+
+ l'édition de liens
+ l'analyse harmonique
+ l'analyse sémantique
+ l'analyse des entrées clavier
+!
+
+@META debut=1 difficile=1
++ Si cette erreur apparaît à la compilation : \\
+ \verb+Undefined symbols :"_prinft"+ ou \\
+ \verb+référence indéfinie vers « prinft »+
+- que doit-on chercher dans le programme ?
+  une faute de frappe dans un appel de fonction
+  une variable non déclarée
+  un caractère interdit en C
+  une directive préprocesseur \verb+#include+ manquante
+!
+
+@META debut=1 facile=1
++ Si cette erreur apparaît à la compilation : \\
+ \verb+error: expected ; before } token+ \\
+(ou \verb+erreur: ; attendu avant un élément lexical }+)
+- que doit-on chercher dans le programme ?
+ un point-virgule manquant
+ une accolade manquante
+ un point-virgule en trop
+ une accolade en trop
+!
+
+@META debut=1 facile=1
+Pour compiler un programme \verb|prog.c|, on utilise la ligne de commande :
+ \verb|gcc -Wall prog.c -o prog.exe|
+ \verb|gcc -Wall prog.exe -o prog.c|
+ \verb|gcc prog.exe -Wall -o prog.c|
+ \verb|gcc prog.c -o -Wall prog.exe|
+!
+
+@META debut=1 difficile=1
++Les lignes
+\begin{verbatim}
+int i;
+int x = 0;
+for(i = 0, i < 5, i = i + 1)
+{
+  x = x + 1;
+}
+\end{verbatim}
+-
+ comportent une erreur qui sera détectée au cours de l'analyse syntaxique
+ comportent une erreur qui ne sera pas détectée
+ comportent une erreur qui sera détectée au cours de l'édition de lien
+ ne comportent aucune erreur
+!
+
+@META debut=1 facile=1
++Laquelle des analyses suivantes ne fait pas partie des étapes de la
+-compilation :
+ analyse harmonique
+ analyse syntaxique
+ analyse lexicale
+ analyse sémantique
+!
+
+@META debut=1 facile=1
++Un programme en langage C doit comporter une et une seule définition de la
+-fonction :
+ main
+ begin
+ init
+ include
+!
+
+@META debut=1 facile=1
+Un fichier source est :
+ un fichier texte qui sera traduit en instructions processeur
+ un fichier que l'ont doit citer dans les documents produits sur l'ordinateur
+ un document illisible pour les humains
+ un document de référence du système
+ un document qui doit être protégé
+!
+
+#PROG STRUCTUREE ########################
+@META debut=1
++Une de ces manière de composer les blocs de
+programmes ne fait pas partie des opérations de la programmation
+-structurée :
+ inverser un bloc
+ sélectionner entre deux blocs à l'aide d'une condition
+ répéter un bloc tant qu'une condition est vérifée
+ mettre les blocs en séquence les uns à la suite des autres
+!
+
+@META debut=1
+Quels calculs peut-on programmer en programmation structurée ?
+ en programmation structurée on peut programmer tous les calculs programmables en langage machine
++il y a des calculs programmables en langage machine et qui ne sont
+-pas programmables en programmation structurée
++il y a des calculs programmables en programmation structurée qui ne
+-sont pas programmables en langage machine
+ certains programmes sont de vrais plats de spaghetti
+!
+
+#IF ELSE FACILE###################
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int age = 18;
+ if (age < 18)
+ {
+     printf("Mineur\n");
+ }
+ else
+ {
+     printf("Majeur\n");
+ }
+ \end{verbatim}
+-affichera :
+ \verb|Majeur|
+ \verb|Mineur|
+ rien
++\verb|Mineur|\\
+-\verb|Majeur|
+!
+
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int age = 20;
+ if (age < 18)
+ {
+     printf("Mineur\n");
+ }
+ printf("Majeur\n");
+ \end{verbatim}
+-affichera :
+ \verb|Mineur|
+ \verb|Majeur|
+ rien
++\verb|Mineur|\\
+-\verb|Majeur|
+!
+
+@META debut=1
+Quel est l'opérateur de différence en C:
+ \verb|<>|
+ \texttt{$\neq$}
+ \verb|!=|
+ \verb|!|
+!
+
+#BOUCLE FOR###################
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int somme = 0;
+ int i;
+ for (i = 1; i < 4; i = i + 1)
+ {
+   somme = somme + i;
+ }
+ printf("%d", somme);
+ \end{verbatim}
+-affichera :
+ 0
+ 6
+ 1
+ 42
+!
+
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int i;
+ for (i = 4; i > 0; i = i - 1)
+ {
+     printf("%d ", i);
+ }
+ printf("\n");
+\end{verbatim}
+-affichera :
+ 4 3 2 1
+ 0 1 2 3
+ 0 1 2 3 4
+ 4 3 2 1 0
+!
+
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int i;
+ for (i = 0; i < 5; i = i + 1)
+ {
+     printf("%d ", i);
+ }
+ printf("\n");
+\end{verbatim}
+-affichera :
+ 0 1 2 3 4
+ 4 3 2 1
+ 0 1 2 3
+ 4 3 2 1 0
+!
+
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int i;
+ for (i = 1; i < 5; i = i + 1)
+ {
+     printf("%d ", i);
+ }
+ printf("\n");
+\end{verbatim}
+-affichera :
+ 0 1 2 3 4
+ 4 3 2 1
+ 1 2 3 4
+ 4 3 2 1 0
+!
+
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int i;
+ for (i = 4; i >= 0; i = i - 1)
+ {
+     printf("%d ", i);
+ }
+ printf("\n");
+\end{verbatim}
+-affichera :
+ 4 3 2 1 0
+ 0 1 2 3 4
+ 4 3 2 1
+ 1 2 3 4
+!
+
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int i;
+ for (i = 0; i < 7; i = i + 2)
+ {
+     printf("%d ", i);
+ }
+ printf("\n");
+\end{verbatim}
+-affichera :
+ 0 2 4 6
+ 0 2 4 6 8
+ 0 1 2 3 4 5 6
+ 0 1 2 3 4 5 6 7
+!
+
+@META debut=1
++Le code suivant :
+ \begin{verbatim}
+ int i;
+ for (i = 8; i > 0; i = i - 2)
+ {
+     printf("%d ", i);
+ }
+ printf("\n");
+\end{verbatim}
+-affichera :
+ 8 6 4 2
+ 0 2 4 6 8
+ 8 6 4 2 0
+ 8 2
+!
+
+@META debut=1 difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 3; i = i + 1)
+ {
+     for (j = 0; j < 5; j = j + 1)
+     {
+           ...
+     }
+ }
+ printf("j = %d\n", j);
+ \end{verbatim}
+-qu'est ce qui sera affiché par ce printf ?
+ \verb|j = 5|
+ \verb|j = %d|
+ \verb|j = 4|
+ \verb|j = 0|
+!
+
+@META debut=1 difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 0; i = i + 1)
+ {
+     for (j = 0; j < 5; j = j + 1)
+     {
+       ...
+     }
+ }
+ printf("j = %d\n", j);
+ ...
+ }
+ \end{verbatim}
+-qu'est ce qui sera affiché ?
+ \verb|j = 0|
+ \verb|j = 5|
+ \verb|j = %d|
+ \verb|j = 4|
+!
+
+@META debut=1 difficile=1
++ Pour l'extrait de programme suivant:
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 2; i = i + 1)
+ {
+     for (j = 0; j < 3; j = j + 1)
+     {
+         printf("%d ", j);
+     }
+ }
+\end{verbatim}
+-qu'est ce qui sera affiché ?
+ \verb|0 1 2 0 1 2|
+ \verb|0 1 2 0 1 2 3|
+ \verb|0 1 2 3 0 1 2|
+ \verb|0 0 1 1 2 2 3|
+!
+
+@META debut=1 difficile=1
++Soit un programme contenant les lignes suivantes :
+ \begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 2; i = i + 1)
+ {
+     for (j = 0; j < 3; j = j + 1)
+     {
+         printf("%d ", i);
+     }
+ }
+ \end{verbatim}
+-qu'est ce qui sera affiché ?
+ \verb|0 0 0 1 1 1|
+ \verb|0 1 2 0 1 2|
+ \verb|0 1 0 1 0 1 0 1|
+ \verb|1 2 1 2 3|
+!
+
+@META debut=1 difficile=1
++ Pour l'extrait de programme suivant:
+\begin{verbatim}
+ int i = 0;
+ int j = 0;
+ for (i = 0; i < 3; i = i + 1)
+ {
+     for (j = 0; j < 2; j = j + 1)
+     {
+         printf("%d ", i);
+     }
+ }
+ printf("\n");
+\end{verbatim}
+-qu'est ce qui sera affiché ?
+ \verb|0 0 1 1 2 2|
+ \verb|0 1 2 0 1 2|
+ \verb|0 1 0 1 0 1|
+ \verb|1 2 3 1 2|
+!
+
+
+@META debut=1 difficile=1
++ Pour l'extrait de programme suivant:
+\begin{verbatim}
+ int i;
+ int j;
+ for(i = 4; i > 0; i = i - 1)
+ {
+   for(j = i; j < 6; j = j + 1)
+   {
+     printf("*");
+   }
+   printf(" ");
+ }
+ \end{verbatim}
+-qu'est ce qui sera affiché ?
+ \verb|** *** **** *****|
+ \verb|** ** ** ** ** **|
+ \verb|**** **** **** ****|
+ \verb|***** **** *** ***|
+!
+
+@META debut=1 difficile=1
++ Pour l'extrait de programme suivant:
+ \begin{verbatim}
+  int somme = 0;
+  for (i = 0; i < 5; i = i + 1)
+  {
+    somme = somme + i;
+    i = i + 1; /* attention ! */
+  }
+  printf("somme = %d",somme);
+\end{verbatim}
+-La valeur de somme affichée est :
+ 6
+ 0
+ 10
+ 15
+!
+
+#### WHILE ET COND BOOL
+@META facile=1
++Quel est le problème d'un programme comportant les lignes suivantes?
+\begin{verbatim}
+while (1)
+{
+  printf("coucou\n");
+}
+\end{verbatim}
+-
+  il comporte une boucle infinie
+  il n'affiche rien
+  il ne compile pas
+  il risque d'afficher bonjour à la place de coucou
+!
+
+Une variable booléenne est un variable :
+ qui est vraie ou fausse
+ réelle positive
+ jamais nulle
+ à laquelle une valeur vient d'être affectée
+ NaN (not a number, qui n'est pas un nombre)
+!
+
+
+@META difficile=1
++On considère deux variables booléennes \verb|A| et \verb|B|
+initialisées à \verb|TRUE| et \verb|FALSE| respectivement. Parmi
+les expressions booléennes suivantes, laquelle a pour valeur
+-\verb|TRUE| ?
+ \verb+!(!A || B) == (A && !B)+
+ \verb|(A == TRUE) && (B == TRUE)|
+ \verb|A && B|
+ \verb+(!A || B)+
+!
+
+@META facile=1
+Vous utilisez une boucle \verb|while| quand :
+ vous ne connaissez pas le nombre d'itérations de la boucle à l'avance
+ vous avez déjà fait un  \verb|for| dans le même programme principal
+ l'incrément de la variable de boucle n'est pas 1
+!
