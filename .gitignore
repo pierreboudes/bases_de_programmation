@@ -1,0 +1,35 @@
+#ignorer les binaires, dont les pdf
+*.pdf
+*.exe
+#ignorer tous les fichiers intermédiaires latex
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
+*.swo
+*.swp
+*.swn
+*.snm
+*.nav
+*.vrb
+*.DS_Store
+

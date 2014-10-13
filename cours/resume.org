@@ -1,0 +1,25 @@
+#+TITLE: Programmation
+
+* Cours (12h en 12 séances, sur 5 mois)
+Sur /transparents/ et démos en direct ou préenregistrées en vidéo. Moins
+de démos cette année que l'année passée (12 x 1h != 8 x 1h30).
+
+Peu de participation des étudiants, avec une poignée d'étudiants qui
+posaient des questions et les autres qui suivaient d'une oreille. J'ai
+arrêté de fournir les copies papier des présentation pour les forcer à
+écrire un peu.
+
+Notions : IF, FOR, WHILE, fonctions, généralisation (procédures,
+etc.), tableaux.
+
+* Exercices (32h en 15 séances, deux groupes)
+
+Pour chaque notion importante :
+1. Lire et commenter un programme (lire)
+2. Modifier ou compléter un programme (compléter des phrases)
+3. Faire des petits exercices types (tournures idomatiques)
+4. Traiter un problème avec la notion (texte)
+
+* Évaluations
+Deux contrôles très courts (QCM + question ouverte), et un plus long
+(écourté à 2h).
