@@ -1,0 +1,434 @@
+\section{Langage machine}
+
+L'objectif de cette première partie est de vous familiariser avec le cycle d'exécution
+d'un processeur et avec la notion de flux d'instructions. Pour cela,
+il vous est demandé d'écrire de petits programmes dans le langage
+assembleur \C{amil} (\emph{assembleur miniature pour l'informatique de
+  licence}) et de simuler leur exécution soit à la main en écrivant une trace soit en utilisant le
+simulateur en ligne : \url{http://mindsized.org/amilweb/}.
+
+\begin{correction}
+ \paragraph{Note aux chargés de TD.}
+  \begin{itemize}
+  \item Dans le texte des corrections se trouvent également quelques
+    explications de correction. Bien entendu, vous n'avez pas à en
+    parler aux étudiants (boucle for, \C{gcc -S}, etc.).
+  \item Amil est très rudimentaire dans ses possibilités d'écrire des
+    commentaires. Dans cette feuille, il y a des commentaires ligne à
+    ligne, mais aussi une tentative d'indiquer où sont les différents
+    blocs de code dans un style balise xml/html : une ligne avec en
+    commentaire \C{<bloc1>} signale la première ligne du bloc
+    \C{bloc1}, une ligne avec en commentaire \C{</bloc1>} signale la
+    dernière ligne du bloc, et une ligne avec en commentaire
+    \C{<bloc1/>} signale l'unique ligne du bloc \C{bloc1}.
+  \item les traces contiennent une colonne \emph{instructions} : cette
+    colonne n'a pas lieu d'être dans les corrections (elle aide juste
+    à relire la trace, qui est générée automatiquement).
+  \end{itemize}
+\end{correction}
+
+%\subsection*{Jeu d'instructions (simplifié)}
+%\input{amil_instructions_simples}
+%\noindent
+
+\subsection{Écriture de programmes simples}
+Écrire les programmes répondant aux problèmes suivants :
+\begin{enumerate}
+\item Soit la valeur 8 contenue dans la case mémoire d'adresse 10. Recopier cette valeur à l'adresse 11.
+  \begin{correction}%OK
+    \begin{listing}{1}
+      lecture 10 r0
+      ecriture r0 11
+      stop
+    \end{listing}
+
+\begin{figure} %\begin{sidewaysfigure} ...
+  \centering
+% bin/amiltrace examples/max2td.ail traces_latex/max2td.tex
+  \input{../mini-assembleur/traces_latex/copie_val.tex}
+  \caption{Simulation de la copie de valeur}
+  \label{trace_copie_val}
+\end{figure}
+  \end{correction}
+\item Soit une valeur quelconque, $a$, contenue à l'adresse 10. Écrire
+  la valeur de $a \times 2 + 1$ dans  la case d'adresse 11.
+  \begin{correction}%OK
+    \begin{listing}{1}
+      lecture 10 r0
+      valeur 2 r1
+      mult r1 r0
+      valeur 1 r1
+      add r1 r0
+      ecriture r0 11
+      stop
+    \end{listing}
+  \end{correction}
+\end{enumerate}
+
+\subsection{Trace de programme assembleur}
+Nous allons désormais produire une représentation de l'exécution pas à pas de nos programmes. Une \emph{trace} d'un programme assembleur sera un tableau dont chaque ligne correspond à l'exécution d'une instruction par le processeur.  Une colonne contiendra le cycle d'horloge du processeur et une autre colonne le compteur de programme. Il y aura également une colonne par registre utilisé dans le programme et par case mémoire où des données sont lues ou écrites par les instructions du programme. Une première ligne, d'initialisation, montrera l'état de ces registres et cases mémoires avant le début du programme. Ensuite, chaque exécution d'instruction sera représentée par une nouvelle ligne du tableau, jusqu'à exécution de l'instruction \C{stop}. Dans cette ligne nous représenterons le cycle d'horloge du processeur (en commençant à 0 pour la ligne d'initialisation),  la valeur du compteur de programme après exécution de l'instruction, et, s'il y a lieu, la valeur du registre ou de la case mémoire modifiée par le programme.
+
+\subsubsection{Exemple de trace et première trace}
+
+
+\begin{minipage}[t]{0.35\linewidth}
+Soit le programme ci-dessous :
+
+\listinginput{1}{progs/exempletrace.ail}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.6\linewidth}
+On représentera alors sa trace comme ceci :
+\bigskip
+
+\input{progs/exempletrace.tex}
+\end{minipage}
+\medskip
+
+La colonne \emph{Instructions} n'est pas nécessaire, elle sert juste ici à la compréhension, sans cette colonne le mot-clé \emph{initialisation} pourra être placé dans la colonne \emph{Cycles}. Remarquez par exemple qu'il n'y a pas de colonne pour le registre 1, puisque celui-ci n'est pas utilisé.
+
+
+\begin{enumerate}
+\item Refaire la trace du programme où la valeur 14 à l'adresse 10 est remplacée
+  par 2.
+
+\item  Quelles sont les valeurs contenues dans les registres 0, 1 et 2
+  après arrêt sur \C{stop} ?
+\end{enumerate}
+\begin{correction}
+
+La valeur contenue dans le registre 0 est 0, celle contenue dans le registre 1 est indéterminée, celle contenue dans le registre 2 est 5.
+
+\input{progs/exempletraceAlt.tex}
+
+\end{correction}
+
+\subsection{Exécution conditionnelle d'instructions}
+
+À l'aide de l'instruction \verb|sautpos|, écrire les programmes correspondant aux
+algorithmes suivants et les exécuter sur un exemple (trace ou simulateur) afin de tester leur correction :
+\begin{enumerate}
+\item Soient la valeur $a$ à l'adresse 15, $b$ à l'adresse 16. Si $a >= b$ alors écrire $a$ à l'adresse 17 sinon écrire $b$ à l'adresse 17.
+\begin{correction}
+    \listinginput{1}{progs/max2td.ail}
+\begin{figure} %\begin{sidewaysfigure} ...
+  \centering
+ \input{progs/max2td.tex}
+  \caption{Simulation du calcul du max de a et b (1)}
+  \label{simmax1}
+\end{figure}
+\begin{figure}
+  \centering
+  \input{progs/max2td_2.tex}
+  \caption{Simulation du calcul du max de a et b (2)}
+  \label{simmax2}
+\end{figure}
+\end{correction}
+% \item Soient la valeur $a$ à l'adresse 1, $b$ à l'adresse 2. Si $a < b$ alors écrire $a$ à l'adresse 3 sinon écrire $b$ à l'adresse 3$.
+\item Soit l'âge d'une personne à l'adresse 15. Si cette personne est majeure alors écrire $1$ à l'adresse 16 sinon écrire $0$ à l'adresse 16.
+ \begin{correction}
+\listinginput{1}{../mini-assembleur/examples/majeur.ail}
+\begin{figure}
+  \centering
+  \input{../mini-assembleur/traces_latex/majeur.tex}
+  \caption{Simulation du test de la majorité (1)}
+  \label{simmaj1}
+\end{figure}
+\begin{figure}
+  \centering
+  \input{../mini-assembleur/traces_latex/majeur_2.tex}
+  \caption{Simulation du test de la majorité (2)}
+  \label{simmaj2}
+\end{figure}
+ \end{correction}
+\item Soient trois cases mémoires contenant trois entiers, $a$, $b$ et $c$. Calculer le
+  minimum de ces trois entiers et l'écrire dans une autre case
+  mémoire. \emph{Commencer par réflechir à l'algorithme.}
+\begin{correction}
+\begin{itemize}
+\item Soient $a$, $b$ et $c$ trois entiers
+\begin{listing}{20}
+12 # a
+23 # b
+6  # c
+?  # min
+\end{listing}
+\item $\text{min}$ est initialise à $a$ (par défaut)
+\begin{listing}{1}
+lecture 20 r0
+ecriture r0 23
+\end{listing}
+\item Si $b < \text{min}$ alors $\text{min}$ vaut $b$
+\begin{listing}{3}
+lecture 21 r0
+lecture 23 r1
+inverse r1
+add r0 r1    # r1 vaut b - min
+sautpos r1 9
+ecriture r0 23
+\end{listing}
+\item Si $c < \text{min}$ alors $\text{min}$ vaut $c$
+\begin{listing}{9}
+lecture 22 r0
+lecture 23 r1
+inverse r1
+add r0 r1 # r1 vaut c - min
+sautpos r1 15
+ecriture r0 23
+\end{listing}
+\item $\text{min}$ contient le minimum de $a$, $b$ et $c$
+\begin{listing}{15}
+stop
+\end{listing}
+\end{itemize}
+\end{correction}
+\end{enumerate}
+
+% Soit la donnée $x$ d'adresse $15$. On veut écrire la valeur absolue de $x$ à
+%   l'adresse $16$.
+% \begin{enumerate}
+% \item Décrire un algorithme réalisant cette tâche.
+%   \begin{correction}
+%     \begin{itemize}
+%     \item Si $x < 0$
+%     \item Alors écrire $-x$ à l'adresse $16$
+%      \item Sinon écrire $x$ à l'adresse $16$
+% % =======
+% %     \item Si $x \geq 0$
+% %     \item Alors écrire $x$ à l'adresse $16$
+% %      \item Sinon écrire $-x$ à l'adresse $16$
+% % >>>>>>> .r117
+%     \end{itemize}
+% \end{correction}
+% \item Écrire un programme réalisant cette tâche.
+% \begin{correction}
+% \begin{itemize}
+% \item Si $x < 0$
+% \begin{listing}{1}
+% lecture 15 r0
+% sautpos r0 6    <-- saute sur le sinon
+% \end{listing}
+% \item Alors écrire $-x$ à l'adresse $16$
+% \begin{listing}{3}
+% inverse r0
+% ecriture r0 16
+% saut 7         <-- saute sur le stop
+% \end{listing}
+% \item Sinon écrire $x$ à l'adresse $16$
+% \begin{listing}{6}
+% ecriture r0 16
+% \end{listing}
+% \item suite du programme
+% \begin{listing}{7}
+% stop
+% ?
+% \end{listing}
+% \vdots
+% \begin{listing}{14}
+% ?
+% 5
+% ?
+% \end{listing}
+% \end{itemize}
+% \end{correction}
+
+% \item Construire une trace de votre programme lorsque $x$ vaut $5$,
+%   puis lorsque $x$ vaut $-5$.
+% \end{enumerate}
+
+% \begin{correction}
+% Voir les figures~\ref{fig:abspos} et~\ref{fig:absposmoins}.
+%   \begin{figure}[tbp]
+%     \centering
+%     \input{progs/valeur_absolue5.tex}
+%     \caption{Trace du calcul de la valeur absolue de $5$}
+%     \label{fig:abspos}
+%   \end{figure}
+%   \begin{figure}[tbp]
+%     \centering
+%     \input{progs/valeur_absoluemoins5.tex}
+%     \caption{Trace du calcul de la valeur absolue de $-5$}
+%     \label{fig:absposmoins}
+%   \end{figure}
+% \clearpage
+% \end{correction}
+
+\subsection{Boucles infinies}
+
+
+Avec l'instruction \verb|saut|, écrire un programme qui ne
+termine jamais.
+
+\begin{correction}
+\begin{listing}{1}
+saut 1
+stop # <- jamais atteint
+\end{listing}
+\end{correction}
+
+% \item Avec l'instruction \verb|sautpos|, écrire un programme qui ne
+%   termine jamais.
+% \begin{correction}
+% \begin{listing}{1}
+% valeur 0 r0
+% sautpos r0 1
+% stop # <- jamais atteint
+% \end{listing}
+% \end{correction}
+
+
+% \subsection{Boucles de calculs itératifs}
+
+% Soit un entier $n$ d'adresse $15$.
+% \begin{enumerate}
+% \item Écrire un programme qui lorsque $n \geq 0$, écrit la valeur $n$
+%   à l'adresse $16$, puis, toujours à l'adresse $16$, écrit la valeur
+%   $n - 1$, puis $n - 2$, et ainsi de suite jusqu'à écrire $0$, après
+%   quoi le programme termine. Si $n$ est négatif, le programme ne fait
+%   rien.
+%   \begin{correction}
+%     \begin{itemize}
+%     \item $x$ vaut $n$
+%     \item Tant que $x \geq 0$ : écrire $x$ puis enlever $1$ à $x$
+%     \end{itemize}
+
+%     Pour la traduction en assembleur de l'algorithme, on imite le
+%     schéma de traduction standard du \C{while (...) \{ ... \}} . Dans
+%     cette traduction le test décidant de (la répétition de)
+%     l'exécution de la boucle, vient juste après le corps de la boucle
+%     plutôt qu'avant. Et il y a juste avant le corps de boucle un saut
+%     vers ce test. Ainsi la condition de saut traduit la condition
+%     d'exécution (non sa négation) en un minimum de lignes.
+
+%     \listinginput{1}{progs/decrement.ail}
+%     \begin{figure}[tbp]
+%       \centering
+%       \input{progs/decrement.tex}
+%       \caption{Décrément pour $n = 3$}
+%       \label{fig:decr}
+%     \end{figure}
+%   \end{correction}
+% \item Décrire un algorithme calculant la somme des entiers $0$, $1$,
+%   \ldots, $n$. Par convention cette somme, $\sum^n_{i = 0} i
+%   = 0 + 1 + \ldots + n$ est nulle lorsque $n < 0$. Écrire le programme
+%   correspondant. Le résultat de la sommation sera écrit à l'adresse
+%   $16$.
+% \begin{correction}
+% \textbf{Attention plusieurs réponses correctes sont possibles, mais
+% il faudra donner la correction suivante.}
+
+% La correction suivante reprend la traduction en assembleur (\C{gcc
+%   -S}) d'un \C{while (...) {...}}, ou d'une boucle \C{for( i = 0; i <=
+%   n; i = i + 1)} en C. L'algorithme consiste en copier la formule de
+% la somme :
+% \begin{itemize}
+% \item la somme vaut $0$,  $i$ vaut $0$.
+% \item Tant que $i \leq n$, ajouter $x_i$ à la somme puis ajouter $1$ à
+%   $i$.
+% \end{itemize}
+
+% Le programme est alors :
+
+% \listinginput{1}{progs/gauss1.ail}
+% \begin{figure}[tbp]
+%   \centering \input{progs/gauss1.tex}
+%   \caption{Somme des entiers de $0$ à $3$}
+%   \label{fig:gauss1}
+% \end{figure}
+
+
+% La boucle incrémente $i$. Dans amil, à cause de la difficulté à écrire
+% des tests tels que $i \leq n$, il serait plus rapide sur cet exercice
+% de décrémenter $n$ jusqu'à $0$ comme à la question précédente :
+
+% \begin{itemize}
+% \item $x$ vaut $n$, la somme vaut $0$
+% \item Tant que $x \geq 0$, ajouter $x$ à la somme et décrementer $x$.
+% \end{itemize}
+
+% Cette réponse est correcte et on peut encourager dans un premier temps
+% les étudiants qui cherchent dans cette direction, mais, pour les
+% préparer à la suite du cours, il faut leur donner la correction qui
+% incrémente l'indice.
+
+% Parmi les autres programmes corrects possibles, des étudiants peuvent
+% même penser à la formule de Gauss $\sum^n_{i = 0} i = \frac{n (n +
+%   1)}{2}$.
+
+
+
+% % Solution de Gauss (trace figure~\ref{fig:gauss3}).
+
+% % \listinginput{1}{progs/gauss3.ail}
+% %     \begin{figure}[tbp]
+% %       \centering
+% %       \input{progs/gauss3.tex}
+% %       \caption{Somme des entiers de $0$ à $3$ (3)}
+% %       \label{fig:gauss3}
+% %     \end{figure}
+
+% \end{correction}
+% \item (Optionnel) Tester votre programme en construisant sa trace pour
+%   $n = 3$.
+
+%   \begin{correction}
+%     Cette question n'est à traitée qu'au cas où les étudiants auraient
+%     eu de grosses difficultés avec la précédente trace. Dans un groupe
+%     ou les traces passent mal, la similitude avec l'exercice
+%     précédent peut aider à leur faire refaire une trace (dans ce cas
+%     on donne la correction). La trace est donnée
+%     figure~\ref{fig:gauss1}.
+%   \end{correction}
+% \end{enumerate}
+
+% \subsection{Boucles de parcours (exercice facultatif)}
+
+% Soient $n$ entiers $x_1$, \ldots, $x_n$ rangées aux adresses $30 + 1$,
+% \ldots, $30 + n$. La valeur $n > 0$ est elle même rangée à l'adresse
+% $30$.
+
+% \begin{enumerate}
+% \item Décrire un algorithme qui effectue la somme $\sum^{n}_{i = 1} x_i
+%   = x_1 + \ldots + x_n$.
+% \begin{correction}
+% \begin{itemize}
+% \item La somme vaut $0$
+% \item Pour $i$ allant de $1$ à $n$, ajouter $x_i$ à la somme.
+% \end{itemize}
+% \end{correction}
+% \item Écrire un programme réalisant cet algorithme. (Vous aurez besoin
+%   des instructions \C{lecture *ri rj} et \C{ecriture ri *rj}). Le
+%   résultat sera écrit à l'adresse $30 + n + 1$.
+
+% \begin{correction}
+% \listinginput{1}{progs/bouclesomme.ail}
+%     \begin{figure}[tbp]
+%       \centering\small
+%       \input{progs/bouclesomme.tex}
+%       \caption{Somme des entiers $x_1$, \ldots, $x_n$}
+%       \label{fig:bouclesomme}
+%     \end{figure}
+% \end{correction}
+% \item Écrire un algorithme qui trouve le plus petit des entiers parmi
+%   $x_1$, \ldots, $x_n$.  En déduire un programme réalisant cette
+%   recherche du minimum. Le résultat sera écrit à l'adresse $30 + n +
+%   1$.
+% \begin{correction}
+% \begin{itemize}
+% \item Prendre $x_1$ comme étant le minimum.
+% \item Pour $i$ allant de $2$ à $n$ :
+%   \begin{itemize}
+%   \item Si $x_i$ est plus petit que le minimun alors
+%     prendre $x_i$ comme étant le minimum.
+%   \end{itemize}
+% %\item Écrire $y$ à l'adresse $30 + n + 1$.
+% \end{itemize}
+
+% \listinginput{1}{progs/boucleminimum.ail}
+%     \begin{figure}[tbp]
+%       \centering\footnotesize
+%       \input{progs/boucleminimum.tex}
+%       \caption{Minimum parmi $x_1$, \ldots, $x_n$}
+%       \label{fig:boucleminimum}
+%     \end{figure}
+% \end{correction}
+% \end{enumerate}
