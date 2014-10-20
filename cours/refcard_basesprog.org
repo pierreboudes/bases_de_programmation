@@ -88,13 +88,13 @@ sur les fichiers ouverts (fermer une vue ne ferme pas le fichier).
 #+BEGIN_LaTeX
 \hfill
 \parbox{7.2cm}{\small\em Auteur: Pierre Boudes (\href{http://mindsized.org}{mindsized.org})\\
-sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}
+sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}
 \vfill
 #+END_LaTeX
 
 
 * AMIL
-Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amil/]]
+Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb/]]
 #+ATTR_LATEX: :environment tabularx  :align | l X| :width 0.999\linewidth
 |-------------------+-------------------------------------------------------------------------------------------|
 | Instruction       | Effet                                                                                     |
@@ -185,10 +185,11 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amil/]]
 | ~toto.b += 40;~                           | accès aux /champs/ d'une variable de type struct                              |
 |-------------------------------------------+------------------------------------------------------------------------------------|
 
+
 #+BEGIN_LaTeX
 \hfill
 \parbox{7.2cm}{\small\em Auteur: Pierre Boudes (\href{http://mindsized.org}{mindsized.org})\\
-sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}
+sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}
 \vfill
 #+END_LaTeX
 
