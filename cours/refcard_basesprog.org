@@ -69,26 +69,33 @@ numéros de lignes =Alt-x= puis =linum-mode=).
 |------------------+---------------------------------------------------|
 
 
+#+BEGIN_COMMENT
+Ajouter "mon" C-x C-r ?
+#+END_COMMENT
+
+
+
 ** Les /vues/
-Emacs permet de partager le cadre de ses fenêtres en plusieurs /vues/
+Emacs permet de partager le cadre de ses fenêtres en plusieurs /tuiles/
+ou /vues/
 sur les fichiers ouverts (fermer une vue ne ferme pas le fichier).
 #+ATTR_LATEX: :environment tabularx  :align | p{2.2cm} X| :width 0.999\linewidth
-|-----------+----------------------------------------------------|
-| Commande  | Effet                                              |
-|-----------+----------------------------------------------------|
-| =C-x 0=   | Fermer la vue active (où se trouve le curseur)     |
-| =C-x 1=   | Fermer les autres vues                             |
-| =C-x 2=   | Diviser la vue en deux, l'une au dessus de l'autre |
-| =C-x 3=   | Diviser la vue en deux, l'une à côté de l'autre    |
-| =C-x b=   | Visiter un autre fichier ouvert dans la vue active |
-| =C-x o=   | Passer le curseur dans une autre vue               |
-| =C-x C-+= | Augmenter la taille de police de la vue (+, -)     |
-|-----------+----------------------------------------------------|
+|-----------+---------------------------------------------------------|
+| Commande  | Effet                                                   |
+|-----------+---------------------------------------------------------|
+| =C-x 0=   | Fermer la vue active (où se trouve le curseur)          |
+| =C-x 1=   | Fermer les autres vues                                  |
+| =C-x 2=   | Diviser la vue en deux, l'une au dessus de l'autre      |
+| =C-x 3=   | Diviser la vue en deux, l'une à côté de l'autre         |
+| =C-x b=   | Visiter un autre fichier ouvert dans la vue active…     |
+| =C-x o=   | Passer le curseur dans une autre vue                    |
+| =C-x C-+= | Augmenter la taille de police de la vue (=+=, =-=, =0=) |
+|-----------+---------------------------------------------------------|
 
 #+BEGIN_LaTeX
 \hfill
 \parbox{7.2cm}{\small\em Auteur: Pierre Boudes (\href{http://mindsized.org}{mindsized.org})\\
-sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}
+sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}\\[-1cm]
 \vfill
 #+END_LaTeX
 
@@ -120,17 +127,18 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb
 * Programmation Bash
 [[http://mindsized.org/IMG/pdf/cours_magistral_1.pdf][Cours 1]] et [[http://mindsized.org/IMG/pdf/cours_magistral_2.pdf][cours 2]] réalisés par Jean-Vincent Loddo.
 #+ATTR_LATEX: :environment tabularx  :align | p{4.5cm} X| :width 0.999\linewidth
-|---------------------------------------+---------------------------------------------------------------------------|
-| Instruction                           | Effet                                                                     |
-|---------------------------------------+---------------------------------------------------------------------------|
-| =#!/bin/bash=                         | première ligne d'un fichier script                                        |
-| =read X=                              | Lit une entrée de l'utilisateur et la place dans =X=                      |
-| ~age=$(wc -l <annees.txt)~            | compte le nombre de lignes du fichier =annees.txt= et le place dans =age= |
-| =test $age -gt 13=                    | réussit si la valeur de =age= est plus grande que 13, sinon échoue        |
-| =echo $?=                             | affiche le code de sortie de la dernière instruction                      |
-| =if x; then y; else z; fi=            | exécute x et si x réussit, exécute y, sinon z                             |
-| =for X in *.c; do echo ${X%.c}; done= | Itération sur tous les noms de fichiers se terminant par *.c*             |
-|---------------------------------------+---------------------------------------------------------------------------|
+|---------------------------------------+-----------------------------------------------------------------------------|
+| Instruction                           | Effet                                                                       |
+|---------------------------------------+-----------------------------------------------------------------------------|
+| =#!/bin/bash=                         | première ligne d'un fichier script                                          |
+| =read X=                              | Lit une entrée de l'utilisateur et la place dans =X=                        |
+| ~age=$(wc -l <annees.txt)~            | compte le nombre de lignes du fichier =annees.txt= et le place dans =age=   |
+| =test $age -gt 13=                    | réussit si la valeur de =age= est plus grande que 13, sinon échoue          |
+| =echo $?=                             | affiche le code de sortie de la dernière instruction                        |
+| =if x; then y; else z; fi=            | exécute x et si x réussit, exécute y, sinon z                               |
+| =while x; do y; done=                 | exécute x et tant que x réussit, exécute y puis recommence (exécute x etc.) |
+| =for X in *.c; do echo ${X%.c}; done= | Itération sur tous les noms de fichiers se terminant par *.c*               |
+|---------------------------------------+-----------------------------------------------------------------------------|
 
 
 
@@ -160,18 +168,18 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb
 
 
 ** Instructions impératives
-#+ATTR_LATEX: :environment tabularx  :align | l X| :width 0.999\linewidth
-|--------------------------------+----------------------------------------------------------------------------------|
-| <30>                           | <80>                                                                             |
-| Instruction                    | Effet                                                                            |
-|--------------------------------+----------------------------------------------------------------------------------|
-| ~int a;~                       | déclare une variable de nom ~a~ et de type entier                                |
-| ~int b = 3;~                   | déclare une variable ~b~ de type entier et fixe sa valeur à 3                    |
-| ~double a;~                    | déclare une variable ~a~ de type nombre à virgule (en double précision)          |
-| ~a = expression;~              | évalue =expression= et affecte sa valeur à ~a~ (variable,…)                      |
-| ~a += expression;~             | évalue =expression= et ajoute sa valeur à ~a~                                    |
-| ~a *= 3;~                      | multiplie ~a~ par ~3~                                                            |
-|--------------------------------+----------------------------------------------------------------------------------|
+#+ATTR_LATEX: :environment tabularx  :align | p{2.99cm} X| :width 0.999\linewidth
+|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <30>                           | <180>                                                                                                                                                                                |
+| Instruction                    | Effet                                                                                                                                                                                |
+|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ~int a;~                       | déclare une variable de nom ~a~ et de type entier                                                                                                                                    |
+| ~int b = 3;~                   | déclare une variable ~b~ de type entier et fixe sa valeur à 3                                                                                                                        |
+| =double a = 1.2;=  =char b;=   | déclare deux variables : ~a~ de type nombre à virgule (en double précision) initialisée à $1.2$, et =b= de type caractère.                                                           |
+| ~a = expression;~              | évalue =expression= et affecte sa valeur à ~a~ (variable,…)                                                                                                                          |
+| ~a += expression;~             | évalue =expression= et ajoute sa valeur à ~a~                                                                                                                                        |
+| ~a *= 3;~                      | multiplie ~a~ par ~3~                                                                                                                                                                |
+|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 ** Structures de données
 #+ATTR_LATEX: :environment tabularx  :align |p{3.5cm} X| :width 0.999\linewidth
@@ -189,7 +197,7 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb
 #+BEGIN_LaTeX
 \hfill
 \parbox{7.2cm}{\small\em Auteur: Pierre Boudes (\href{http://mindsized.org}{mindsized.org})\\
-sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}
+sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}\\[-1cm]
 \vfill
 #+END_LaTeX
 
@@ -229,8 +237,9 @@ sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouv
 | =else { z }=                                                                     | lorsque la condition du if juste avant était fausse, exécute =z=                 |
 | ~while ( x ) { y }~                                                              | tant que la condition =x= est vraie, exécute =y= (en boucle)                     |
 | ~for (i = 0; i < n; i += 1)~ ={ x }=                                             | exécute n fois x, pour i, la /variable de boucle/, allant de $0$ à $n - 1$ par pas de $1$ |
-| ~for (x; y; z) { t }~                                                            | exécute =x= une fois, puis tant que =y= est vraie exécute =t=, puis =z= en boucle |
+| ~for (x; y; z) { t }~                                                            | exécute =x= une fois, puis, tant que =y= est vraie, exécute =t=, puis =z=, en boucle |
 |----------------------------------------------------------------------------------+----------------------------------------------------------------------------------|
+
 
 #+BEGIN_LaTeX
 \end{multicols}
@@ -238,14 +247,15 @@ sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouv
 
 ** Fonctions et procédures
 #+ATTR_LATEX: :environment tabularx  :align | p{8.77cm} X| :width 0.999\linewidth
-|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <30>                           | <180>                                                                                                                                                                                |
-| Instruction                    | Effet                                                                                                                                                                                |
-|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =int main () { … }=            | définit la fonction principale du programme (son point d'entrée).                                                                                                                    |
-| =double puissance(double base, int exposant);= | *déclare* une fonction nommée puissance et prenant en paramètres d'entrées un double et un int                                                                                       |
+|----------------------------------------------------+------------------------------------------------------------------------------------------------------|
+| <50>                                               | <100>                                                                                                |
+| Instruction                                        | Effet                                                                                                |
+|----------------------------------------------------+------------------------------------------------------------------------------------------------------|
+| =int main () { … }=                                | définit la fonction principale du programme (son point d'entrée).                                    |
+| =double puissance(double base, int exposant);=     | *déclare* une fonction nommée puissance et prenant en paramètres d'entrées un double et un int       |
 | =double puissance(double base, int exposant)= ={ x }= | *définit* puissance comme devant exécuter la suite d'instructions x. Les *paramètres formels* ~base~ et ~exposant~ sont des variables déclarées dans ~x~, initialisées aux valeurs des paramètres effectifs à chaque appel. |
-| =…puissance(3.2, 4)…=          | dans un expression, *appelle* la fonction =puissance= avec les *paramètres effectifs* 3.2 et 4. L'expression prend pour valeur la valeur de sortie de l'appel.                       |
-| =return expression=            | Évalue ~expression~ et retourne sa valeur comme valeur de sortie de la fonction courante                                                                                             |
-| =void afficher(…);=            | Déclare une fonction sans valeur de retour (une /procédure/).                                                                                                                        |
-|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =…puissance(3.2, 4)…=                              | dans un expression, *appelle* la fonction =puissance= avec les *paramètres effectifs* 3.2 et 4. L'expression prend pour valeur la valeur de sortie de l'appel. |
+| =return expression=                                | Évalue ~expression~ et retourne sa valeur comme valeur de sortie de la fonction courante             |
+| =void afficher(…);=                                | Déclare une fonction sans valeur de retour (une /procédure/).                                        |
+| =printf("%d %c %g ?", 7 * 6, '-', 0.00001);=       | Appel à la fonction d'affichage formaté de =stdio.h=.  Affiche =42 - 1e-05 ?=                        |
+|----------------------------------------------------+------------------------------------------------------------------------------------------------------|
