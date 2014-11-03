@@ -32,7 +32,7 @@ int main()
     /* déclaration et initialisation variables */
     int i; /* variable de boucle */
 
-    for(i = 0; i < 5; i = i + 1)
+    for (i = 0; i < 5; i = i + 1)
     {
         printf("i = %d\n",i);
     }
@@ -53,12 +53,13 @@ int main()
   \begin{correction}
     Vu en cours. Tout est expression en C (avec effet de bord) mais on
     ment ici et on considère que ce sont des instructions. Ne sert a
-    rien de les embrouiller et en plus c une mauvaise pratique de les
+    rien de les embrouiller et en plus c'est une mauvaise pratique de les
     utiliser comme expressions (source d'erreurs, de confusion).
 \begin{verbatim}
-for(instruction1; expression_booléenne; instruction2)
+for (instruction1; expression_booléenne; instruction2)
 {
-    corps de la boucle : le bloc défini par la séquence d'instructions entre {}
+    corps de la boucle :
+    le bloc défini par la séquence d'instructions entre {}
 }
 \end{verbatim}
     \begin{itemize}
@@ -148,7 +149,7 @@ int main()
     /* déclaration et initialisation variables */
     int i; /* var. de boucle */
 
-    for(i = 0; i < 3; i = i + 1)
+    for (i = 0; i < 3; i = i + 1)
     {
         printf("(%d,%d) ", i, i);
     }
@@ -206,9 +207,9 @@ int main()
     int i; /* var. de boucle */
     int j; /* var. de boucle */
 
-    for(i = 0; i < 3; i = i + 1)
+    for (i = 0; i < 3; i = i + 1)
     {
-        for(j = 0; j < 3; j = j + 1)
+        for (j = 0; j < 3; j = j + 1)
         {
             printf("(%d,%d) ", i, j);
         }
@@ -235,6 +236,10 @@ $n$ : $\Sigma_1^n i$, où $n$ est un entier quelconque (tester avec
 différentes valeurs).
 
 \begin{correction}
+On introduit ici l'expression \C{i += 1} qui évite de répéter le nom
+de la variable (comme dans l'expression \C{variable = variable + 1}.
+On n'introduit pas les formes limitées à un incrément de 1 (\C{i++},
+\C{++i}).
 \begin{verbatim}
 /* déclaration de fonctionalités supplémentaires */
 #include <stdlib.h> /* EXIT_SUCCESS */
@@ -252,7 +257,7 @@ int main()
     int somme = 0; /* élément neutre pour l'addition */
     int i; /* var. de boucle */
 
-    for(i = 1; i <= n; i = i + 1) /* i allant de 1 à n */
+    for (i = 1; i <= n; i += 1) /* i allant de 1 à n */
     {
         /* ajoute i à la somme partielle */
         somme = somme + i;
@@ -281,7 +286,7 @@ sur cet exercice. Il suffit de laisser les étudiants y réfléchir un peu, puis
 donner la structure du programme.
 
 La correction suivante reprend la traduction en assembleur (\C{gcc
-  -S}) d'un \C{while (...) {...}}, ou d'une boucle \C{for( i = 0; i <=
+  -S}) d'un \C{while (...) {...}}, ou d'une boucle \C{for ( i = 0; i <=
   n; i = i + 1)} en C. L'algorithme consiste en copier la formule de
 la somme :
 \begin{itemize}
@@ -342,12 +347,12 @@ Solution de Gauss (trace figure~\ref{fig:gauss3}).
 \subsection{Exercice type : affichage d'un rectangle d'étoiles}
 
 Écrire un programme \C{rect.c} qui, étant données deux variables,
-\verb|longueur| et \verb|largeur|, initialisées à des valeurs
+\verb|hauteur| et \verb|largeur|, initialisées à des valeurs
 strictement positives quelconques, affiche un rectangle d'étoiles ayant pour
-longueur \verb|longueur| étoiles et largeur \verb|largeur|
+hauteur \verb|hauteur| étoiles et largeur \verb|largeur|
 étoiles. Exemple :
 \begin{verbatim}
-Affichage d'un rectangle d'etoiles de longueur 6 et largeur 3.
+Affichage d'un rectangle d'etoiles de hauteur 3 et largeur 6.
 ******
 ******
 ******
@@ -358,7 +363,8 @@ Durée 3/4 d'heure ?
 
 Les algos sont à faire (les extraire du code).
 
-Vous pouvez dans un premier temps supprimer la boucle la plus imbriquée en leur demandant d'afficher un rectangle de longueur exactement ``************''.
+Vous pouvez dans un premier temps supprimer la boucle la plus
+imbriquée en leur demandant d'afficher hauteur lignes  \verb|"************\n"|.
 
 \begin{verbatim}
 /* declaration de fonctionnalites supplementaires */
@@ -373,27 +379,28 @@ Vous pouvez dans un premier temps supprimer la boucle la plus imbriquée en leur
 int main()
 {
     /* declaration et initialisation variables */
-    int largeur = 3; /* largeur du rectangle en nb d'etoiles */
-    int longueur = 6; /* longueur du rectangle en nb d'etoiles */
+    int hauteur = 3; /* hauteur du rectangle en nb d'etoiles */
+    int largeur = 6; /* largeur du rectangle en nb d'etoiles */
     int i; /* var. de boucle */
     int j; /* var. de boucle */
 
-    printf("Affichage d'un rectangle d'etoiles de longueur %d et largeur %d.\n",longueur,largeur);
+    printf("Affichage d'un rectangle d'etoiles de hauteur %d et
+                                %largeur %d.\n", hauteur, largeur);
 
-    for(i = 0; i < largeur; i += 1) /* chaque ligne d'étoiles */
+    for (i = 0; i < hauteur; i += 1) /* chaque ligne d'étoiles */
     {
-        /* affiche longueur etoiles */
-        for(j = 0;j < longueur;j = j + 1) /* chaque colonne d'etoiles */
+        /* affiche largeur etoiles */
+        for (j = 0; j < largeur; j += 1) /* chaque colonne d'etoiles */
         {
             /* affiche une etoile */
             printf("*");
         }
-        /* j >= longueur */
+        /* j >= largeur */
 
         /* passe a la ligne suivante */
         printf("\n");
     }
-    /* i >= largeur */
+    /* i >= hauteur */
 
     return EXIT_SUCCESS;
 }
@@ -406,7 +413,7 @@ int main()
 
 Écrire un programme \C{diag.c} qui affiche, étant donnée la variable,
 \verb|cote|, initialisée à une valeur quelconque, un demi-carré d'étoiles (triangle rectangle isocèle) ayant pour
-longueur de côté \verb|cote| étoiles. Exemple :
+taille de côté \verb|cote| étoiles. Exemple :
 \begin{verbatim}
 Affichage d'un demi-carre d'etoiles de cote 5.
 *
@@ -438,12 +445,12 @@ int main()
     int i; /* var. de boucle */
     int j; /* var. de boucle */
 
-    printf("Affichage d'un demi-carre d'etoiles de cote %d.\n",cote);
+    printf("Affichage d'un demi-carre d'etoiles de cote %d.\n", cote);
 
-    for(i = 1; i <= cote; i += 1) /* chaque numero de ligne d'étoiles */
+    for (i = 1; i <= cote; i += 1) /* chaque numero de ligne d'étoiles */
     {
         /* affiche autant d'etoiles que le numero de ligne */
-        for(j = 0; j < i; j += 1) /* chaque colonne d'etoiles */
+        for (j = 0; j < i; j += 1) /* chaque colonne d'etoiles */
         {
             /* affiche une etoile */
             printf("*");
@@ -481,6 +488,10 @@ Affichage d'un demi-carre droit d'etoiles de cote 5.
 \end{small}
 
 \begin{correction}
+Ce sera plus facile et plus général avec un if dans un affichage rectangle (un balayage écran, où en
+fonction des coordonnées on affiche une étoile ou un espace). Pour le
+moment on regarde seulement le problème particulier en énumérant avec
+des for le bon nombre d'espaces et le bon nombre d'étoiles.
 \begin{verbatim}
 /* declaration de fonctionnalites supplementaires */
 #include <stdlib.h> /* EXIT_SUCCESS */
@@ -493,7 +504,7 @@ Affichage d'un demi-carre droit d'etoiles de cote 5.
 /* fonction principale */
 int main()
 {
-    int cote; /* cote du demi-carré droit en nb d'etoiles a saisir par l'utilisateur*/
+    int cote; /* cote du demi-carré en nb d'etoiles, a saisir par l'utilisateur */
     int i; /* var. de boucle */
     int j; /* var. de boucle */
 
@@ -502,12 +513,12 @@ int main()
     scanf("%d", &cote);
 
     /* affichage du demi-carre droit */
-    printf("Affichage d'un demi-carre droit d'etoiles de cote %d.\n",cote);
+    printf("Affichage d'un demi-carre droit d'etoiles de cote %d.\n", cote);
 
-    for(i = 1; i <= cote; i += 1) /* chaque numero de ligne d'étoiles */
+    for (i = 1; i <= cote; i += 1) /* chaque numero de ligne d'étoiles */
     {
         /* affiche les blancs */
-        for(j = 0; j < cote - i; j += 1) /* chaque colonne de blancs */
+        for (j = 0; j < cote - i; j += 1) /* chaque colonne de blancs */
         {
             /* affiche un blanc */
             printf(" ");
@@ -515,7 +526,7 @@ int main()
         /* j >= cote - i */
 
         /* affiche autant d'etoiles que le numero de ligne */
-        for(j = 0; j < i; j += 1) /* chaque colonne d'etoiles */
+        for (j = 0; j < i; j += 1) /* chaque colonne d'etoiles */
         {
             /* affiche une etoile */
             printf("*");
@@ -560,8 +571,8 @@ sera affectée à la variable \texttt{a} (comme toute variable, \texttt{a} doit
 /* fonction principale */
 int main()
 {
-    int n; /* taille de la serie a saisir par l'utilisateur*/
-    int elt; /* un element de la serie a saisir par l'utilsateur */
+    int n; /* taille de la serie a saisir par l'utilisateur */
+    int elt; /* un element de la serie a saisir par l'utilisateur */
     int somme = 0; /* somme de la serie a calculer */
 
     int i; /* var. de boucle */
@@ -571,7 +582,7 @@ int main()
     scanf("%d", &n);
 
     /* saisie serie (n entiers) et calcul incremental de la somme */
-    for(i = 0; i < n; i += 1) /* chaque entier de la serie */
+    for (i = 0; i < n; i += 1) /* chaque entier de la serie */
     {
         /* saisir sa valeur */
         scanf("%d", &elt);
@@ -581,8 +592,8 @@ int main()
     }
     /* i >= n */
 
-    /* somme contient la somme des elements de la serie. */
-    printf("La somme des valeurs de cette serie est : %d\n",somme);
+    /* somme contient la somme des elements de la serie */
+    printf("La somme des valeurs de cette serie est : %d\n", somme);
 
     return EXIT_SUCCESS;
 }
