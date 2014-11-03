@@ -380,7 +380,7 @@ int main()
 
     printf("Affichage d'un rectangle d'etoiles de longueur %d et largeur %d.\n",longueur,largeur);
 
-    for(i = 0;i < largeur;i = i + 1) /* chaque ligne d'étoiles */
+    for(i = 0; i < largeur; i += 1) /* chaque ligne d'étoiles */
     {
         /* affiche longueur etoiles */
         for(j = 0;j < longueur;j = j + 1) /* chaque colonne d'etoiles */
@@ -440,10 +440,10 @@ int main()
 
     printf("Affichage d'un demi-carre d'etoiles de cote %d.\n",cote);
 
-    for(i = 1;i <= cote;i = i + 1) /* chaque numero de ligne d'étoiles */
+    for(i = 1; i <= cote; i += 1) /* chaque numero de ligne d'étoiles */
     {
         /* affiche autant d'etoiles que le numero de ligne */
-        for(j = 0;j < i;j = j + 1) /* chaque colonne d'etoiles */
+        for(j = 0; j < i; j += 1) /* chaque colonne d'etoiles */
         {
             /* affiche une etoile */
             printf("*");
@@ -504,10 +504,10 @@ int main()
     /* affichage du demi-carre droit */
     printf("Affichage d'un demi-carre droit d'etoiles de cote %d.\n",cote);
 
-    for(i = 1;i <= cote;i = i + 1) /* chaque numero de ligne d'étoiles */
+    for(i = 1; i <= cote; i += 1) /* chaque numero de ligne d'étoiles */
     {
         /* affiche les blancs */
-        for(j = 0;j < cote - i;j = j + 1) /* chaque colonne de blancs */
+        for(j = 0; j < cote - i; j += 1) /* chaque colonne de blancs */
         {
             /* affiche un blanc */
             printf(" ");
@@ -515,7 +515,7 @@ int main()
         /* j >= cote - i */
 
         /* affiche autant d'etoiles que le numero de ligne */
-        for(j = 0;j < i;j = j + 1) /* chaque colonne d'etoiles */
+        for(j = 0; j < i; j += 1) /* chaque colonne d'etoiles */
         {
             /* affiche une etoile */
             printf("*");
@@ -571,7 +571,7 @@ int main()
     scanf("%d", &n);
 
     /* saisie serie (n entiers) et calcul incremental de la somme */
-    for(i = 0; i < n; i = i + 1) /* chaque entier de la serie */
+    for(i = 0; i < n; i += 1) /* chaque entier de la serie */
     {
         /* saisir sa valeur */
         scanf("%d", &elt);
