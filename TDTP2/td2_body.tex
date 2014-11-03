@@ -2,12 +2,13 @@
 
 \newcommand{\commentaire}[1]{}
 
-\entete{Travaux dirigés 2 : la structure de contrôle \C{for}}
+\entete{Exercices 2 : la structure de contrôle \C{for}}
 
+\vspace{-0.5cm}
 L'objectif de ce TD TP est de vous familiariser avec la notion
 d'itération en programmation. On parle communément de
 \emph{boucle}. Cette notion sera illustrée sur des problèmes de comptage
-et de répétition d'actions. 
+et de répétition d'actions.
 
 
 \section{Itération : l'instruction \C{for}}
@@ -21,7 +22,7 @@ Soit le programme suivant :
 #include <stdlib.h> /* EXIT_SUCCESS */
 #include <stdio.h> /* printf */
 
-/* déclaration constantes et types utilisateurs */
+/* déclaration de constantes et types utilisateurs */
 
 /* déclaration de fonctions utilisateurs */
 
@@ -53,7 +54,7 @@ int main()
     Vu en cours. Tout est expression en C (avec effet de bord) mais on
     ment ici et on considère que ce sont des instructions. Ne sert a
     rien de les embrouiller et en plus c une mauvaise pratique de les
-    utiliser comme expressions (source d'erreurs, de confusion). 
+    utiliser comme expressions (source d'erreurs, de confusion).
 \begin{verbatim}
 for(instruction1; expression_booléenne; instruction2)
 {
@@ -65,17 +66,18 @@ for(instruction1; expression_booléenne; instruction2)
 
     \item expression\_booléenne : (s'évalue à vrai ou faux) si vrai
       exécute le corps de boucle, sinon passe a l'instruction suivant
-      la boucle. On parle parfois de la garde de la boucle. 
+      la boucle. On parle parfois de la garde de la boucle.
 
     \item instruction2 : prépare l'itération suivante; il est
       important de comprendre que cette instruction doit forcément
       modifier la valeur de (au moins une variable, on ne leur parle
       que de la var de boucle) la variable intervenant dans
       l'expression booléenne SINON la val de expression\_booléenne est
-      constante et on ne sort jamais de la boucle 
+      constante et on ne sort jamais de la boucle
     \end{itemize}
   \end{correction}
-\item Faire la trace du programme. Qu'affiche le programme~?
+\item Faire la trace du programme. Qu'affichera le programme~?
+
 \begin{correction}
 L'exécution de $i = i + 1$ est mise à la ligne 18 pour montrer que c à
 la fin du corps de la boucle, mm si c pas très clair.
@@ -85,15 +87,15 @@ ligne          | i | affichage (sortie/écriture à l'écran)
 initialisation | ? |
 15             | 0 |
 17             |   | i = 0
-18             | 1 | 
+18             | 1 |
 17             |   | i = 1
-18             | 2 | 
+18             | 2 |
 17             |   | i = 2
-18             | 3 | 
+18             | 3 |
 17             |   | i = 3
-18             | 4 | 
+18             | 4 |
 17             |   | i = 4
-18             | 5 | 
+18             | 5 |
 21             |   | i vaut 5 après l'exécution de la boucle.
 \end{verbatim}
 
@@ -107,20 +109,27 @@ i = 4
 i vaut 5 après l'exécution de la boucle.
 \end{verbatim}
 \end{correction}
+\item Tester. Créer un répertoire (\C{mkdir TP2});
+s'y placer (\C{cd TP2}): récupérer le programme
+\verb|wget lipn.fr/~boudes/static/premierfor.c|, l'éditer
+\verb|emacs premierfor.c &|. Compiler,
+corriger, compiler, exécuter.
+
 \item Modifiez le programme afin que la séquence affichée soit
   exactement (faire cinq programmes) :
   \begin{itemize}
-  \item \verb|0 1 2 3 4|,
-  \item \verb|1 2 3 4|,
-  \item \verb|1 2 3 4 5|,
-  \item \verb|1 3 5|
-  \item puis, enfin \verb|(0,0) (1,1) (2,2)|.
+  \item \verb|0 1 2 3 4| (\C{cp premierfor.c premierfor2.c} ou, dans
+    \C{emacs}, \C{C-x C-w …}),
+  \item \verb|1 2 3 4|, (\C{premierfor3.c})
+  \item \verb|1 2 3 4 5|, (\C{premierfor4.c})
+  \item \verb|1 3 5| (\C{premierfor5.c})
+  \item puis, enfin \verb|(0,0) (1,1) (2,2)|. (\C{premierfor6.c})
   \end{itemize}
   \begin{correction}
     Ici, les corrections peuvent se faire plus ou moins rapidement, en
     fonction de la compréhension des étudiants. Chaque séquence
     demande la modif d'un ou de plusieurs arguments afin d'insister
-    sur leur rôle. 
+    sur leur rôle.
 
 Pour \verb|1 2 3 4 5|, c'est soit \verb|i < 6| soit \verb|i <=5|. Ca dépend du problème.
 \begin{verbatim}
@@ -156,8 +165,8 @@ int main()
   \end{correction}
 \item Modifiez le programme afin que la séquence affichée soit~:
   \begin{itemize}
-  \item \verb|0 1 2 0 1 2|,
-  \item puis \verb|0 1 2 0 1 2 3|.
+  \item \verb|0 1 2 0 1 2|, (\C{premierfor7.c})
+  \item puis \verb|0 1 2 0 1 2 3|. (\C{premierfor8.c})
   \end{itemize}
   De combien de boucles avez-vous besoin~? De combien de variables de
   boucles~?
@@ -166,11 +175,12 @@ int main()
     2 boucles à la suite, 1 seule variable (on la réutilise)
   \end{correction}
 
-\item Modifiez le programme afin que la séquence affichée soit :
+\item Modifiez le programme afin que la séquence affichée soit
+  (\C{premierfor9.c}) :
   \begin{itemize}
   \item \verb|(0,0) (0,1) (0,2) (1,0) (1,1) (1,2) (2,0) (2,1) (2,2)|.
   \end{itemize}
-  
+
   De combien de boucles avez-vous besoin~? De combien de variables de
   boucles~? Quelle est la différence de structuration
   des boucles entre le point 4 et le point 5~?
@@ -178,7 +188,7 @@ int main()
   \begin{correction}
     C'est un produit cartésien : $\{0,1,2\} \times \{0,1,2\}$. Deux boucles
     imbriquées, deux variables. La différence, c'est 1) deux à la suite; 2)
-    deux imbriquées 
+    deux imbriquées
 
 \begin{verbatim}
 /* déclaration de fonctionalités supplémentaires */
@@ -220,9 +230,9 @@ int main()
 
 \subsection{Exercice type : calcul de $\Sigma_1^n i$}
 
-Écrire un programme qui calcule et affiche la somme des entiers de 1 à
+Écrire un programme \C{somme.c} qui calcule et affiche la somme des entiers de 1 à
 $n$ : $\Sigma_1^n i$, où $n$ est un entier quelconque (tester avec
-différentes valeurs). 
+différentes valeurs).
 
 \begin{correction}
 \begin{verbatim}
@@ -306,7 +316,7 @@ incrémente l'indice.
 
 Parmi les autres programmes corrects possibles, des étudiants peuvent
 même penser à la formule de Gauss $\sum^n_{i = 0} i = \frac{n (n +
-  1)}{2}$. 
+  1)}{2}$.
 
 
 Solution de Gauss (trace figure~\ref{fig:gauss3}).
@@ -331,9 +341,9 @@ Solution de Gauss (trace figure~\ref{fig:gauss3}).
 
 \subsection{Exercice type : affichage d'un rectangle d'étoiles}
 
-Écrire un programme qui, étant données deux variables,
+Écrire un programme \C{rect.c} qui, étant données deux variables,
 \verb|longueur| et \verb|largeur|, initialisées à des valeurs
-strictement positives quelconques,affiche  un rectangle d'étoiles ayant pour
+strictement positives quelconques, affiche un rectangle d'étoiles ayant pour
 longueur \verb|longueur| étoiles et largeur \verb|largeur|
 étoiles. Exemple :
 \begin{verbatim}
@@ -394,7 +404,7 @@ int main()
 
 \subsection{Exercice type : affichage d'un demi-carré d'étoiles}
 
-Écrire un programme qui affiche, étant donnée la variable,
+Écrire un programme \C{diag.c} qui affiche, étant donnée la variable,
 \verb|cote|, initialisée à une valeur quelconque, un demi-carré d'étoiles (triangle rectangle isocèle) ayant pour
 longueur de côté \verb|cote| étoiles. Exemple :
 \begin{verbatim}
@@ -456,7 +466,7 @@ int main()
 \subsection{Affichage d'un demi-carré droit d'étoiles}
 
 
-Écrire un programme qui affiche un demi-carré droit d'étoiles de côté spécifié par l'utilisateur. Exemple d'exécution :
+Écrire un programme \C{diag2.c} qui affiche un demi-carré droit d'étoiles de côté spécifié par l'utilisateur. Exemple d'exécution :
 \begin{small}
 \begin{verbatim}
 Entrer la taille du demi-carré :
@@ -527,11 +537,11 @@ int main()
 
 \subsection{Calcul de la somme d'une série d'entiers saisie par l'utilisateur}
 
-Écrire un programme qui demande à l'utilisateur combien d'entiers
+Écrire un programme \C{somme2.c} qui demande à l'utilisateur combien d'entiers
 composent sa série, lit la série d'entiers et affiche la somme des
-valeurs de la série. 
+valeurs de la série.
 
-\paragraph{Indication :} l'instruction 
+\paragraph{Indication :} l'instruction
 \verb+scanf("%d", &a)+
 permet de réaliser une saisie utilisateur d'un entier dont la valeur
 sera affectée à la variable \texttt{a} (comme toute variable, \texttt{a} doit
@@ -582,7 +592,7 @@ int main()
 \end{correction}
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "td2"
-%%% End: 
+%%% End:
