@@ -3,15 +3,24 @@
 #include <stdio.h> /* pour printf() */
 
 /* Declaration des constantes et types utilisateur */
-
+#define NOMBREMAGIQUE 42
 /* Declaration des fonctions utilisateur */
 
 /* Fonction principale */
 int main()
 {
     /* Declaration et initialisation des variables */
+    int i; /* variable de boucle */
+    int somme = 0;
 
-    printf("Bonjour !\n");
+    for (i = 1; i <= NOMBREMAGIQUE; i = i + 1)
+    {
+        printf("Bonjour entier %d, viens avec nous dans la somme !\n", i);
+        somme = somme + i;
+        printf("somme = %d\n", somme);
+    }
+
+    printf("somme = %d\n", somme);
 
     /* Valeur fonction */
     return EXIT_SUCCESS;

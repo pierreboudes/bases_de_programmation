@@ -3,7 +3,7 @@
 \input{communs/slides_style}
 
 %%% Titre -- Cours 2
-\title{Algorithmique et programmation -- Cours 2. Compilation. Instruction de contrôle \C{for}.}
+\title{Bases de programmation -- Cours 2. Compilation. Instruction de contrôle \C{for}.}
 \author{Pierre Boudes}
 \date{\today}
 
@@ -35,17 +35,17 @@
 \begin{scope}[shift={(6.5,3)}]%computer 3
 \draw[ultra thick, rounded corners=4pt,fill=blue!15] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \begin{scope}[shift={(5,2.5)}]%computer 1
 \draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \begin{scope}[shift={(5.6,1.9)}]%computer 2
 \draw[ultra thick, rounded corners=4pt,fill=blue!20] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \begin{scope}[shift={(-3,2.5)}]%hum 1
   \draw[ultra thick,fill=pink] (0,0.9) circle (0.3cm); \draw[draw,line
@@ -89,9 +89,9 @@
 
 \draw[draw,line width=4mm,->,Goldenrod](-1.9,2.5)--node [black]
 (0.4,3) {programment} (0.3,2.5);
-\node [rectangle, draw, fill=blue!20, 
+\node [rectangle, draw, fill=blue!20,
 text width=3em, text centered, minimum height=4.6em] at (1.2,2.5) {};
-\node [rectangle, draw, fill=blue!20, 
+\node [rectangle, draw, fill=blue!20,
     text width=3em, text centered, minimum height=4.6em] at (1.1,2.6)
     {};
 \node[line width=0mm,Goldenrod,rotate=60] at (1.1,2.6) {\Large\textbf{source}};
@@ -99,7 +99,7 @@ text width=3em, text centered, minimum height=4.6em] at (1.2,2.5) {};
 \begin{scope}[shift={(2.4,2.2)},black!30]%computer 4
 \draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \draw[draw,line width=4mm,->,blue!20](2,2.5)--node [black] (4,3)
 {traduction} (4.1,2.5);
@@ -120,15 +120,15 @@ faut aussi savoir réfléchir à ce que nous faisons faire à nos
 programmes. \alert{Écrivez vos algorithmes !}
 }
 \end{frame}
- 
+
 %PLAN
-\frame[label=plan]{\tableofcontents}
+\mode<beamer>{\frame[label=plan]{\tableofcontents}}
 
 
 \section{Compilation}
 \begin{frame}
   \frametitle{Compilation\nowrite}
-\begin{itemize} 
+\begin{itemize}
 \item  \structure{Compiler} un programme c'est traduire un texte (\structure{code
   source}) d'un langage de haut niveau (langage C) en code de bas
   niveau (\structure{code machine}), de manière à ce que le système
@@ -147,7 +147,7 @@ langage interprété, l'étape de traduction a lieu à chaque exécution.}\pause
 
 \begin{frame}
   \frametitle{Compilation\nowrite}
- 
+
 Les cinq grandes étapes de la compilation :
 
   \begin{enumerate}
@@ -175,32 +175,32 @@ Erreur lexicale :
 Erreur détectée uniquement au moment de l'analyse sémantique :\\
 \begin{description}
 \item[code source] \C{intx = 0;}
-\item[compilation] \C{error: ‘intx’ undeclared (first use in this function)} 
+\item[compilation] \C{error: ‘intx’ undeclared (first use in this function)}
 \end{description}
 \end{frame}
 
 \subsection{Analyse syntaxique}
 \begin{frame}
   \frametitle{Analyse syntaxique}
-\begin{block}{Analyse syntaxique\youwrite} 
+\begin{block}{Analyse syntaxique\youwrite}
 trouve la structure syntaxique, (arbre
-  syntaxique), et teste l'appartenance au langage. 
+  syntaxique), et teste l'appartenance au langage.
 \end{block}
 \pause
 Exemple : dans l'expression \C{x = 3 * x + 1}, est-ce que la
-sous-suite  \C{x + 1} correspond à une structure syntaxique ? 
+sous-suite  \C{x + 1} correspond à une structure syntaxique ?
 \pause
 \begin{center}
 \C{
 \begin{tikzpicture} [level distance=5mm,every node/.style={fill=blue!20,circle,inner sep=1pt}]
 \node {=}
-child {node {x}} 
+child {node {x}}
 child {node {+}
   child {node {*}
-    child {node {3}} 
+    child {node {3}}
     child {node {x}}
-  }  
-  child {node {1}} 
+  }
+  child {node {1}}
 };
 \end{tikzpicture}
 }
@@ -208,7 +208,7 @@ child {node {+}
 \pause
 \begin{description}
 \item[code source] Un else sans if le précédant immédiatement (point-virgule mal placé ?)
-\item[compilation] \C{error: expected expression before ‘else’} 
+\item[compilation] \C{error: expected expression before ‘else’}
 \end{description}
 
 \end{frame}
@@ -245,7 +245,7 @@ aucun sens, etc.
 \begin{block}{Génération du code\youwrite}
   encodage en assembleur, optimisations et allocations des registres,
   traduction en \structure{code objet} (du code machine non exécutable
-  en l'état). 
+  en l'état).
 \end{block}
 \end{frame}
 
@@ -275,7 +275,7 @@ aucun sens, etc.
 \section[gcc]{La compilation en pratique (gcc)}
 \begin{frame}
   \frametitle{La compilation en pratique (gcc)}
-\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
     text width=7em, text centered, minimum height=2em,]
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{sline} = [draw, structure, dashed,  -latex']
@@ -342,7 +342,7 @@ Aujourd'hui nous allons voir une première forme de répétition en C, le
 \begin{frame}[fragile]
   \frametitle{Rappels sur l'instruction de contrôle if \nowrite}
 
-  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
+  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else
     \{\emph{\colorbox{red!20}{bloc2}}\}}.
   \medskip
 
@@ -393,7 +393,7 @@ else
   \frametitle{L'instruction de contrôle for\youwrite}
 
   \structure{Syntaxe :}\\
-  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}}) 
+  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!20}{instruct2}})
     \{\emph{\colorbox{green!20}{bloc}}\}}.
   \medskip
 
@@ -452,7 +452,7 @@ int main()
   }
   printf("i vaut %d\n", i);
 
-  return EXIT_SUCCESS;  
+  return EXIT_SUCCESS;
 }
 \end{lstlisting}
 \vspace{.4cm}
@@ -467,23 +467,23 @@ int main()
 \pause
    initialisation & ? &  \\
 \pause
-  6 & 0 & \\ 
+  6 & 0 & \\
 \pause
   8 &  & \C{etape 0} \\
 \pause
-  9 & 1 & \\ 
+  9 & 1 & \\
 \pause
   8 &  & \C{etape 1} \\
 \pause
-  9 & 2 & \\ 
+  9 & 2 & \\
 \pause
   8 &  & \C{etape 2} \\
 \pause
-  9 & 3 & \\ 
+  9 & 3 & \\
 \pause
-  10 & & \C{i vaut 3} \\ 
+  10 & & \C{i vaut 3} \\
 \pause
-12 & & Renvoie \C{EXIT\_SUCCESS} \\ 
+12 & & Renvoie \C{EXIT\_SUCCESS} \\
 \end{tabular}
   \end{column}
  \end{columns}
@@ -498,7 +498,7 @@ int main()
 \begin{columns}
  \begin{column}[t]{0.59\linewidth}
   \begin{enumerate}
-    \item  Traiter des cas spécifiques 
+    \item  Traiter des cas spécifiques
       \begin{itemize}
       \item \alert{\C{if else}} (différencier)
       \item \alert{\C{\#define}} constantes symboliques (nommer)
@@ -545,7 +545,7 @@ int main()
 %   \begin{itemize}
 % \item boucle \alert{while}
 %   \end{itemize}\pause
-%     \item Attente active 
+%     \item Attente active
 %   \begin{itemize}
 % \item boucle \alert{while}
 %   \end{itemize}
@@ -554,10 +554,12 @@ int main()
 \end{columns}
 \end{frame}
 
+\mode<beamer>{
 \section{Démos}
 \begin{frame}
   \frametitle{Démos}
 \end{frame}
+}
 
 
 \section{printf/scanf (1)}
@@ -565,26 +567,26 @@ int main()
   \frametitle{printf/scanf (1) \nowrite}
 \begin{itemize}
 \item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
-  (\emph{print formatted}). 
-\item Chaque \verb+%+ 
+  (\emph{print formatted}).
+\item Chaque \verb+%+
 dans le texte à afficher est substitué par la valeur formatée d'un
 \alert{paramètre supplémentaire} de la fonction. Le caractère suivant le
-symbole \verb+%+ 
+symbole \verb+%+
 signale le format à utiliser.  Un \verb+%d+
 met une valeur au format \alert{entier décimal}.
 \pause
 \item Exemples :
   \begin{itemize}
 \item
-    \verb+printf("Bonjour\n")+ 
+    \verb+printf("Bonjour\n")+
 affiche \C{Bonjour} et un saut de
     ligne\pause
 \item
-    \verb+printf("i vaut %d\n", i)+ 
+    \verb+printf("i vaut %d\n", i)+
 affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
 ligne)\pause
 \item
-    \verb+printf("(%d, %d)\n", 31, -4)+ 
+    \verb+printf("(%d, %d)\n", 31, -4)+
 affiche \C{(31, -4)} et un saut de ligne.
  \end{itemize}
 \pause
