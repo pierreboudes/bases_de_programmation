@@ -2,7 +2,7 @@
 
 \newcommand{\commentaire}[1]{}
 
-\entete{Travaux dirigés 6 : tableaux, chaînes, structures}
+\entete{Travaux dirigés 6 : tableaux, chaînes}
 
 \section{Tableaux en C}
 \label{intro}
@@ -184,10 +184,10 @@ int main()
 \end{correction}
 
 \subsection{Exercice type : calcul du minimum d'un tableau}
- 
+
 Soit un tableau d'entiers, initialisé à une taille et des
 valeurs quelconques. Écrire un programme qui calcule et affiche à
-l'écran la valeur minimum des éléments du tableau. 
+l'écran la valeur minimum des éléments du tableau.
 
 \begin{correction}
 \begin{verbatim}
@@ -217,7 +217,7 @@ int main()
         }
     }
     /* i >= 5 */
-    
+
     /* min contient le minimum de tous les elements du tableau */
     printf("le minimum des elements du tableau est : %d\n",min);
 
@@ -251,7 +251,7 @@ int main()
         min = minimum(tab[i], min);
     }
     /* i >= 5 */
-    
+
     /* min contient le minimum de tous les elements du tableau */
     printf("le minimum des elements du tableau est : %d\n",min);
 
@@ -276,8 +276,9 @@ une taille \C{taille(t)}.
 \item[Calcul de la moyenne des éléments d'un tableau.] Soit un tableau
   d'entiers. Calculer la moyenne des éléments du tableau.
 \item[Permutation circulaire d'un tableau.] Soit un tableau, permuter
-  ses éléments vers la droite : le premier devient le second, le
-  second le troisième, \ldots, le dernier devient le premier.
+  ses éléments vers la gauche : le second devient le premier, le
+  troisième devient le second, \ldots, le premier devient le dernier.
+  Puis vers la droite.
 \item[Calcul du nombre d'occurrences d'un élément dans un tableau.] Soit
   un tableau d'entiers et soit un entier $n$. Compter le
   nombre d'occurrences de $n$ dans le tableau.
@@ -286,7 +287,7 @@ une taille \C{taille(t)}.
   (il n'apparaît qu'une seule fois dans le tableau).
 \item[Unicité de tous les éléments d'un tableau.] Soit
   un tableau d'entiers $t$. Tester si le tableau est sans
-  répétitions (chacun de ses éléments est unique). 
+  répétitions (chacun de ses éléments est unique).
 \item[Tableau trié.]  Soit un tableau d'entiers. Tester si les
   éléments du tableau sont ordonnés par ordre croissant.
 \item[Recherche d'un entier dans un tableau.] Soit
@@ -300,26 +301,26 @@ une taille \C{taille(t)}.
   indice à $-1$ si $n$ n'apparaît pas dans le tableau). Utiliser l'ordre
   pour trouver la réponse plus rapidement qu'à la question précédente.
 \item[Comparaison de tableaux.] Soient deux tableaux de même
-  taille. Vérifier s'ils sont égaux. 
+  taille. Vérifier s'ils sont égaux.
 \item[Un élément au hasard.] Soit un tableau $t$ donner un de ses
   éléments au hasard.
 \item[Mélanger un tableau.] Soit un tableau $t$ sans
   répétition, modifier au hasard l'ordre des éléments de $t$.
 \item[Tirage de $p$ éléments parmi $n$.] Soit deux entiers positifs $p$ et $n$
   avec $p \leq n$. Donner au hasard une liste de $p$ entiers, \textbf{sans répétition}, parmi
-  $1$, \ldots, $n$. 
+  $1$, \ldots, $n$.
 \end{description}
 \subsection{Algorithmes sur du texte}
 \begin{description}
 \item[Longueur d'une chaîne.] Soit une chaîne de caractères $s$,
   déterminer le nombre de lettres qui la compose (on ne compte pas la
-  sentinelle \verb|\0|). 
+  sentinelle \verb|\0|).
 \item[Comparaison de mots.] Soient deux mots, stockés dans deux
   chaînes de caractères différentes.  Comparer ces deux mots selon
   l'ordre lexicographique (l'ordre du dictionnaire). Le résultat
   prendra trois valeurs : $0$ si les deux mots sont égaux, $1$  si le
-  premier mot est le premier dans l'ordre lexicographique, $2$ si c'est
-  le second.
+  premier mot arrive avant dans l'ordre lexicographique, $2$ si c'est
+  le second mot.
   \item[Palindrome.] Soit une chaîne de caractère $s$ de $n$ lettres. Tester si $s$
     est un palindrome. Vous pourrez distinguer deux cas : $n$ pair
     et $n$ impair.
@@ -337,7 +338,7 @@ une taille \C{taille(t)}.
 \emph{Non imorpta in che oridne apapaino le letetre in una paolra, l'uinca csoa imnorptate è che la pimra e l'ulimta letetra sinao nel ptoso gituso.}
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "td6"
-%%% End: 
+%%% End:
