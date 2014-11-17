@@ -3,9 +3,8 @@
 #include <stdlib.h> /* EXIT_SUCCESS, rand, srand */
 #include <stdio.h>  /* printf, scanf */
 #include <time.h>   /* time */
+#include <stdbool.h>
 
-#define TRUE 1
-#define FALSE 0
 #define NB_MAX 100
 /* declaration de fonctions utilisateurs */
 
@@ -24,13 +23,13 @@ char cercle(int x, int y, int rayon);
 
 int main()
 {
-    int continuer = TRUE; /* TRUE si on doit proposer le menu */
+    int continuer = true; /* si on doit proposer le menu */
     int choix_menu = 0;	  /* Choix de l'utilisateur */
 
     srand(time(NULL)); /* à ne faire qu'une fois */
 
     /* Boucle principale d'interaction avec l'utilisateur */
-    while(continuer) 
+    while(continuer)
     {
 	/* Affichage du menu */
 	printf("\n\n");
@@ -49,13 +48,13 @@ int main()
 
 	/* Choix utilisateur */
 	scanf("%d", &choix_menu);
-	
+
 	/* Execution du choix de l'utilisateur (cas mutuellement exclusifs) */
 
 	if (1 == choix_menu) /* ---------------- Test de primalité -------------------- */
 	{
 	    int p; /* nombre a tester */
-	    
+
 	    /* Saisie utilisateur */
 	    printf("Donner un nombre entier positif : ");
 	    scanf("%d", &p);
@@ -84,7 +83,7 @@ int main()
 	    if (op == '!')
 	    {
 		int n = nombre_g; /* ignorer la décimale */
-		expr = factorielle(n); 
+		expr = factorielle(n);
 		nombre_g = n; /* ignorer la décimale dans l'affichage */
 	    }
 	    else
@@ -116,18 +115,18 @@ int main()
 	    /* affichage resultat */
 	    if (op == '!')
 	    {
-		printf("%g! = %g\n",nombre_g, expr);   
+		printf("%g! = %g\n",nombre_g, expr);
 	    }
 	    else
 	    {
-		printf("%g %c %g = %g\n",nombre_g,op,nombre_d,expr);   
+		printf("%g %c %g = %g\n",nombre_g,op,nombre_d,expr);
 	    }
 	}
 
 	if (3 == choix_menu) /* --------------- Deviner un nombre ---------------- */
 	{
 	    int choix; /* choix de l'utilisateur pour le nombre secret */
-	    int trouve = FALSE; /* TRUE si trouvé */
+	    int trouve = false; /* true si trouvé */
 	    int nombre_secret;
 
 	    /* Tirage aléatoire du nombre secret */
@@ -139,10 +138,10 @@ int main()
 		/* demande nombre à l'utilisateur */
 		printf("Votre choix (nombre entre 0 et %d) ?\n",NB_MAX);
 		scanf("%d",&choix);
-		
+
 		if(choix == nombre_secret) /* trouvé */
 		{
-		    trouve = TRUE;
+		    trouve = true;
 		}
 		else /* pas trouvé */
 		{
@@ -158,38 +157,38 @@ int main()
 		}
 	    }
 	    /* trouvé nombre secret */
-	    
+
 	    printf("Vous avez trouvé le nombre secret.\n");
 	}
-	
+
 	if (4 == choix_menu) /* --------------- Cercle --------------------------- */
-	{	    
+	{
 	    int ligne;	 /* numero de ligne */
 	    int colonne; /* numero de colonne */
 	    int rayon; /* rayon du cercle */
-	    
+
 	    printf("Donner le rayon : ");
 	    scanf("%d", &rayon);
 	    printf("\n");
 
 	    /* Affichage par balayage */
-	    for (ligne = -rayon; ligne <= rayon; ligne = ligne + 1)
+	    for (ligne = -rayon; ligne <= rayon; ligne += 1)
 	    {
-		for (colonne = -rayon; colonne <= rayon; colonne = colonne + 1)
+		for (colonne = -rayon; colonne <= rayon; colonne += 1)
 		{
 		    printf("%c", cercle(colonne, ligne, rayon));
 		}
 		printf("\n");
 	    }
-	    
-	} 
+
+	}
 
 	if (4 < choix_menu) /* Non disponible */
 	{
 	    printf("\n** Choix non disponible **\n");
 	}
 
-	
+
 	if (0 < choix_menu) /* Attendre que l'utilisateur soit pret a revenir au menu */
 	{
 	    char c;
@@ -200,7 +199,7 @@ int main()
 	if (0 == choix_menu) /* quitter */
 	{
 	    printf("Sayonara\n");
-	    continuer = FALSE;
+	    continuer = false;
 	}
     }
 
@@ -213,14 +212,12 @@ int est_premier(int n)
 {
     int i;
 
-    for (i = 2; i < n; i = i + 1)
-    {	
-	if (n % i == 0) 
-	{
-	    return FALSE; 
+    for (i = 2; i < n; i = i + 1) {
+	if (n % i == 0) {
+	    return false;
 	}
     }
-    return TRUE;
+    return true;
 }
 
 
@@ -240,8 +237,7 @@ int factorielle(int n)
 
 char cercle(int x, int y, int rayon)
 {
-    if (x*x + y*y <= rayon * rayon)
-    {
+    if (x*x + y*y <= rayon * rayon) {
 	return '*';
     }
     return ' ';

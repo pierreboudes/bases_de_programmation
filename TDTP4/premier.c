@@ -1,8 +1,7 @@
 #include <stdlib.h> /* EXIT_SUCCESS */
 #include <stdio.h> /* printf() */
+#include <stdbool.h>
 /* Declaration constantes et types utilisateurs */
-#define TRUE 1
-#define FALSE 0
 
 /* Declaration de fonctions utilisateurs */
 int est_xxx(int n);
@@ -31,12 +30,10 @@ int est_xxx(int n)
 {
     int i;
 
-    for (i = 2; i < n; i = i + 1)
-    {	
-	if (n % i == 0) 
-	{
-	    return FALSE; 
+    for (i = 2; i < n; i = i + 1){
+	if (n % i == 0) {
+	    return false;
 	}
     }
-    return TRUE;
+    return true;
 }

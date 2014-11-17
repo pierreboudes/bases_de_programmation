@@ -14,7 +14,7 @@
   l'exception d'une des dernières questions du TD sur le coefficient
   binomial. On dit spécifiquement procédures pour les
   fonctions de type de sortie void.
-  
+
   La trace des programmes avec appel de fonction doit représenter la
   pile d'appel (voir tableau \ref{simulation}). Pour cela, au moment
   de l'appel d'une fonction, on fait la trace de cette fonction en
@@ -48,8 +48,8 @@ Faire la trace du programme suivant et dire ce que calcule la fonction \verb+est
 
 \begin{correction}
   Cette fonction teste si son argument est
-  un nombre premier : elle renvoie TRUE si son argument $n$ est
-  premier (ou négatif ou nul -- remarque : zéro n'est pas premier), et FALSE
+  un nombre premier : elle renvoie true si son argument $n$ est
+  premier (ou négatif ou nul -- remarque : zéro n'est pas premier), et false
   sinon.
 %% 24 & & &  & \\ \hline
 %%           &  &  &  &\multicolumn{1}{r|}{
@@ -63,32 +63,32 @@ Faire la trace du programme suivant et dire ce que calcule la fonction \verb+est
           \multicolumn{3}{l}{\C{main()}}\\ \hline
           ligne & n & Affichage (sortie écran) \\ \hline
           initialisation  & 9 & \\ \hline
-          16 & & \\\hline
+          15 & & \\\hline
           & & \multicolumn{1}{|r|}{
             \put(1,0){\noindent
               \begin{tabular}[t]{|c|c|c|l|}
           \multicolumn{4}{l}{\C{est\_xxx(9)}}\\ \hline
           ligne & n & i & Affichage \\ \hline
           initialisation  & 9 & ? & \\ \hline
-         34 &  & 2 & \\ \hline
-         40  &  & 3 & \\ \hline
-         38  &\multicolumn{3}{|l|}{renvoie FALSE}\\ \hline 
+         33 &  & 2 & \\ \hline
+         37  &  & 3 & \\ \hline
+         35  &\multicolumn{3}{|l|}{renvoie false}\\ \hline
         \end{tabular}
               }
-          }\\ \hline 
-          22 & & L'entier 9 n'est pas xxx\\ \hline
-          26 &\multicolumn{2}{|l|}{renvoie EXIT\_SUCCESS}\\ \hline
+          }\\ \hline
+          21 & & L'entier 9 n'est pas xxx\\ \hline
+          25 &\multicolumn{2}{|l|}{renvoie EXIT\_SUCCESS}\\ \hline
           \end{tabular}
           %\end{center}
           \caption{Trace du programme de l'exercice 1.}
           \label{simulation}
-  \end{table}		
+  \end{table}
 \end{correction}
-  
+
 \section{Déclaration et définition de fonctions}
 
 Les fonctions \verb+valeur_absolue()+, \verb+factorielle()+ et
-\verb+minimum()+ ne sont pas fournies avec le programme
+\verb+minimum()+ ne sont pas fournies avec le programme (\C{fonctions1.c})
 suivant. Compléter le programme avec le prototype et le code des
 fonctions (le \verb+main+ doit rester inchangé) et
 faire la trace du programme complet.
@@ -113,7 +113,7 @@ faire la trace du programme complet.
         \setlength{\unitlength}{\tabcolsep}
         \begin{tabular}[h]{|c|c|c|c|l|}
          \multicolumn{5}{l}{\C{main()}}\\ \hline
-          ligne & x & y & z & Affichage \\ 
+          ligne & x & y & z & Affichage \\
           \hline
           initialisation  & -3 & 5 & ? & \\ \hline
           21 & & & & \\ \hline
@@ -155,7 +155,7 @@ faire la trace du programme complet.
                65 &  &   & 6 & \\ \hline
                66 &  & 4 &   & \\ \hline
                69 & \multicolumn{4}{|l|}{renvoie 6} \\ \hline
-             \end{tabular}           
+             \end{tabular}
            }
          }\\ \hline
          23 &  &  & 6 & \\ \hline
@@ -163,40 +163,40 @@ faire la trace du programme complet.
          &&&&\multicolumn{1}{r|}{
             \put(1,0){\noindent
               \begin{tabular}[h]{|c|c|c|l|}
-                \multicolumn{4}{l}{\C{minimum(5, 6)}}\\ \hline
+                \multicolumn{4}{l}{\C{minimum(2, 6)}}\\ \hline
                ligne & a & b & Affichage \\ \hline
                initialisation  & 5 & 6 & \\ \hline
-               49 & \multicolumn{3}{|l|}{renvoie 5} \\ \hline
+               49 & \multicolumn{3}{|l|}{renvoie 2} \\ \hline
              \end{tabular}
            }
          }\\ \hline
-         24 &  &  & 5 & \\ \hline
+         24 &  &  & 2 & \\ \hline
          27 & \multicolumn{4}{|l|}{renvoie EXIT\_SUCCESS} \\ \hline
        \end{tabular}
        \caption{Trace du programme de l'exercice 2.}
         \label{simulation2}
 %      \end{center}
-    \end{table}			
+    \end{table}
 
  \end{correction}
- 
+
 \section{Écriture de fonctions}
 
 Pour les questions suivantes il faut donner la déclaration et la
 définition de chaque fonction. Vous pouvez faire l'exercice une
 première fois en donnant uniquement les déclarations, puis le
-reprendre pour les définitions. Répondre dans un seul programme, dans
+reprendre pour les définitions. Répondre dans un seul programme, \C{fonctions2.c}, dans
 lequel vous écrirez une fonction principale (\C{main}) faisant appel à
-ces fonctions pour les tester.
+toutes les fonctions pour les tester.
 \begin{enumerate}
 \item Écrire la fonction \verb|carre| qui prend en entrée un entier et qui renvoie le carré de cet entier.
 \item Écrire la fonction \verb|cube| qui prend en entrée un entier et qui renvoie le cube de cet entier.
-\item Écrire la fonction \verb|est_majeur| qui prend en entrée un entier représentant l'age en années d'une personne et renvoie \verb|TRUE| si cette personne est majeure et \verb|FALSE| sinon (on considérera les deux constantes utilisateurs bien déclarées).
+\item Écrire la fonction \verb|est_majeur| qui prend en entrée un entier représentant l'age en années d'une personne et renvoie \verb|true| si cette personne est majeure et \verb|false| sinon (on considérera les deux constantes utilisateurs bien déclarées).
 \item Écrire la fonction \verb|somme| qui prend en entrée un entier
   $n$ et qui renvoie $\sum_{i=1}^{i=n} i$. Où faut-il déclarer la
   variable de boucle ?
 \item Si vous ne l'avez pas fait à l'exercice précédent, écrire la fonction \verb|factorielle| qui prend en entrée un entier
-  $n$ et qui renvoie $\Pi_{i=1}^{i=n} i$. 
+  $n$ et qui renvoie $\Pi_{i=1}^{i=n} i$.
 \item Écrire la procédure \verb|afficher_rectangle| qui prend en
   entrée deux entiers, largeur et hauteur, et affiche un rectangle
   d'étoiles de ces dimensions.
@@ -241,10 +241,10 @@ int est_majeur(int age)
 {
     if (age < 18)
     {
-        return FALSE;
+        return false;
     }
     /* sinon */
-    return TRUE;
+    return true;
 }
 
 int somme(int n)
@@ -294,10 +294,10 @@ int binomial(int n, int p)
 
 \section{Programmer avec des fonctions et procédures}
 Dans les exercices suivants, l'objectif est de mettre au point des programmes entiers en y apportant vos
-propres fonctions et procédures. La méthode pour y arriver : découper le
-programmes en tâches simples à mettre en œuvre et 
-progresser par étapes en  testant régulièrement votre code (même s'il
-est incomplet).
+propres fonctions et procédures. La méthode pour y arriver : \textbf{découper le
+programmes en tâches simples à mettre en œuvre et
+progresser par étapes en  testant régulièrement votre code, même s'il
+est incomplet}.
 
 Pour chaque exercice, vous pouvez faire plus ou moins de fonctions et
 procédures selon si vous découpez le travail en de plus ou moins gros
@@ -306,23 +306,21 @@ de \emph{code ravioli}. Par exemple, pour afficher des motifs
 d'étoiles vous pouvez déclarer et définir les procédures suivantes :
 \begin{small}
 \begin{verbatim}
-/* afficher_ligne(5) affiche "*****\n" */
-void afficher_ligne(int nb_etoiles);
-/* afficher_etoile() affiche "*" */
-void afficher_etoile();
-/* afficher_espace() affiche " " */
-void afficher_espace();
-/* afficher_etoile() affiche "\n" */
-void finir_ligne();
+void afficher_ligne(int nb_etoiles); /* afficher_ligne(5) affiche "*****\n" */
+void afficher_etoile();              /* affiche "*" */
+void afficher_espace();              /* affiche " " */
+void finir_ligne();                  /* affiche "\n" */
 \end{verbatim}
 \end{small}
 
 
 Lorsque c'est possible, exercez vous à produire du code ravioli en
-rajoutant des fonctions et procédures (par exemple, utiliser \verb+afficher_ligne(n)+
-au lieu d'une boucle for pour afficher $n$ étoiles et un retour à la ligne). Puis, réciproquement, à
-supprimer les sous-tâches qui vous paraissent exagérées (par exemple, remplacer un appel
-à \verb+afficher_espace()+ par un appel direct à \verb+printf(" ")+.)
+rajoutant des fonctions et procédures (par exemple, utiliser
+\verb+afficher_ligne(n)+ au lieu d'écrire directement une boucle for
+pour afficher $n$ étoiles et un retour à la ligne). Puis,
+réciproquement, à supprimer les sous-tâches qui vous paraissent
+exagérées (par exemple, remplacer un appel à \verb+afficher_espace()+
+par un appel direct à \verb+printf(" ")+.)
 
 \begin{correction}
 À faire.
@@ -332,9 +330,7 @@ supprimer les sous-tâches qui vous paraissent exagérées (par exemple, remplac
 Pippo a commencé à écrire un procédure qui permet d'afficher un
 triangle d'étoiles. Comme c'est un peu compliqué, il progresse par étapes
 et fait en sorte de pouvoir tester son code le plus tôt possible, même
-s'il n'est pas terminé.  Bien entendu, le principal reste à
-faire. Vous pouvez récupérer ce programme sur la page web du cours. À vous de
-le compléter. 
+s'il n'est pas terminé.  Compléter son programme \C{triangle3.c}, figure~\ref{fig:triangle}.
 
 \begin{figure}[tb]
   \begin{small}
@@ -353,15 +349,14 @@ int main() {
         afficher_triangle(i);
     }
     return EXIT_SUCCESS;
-} 
+}
 
 void afficher_triangle(int cote) {
     int i; /* var de boucle */
 
     /* il faudrait deja arriver a faire un carre ! */
-    for (i = 0; i < cote; i = i + 1) {/* pour chaque ligne */
+    for (i = 0; i < cote; i += 1) {/* pour chaque ligne */
         /* afficher une ligne de cote etoiles. Faire une sous-procedure ? */
-        printf("*<-- %d -->*\n", cote);
     }
 }
 \end{verbatim}
@@ -397,7 +392,7 @@ ainsi obtenus se reproduisent de la même manière.\footnote{Merci à Laure Petr
     1er décembre & \plapin \plapin   \quad  \mlapin \mlapin  \quad
     \glapin \glapin & \\
     1er janvier&\plapin \plapin \plapin \plapin   \quad  \mlapin
-    \mlapin  \quad \glapin \glapin \glapin \glapin   & 
+    \mlapin  \quad \glapin \glapin \glapin \glapin   &
   \end{tabular}
 \end{center}
 \begin{newenu}
@@ -416,8 +411,8 @@ premiers mois.
   de combien de temps les lapins sont plus d’un milliard (on supposera
   qu’aucun lapin ne meurt pendant cette période), en partant d’un
   couple de jeunes lapins.
-\item Mettre en œuvre ces algorithmes dans un programme C.
-\end{newenu} 
+\item Mettre en œuvre ces algorithmes dans un programme C, \C{lapins.c}.
+\end{newenu}
 
 \paragraph{Les lapins disparaissent !} Cinq couples de jeunes lapins se sont
 installés sur une île déserte et ont fondé une communauté. Les premiers
@@ -437,18 +432,18 @@ par les lapins et ont pris des contre-mesures).
 \item Afficher la population de lapin obtenue à chaque nouveau mois
   sous forme graphique sur une ligne. Par exemple, un couple de
   nouveaux lapins sera affiché par le caractère point "\verb+.+'', un couple de lapins d'un
-  mois par le caractère "\verb+o+'', un vieux couple de lapins par le
+  mois par le caractère "\verb+o+", un vieux couple de lapins par le
   caractère "\verb+#+".
 \item Combien de lapins sont nés sur l'île ?
 \end{lastenu}
 
-\begin{correction}wq
+\begin{correction}
   \begin{small}
     \verbatiminput{lapins.c}
     \end{small}
 \end{correction}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "td4"
-%%% End: 
+%%% End:
