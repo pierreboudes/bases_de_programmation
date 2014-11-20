@@ -2,7 +2,7 @@
 \input{communs/slides_style}
 
 %%% Titre -- Cours 1
-\title{Éléments d'informatique -- Cours 1. Introduction\\ L'instruction de contrôle \C{if}}
+\title{Bases de programmation -- Cours 1. Introduction\\ L'instruction de contrôle \C{if}}
 
 % Éléments d'architecture des
 % ordinateurs, mini-assembleur\\La programmation
@@ -43,17 +43,17 @@
 \begin{scope}[shift={(6.5,3)}]%computer 3
 \draw[ultra thick, rounded corners=4pt,fill=blue!15] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \begin{scope}[shift={(5,2.5)}]%computer 1
 \draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \begin{scope}[shift={(5.6,1.9)}]%computer 2
 \draw[ultra thick, rounded corners=4pt,fill=blue!20] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \begin{scope}[shift={(-3,2.5)}]%hum 1
   \draw[ultra thick,fill=pink] (0,0.9) circle (0.3cm); \draw[draw,line
@@ -98,9 +98,9 @@ node {??};
 \only<7->{%source
 \draw[draw,line width=4mm,->,Goldenrod](-1.9,2.5)--node [black]
 (0.4,3) {programment} (0.3,2.5);
-\node [rectangle, draw, fill=blue!20, 
+\node [rectangle, draw, fill=blue!20,
 text width=3em, text centered, minimum height=4.6em] at (1.2,2.5) {};
-\node [rectangle, draw, fill=blue!20, 
+\node [rectangle, draw, fill=blue!20,
     text width=3em, text centered, minimum height=4.6em] at (1.1,2.6)
     {};
 \node[line width=0mm,Goldenrod,rotate=60] at (1.1,2.6) {\Large\textbf{source}};
@@ -110,7 +110,7 @@ text width=3em, text centered, minimum height=4.6em] at (1.2,2.5) {};
 \begin{scope}[shift={(2.4,2.2)},black!30]%computer 4
 \draw[ultra thick, rounded corners=4pt,fill=blue!10] (0,0) rectangle (1,0.7);
 \draw[ultra thick, pattern=crosshatch dots] (0,0) -- (-0.4,-0.4) -- (0.6,
--0.4) -- (1, 0) -- cycle;  
+-0.4) -- (1, 0) -- cycle;
 \end{scope}
 \draw[draw,line width=4mm,->,blue!20](2,2.5)--node [black] (4,3)
 {traduction} (4.1,2.5);
@@ -138,13 +138,14 @@ langage C.
 }
 \end{frame}
 
-\section[Plan]{}
-\frame[label=plan]{\tableofcontents}
+\mode<beamer>{\section[Plan]{}
+\frame[label=plan]{\tableofcontents}}
+
 
 \begin{frame}
   \begin{quote}
   « L'informatique n'est pas plus la science des ordinateurs que
-  l'astronomie n'est celle des télescopes. »\\ 
+  l'astronomie n'est celle des télescopes. »\\
   \hfill E.~W.~Dijkstra\\[1cm]
 \end{quote}
 \end{frame}
@@ -157,7 +158,7 @@ langage C.
   \item John William Mauchly et John Eckert autant (ou plus) que
     vN\pause
   \item Qu'est-ce que c'est ?\pause
-    \begin{itemize}      
+    \begin{itemize}
     \item L'idée d'une machine à \alert{programme
         stocké}\pause
     \item  Une machine réalisée, l'ancêtre de tous nos processeurs\pause
@@ -187,7 +188,7 @@ langage C.
     \foreach \y in {-1.3,-0.7,...,1} {
       \draw[left color=red!20, right color=blue!20] (0.125,\y + 0.2)
       rectangle (0.925,\y + 0.6);
-      \draw[left color=red!20, right color=blue!20] (1.075,\y + 0.2) 
+      \draw[left color=red!20, right color=blue!20] (1.075,\y + 0.2)
       rectangle (1.875,\y + 0.6);
     }
 }
@@ -236,7 +237,7 @@ langage C.
   l'architecture matérielle.\pause
 \item les instructions du langage machine sont écrites en binaire.\pause
 \item   le \alert{langage assembleur} est une notation du langage
-  machine plus pratique pour les humains. 
+  machine plus pratique pour les humains.
    \end{itemize}
   \end{definition}
 \pause Vous en verrez plus sur les codages en binaire des données
@@ -269,14 +270,14 @@ ou deux \emph{opérandes} (ou \emph{arguments} de l'opération).
 \pause
 \begin{block}{Vocabulaire} Dans l'expression arithmétique usuelle $3 + 5$,  le signe $+$ est l'opérateur
 et les nombres $3$ et $5$ sont les opérandes.
-\end{block} 
+\end{block}
 \end{frame}
 
 \begin{frame}
 \frametitle{Quelques instructions typiques (Amil)\nowrite}
 \pause
   \begin{tabular}[c]{lp{8.3cm}}
-  \C{stop} & Arrête l'exécution du programme.\\ 
+  \C{stop} & Arrête l'exécution du programme.\\
   \C{noop} & N'effectue aucune opération.\\ \pause
   \C{lecture i rj} & Charge, dans le registre $j$, le contenu de la mémoire d'adresse $i$.\\
   \C{ecriture ri j} & Écrit le contenu du registre $i$ dans la mémoire
@@ -285,7 +286,7 @@ et les nombres $3$ et $5$ sont les opérandes.
   \C{sautpos ri j} & Si la valeur contenue dans le registre $i$ est
   positive ou nulle, met CP à la valeur $j$.\\ \pause
 %  \C{valeur x ri} & Initialise le registre $i$ avec la valeur $x$.\\
- \C{inverse ri} & Inverse le signe du contenu du registre $i$.\\ 
+ \C{inverse ri} & Inverse le signe du contenu du registre $i$.\\
   \C{add ri rj} & Ajoute la valeur du registre $i$ à celle du registre $j$.\\
   \C{soustr ri rj} & Soustrait la valeur du registre $i$ à celle du registre $j$.\\
   \C{mult ri rj} & Multiplie \ldots\\
@@ -333,7 +334,7 @@ On simule pas à pas l'exécution du programme.
  \emph{Instructions} & Cycles & CP& r0& r2& 10& 11 &12\\ \hline \pause
 \hfill Initialisation & 0 & 1 & ? & ? & 14 & 5 & ?
  \\ \hline \commentaire{Lecture de la donnée d'adresse 10 dans le
-   registre 0} 
+   registre 0}
 \C{lecture 10 r0} & 1 & 2  & 14 & & & &\\ \hline
  \commentaire{Initialisation du registre 2 à 5
 } \C{lecture 11 r2} & 2 & 3  & & 5 & & &\\ \hline
@@ -360,7 +361,7 @@ On simule pas à pas l'exécution du programme.
 \subsection{La programmation structurée}
 \begin{frame}
   \frametitle{La programmation structurée}
-  
+
   \begin{definition}[Programmation structurée]
     Programmer par \structure{blocs} d'instructions en combinant ces blocs de trois manières :\pause
     \begin{enumerate}
@@ -373,7 +374,7 @@ On simule pas à pas l'exécution du programme.
     Un bloc peut lui-même être une combinaison de blocs (ou juste une instruction).
   \end{definition}
 \pause La sélection et la répétition sont assurées par des
-\structure{instructions de contrôle}. 
+\structure{instructions de contrôle}.
   \pause Tout programme en langage machine peut
   être transformé en un programme structuré (Böhm-Jacopini 1966).
 \end{frame}
@@ -397,7 +398,7 @@ Cette traduction est assurée par un programme particulier : un compilateur
 \begin{frame}[fragile]
   \frametitle{Construction d'un programme C\nowrite}
 \structure{Code source}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
 /* Declaration de fonctionnalites supplementaires */
 #include <stdlib.h> /* EXIT_SUCCESS */
 
@@ -426,16 +427,16 @@ Les commentaires sont ignorés lors de la traduction en langage machine.
   \begin{columns}
  \begin{column}[t]{2.5cm}
 \structure{Code source}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize] 
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
 ...
 /* Fonction principale */
 int main()
 {
     /* Declaration et initialisation des variables */
     int x = 5;
- 
 
-   
+
+
     x = 3 * x + 1;
     ...
 \end{lstlisting}
@@ -484,7 +485,7 @@ text width=5.4cm]
 \begin{frame}[fragile]
   \frametitle{L'instruction de contrôle if}
 
-\structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else 
+\structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!20}{bloc1}}\} else
 \{\emph{\colorbox{red!20}{bloc2}}\}}.
 \medskip
 
@@ -528,17 +529,17 @@ else
 \end{columns}
 \end{frame}
 
-\section[Démos]{Démos et fin}
+\mode<beamer>{\section[Démos]{Démos et fin}
 \begin{frame}
   \frametitle{Démos et fin}
-\end{frame}
+\end{frame}}
 
 
 \section[Références]{Liens utiles}
 \begin{frame}
 \frametitle{Liens utiles\nowrite}
 
-  \begin{itemize} 
+  \begin{itemize}
 \item ma page : \url{http://www-lipn.univ-paris13.fr/~boudes/}
 \item sites pour apprendre à développer :
   \begin{itemize}
@@ -549,12 +550,12 @@ else
   \url{https://science-info-lycee.fr}
 \item Un livre de la BU: \emph{Le livre du C, premier langage (pour les
   vrais débutants en programmation)}, Claude Delannoy.
-  \end{itemize} 
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Liens utiles\nowrite}
-\begin{itemize} 
+\begin{itemize}
 \item Polycopiés :
   \begin{itemize}
   \item le cours I3 de Laure Petrucci :\\
@@ -572,7 +573,7 @@ else
   \item ubuntu : \url{http://www.ubuntu-fr.org/}
   \item virtualbox : \url{http://www.virtualbox.org/}
   \end{itemize}
-  \end{itemize} 
+  \end{itemize}
 \end{frame}
 
 \end{document}
