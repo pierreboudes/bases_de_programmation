@@ -1,10 +1,10 @@
 /* Declaration de fonctionnalites supplementaires */
 #include <stdlib.h> /* pour EXIT_SUCCESS */
 #include <stdio.h> /* pour printf() */
+#include <stdbool.h> /* booleens */
+
 
 /* Declaration des constantes et types utilisateur */
-#define TRUE 1
-#define FALSE 0
 
 /* Declaration des fonctions utilisateur */
 
@@ -14,19 +14,20 @@ int main()
     /* Declaration et initialisation des variables */
     int n = 1;
     int d;
-    int premier = TRUE;
-    int continuer = TRUE;
+    bool premier = true;
+    bool continuer = true;
 
 
     while (continuer)
     {
-	printf("Donner un entier positif (0 pour terminer)\n");
+      premier = true;
+      printf("Donner un entier positif (0 pour terminer)\n");
 	scanf("%d", &n);
 	printf("Vous avez saisi %d\n", n);
 
 	if (n == 0)
 	{
-	    continuer = FALSE;
+	    continuer = false;
 	}
 	/* test de primalite */
 	d = 2;
@@ -35,7 +36,7 @@ int main()
 	    if (n % d == 0) /* d divise n */
 	    {
 		printf("divisible par %d\n", d);
-		premier = FALSE;
+		premier = false;
 	    }
 	    d = d + 1; /* candidat diviseur suivant */
 	}

@@ -4,7 +4,7 @@
 \input{communs/slides_style}
 
 %%% Titre -- Cours 3
-\title{Algorithmique et programmation -- Cours 3. Boucle while,
+\title{Bases de programmation -- Cours 3. Boucle while,
 expressions booléennes. Algorithmes élémentaires.}
 
 \author{Pierre Boudes}
@@ -23,33 +23,35 @@ expressions booléennes. Algorithmes élémentaires.}
 	\end{center}
 \end{frame}
 
+\mode<beamer>{
 \frame[label=plan]{\tableofcontents}
+}
 
-\section{printf/scanf (1)}
+\section{printf/scanf (int seulement)}
 \begin{frame}[fragile]
   \frametitle{printf/scanf (1) \nowrite}
 \begin{itemize}
 \item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
-  (\emph{print formatted}). 
-\item Chaque \verb+%+ 
+  (\emph{print formatted}).
+\item Chaque \verb+%+
 dans le texte à afficher est substitué par la valeur formatée d'un
 \alert{paramètre supplémentaire} de la fonction. Le caractère suivant le
-symbole \verb+%+ 
+symbole \verb+%+
 signale le format à utiliser.  Un \verb+%d+
 met une valeur au format \alert{entier décimal}.
 \pause
 \item Exemples :
   \begin{itemize}
 \item
-    \verb+printf("Bonjour\n")+ 
+    \verb+printf("Bonjour\n")+
 affiche \C{Bonjour} et un saut de
     ligne\pause
 \item
-    \verb+printf("i vaut %d\n", i)+ 
+    \verb+printf("i vaut %d\n", i)+
 affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
 ligne)\pause
 \item
-    \verb+printf("(%d, %d)\n", 31, -4)+ 
+    \verb+printf("(%d, %d)\n", 31, -4)+
 affiche \C{(31, -4)} et un saut de ligne.
  \end{itemize}
 \pause
@@ -60,12 +62,13 @@ affiche \C{(31, -4)} et un saut de ligne.
 \end{frame}
 
 
-
-%\subsection{Rappels sur l'instruction de contrôle if}
+\section[while]{L'instruction de contrôle while}
+%\mode<beamer>{
+\subsection{Rappels sur l'instruction de contrôle if}
 \begin{frame}[fragile]
   \frametitle{Rappels sur l'instruction de contrôle if \nowrite}
 
-  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!30}{bloc1}}\} else 
+  \structure{Syntaxe :} \C{if (\emph{condition}) \{\emph{\colorbox{green!30}{bloc1}}\} else
     \{\emph{\colorbox{red!30}{bloc2}}\}}.
   \medskip
 
@@ -110,12 +113,12 @@ else
   \end{columns}
 \end{frame}
 
-\subsection{L'instruction de contrôle for}
+\subsection{Rappels sur l'instruction de contrôle for}
 \begin{frame}[fragile]
   \frametitle{Rappels sur l'instruction de contrôle for\nowrite}
 
   \structure{Syntaxe :}\\
-  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!30}{instruct2}}) 
+  \C{for (\emph{instruct1}; \emph{condition}; \emph{\colorbox{yellow!30}{instruct2}})
     \{\emph{\colorbox{green!30}{bloc}}\}}.
   \medskip
 
@@ -156,15 +159,14 @@ for (i = 0; i < 5; i = i + 1)
     }
   \end{columns}
 \end{frame}
+%}
 
-
-\section[while]{L'instruction de contrôle while}
-\subsection{Syntaxe et sémantique}
+\subsection{Syntaxe et sémantique du while}
 \begin{frame}[fragile]
   \frametitle{L'instruction de contrôle while\youwrite}
 
 \structure{Syntaxe :}\\
- \C{while (\emph{condition}) 
+ \C{while (\emph{condition})
 \{\emph{\colorbox{green!30}{bloc}}\}}.
 \medskip
 
@@ -204,6 +206,43 @@ while ( ... )
 \end{frame}
 
 %\subsection{Trace}
+%\mode<handout>{
+\begin{frame}[fragile]
+  \frametitle{Exemple}
+\begin{columns}
+  \begin{column}[t]{3.7cm}
+ \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\scriptsize]
+int main()
+{
+    /* Declaration et initialisation des variables */
+    int x;
+    int nb = 1; /* nombre de chiffres */
+
+    printf("Entrer un nombre positif ");
+    scanf("%d", &x);
+
+    while (x > 9) /* tant que x a plus d'un chiffre */
+    {
+        x = x / 10; /* enlever un chiffre a x */
+        nb = nb + 1; /* compter un chiffre de plus */
+    }
+    printf("ce nombre a %d chiffres decimaux\n", nb);
+
+    /* Valeur fonction */
+    return EXIT_SUCCESS;
+}
+\end{lstlisting}
+\vspace{.4cm}
+  \end{column}
+\begin{column}[t]{4cm}
+\scriptsize
+ \end{column}
+\end{columns}
+\end{frame}
+%}
+
+
+%\subsection{Trace}
 \begin{frame}[fragile]
   \frametitle{Trace}
 \begin{columns}
@@ -217,14 +256,14 @@ int main()
 
     printf("Entrer un nombre positif ");
     scanf("%d", &x);
-    
+
     while (x > 9) /* tant que x a plus d'un chiffre */
     {
         x = x / 10; /* enlever un chiffre a x */
         nb = nb + 1; /* compter un chiffre de plus */
     }
     printf("ce nombre a %d chiffres decimaux\n", nb);
-    
+
     /* Valeur fonction */
     return EXIT_SUCCESS;
 }
@@ -249,7 +288,7 @@ L'utilisateur saisit 6071.
 13 &   & 3 & \pause \\
 12 &  6 &  & \pause\\
 13 &   & 4 &  \pause \\
-15 & & & \C{ce nombre a 4...}\pause \\ 
+15 & & & \C{ce nombre a 4...}\pause \\
 18 & \multicolumn{3}{c}{Renvoie \C{EXIT\_SUCCESS}}
 \end{tabular}
  \end{column}
@@ -320,22 +359,19 @@ booléennes}, pouvant être \emph{Vrai}, \emph{Faux}  ou :\pause
   joue le rôle du Faux, l'entier \emph{un} joue le rôle du Vrai et tout
   entier différent de zéro est évalué à vrai.\pause
 
-\item On se donne deux
+\item Par souci de clarté, on se donne deux
   constantes symboliques :
 \begin{lstlisting}[escapechar={\%},basicstyle=\scriptsize\ttfamily]
 /* Declaration des constantes et types utilisateur */
 #define TRUE 1
 #define FALSE 0
-
 int main()
 {
     int continuer = TRUE; /* faut-il continuer ?*/
+    while (continuer) { ...
+\end{lstlisting}\pause
 
-    while (continuer)
-    {
-        ...
-\end{lstlisting}
-
+\item Mais depuis C99 le type \C{bool} et les constantes \C{true} et \C{false}, sont définies dans \C{stdbool.h}.
   \end{itemize}
 \end{frame}
 
@@ -349,7 +385,7 @@ int main()
 \begin{columns}
  \begin{column}[t]{0.59\linewidth}
   \begin{enumerate}
-    \item  Traiter des cas spécifiques 
+    \item  Traiter des cas spécifiques
       \begin{itemize}
       \item \alert{\C{if else}} (différencier)
       \item \alert{\C{\#define}} constantes symboliques (nommer)
@@ -396,7 +432,7 @@ int main()
   \begin{itemize}
 \item boucle \alert{while}
   \end{itemize}\pause
-    \item Attente active 
+    \item Attente active
   \begin{itemize}
 \item boucle \alert{while}
   \end{itemize}
@@ -444,17 +480,19 @@ Jeu de calcul mental (additionner deux nombres au hasard)\nowrite
 \begin{frame}[fragile]
   \frametitle{Boucle d'attente active}
 La boucle sert à attendre qu'une condition externe devienne vraie, le
-programme teste continuellement cette condition. 
+programme teste continuellement cette condition.
 \pause
 \begin{block}{Exemple}
   \emph{Tic tac boum}, est-ce que 10 secondes sont écoulées ?\nowrite
 \end{block}
-\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={19-23},numbers=left,firstnumber=19]{../demo/tictacboum.c}
-\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={42-44},numbers=left,firstnumber=42]{../demo/tictacboum.c}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={18-22},numbers=left,firstnumber=18]{../demo/tictacboum.c}
+\lstinputlisting[basicstyle=\scriptsize\ttfamily,linerange={41-43},numbers=left,firstnumber=41]{../demo/tictacboum.c}
 \end{frame}
 
+\mode<beamer>{
 \section{Démos}
 \begin{frame}
   \frametitle{Démos et utilisation de codeblocks}
 \end{frame}
+}
 \end{document}
