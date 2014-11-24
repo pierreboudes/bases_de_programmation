@@ -27,41 +27,6 @@ expressions booléennes. Algorithmes élémentaires.}
 \frame[label=plan]{\tableofcontents}
 }
 
-\section{printf/scanf (int seulement)}
-\begin{frame}[fragile]
-  \frametitle{printf/scanf (1) \nowrite}
-\begin{itemize}
-\item  Pour afficher un texte à l'écran, nous utilisons la fonction \alert{printf}
-  (\emph{print formatted}).
-\item Chaque \verb+%+
-dans le texte à afficher est substitué par la valeur formatée d'un
-\alert{paramètre supplémentaire} de la fonction. Le caractère suivant le
-symbole \verb+%+
-signale le format à utiliser.  Un \verb+%d+
-met une valeur au format \alert{entier décimal}.
-\pause
-\item Exemples :
-  \begin{itemize}
-\item
-    \verb+printf("Bonjour\n")+
-affiche \C{Bonjour} et un saut de
-    ligne\pause
-\item
-    \verb+printf("i vaut %d\n", i)+
-affiche \C{i vaut} suivi de la valeur décimale de i (et d'un saut de
-ligne)\pause
-\item
-    \verb+printf("(%d, %d)\n", 31, -4)+
-affiche \C{(31, -4)} et un saut de ligne.
- \end{itemize}
-\pause
-\item Réciproquement pour faire entrer dans le programme une donnée saisie par
-  l'utilisateur, nous utiliserons \alert{\C{scanf}}.
-\item Exemple : \verb+scanf("%d", &x)+
-\end{itemize}
-\end{frame}
-
-
 \section[while]{L'instruction de contrôle while}
 %\mode<beamer>{
 \subsection{Rappels sur l'instruction de contrôle if}
