@@ -3,89 +3,23 @@
 \newcommand{\commentaire}[1]{}
 
 \entete{Travaux dirigés  3 : expressions booléennes et structures de
-  controle \emph{if else}, \emph{for} et \emph{while}.}
+  contrôle \emph{if else}, \emph{for} et \emph{while}.}
+\vspace{-1cm}
 
-
-
-\section{Révisions rapides}
-
-\subsection{Affectation}
-Soit le programme suivant :
-{\small
-\begin{listing}{1}
-/* Declaration de fonctionnalites supplementaires */
-#include <stdlib.h> /* EXIT_SUCCESS */
-#include <stdio.h> /* printf */
-
-/* Declaration des constantes et types utilisateurs */
-
-/* Declaration des fonctions utilisateurs */
-
-/* Fonction principale */
-int main()
-{
-    /* Declaration et initialisation des variables */
-    int x;
-
-    x = 3;
-    x = x + 1;
-    printf("x = %d\n", x);
-
-    /* valeur fonction */
-    return EXIT_SUCCESS;
-}
-
-/* Definitions des fonctions utilisateurs */
-\end{listing}
-}
-
-\begin{enumerate}
-\item Que fait ce programme (répondre sans utiliser l'ordinateur) ?
-  \begin{correction}
-    \begin{itemize}
-    \item Il déclare la variable impérative \verb|x| (occupe un espace memoire)
-    \item Il affecte 3 à la variable \verb|x|
-    \item Affecte à x la valeur de l'expression (x + 1) qui vaut 4 : la sous-expression x s'évalue comme la valeur de la variable (3), plus un. 
-    \item Affiche la valeur de l'expression x qui s'évalue comme la valeur de la variable, cad 4.
-    \end{itemize}
-  \end{correction}
-\item Donner la traduction des instructions aux lignes 15 et 16 en langage amil.
-  \begin{correction}
-    \begin{itemize}
-    \item[] CP vaut 1
-    \item[\#]  Soit la var x correspondant à la case mémoire d'adresse 10 (initialisation).
-    \item[\#] affecte 3 a la var x
-    \item[1] valeur 3 r0
-    \item[2] ecriture r0 10
-    \item[\#] x = x + 1
-    \item[3] lecture 10 r0
-    \item[4] valeur 1 r1
-    \item[5] add r1 r0 \# r0 vaut l'expression x + 1
-    \item[6] ecriture r0 10 \# affecte la valeur de l'expression à x
-    \end{itemize}
-  \end{correction}
-\end{enumerate}
-
-
-
-\subsection{Évaluation d'expressions booléennes}
+\section{Évaluation d'expressions booléennes}
 \label{intro}
 
-Soit le programme suivant :
+Qu'affiche le programme suivant (répondre sans utiliser l'ordinateur) ?
 {\small
 \begin{listing}{1}
 #include <stdlib.h> /* EXIT_SUCCESS */
 #include <stdio.h> /* printf */
-
-#define FALSE 0
-#define TRUE 1
-
-/* Declaration de fonctions utilisateurs */
+#include <stdbool.h> /* booleens */
 
 int main()
 {
-    int beau_temps = TRUE;
-    int pas_de_vent = FALSE;
+    bool beau_temps = true;
+    bool pas_de_vent = false;
 
     printf("%d\n", beau_temps && pas_de_vent);
     printf("%d\n", beau_temps || pas_de_vent);
@@ -94,21 +28,17 @@ int main()
 
     return EXIT_SUCCESS;
 }
-
-/* Definition de fonctions utilisateurs */
 \end{listing}
 }
 
-Qu'affiche le programme (répondre sans utiliser l'ordinateur) ?
-  \begin{correction}
+\begin{correction}
 \begin{verbatim}
 0
 1
 0
 1 /* toujours vrai : théorème de De Morgan : NON (a OU b) = NON a ET NON b */
 \end{verbatim}
-  \end{correction}
-
+\end{correction}
 
 
 \section{Boucles \textit{for} ou \textit{while} ?}
@@ -117,13 +47,12 @@ Ces boucles ont exactement la même sémantique et on peut facilement
 réécrire l'une en l'autre. Par convention, on préfère utiliser la
 boucle \textit{for} lorsque l'on connaît le nombre d'itérations à
 l'avance ; on utilise \textit{while} dans le cas contraire, lorsque le nombre
-d'itérations n'est pas connu à l'avance. 
+d'itérations n'est pas connu à l'avance.
 
 Résoudre les problèmes suivants en utilisant soit \textit{for}, soit \textit{while}.
 
 \subsection{Élévation à la puissance}
-
-Écrire un programme qui demande à l'utilisateur d'entrer deux nombres
+Écrire un programme \C{puissance.c} qui demande à l'utilisateur d'entrer deux nombres
 entiers $x$ et $n \geq 0$ puis calcule $x^n$ et affiche le résultat.
 \begin{correction}
 Trivial (for).
@@ -131,39 +60,39 @@ Trivial (for).
 
 \subsection{Somme d'une série d'entiers positifs saisis par
   l'utilisateur}
-Écrire un programme qui lit des entiers saisis par
+Écrire un programme \C{add.c} qui lit des entiers saisis par
 l'utilisateur et dès que l'utilisateur saisit un zéro (ou un nombre négatif), affiche le total des entiers positifs saisis jusque là.
 
-Exemple d'exécution : 
-\begin{verbatim}
-Entier ? 13
-Entier ? 2
-Entier ? 12
-Entier ? 15
-Entier ? 0
-Total : 42
-\end{verbatim}
+% Exemple d'exécution :
+% \begin{verbatim}
+% Entier ? 13
+% Entier ? 2
+% Entier ? 15
+% Entier ? 0
+% Total : 30
+% \end{verbatim}
 
 \subsection{Test de primalité}
 
-Donner \textbf{seulement l'algorithme} d'un programme qui demande à l'utilisateur d'entrer un
+Donner \textbf{l'algorithme} d'un programme qui demande à l'utilisateur d'entrer un
 nombre entier positif $n$ et teste si $n$ est premier. Utiliseriez
-vous un \emph{for} ou un \emph{while} ? Exemples d'exécution :
-\begin{small}
-\begin{verbatim}
-Entrer un entier positif : 23
-L'entier 23 est premier
+vous un \emph{for} ou un \emph{while} ?
+%Exemples d'exécution :
+% \begin{small}
+% \begin{verbatim}
+% Entrer un entier positif : 23
+% L'entier 23 est premier
 
-Entrer un entier positif : 25
-L'entier 25 n'est pas premier car divisible par 5
-\end{verbatim}
-\end{small}
+% Entrer un entier positif : 25
+% L'entier 25 n'est pas premier car divisible par 5
+% \end{verbatim}
+% \end{small}
 
 \begin{correction}
 L'idée est qu'il faut le faire avec un while plutôt qu'un
 for. L'algorithme doit s'énoncer à peu près comme ceci :
 \begin{itemize}
-\item saisie de n 
+\item saisie de n
 \item Pour chaque entier $d$ entre $1$ et $n$ exclus:
   \begin{itemize}
   \item \item Si $d$ divise $n$, terminer la boucle et afficher $n$
@@ -175,15 +104,13 @@ for. L'algorithme doit s'énoncer à peu près comme ceci :
 La traduction d'une boucle de parcours pouvant avoir une fin prématurée se fera
 plutôt avec un \C{while}. On ne présente pas le \C{break} dans ce cours.
 \begin{verbatim}
-#define TRUE 1
-#define FALSE 0
 ...
 int main()
 {
-  int premier = TRUE;
+  bool premier = true;
   int n;
   int d = 2;
- 
+
   /* saisie */
   printf("n?");
   scanf("%d",&n);
@@ -217,8 +144,8 @@ int main()
 
 \section{Le nombre secret}
 
-Nous voulons programmer le jeu du nombre à découvrir. Le joueur doit
-deviner un nombre secret choisit par l'ordinateur entre 0 et \verb|NB_MAX| (une constante du programme). S'il propose un nombre trop
+Programmer le jeu du nombre à découvrir. Le joueur doit
+deviner un nombre secret choisi par l'ordinateur entre 0 et \verb|NB_MAX| (une constante du programme). S'il propose un nombre trop
 grand, l'ordinateur lui répond "Plus petit", s'il propose trop petit, l'ordinateur lui répond "Plus grand". Dans ces deux cas, il
 est invité à proposer un autre nombre. Le jeu s'arrête quand il devine juste.
 Un exemple d'exécution de ce jeu pourrait être :
@@ -236,7 +163,7 @@ Vous avez trouvé le nombre secret.
 
 \begin{enumerate}
 \item Proposez un algorithme en français pour le jeu.
-\item Traduisez-le en langage C et exécutez-le.
+\item Traduisez-le en un programme C \C{deviner.c} et testez-le.
 \item Pourquoi préférez-vous une boucle \verb|while| ici ?
 \end{enumerate}
 
@@ -245,7 +172,7 @@ Pour rendre le jeu intéressant, l'ordinateur doit choisir le nombre secret \emp
 qui renvoie un nombre pseudo-aléatoire entier entre 0 et la constante
 \verb|RAND_MAX| (égale à 2147483647) inclus. Pour renvoyer un nombre
 pseudo-aléatoire entre 0 et \verb|NB_MAX|, \verb|NB_MAX| inclus
-($\verb|NB_MAX| << \verb|RAND_MAX|$), il suffit de calculer le reste
+($\verb|NB_MAX| < \verb|RAND_MAX|$), il suffit de calculer le reste
 de la division entière de \C{rand()} par \verb|(NB_MAX + 1)|,
 c'est-à-dire le nombre renvoyé par \C{rand()}  modulo \verb|(NB_MAX + 1)|
 (opérateur \% en C). Le nom \C{rand} vient de \emph{random} qui veut dire aléatoire en anglais.
@@ -283,9 +210,7 @@ int main()
 #include <stdlib.h> /* EXIT_SUCCESS, rand, srand */
 #include <stdio.h> /* printf, scanf */
 #include <time.h> /* time */
-
-#define TRUE 1
-#define FALSE 0
+#include <stdbool.h>
 
 #define NB_MAX 15 /* nombre secret entre 0 et NB_MAX inclus */
 
@@ -295,7 +220,7 @@ int main()
 {
     int nombre_secret; /* nombre secret à deviner */
     int choix; /* choix de l'utilisateur pour le nombre secret */
-    int trouve = FALSE; /* TRUE si trouvé nombre secret */
+    bool trouve = false; /* true si trouvé nombre secret */
 
     /* initialisation du générateur de nombres pseudo-aléatoires */
     srand(time(NULL)); /* à ne faire qu'une fois */
@@ -309,10 +234,10 @@ int main()
         /* demande nombre à l'utilisateur */
         printf("Votre choix (nombre entre 0 et %d) ?\n",NB_MAX);
         scanf("%d",&choix);
-        
+
         if(choix == nombre_secret) /* trouvé */
         {
-            trouve = TRUE;
+            trouve = true;
         }
         else /* pas trouvé */
         {
@@ -340,180 +265,6 @@ int main()
 
 
 \section{Exercices complémentaires}
-
-\subsection{Faut-il renoncer à rembourser la dette publique ?}
-
-\begin{figure}[h!]
-    \begin{center}
-% Define block styles
-\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
-    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
-\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
-    text width=5em, text centered, rounded corners, minimum height=4em, node distance=3.5cm]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20,  text width=5.7em, text centered, 
-    minimum height=2em,  node distance=3.2cm]
-\tikzstyle{choix} = [rectangle, inner sep=2pt,
-    text centered]
-    
-\begin{tikzpicture}[node distance = 1.7cm, auto]
-    % Place nodes
-    \node [cloud] (temps) {Comment sont les marchés ?};
-    \node [below of=temps] (fantome) {};
-    \node [left of=fantome] (fantome2) {};
-    \node [block, left of=fantome2] (panique) {Ne plus rembourser};
-    \node [cloud, right of=fantome] (inquiets) {Dette $ > 0.5$
-      PIB ?};
-    \node [block,right of=inquiets] (confiants) {Ne rien changer};
-    \node [cloud,  below left of=inquiets] (pop) {La population
-      refuse l'austérité ?};
-    \node [block, below left of=pop] (ouipop) {Ne plus
-      rembourser};
-    \node [block, below right of=pop] (nonpop) {Ne
-      rien changer};
-    \node [block, below right of=inquiets] (nondette) {Ne rien changer};
-
-   % Draw edges
-\path [line] (temps) -| node [near start, above, choix] {paniqués} (panique);
-\path [line] (temps) -- node [near start, right, choix] {inquiets} (inquiets);
-\path [line] (temps) -| node [near start, above, choix] {confiants}
-(confiants);
-\path [line] (inquiets) -- node [left, choix] {oui} (pop);
-\path [line] (inquiets) -- node [right, choix] {non} (nondette);
-\path [line] (pop) -- node [left, choix] {oui} (ouipop);
-\path [line] (pop) -- node [right, choix] {non} (nonpop);
-\end{tikzpicture}
-    \end{center}
-    \caption{Décider s'il faut continuer de rembourser la dette}
-    \label{fig:ad}
-\end{figure}
-
-
-
-Un arbre de décision
-est un graphe particulier où les n{\oe}uds sont 
-des questions et les arêtes sont les réponses à ces questions.
-Il se lit de haut en bas. On avance dans l'arbre en répondant aux
-questions. Les n{\oe}uds les plus bas jouent le rôle particulier de
-classes de réponse au problème initial. 
-
-Ici, il y a deux classes de réponse : <<~Ne plus rembourser~>> et
-<<~Ne rien changer~>>.
-Par exemple, si les marchés sont inquiets, si la dette est
-strictement supérieure à $0.5$ fois le PIB et que la population refuse
-l'austérité, alors on ne rembourse plus.
-
-
-Vous utiliserez quatre variables dont vous coderez les valeurs avec des
-constantes symboliques. Les trois premières représentent les propriétés du jour
-courant pour prendre la décision, la dernière représente la décision à
-prendre :
-  
-\begin{itemize}
-\item \verb|marches| est un entier représentant l'état des marchés,
-  elle peut valoir un entier signifiant PANIQUE, ou un entier
-  signifiant INQUIETUDE ou un entier signifiant CONFIANCE.
-\item \verb|dette| est un nombre représentant la dette en
-  pourcentage du PIB (une valeur de 50 représente 50\% du PIB).
-\item \verb|refus| est un entier représentant le refus de l'austérité
-  qui peut avoir la valeur usuelle
- TRUE (si la population refuse l'austérité) ou la valeur usuelle FALSE (sinon).
-\item \verb|rembourser| est un entier représentant la décision à
-  prendre et peut avoir la valeur TRUE (s'il faut continuer de
-  rembourser) ou FALSE (s'il faut arrêter de rembourser). Sa valeur
-  initiale est TRUE. 
-\end{itemize}
-
-Votre programme sera en deux parties. Une première partie concernera
-la prise de décision sans affichage, en fonction
-des valeurs de \verb|marches|, \verb|dette|, \verb|refus|. Vous
-donnerez des valeurs de votre choix à ces trois variables mais le
-programme doit fonctionner pour tous les autres choix possibles. À la fin
-de cette première partie, \verb|rembourser| contiendra la valeur
-correcte pour la décision prise (TRUE ou FALSE). La seconde partie
-exploitera la valeur de \verb|rembourser| pour effectuer l'affichage.
-
-Écrire le programme complet en distinguant bien les deux
-parties.
-
-\begin{correction}
-\begin{figure}
-  \centering
-\begin{small}
-\listinginput{1}{marches.c}
-\end{small} 
-  \caption{Faut-il annuler la dette ? -- Corrigé.}
-  \label{fig:dropdebt}
-\end{figure}
-Correction figure~\ref{fig:dropdebt}.
-\end{correction}
-
-% \subsection{Exercice type : Quel temps fait-il ?}
-
-% En vous inspirant du codage du genre vu en cours (1 pour MASCULIN, 2
-% pour FÉMININ), proposez un codage pour indiquer si le temps est
-% COUVERT, ENSOLEILLÉ ou PLUVIEUX.
-% Écrivez un programme principal qui, étant donné le temps affecté à une
-% variable, affiche le temps qu'il fait.
-
-% \begin{correction}
-% \begin{verbatim}
-% Exemple : Soit temps = 1 avec 0 COUVERT, 1 ENSOLEILLÉ et 2 PLUVIEUX.
-% Affiche ``Le temps est ensoleillé.''
-
-% Algo :
-%     /* Codage :
-%        0 COUVERT
-%        1 ENSOLEILLE
-%        2 PLUVIEUX
-%     */
-% si temps = 0 alors affiche couvert
-% si temps = 1 alors affiche ensoleille
-% si temps = 2 alors affiche pluvieux 
-
-% les cas sont mutuellement exclusifs.
-% \end{verbatim}
-% \begin{verbatim}
-% /* Declaration de fonctionnalites supplementaires */
-% #include <stdlib.h> /* EXIT_SUCCESS */
-% #include <stdio.h> /* printf */
-
-% /* Declaration des constantes et types utilisateurs */
-
-% /* Declaration des fonctions utilisateurs */
-
-% /* Fonction principale */
-% int main()
-% {
-%     /* Declaration et initialisation variables */
-%     int temps = 1; /* temps qu'il fait */
-
-%     /* si temps = 0 alors affiche couvert */ 
-%     if(temps == 0) /* COUVERT */
-%     {
-%         printf("Le temps est couvert.\n");
-%     }
-
-%     /* si temps = 1 alors affiche ensoleille */ 
-%     if(temps == 1) /* ENSOLEILLE */
-%     {
-%         printf("Le temps est ensoleille.\n");
-%     }
-
-%     /* si temps = 2 alors affiche pluvieux */ 
-%     if(temps == 2) /* PLUVIEUX */
-%     {
-%         printf("Le temps est pluvieux.\n");
-%     }
-    
-%     /* valeur fonction */
-%     return EXIT_SUCCESS;
-% }
-
-% /* Definitions des fonctions utilisateurs */
-% \end{verbatim}
-% \end{correction}
-
 
 \subsection{Carré d'étoiles}
 
@@ -546,7 +297,7 @@ n? 4
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "td3"
-%%% End: 
+%%% End:
