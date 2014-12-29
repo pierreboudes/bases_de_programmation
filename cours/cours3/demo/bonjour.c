@@ -10,7 +10,7 @@
 int main()
 {
   /* Declaration et initialisation des variables */
-  printf("Bonjour tout le monde\n");
+  printf("main()\n");
 
   /* Valeur fonction */
   return EXIT_SUCCESS;

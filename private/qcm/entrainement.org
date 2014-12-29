@@ -1,11 +1,10 @@
 #+TITLE: QCM
 #+OPTIONS: toc:nil
 #+LANGUAGE: fr
- 
+
 * Tous les QCM d'un bloc
 
 ** Situer le langage
-
 *** chanteur compositeur
 Le langage C est un langage
 - compilé
@@ -13,7 +12,7 @@ Le langage C est un langage
 - interprété
 - composé
 
-** lecture des erreurs 
+** lecture des erreurs
 *** seg fault
 Une /segmentation fault/ (ou /faute de segmentation/) est
 une erreur qui survient lorsque :
@@ -35,14 +34,13 @@ on peut utiliser l'instruction
 -  =int loop n;=
 -  =int %d;=
 
-*** stdio 
+*** stdio
 Lorsqu'un programme utilise =printf= ou =scanf= il faut
 qu'il contienne l'instruction préprocesseur :
 - =#include <stdio.h>=
 - =#include <studio.h>=
 - =#include <studlib.h>=
 - =#appart <stdlib.h>=
-
 
 *** printf
 Soient deux variables entières =x= et =y= initialisées à
@@ -61,14 +59,12 @@ Un registre du processeur est :
 - un composant qui contient la liste des fichiers du système
 - une gamme de fréquence de fonctionnement du processeur
 
-
 *** bus
 Le bus système sert à :
 - Transférer des données et intructions entre processeur et mémoire
 - Arriver à l'heure en cours
 - Écrire des données sur le disque dur
 - transporter les processus du serveur au processeur
-
 
 *** bit
 Un bit est :
@@ -77,7 +73,7 @@ Un bit est :
 - l'instruction qui met fin à un programme
 - un battement d'horloge processeur
 
-*** Amil
+*** COMMENT Amil
 Après exécution du programme :
 #+begin_example -n
 lecture 8 r0
@@ -88,37 +84,35 @@ add r2 r0
 ecriture r0 8
 stop
 5
-#+end_example 
+#+end_example
 - la case mémoire 8 contiendra 16
 -  la case mémoire 8 contiendra 0
 -  le bus explose
 -  le terminal affiche 8
 
-
 ** Sémantique d'instructions simples
 *** sémantique de l'affectation
 Après exécution jusqu'à la ligne 6 du programme  C :
-#+begin_src C -n 
+#+begin_src C -n
   int main() {
       int x = 5;
       int y = 3;
-  
+
       x = y;
-  
+
 #+end_src
 - la variable x vaut =3=
 - la variable y vaut =5=
 - la variable x vaut =5= et la variable y vaut =3=
 - le programme affiche =Faux=
 
-
 *** Affectation encore
 Après exécution jusqu'à la ligne 4 du programme  C :
-#+begin_src C -n 
+#+begin_src C -n
   int main() {
       int x = 5;
       x = 2 * x - 1;
-  
+
 #+end_src
 - la variable x vaut =9=
 - la variable x vaut =5=
@@ -127,10 +121,10 @@ Après exécution jusqu'à la ligne 4 du programme  C :
 
 *** Effet de bord
 Après exécution jusqu'à la ligne 4 du programme  C :
-#+begin_src C -n 
+#+begin_src C -n
   int main() {
       int x = 5;
-      printf("x = %d\n", x + 1);  
+      printf("x = %d\n", x + 1);
 #+end_src
 - la variable x vaut =5=
 - la variable x vaut =0=
@@ -213,7 +207,7 @@ que doit-on chercher dans le programme ?
 - une accolade en trop
 
 *** commande de compilation
-Pour compiler un programme =prog.c=, on utilise la ligne de commande : 
+Pour compiler un programme =prog.c=, on utilise la ligne de commande :
 - =gcc -Wall prog.c -o prog.exe=
 - =gcc -Wall prog.exe -o prog.c=
 - =gcc prog.exe -Wall -o prog.c=
@@ -234,7 +228,7 @@ Les lignes
 - comportent une erreur qui sera détectée au cours de l'édition de lien
 - ne comportent aucune erreur
 
-*** harmonique 
+*** harmonique
 Laquelle des analyses suivantes ne fait pas partie des étapes de la
 compilation :
 - analyse harmonique
@@ -269,13 +263,12 @@ a pour valeur :
 - $0$
 - $\sqrt{2}$
 
-
 ** Algorithmique
 *** While algo
 Vous utilisez une boucle =while= quand :
 - vous ne connaissez pas le nombre d'itérations de la boucle à l'avance
 - vous n'avez pas déclaré de fonction
-- vous avez déjà fait un  =for= dans le même programme principal 
+- vous avez déjà fait un  =for= dans le même programme principal
 - l'incrément de la variable de boucle n'est pas 1
 
 *** parcours
@@ -300,7 +293,6 @@ est présent dans le tableau :
   chaque occurrence de =x=.
 - On regarde simplement si =t[x] < n= où =n= est la taille du tableau.
 
-
 ** Prog stucturée
 *** Composer des blocs
 Une de ces manière de composer les blocs de programmes ne fait pas
@@ -311,13 +303,13 @@ partie des opérations de la programmation structurée :
 - mettre les blocs en séquence les uns à la suite des autres
 
 *** pouvoir expressif
-Quels calculs peut-on programmer en programmation structurée ?  
+Quels calculs peut-on programmer en programmation structurée ?
 - en programmation structurée on peut programmer tous les calculs
   programmables en langage machine
 - il y a des calculs programmables en langage machine et qui ne sont
   pas programmables en programmation structurée
 - il y a des calculs programmables en programmation structurée qui ne
-  sont pas programmables en langage machine 
+  sont pas programmables en langage machine
 - certains programmes sont
   de vrais plats de spaghetti
 
@@ -327,18 +319,18 @@ Le code suivant :
  int age = 18;
  if (age < 18)
  {
-     printf("Mineur\n"); 
+     printf("Mineur\n");
  }
  else
  {
-     printf("Majeur\n"); 
+     printf("Majeur\n");
  }
 #+end_src
 affichera :
 - =Majeur=
 - =Mineur=
 -  rien
-- =Mineur= 
+- =Mineur=
   =Majeur=
 
 *** majeur/mineur 2
@@ -347,9 +339,9 @@ Le code suivant :
  int age = 20;
  if (age < 18)
  {
-     printf("Mineur\n"); 
+     printf("Mineur\n");
  }
- printf("Majeur\n"); 
+ printf("Majeur\n");
 #+end_src
 affichera :
 - =Majeur=
@@ -364,9 +356,9 @@ Le code suivant :
  int age = 12;
  if (age < 18)
  {
-     printf("Mineur\n"); 
+     printf("Mineur\n");
  }
- printf("Majeur\n"); 
+ printf("Majeur\n");
 #+end_src
 affichera :
 - =Mineur=
@@ -391,7 +383,7 @@ Le code suivant :
  {
    somme = somme + i;
  }
- printf("%d", somme); 
+ printf("%d", somme);
 #+end_src
 affichera :
 - 6
@@ -405,7 +397,7 @@ Le code suivant :
  int i;
  for (i = 4; i > 0; i = i - 1)
  {
-     printf("%d ", i); 
+     printf("%d ", i);
  }
  printf("\n");
 #+end_src
@@ -421,7 +413,7 @@ Le code suivant :
  int i;
  for (i = 0; i < 5; i = i + 1)
  {
-     printf("%d ", i); 
+     printf("%d ", i);
  }
  printf("\n");
 #+end_src
@@ -437,7 +429,7 @@ Le code suivant :
  int i;
  for (i = 1; i < 5; i = i + 1)
  {
-     printf("%d ", i); 
+     printf("%d ", i);
  }
  printf("\n");
 #+end_src
@@ -453,7 +445,7 @@ Le code suivant :
  int i;
  for (i = 4; i >= 0; i = i - 1)
  {
-     printf("%d ", i); 
+     printf("%d ", i);
  }
  printf("\n");
 #+end_src
@@ -469,7 +461,7 @@ Le code suivant :
  int i;
  for (i = 0; i < 7; i = i + 2)
  {
-     printf("%d ", i); 
+     printf("%d ", i);
  }
  printf("\n");
 #+end_src
@@ -485,7 +477,7 @@ Le code suivant :
  int i;
  for (i = 8; i > 0; i = i - 2)
  {
-     printf("%d ", i); 
+     printf("%d ", i);
  }
  printf("\n");
 #+end_src
@@ -500,14 +492,14 @@ Soit un programme contenant les lignes suivantes :
 #+begin_src C
  int i = 0;
  int j = 0;
- for (i = 0; i < 3; i = i + 1) 
+ for (i = 0; i < 3; i = i + 1)
  {
-     for (j = 0; j < 5; j = j + 1) 
+     for (j = 0; j < 5; j = j + 1)
      {
            ...
      }
  }
- printf("j = %d\n", j); 
+ printf("j = %d\n", j);
 #+end_src
 qu'est ce qui sera affiché par ce printf ?
 - =j = 5=
@@ -515,15 +507,14 @@ qu'est ce qui sera affiché par ce printf ?
 - =j = 4=
 - =j = 0=
 
-
-*** COMMENT Double boucle for 2 (vache)
+*** Double boucle for 2 (vache)
 Soit un programme contenant les lignes suivantes :
 #+begin_src C
  int i = 0;
  int j = 0;
- for (i = 0; i < 0; i = i + 1) 
+ for (i = 0; i < 0; i = i + 1)
  {
-     for (j = 0; j < 5; j = j + 1) 
+     for (j = 0; j < 5; j = j + 1)
      {
        ...
      }
@@ -535,15 +526,15 @@ qu'est ce qui sera affiché ?
 - =j = 5=
 - =j = %d=
 - =j = 4=
-  
+
 *** Double boucle for 3
-Pour l'extrait de programme suivant: 
+Pour l'extrait de programme suivant:
 #+begin_src C
  int i = 0;
  int j = 0;
- for (i = 0; i < 2; i = i + 1) 
+ for (i = 0; i < 2; i = i + 1)
  {
-     for (j = 0; j < 3; j = j + 1) 
+     for (j = 0; j < 3; j = j + 1)
      {
          printf("%d ", j);
      }
@@ -560,9 +551,9 @@ Soit un programme contenant les lignes suivantes :
 #+begin_src C
  int i = 0;
  int j = 0;
- for (i = 0; i < 2; i = i + 1) 
+ for (i = 0; i < 2; i = i + 1)
  {
-     for (j = 0; j < 3; j = j + 1) 
+     for (j = 0; j < 3; j = j + 1)
      {
          printf("%d ", i);
      }
@@ -575,13 +566,13 @@ qu'est ce qui sera affiché ?
 - =1 2 1 2 3=
 
 *** Double boucle for 5
-Pour l'extrait de programme suivant: 
+Pour l'extrait de programme suivant:
 #+begin_src C
  int i = 0;
  int j = 0;
- for (i = 0; i < 3; i = i + 1) 
+ for (i = 0; i < 3; i = i + 1)
  {
-     for (j = 0; j < 2; j = j + 1) 
+     for (j = 0; j < 2; j = j + 1)
      {
          printf("%d ", i);
      }
@@ -595,7 +586,7 @@ qu'est ce qui sera affiché ?
 - =1 2 3 1 2=
 
 *** Double boucle for 6
- Pour l'extrait de programme suivant: 
+ Pour l'extrait de programme suivant:
 #+begin_src C
  int i;
  int j;
@@ -604,7 +595,7 @@ qu'est ce qui sera affiché ?
    for(j = i; j < 6; j = j + 1)
    {
      printf("*");
-   } 
+   }
    printf(" ");
  }
 #+end_src
@@ -614,23 +605,21 @@ qu'est ce qui sera affiché ?
 - =**** **** **** ****=
 - =***** **** *** ***=
 
-
 *** somme
-Pour l'extrait de programme suivant: 
+Pour l'extrait de programme suivant:
 #+begin_src C
   int somme = 0;
-  for (i = 1; i <= 4; i = i + 1) 
+  for (i = 1; i <= 4; i = i + 1)
   {
     somme = somme + i;
   }
-  printf("somme = %d", somme); 
+  printf("somme = %d", somme);
 #+end_src
-La valeur de somme affichée est : 
+La valeur de somme affichée est :
 - 10
 - 6
 - 0
 - 15
-
 
 *** While et bool
 Quel est le problème d'un programme comportant les lignes suivantes?
@@ -662,7 +651,7 @@ les expressions booléennes suivantes, laquelle a pour valeur
 - ~(A == TRUE) && (B == TRUE)~
 - =A && B=
 - =(!A || B)=
-  
+
 ** Types et E/S
 *** char
 Laquelle de ces écritures correspond à la déclaration d'une variable
@@ -696,16 +685,16 @@ Après le code suivant
 #+begin_src C
   int a = 5;
   int b;
-  
-  b = a / 2;  
+
+  b = a / 2;
 #+end_src
 -  =a= vaut 5 et =b= vaut 2
 -  =a= vaut 5 et =b= vaut 2.5
 -  =a= vaut 2.5 et =b= vaut 2.5
 -  =a= vaut 2.5 et =b= vaut 2
 
-*** COMMENT arrondi entre int
-Si x est une variable réelle (de type double) alors =x = 3/2= lui
+*** arrondi entre int
+Si x est une variable de type double alors =x = 3/2= lui
 affecte la valeur :
 -  1
 -  0
@@ -748,12 +737,11 @@ Alors l'affichage sera :
 - =cccccc=
 - =i=
 
-
 ** Fonctions
 *** implicit
 Si cet avertissement apparaît à la compilation :
 =warning: implicit declaration of function max=
- (ou =avertissement: déclaration implicite de la fonction max=) 
+ (ou =avertissement: déclaration implicite de la fonction max=)
 que doit-on chercher dans le programme ?
 -  une fonction appelée avant sa déclaration
 -  une fonction déclarée mais non définie
@@ -782,14 +770,14 @@ réel $x$ et un entier positif $n$ et renvoie la valeur de $x^n$ on écrit :
 Pour déclarer une fonction =factorielle= qui prend en argument un
 entier et renvoie sa factorielle on écrit :
 - =int factorielle(int x);=
-- =struct int factorielle(int n);=
+- =void factorielle(int n);=
 - =int factorielle();=
 - =int factorielle(double n);=
 
 *** Prototype
 Pour déclarer une fonction =pgcd= qui calcule et renvoie le plus
-  grand diviseur commun de deux entiers positifs passés en arguments 
-on écrit : 
+  grand diviseur commun de deux entiers positifs passés en arguments
+on écrit :
 - =int pgcd(int x, int y);=
 - =int pgcd(int x, int x);=
 - =int pgcd(int x, y);=
@@ -797,10 +785,12 @@ on écrit :
 
 *** Prototype
 Pour déclarer une fonction =saisie_utilisateur= qui demande à
-l'utilisateur d'entrer un entier au clavier et renvoie cet entier on écrit :
+l'utilisateur d'entrer un entier quelconque au clavier et renvoie cet entier on écrit :
 - =int saisie_utilisateur();=
 - =void saisie_utilisateur(int n);=
 - =void saisie_utilisateur(char c);=
+- =int saisie_utilisateur(int n);=
+
 
 *** Prototype
 Pour déclarer une procédure =afficher_menu= sans argument et qui
@@ -827,6 +817,15 @@ définie et initialisée, il est correct d'écrire :
 - =int n = carre();=
 - =int carre(2);=
 
+*** Appel cube
+Si =cube= est une fonction prenant en entrée un nombre à virgule et
+renvoyant le cube de ce nombre, et que x est une variable de type =double=
+déclarée et initialisée, il est correct d'écrire :
+- =x = cube(x);=
+- =x = cube(double x);=
+- =double x = cube();=
+- =double cube(2.2);=
+
 *** Appel pgcd
 Si =pgcd= est une fonction prenant en entrée deux entiers et
 renvoyant un entier, il est correct d'écrire :
@@ -834,6 +833,22 @@ renvoyant un entier, il est correct d'écrire :
 - =n = pgcd(int p, int q);=
 - =int n = pgcd();=
 - =int pgcd(2);=
+
+*** Prototype
+Pour déclarer une fonction =valeur_absolue= qui prend en entrée un
+nombre à virgule et renvoie la valeur absolue de ce nombre on écrit :
+- =double valeur_absolue(double x);=
+- =void valeur_absolue(double x);=
+- =void valeur_absolue(char x);=
+- =int valeur_absolue(int x);=
+
+*** Prototype
+Pour déclarer une fonction =est_premier= qui prend en entrée un
+nombre entier et renvoie TRUE si l'entier est premier ou FALSE sinon :
+- =int valeur_absolue(int x);=
+- =void valeur_absolue(double x);=
+- =double valeur_absolue(int x);=
+- =int valeur_absolue(double x);=
 
 *** Appel factorielle
 Si =factorielle= est une fonction prenant en entrée un entier et
@@ -843,11 +858,10 @@ renvoyant un entier, il est correct d'écrire :
 - =n = factorielle();=
 - =int factorielle(int 2);=
 
-
 *** Appel et isolation des frames
-Soit le programme principal suivant: 
+Soit le programme principal suivant:
 #+begin_src C
-  int main() 
+  int main()
   {
     int a = 3;
     int b = 5;
@@ -855,28 +869,27 @@ Soit le programme principal suivant:
     return EXIT_SUCCESS;
   }
 #+end_src
- appelant la fonction =f= ainsi définie: 
+ appelant la fonction =f= ainsi définie:
 
 #+begin_src C
 int f(int a, int b)
 {
-  a = a + b; 
+  a = a + b;
   return a;
 }
 #+end_src
-L'affichage dans le main est le suivant: 
+L'affichage dans le main est le suivant:
 - =f(a,b)=8, a=3, b=5=
 - =f(a,b)=8, a=8, b=5=
 - =f(3,5)=8, a=3, b=5=
 - =f(a,b)=13, a=8, b=5=
 
-
 *** Affichage, paramètres effectifs
-Soit le  morceau de programme suivant: 
+Soit le  morceau de programme suivant:
 #+begin_src C -n
 int f(int x, int y);
 
-int main() 
+int main()
 {
  int a = 3;
  int b = 5;
@@ -888,7 +901,6 @@ effectifs =a= et =b= (dont les valeurs initiales pourront être modifiées), lig
 - ~printf("f(a, b) = %d\n", 3, 5, f(a, b));~
 - ~printf("f(%d, %d) = %d\n", a, b, f(3, 5));~
 - ~printf("f(%d, %d) = %d\n", f(a, b), a, b);~
-
 
 *** Appel
 Soit la fonction =f= définie par :
@@ -907,7 +919,6 @@ Alors l'expression =f(1)= prendra la valeur :
 - 4
 - 1
 - 0
-
 
 *** simulation
 Soit la fonction =g= définie par :
@@ -961,5 +972,3 @@ Alors l'expression =f(1)= prendra la valeur :
 - 4
 - 1
 - 0
-
- 

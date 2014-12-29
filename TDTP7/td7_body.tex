@@ -1,663 +1,382 @@
 % -*- coding: utf-8 -*-
-\newcounter{questioncount}
-\setcounter{questioncount}{0}
-\newcommand{\question}{\addtocounter{questioncount}{1}\paragraph{Question \Alph{questioncount}.}}
+
 \newcommand{\commentaire}[1]{}
-\newcommand{\pt}[1]{\fbox{$#1 \operatorname{pt}$}}
-\newcommand{\bareme}[1]{}
-%\excludeversion{correction}
-%\excludeversion{baremeenv}
+
+\entete{Travaux dirigés 7 : pour aller plus loin}
 
 
-\entete{Travaux dirigés 7}
 
-\section{For ou while ?}
+\section{PGCD (récursivité)}
+Rappel : pour $a$ et $d$ deux entiers naturels, on dit que $d$ divise $a$, et on note $d\mid a$, s'il existe un entier $q$ tel que $a = dq$. En particulier $d\mid 0$ quel que soit $d$. Le plus grand diviseur commun (PGCD) de deux entiers naturels $a$ et $b$ est le plus grand entier $d$ tel que $d\mid a$ et $d\mid b$.  Cette définition donne un moyen effectif de trouver le PGCD de deux entiers (un algorithme) : il suffit de chercher tous les diviseurs de $a$ et de $b$ et de prendre le plus grand d'entre eux.
 
-Il est demandé de résoudre les questions suivantes sans définir de
-fonctions utilisateurs, directement dans le \C{main}, et en faisant le meilleur choix entre \C{for}
-et \C{while}.
-
-\subsection{Puissances successives d'un entier}
-
-\question Écrire un programme qui demande un entier $n$ à l'utilisateur et
-calcule puis affiche $n^{10}$ ($n$ puissance dix). \bareme{2}
-\paragraph{Exemple d'exécution.} 
-\begin{small}
-\begin{verbatim}
-Donner un entier : 2
-2 exposant 10 = 1024
-\end{verbatim}
-\end{small}
-
-
-\begin{correction}
-Voir figure~\ref{fig:puissance}.
-  \begin{figure}[htbp]
-    \begin{small}
-      \begin{verbatim}
-#include <stdlib.h> /* EXIT_SUCCESS */
-#include <stdio.h> /* printf, scanf */
-/* declarations de constantes et types utilisateurs */
-
-/* declarations de fonctions utilisateurs */
-
-/* fonction principale */
-int main()
-{
-    int n = 0; /* base */
-    int produit = 1;
-    int i; /* var de boucle */
-
-    /* saisie */
-    printf("Donner un entier : ");
-    scanf("%d", &n);
-
-    /* calcul */
-    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
-                                     la multiplication par n */
-    {
-        produit = produit * n;
-    }
-
-    /* affichage */
-    printf("%d exposant %d = %d\n", n, 10, produit);
-
-    return EXIT_SUCCESS;
-}
-\end{verbatim}
-    \end{small}
-    \caption{Puissance dix}
-    \label{fig:puissance}
-  \end{figure}
-  \begin{baremeenv}
-    \begin{itemize}
-    \item \pt{0.5} pour la saisie meme si oublie du \&
-    \item \pt{1.5} pour le reste, zéro si pas de boucle sinon :
-      \begin{itemize}
-      \item enlever \pt{0.5} si c'est un while
-      \item enlever \pt{0.5} par problème de déclaration, d'initialisation,
-        ou d'include manquant. 
-\item enlever \pt{0.5} si erreur sur le nombre d'étapes de boucle.
-      \item on ne demande pas un affichage élaboré.
-      \end{itemize}
-    \end{itemize}
-  \end{baremeenv}
-\end{correction}
-
-\question Comment modifier simplement votre programme pour qu'il
-affiche le calcul des puissances successives de l'entier $n$ saisi,
-de $n^0$ jusqu'à $n^{10}$ ?\bareme{1}
-
-
-\paragraph{Exemple d'exécution.} 
-\begin{small}
-\begin{verbatim}
-Donner un entier : 2
-2 exposant 0 = 1
-2 exposant 1 = 2
-2 exposant 2 = 4
-...
-2 exposant 10 = 1024
-\end{verbatim}
-\end{small}
-\begin{correction}
-  Il suffit de placer l'affichage dans la boucle, au début du bloc.
-\begin{small}
-\begin{verbatim}
-    /* calcul et affichage */
-    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
-                                     la multiplication par n */
-    {
-        /* affichage */
-        printf("%d exposant %d = %d\n", n, i, produit);
-        produit = produit * n;
-    }
-    /* affichage */
-    printf("%d exposant %d = %d\n", n, 10, produit);
-\end{verbatim}
-\end{small}
-  \begin{baremeenv}
-    Compter \pt{0} pour toute autre solution. Pénalité de \pt{-0.5} si
-    n'affiche pas l'exposant ou pas la bonne valeur
-    d'exposant. Ne pas enlever de point si l'affichage ne va que
-    jusqu'à l'exposant 9.
-  \end{baremeenv}
-\end{correction}
-
-
-\question Comment modifier simplement votre programme pour qu'il
-affiche le calcul des puissances successives de l'entier $n$
-uniquement à partir de l'exposant $5$ ?\bareme{1}
-
-\paragraph{Exemple d'exécution.} 
-\begin{small}
-\begin{verbatim}
-Donner un entier : 2
-2 exposant 5 = 32
-2 exposant 6 = 64
-...
-2 exposant 10 = 1024
-\end{verbatim}
-\end{small}
-
-\begin{correction}
-il suffit d'encapsuler l'affichage de l'intérieur de boucle dans un
-test :
-\begin{small}
-\begin{verbatim}
-    /* calcul et affichage */
-    for (i = 0; i < 10; i = i + 1) /* faire 10 fois 
-                                     la multiplication par n */
-    {
-        /* affichage */
-        if (i > 4) 
-        {
-            printf("%d exposant %d = %d\n", n, i, produit);
-        }
-        produit = produit * n;
-    }
-    /* affichage */
-    printf("%d exposant %d = %d\n", n, 10, produit);
-\end{verbatim}
-\end{small}
-  \begin{baremeenv}
-    Autre solution admise : deux boucles (i allant de 0 à 4 puis i
-    allant de 5 à 9)  à la suite l'une de l'autre. Sinon zéro.
- \end{baremeenv}
-\end{correction}
-
-\subsection{Unicité des éléments d'un tableau}
-
-Nous disposons d'un tableau $t$ de $N$ entiers. Utiliser une constante
-symbolique pour $N$. Nous souhaitons
-savoir si chaque entier apparaissant dans le tableau n'y apparaît
-qu'une seule fois, autrement dit on veut savoir si chaque entier
-est unique dans le tableau.
-
-\question Écrire un programme qui, étant donné un tableau initalisé $t$,
-  teste si le premier élément du tableau est unique et affiche
-  \C{Vrai} si c'est le cas, \C{Faux} sinon.\bareme{2}
-  \begin{correction} 
-Voir figure~\ref{fig:unicite1}.
-    \begin{figure}[htbp]
-      \begin{small}
-        \begin{listing}{1}
-#include <stdlib.h> /* EXIT_SUCCESS */
-#include <stdio.h> /* printf, scanf */
-
-/* déclaration constantes et types utilisateurs */
-#define N 3
-#define TRUE 1
-#define FALSE 0
-
-/* Fonction principale */
-int main()
-{
-  int t[N] = {10,10,15};
-  int unique = TRUE;
-  int i; /* var de boucle */
-
-  i = 1;
-  while (unique && (i < N)) /* tant que t[0] est unique */
-  {
-    if (t[i] == t[0]) /* t[0] n'est pas unique */
-    {
-      unique = FALSE;
-    }
-    i = i + 1; /* case suivante */
-  }
-
-  /* affichage du résultat */
-  if (unique)
-  {
-    printf("Vrai\n");
-  }
-  else
-  {
-    printf("Faux\n");
-  }
-  /* valeur fonction */
-  return EXIT_SUCCESS;
-}
-\end{listing}
-      \end{small}
-      \caption{Unicité des éléments d'un tableau}
-      \label{fig:unicite1}
-    \end{figure}
-
-    \begin{baremeenv}
-    \pt{2} si arrive au résultat avec une seule boucle (for ou
-    while). L'affichage doit être correct mais on accepte les
-    variantes : ''machin n'est
-    pas unique / "machin est unique'' etc.
-
-    Sinon maximum \pt{1,5} : \pt{0,5} s'il y a une seule boucle; \pt{0,5}
-    de plus si c'est un while; ajouter \pt{0,5} si utilise une
-    variable booléenne (déclarée et initialisée, et les define TRUE
-    et FALSE).      
-    \end{baremeenv}
+\begin{newenu}
+\item Que vaut $\operatorname{PGCD}(0, 0)$ ?
+  \begin{correction}
+    $\operatorname{PGCD}(0, 0)$ est mal défini car il n'existe pas de plus grand entier naturel.
   \end{correction}
-
-
-\question Écrire un programme qui étant donné un tableau initialisé $t$, teste
-  si tous les éléments sont uniques et affiche \C{Vrai} si c'est le
-  cas, \C{Faux} sinon.\bareme{2}
-
-  \begin{correction} 
-Voir figure~\ref{fig:unicite2}.
-
-    \begin{figure}[htbp]
-      \begin{small}
-        \begin{listing}{1}
-#include <stdlib.h> /* EXIT_SUCCESS */
-#include <stdio.h> /* printf, scanf */
-
-/* déclaration constantes et types utilisateurs */
-#define N 4
-#define TRUE 1
-#define FALSE 0
-
-/* Fonction principale */
-int main()
-{
-  int t[N] = {10,12,15,12};
-  int unique = TRUE;
-  int i; /* var de boucle */
-  int j; /* var de boucle */
-
-  j = 0; /* premiere case */
-  while (unique && (j < N)) /* pour chaque case, verifier que la case
-  est unique */
-  { 
-    i = j + 1; /* case suivant t[j] */
-    while (unique && (i < N)) /* tant que t[j] est unique */
-    {
-      if (t[i] == t[j]) /* t[j] n'est pas unique */
-      {
-        unique = FALSE;
-      }
-      i = i + 1; /* case suivante */
-    }
-    j = j + 1; /* case suivante */
-  }
-  /* affichage du résultat */
-  if (unique)
-  {
-    printf("Vrai\n");
-  }
-  else
-  {
-    printf("Faux\n");
-  }
-  /* valeur fonction */
-  return EXIT_SUCCESS;
-}
-\end{listing}
-      \end{small}
-      \caption{Unicité de tous les éléments du tableau}
-\label{fig:unicite2}
-    \end{figure}
-
-   \begin{baremeenv}
-   \pt{2} si arrive au résultat avec deux boucles (avec affichage mais
-   variantes acceptée). 
-
-    Sinon maximum \pt{1,5} : \pt{0,5} s'il y a deux boucles avec
-   variables de boucles différentes (quelles
-   que soient les boucles et les bornes); \pt{0,5} si elles sont
-   toutes deux des while; \pt{0,5} s'il a un algorithme correct en
-   français en commentaire ou dans le texte; \pt{0,5} si utilise une
-   variable boolénnee ou deux variables booléennes. 
-   \end{baremeenv}
+\item Si seulement un des entiers $a$ et $b$ est nul, que vaut $\operatorname{PGCD}(a, b)$ ?
+  \begin{correction}
+    L'autre entier. C'est à dire que  $\operatorname{PGCD}(0, x) =  \operatorname{PGCD}(x, 0) = x$.
   \end{correction}
+\item Si aucun des deux entiers $a$ et $b$ n'est nul, jusqu'a quelle valeur doit-on chercher des diviseurs de $a$ et de $b$ ?
 
-\section{Fractions}
+  \begin{correction}
+    Lorsque $x$ est non nul un diviseur de $x$ est nécessairement plus petit que $x$.  On peut donc certainement s'arrêter au minimum de $a$ et $b$.
+  \end{correction}
+\item Comment tester si un nombre en divise un autre, en C ?
+  \begin{correction}
+Il faut les inciter à formuler leur réponse complétement, puis à essayer de l'écrire en C, même si ça n'est pas optimal.
 
-\question Une fraction $\frac{p}{q}$ est définie par deux entiers $p$ et $q$. Le nombre
-$q$ appelé dénominateur est nécessairement non nul et sera toujours positif, le
-nombre $p$, appelé numérateur, peut être négatif ou nul. Définir un
-type utilisateur pour les fractions (sans tenir compte des questions
-de signe qui n'ont d'importance que pour l'affichage).
-\bareme{1}
-\begin{correction}
+Une réponse possible.
+    Si $a, d > 0$, pour tester si $d \mid a$ on peut multiplier tour à tour $d$ par tous les entiers en commençant à $1$ tant que le résultat est strictement inférieur $a$. Lorsqu'on s'arrête soit on a trouvé $a$ comme résultat de la multiplication et dans ce cas $d$ divise $a$ soit on a trouvé un nombre strictement supérieur à $a$ et $d$ ne divise pas $a$. (On peut aussi faire des additions successives de $d$ dans un accumulateur).
+
 \begin{verbatim}
-struct fraction_s
+int divise(int d, int a)
 {
-  int num; /* nunérateur */
-  int den; /* dénominateur */
-}; /* <- n'oublie pas le point-virgule ! */
-\end{verbatim}
- \begin{baremeenv}
-  Soit tout juste (noms arbitraires) soit faux.
-    \begin{description}
-    \item[1 pt] même si oublie du point-virgule final, ou si typedef
-    \item[zéro] sinon
-   \end{description}
-  \end{baremeenv}
-\end{correction}
-
-\question Déclarer et définir une fonction \C{multiplier\_fractions} qui
-    prend deux fractions en argument et renvoie la fraction obtenue par multiplication des deux
-    fractions (ne pas chercher à simplifier la fraction
-    obtenue). \emph{Répondre en faisant bien apparaître d'une part la
-      déclaration, d'autre part la définition.}
-\bareme{1.5}
-\begin{correction}
-Déclaration :
-\begin{verbatim}
-struct fraction_s multiplier_fractions(struct fraction_s x, 
-                                       struct fraction_s y);
-\end{verbatim}
-Définition :
-\begin{verbatim}
-struct fraction_s multiplier_fractions(struct fraction_s x, 
-                                       struct fraction_s y)
-{
-  struct fraction_s res;
-  res.num = x.num * y.num; /* produit des numérateurs "sur" */
-  res.den = x.den * y.den; /* produit des dénominateurs */
-  return res;
-}
-\end{verbatim}
-
-  \begin{baremeenv}
-    Maximum \pt{1,5}. Sinon :
-    \begin{description}
-    \item[0,5] pour la déclaration exacte.
-    \item[1] pour la définition.
-    \item[0,5] si la définition retourne effectivement un point mais
-      qui n'a pas la bonne valeur.
-    \end{description}
-  \end{baremeenv}
-\end{correction}
-
-\question Même question pour la somme de deux fractions
-    \C{additionner\_fractions}.
-\bareme{1}
-
-\begin{correction}
-Déclaration :
-\begin{verbatim}
-struct fraction_s additionner_fractions(struct fraction_s x, 
-                                        struct fraction_s y);
-\end{verbatim}
-Définition :
-\begin{verbatim}
-struct fraction_s additionner_fractions(struct fraction_s x, 
-                                        struct fraction_s y)
-{
-  struct fraction_s res;
-  res.num = x.num * y.den + y.num * x.den;
-  res.den = x.den * y.den; /* produit des dénominateurs */
-  return res;
-}
-\end{verbatim}
-
-\begin{baremeenv}
-Maximum \pt{1}.
-  \begin{description}
-  \item[0,25] pour la déclaration exacte.
-  \item[0,75] pour la définition, dont \pt[0,5] pour un dénominateur exact.
-\end{description}
-\end{baremeenv}  
-\end{correction}
-
-
-\question Déclarer et définir une procédure affichant une fraction
-passée en argument exactement comme dans l'exemple suivant où les
-fractions $\frac{34}{26}$, $\frac{-34}{26}$, $\frac{34}{1}$,
-$\frac{0}{1}$ sont affichées tour à tour :
-\begin{verbatim}
-34/26
--34/26
-34 
-0
-\end{verbatim}
-Attention à bien respecter les deux derniers affichages.
-\bareme{1.5}
-
-\begin{correction}
-Déclaration :
-\begin{verbatim}
-void afficher_fraction(struct fraction_s x);
-\end{verbatim}
-Définition :
-\begin{verbatim}
-void afficher_fraction(struct fraction_s x);
-{
-  if (x.den == 1)
-  {
-    printf("%d\n", x.num);
-  }
-  else
-  {
-    printf("%d/%d\n", x.num, x.den);
-  }
-}
-\end{verbatim}
-\begin{baremeenv}
-Maximum \pt{1,5}.
-  \begin{description}
-  \item[0,5] pou la déclaration exacte.
-  \item[1] pour la définition, dont \pt{0,5} pour la simple présence d'un if.
- \end{description}
-\end{baremeenv}  
-\end{correction}
-
-\question Comment feriez-vous pour simplifier automatiquement les
-fractions ? Proposer une fonction \verb|normaliser_fraction| qui
-pourra faire appel à des fonctions arithmétiques usuelles. 
-\section{Fonctions}
-\question Déclarer et définir :
-\begin{enumerate}
-\item une fonction \verb|minimum| qui prend en entrée deux nombres à virgule
-  et retourne leur minimum;\bareme{1}
-\item Une procédure \verb|afficher_ligne| qui prend en entrée un
-  entier \C{n} et un caractère \C{c} et affiche une ligne contenant
-  \C{n} fois la caractère \C{c};\bareme{1}
-\item Une fonction \verb|neper| qui prend en entrée un entier \C{n} et
-  retourne la valeur de la somme suivante :
-\[
-1 + \sum^{k = n}_{k = 1} \frac{1}{k!}.
-\]
-Vous pouvez faire appel à une
-  fonction \verb|int factorielle(int n)| calculant la factorielle de
-  son argument.\bareme{1}
-\item Une fonction \verb|saisie_utilisateur| sans paramètre qui
-  demande un entier à l'utilisateur et retourne cet entier.
-\item Une procédure \verb|tester_mes_fonctions| sans paramètre, qui
-  appelle chacune des fonctions et procédures précédentes sur des
-  paramètres de votre choix.
-\end{enumerate}
-
-
-\begin{correction}
-Déclarations :
-\begin{verbatim}
-double valeur_absolue(double x);
-void afficher_ligne(int n, char c);
-double neper(int n);
-\end{verbatim}
-
-Définitions :
-\begin{verbatim}
-double valeur_absolue(double x)
-{
-  if (x < 0)
-  {
-    return -x;
-  }
-  return x;
-}
-
-void afficher_ligne(int n, char c)
-{
-  int i;
-  for (i = 0; i < n; i = i + 1)
-  {
-    printf("%c", c);
-  }
-  printf("\n"); /* optionnel */
-}
-
-double neper(int n) /* récursive */
-{
-  if (n > 1)
-  {
-    return neper(n - 1) + 1.0/factorielle(n);
-  }
-  return 1.0;
-}
-/* alternative plus classique */
-double neper_it(int n) 
-{
-  double somme = 1.0;
-  int i;
-  for (i = 1; i <= n; i = i + 1)
-  {
-    somme = somme + 1.0/factorielle(i);
-  }
-  return somme;
-}
-
-int saisie_utilisateur() {
-  int res = 0;
-  printf("saisir un entier\n");
-  scanf("%d", &res);
-  return res;
-}
-
-
-void tester_mes_fonctions() {/* au moins un appel à chaque fonction */
-  printf("Test de la fonction valeur_absolue\n");
-  printf("|%lg| = %lg\n", -3.16, valeur_absolue(-3.16));
-  printf("|%lg| = %lg\n", 0.16, valeur_absolue(0.16));
-  printf("|%lg| = %lg\n", 0, valeur_absolue(0));
-  printf("Test de la fonction afficher_ligne\n");
-  afficher_ligne(1, 'a');
-  afficher_ligne(2, 'B');
-  afficher_ligne(3, 'c');
-  afficher_ligne(3, '.');
-  afficher_ligne(26, 'z');
-  printf("Test de la fonction neper()\n");
-  printf("neper(%d) = %lg\n", 1, neper(1));
-  printf("neper(%d) = %lg\n", 2, neper(2));
-  printf("neper(%d) = %lg\n", 10, neper(10));
-  printf("neper(%d) = %lg\n", 1000, neper(1000));
-  printf("neper(%d) = %lg\n", 100000, neper(100000));
-  printf("Vous avez saisi %d\n", saisie_utilisateur()); /* <-- expliquer */
-}
-\end{verbatim}
-
-  \begin{baremeenv}
-    On note \pt{0,5} par déclaration exacte et \pt{0,5} par définition
-    correcte (en dehors de la question de typage) en admettant comme
-    erreurs l'oublie de l'utilisation de \C{\%c} pour l'affichage d'un
-    caractère, une erreur d'indice à un près dans les boucles, un
-    problème d'arrondi entier.
-
-   On ajoute \pt{0,5} si il est fait correctement appel à  la fonction factorielle,
-   tant que la syntaxe d'appel est correct et quelle que soit les
-   paramètres et l'usage de cet appel.
-  \end{baremeenv}
-\end{correction}
-
-\section*{Bonus}
-\paragraph{Question bonus.} Au choix.  Déclarer et définir une
-fonction qui calcule le pgcd de deux entiers positifs ou nuls. Ou
-bien, déclarer et définir une procédure \verb|afficher_disque| qui
-prend en paramètre un entier \C{rayon} et affiche un disque d'étoiles
-de ce rayon.\bareme{2}
-
-
-\begin{correction}
-Voici trois corrigés, le pgcd récursif, un pgcd itératif (avec
-boucles au lieu de récursion), la procédure
-\C{afficher\_disque}.
-Déclarations :
-\begin{verbatim}
-int pgcd_r(int a, int b);
-int pgcd_i(int a, int b);
-void afficher_disque(int rayon);
-\end{verbatim}
-
-Définitions :
-\begin{verbatim}
-int pgcd_r(int a, int b)
-{
-    if (a < b)
+    int q = 1;
+    if (a == 0) /* cas dégénéré */
     {
-	return pgcd(b, a);
+        return true;
     }
-    if (b == 0)
+    if (d == 0) /* autre cas dégénéré */
     {
-	return a;
+        return false;
     }
-    return pgcd(b,  a % b);
+    /* cas général (ici on en fait trop) */
+    while (q * d < a)
+    {
+         q = q + 1;
+    }
+    /* q est le premier entier tel que q * d >= a */
+    if (q * d == a)
+    {
+        return true;
+    }
+    return false; /* on peut aussi leur montrer return q * d == a. */
 }
+\end{verbatim}
 
-int pgcd_i(int a, int b)
+Autre solution plus économe : tester si $a \mod d$ vaut zéro (\verb+a % d == 0+ ou bien \verb+a == d *(a/d)+).
+
+ \end{correction}
+\item Écrire une fonction non récursive qui calcule le PGCD de deux entiers naturels.
+
+  \begin{correction}
+    \begin{verbatim}
+int pgcd(int a, int b)
 {
-    int i;
-    int min;
-    int d;
-    /* cas particuliers */
-    if (a == 0)
+    int min;     /* minimum entre a et b */
+    int d = 1;   /* var. de boucle */
+    int res = 0; /* resultat */
+
+    if (a == 0) /* premier cas dégénéré */
     {
-	return b;
+        return b;
     }
-    if (b == 0)
+    if (b == 0) /* second cas dégénéré */
     {
-	return a;
+        return a;
     }
-    /* min = minimum(a, b) */
-    if (a < b)
+    /* a > 0 et b > 0*/
+
+    /* calcul de minimum(a, b) */
+    if (a > b)
     {
-	min = a;
+        min = b;
     }
     else
     {
-	min = b;
+        min = a;
     }
-    /* diviseurs */
-    for (i = 1; i <= min; i = i + 1)
+    /* min est le minimum entre a et b */
+
+    for (d = 1; d < min; d = d + 1)
     {
-	/* i diviseur commun ? */
-	if ( (0 == a % i) && (0 == b % i) )
-	{
-	    d = i;
-	}
-    } /* d plus grand diviseur commun */
-    return d;
+         if ( (a % d == 0) && (b % d == 0) ) /* d | a et d | b */
+         {
+              res = d;
+         }
+    }
+    /* res est le plus grand d tq d | a et d | b */
+
+    return res;
 }
 
-void afficher_disque(int rayon)
+
+\end{verbatim}
+\end{correction}
+
+\item Rappeler l'algorithme d'Euclide pour le calcul du PGCD.
+  \begin{correction}
+    \begin{quote}
+  << Étant donnés deux entiers naturels $a$ et $b$, on
+commence par tester si b est nul. Si oui, alors le PGCD est égal à
+$a$. Sinon, on calcule $c$, le reste de la division de $a$ par $b$. On
+remplace $a$ par $b$, et $b$ par $c$, et on recommence le procédé. Le
+dernier reste non nul est le PGCD. >> (wikipedia.fr, dans le passé).
+\end{quote}
+
+Autrement dit, lorsque $a \geq b$ on utilise la division euclidienne, $a = bq + r$ et on recommence avec le couple $(b, r)$ jusqu'à tomber sur un reste nul. C'est justifié car si $d \mid a$ et $d \mid b$  alors $d \mid r$ (et $d \mid b$) et réciproquement si $d \mid b$ et $d \mid r$ alors $d \mid a = bq  + r$ (et $d\mid b$).
+
+En résumé le PGCD de deux entiers positifs $a$ et $b$
+est défini par : $\operatorname{PGCD}(a, b) = a$ si $ b = 0$ et
+$\operatorname{PGCD}(a, b) = \operatorname{PGCD}(b, a \mod b)$.
+
+ \end{correction}
+\item  Écrire une fonction récursive pour le calcul du PGCD de deux
+  entiers.
+  \begin{correction}
+\begin{verbatim}
+int pgcd(int a, int b)
 {
-    /* on balaie le carré contenant le disque, de coté = 2 rayons + 1,
-       et on affiche une étoile si la distance au centre est
-       inférieure au rayon, sinon un blanc */
-    int i;
-    int j;
-    for (i = -rayon; i <= rayon; i = i + 1)
+    if (b == 0)
     {
-	for (j = -rayon; j <= rayon; j = j + 1)
-	{
-	    if ( (i*i+j*j) <= rayon*rayon )
-	    {
-		printf("*");
-	    }
-	    else
-	    {
-		printf(" ");
-	    }
-	}
-	printf("\n");
-    }	
+        return a;
+    }
+    return pgcd(b, a % b);
+}
+\end{verbatim}
+Remarque : si l'entier le plus grand est $b$, la fonction échange ses arguments au premier appel récursif.
+  \end{correction}
+\item À votre avis quelle est la méthode la plus rapide ?
+  \begin{correction}
+La fonction récursive sera toujours au moins aussi rapide que la fonction itérative. On peut par exemple remarquer que si les deux entiers sont égaux dans la fonction récursive le deuxième appel se fait avec zéro comme second argument et renvoie $a$ immédiatemment tandis que l'algortihme précédent va dérouler la boucle jusqu'à $a$.
+  \end{correction}
+\end{newenu}
+
+
+\section{Les \C{struct} ne sont pas si complexes et point difficiles}
+
+\begin{lastenu}
+\item Proposer un type utilisateur pour les nombres complexes en
+  notation algébrique ($a + \mathrm{i} b$, $a,b\in\mathbb{R}$).
+
+  \begin{correction}
+\begin{verbatim}
+struct complexe_s
+{
+    double re; /* partie reelle */
+    double im; /* partie imaginaire */
+}
+\end{verbatim}
+  \end{correction}
+
+\item Donner une fonction d'addition et une fonction de multiplication
+  entre ces nombres complexes (les tester).
+
+  \begin{correction}
+\begin{verbatim}
+struct complexe_s addition_complexe(struct complexe_s z1, struct complexe_s z2)
+{
+    z1.re = z1.re + z2.re;
+    z1.im = z1.im + z2.im;
+    return z1;
+}
+
+struct complexe_s multiplication_complexe(struct complexe_s z1, struct complexe_s z2)
+{
+    struct complexe_s res;
+    res.re = z1.re * z2.re - z1.im * z2.im;
+    res.im = z2.re * z1.im + z1.re * z2.im;
+    return res;
+}
+\end{verbatim}
+  \end{correction}
+\end{lastenu}
+
+%\subsection{Point}
+
+\begin{lastenu}
+\item Proposer un type utilisateur pour les points de l'espace
+  en coordonnées réelles : $\mathbb{R}^3$.
+  \begin{correction}
+\begin{verbatim}
+struct point_s
+{
+    double x; /* abscisses */
+    double y; /* ordonnees */
+    double z; /* hauteur */
 }
 \end{verbatim}
 \end{correction}
 
-%%% Local Variables: 
+\item Écrire une fonction \C{est\_dans\_sphere} prenant en argument un
+  point $c$, un réel $r$, et un point $p$, qui
+  renvoie vrai si le point $p$ appartient à la sphère de centre $c$ et
+  de rayon $r$, faux sinon.
+  \begin{correction}
+\begin{verbatim}
+est_dans_sphere(struct point_s c, double r, struct point_s p)
+{
+    return ((p.x - c.x)*(p.x - c.x)
+          + (p.y - c.y)*(p.y - c.y)
+          + (p.z - c.z)*(p.z - c.z))
+         <= r*r;
+}
+\end{verbatim}
+
+\end{correction}
+\item Définir une fonction \C{distance} qui retourne la distance entre
+  deux points de l'espace passés en arguments. Simplifier la fonction
+  \verb|est_dans_sphere| en faisant appel à cette fonction distance.
+\begin{correction}
+\begin{verbatim}
+#include <math.h> /* pour sqrt() */
+
+double distance(struct point_s p1, struct point_s p2)
+{
+   return sqrt((p1.x - p2.x)*(p1.x - p2.x)
+             + (p1.y - p2.y)*(p1.y - p2.y)
+             + (p1.z - p2.z)*(p1.z - p2.z));
+}
+
+
+est_dans_sphere(struct point_s c, double r, struct point_s p)
+{
+    return distance(c, p) <= r;
+}
+\end{verbatim}
+\end{correction}
+
+\item Proposer un type utilisateur pour représenter une sphère dans
+  l'espace.
+  \begin{correction}
+Une sphère est donnée par son centre (un point) et son rayon. Le type serait donc le suivant :
+\begin{verbatim}
+struct sphere_s
+{
+    struct point_s centre; /* centre */
+    double          rayon; /* rayon  */
+}
+\end{verbatim}
+\end{correction}
+\item Définir une fonction \verb+collision_spheres+ qui prend en
+  entrée deux sphères et retourne \C{true} si les deux sphères ont une
+  intersection non vide, \C{false} sinon.
+  \begin{correction}
+\begin{verbatim}
+int collision_spheres(struct sphere_s s1, struct sphere_s s2)
+{
+    return distance(s1.centre, s2.centre) <= (s1.rayon + s2.rayon);
+}
+\end{verbatim}
+\end{correction}
+\end{lastenu}
+
+
+\section{Le jeu de la tablette de chocolat}
+
+Une tablette (ou plaquette) de chocolat est une matrice de carreaux de
+chocolat que l'ont peut couper selon les lignes ou les colonnes qui
+séparent les carreaux. La hauteur et la largeur se comptent en nombre
+de carreaux. On a peint en vert un carreau dans le coin d'une
+tablette. Deux joueurs coupent tour à tour la tablette, au choix,
+selon une ligne ou une colonne (pas nécessairement près du
+bord). L'objectif est de ne pas être le joueur qui se retrouve avec le
+carreau vert (la tablette de hauteur 1 et de largeur 1).
+
+Nous allons programmer ce jeu en faisant jouer à l'ordinateur le rôle
+de l'opposant.
+
+\subsection{Type utilisateur (optionnel)}
+
+Définir un type utilisateur qui servira à représenter la tablette
+(faire simple !).
+
+\begin{correction}
+une tablette = paire d'entiers positifs (ses dimensions).
+Soit ils programment fonctionnel et il leur faut retourner une paire
+et donc utiliser un struct soient ils programment argument-résultat et
+ils utilisent deux entiers et deux pointeurs sur ces entiers en entrée
+des fonctions de jeu. Parler des deux !
+\begin{verbatim}
+struct tablette_s
+{
+  int l; /* largeur (nombre de colonnes) */
+  int c; /* hauteur (nombre de lignes) */
+}
+\end{verbatim}
+\end{correction}
+
+\subsection{Le tour de jeu et l'arbitre}
+Le joueur commencera la partie, puis l'opposant (l'ordinateur) jouera
+et ainsi de suite. À chaque fois l'une des deux dimensions de la tablette sera
+modifiée, jusqu'à ce qu'il y ait un perdant. Vous adopterez la
+structure suivante pour le programme :
+\begin{itemize}
+\item Une variable sera utilisée pour déterminer à qui vient le tour de
+  jouer (joueur ou opposant);
+\item Une boucle réalisera le tour de jeu;
+\item Une fonction \C{partie\_perdue()} prenant en argument la tablette
+  et renvoyant vrai lorsque celle-ci se réduit au carré vert, servira
+  à construire la condition de sortie de la boucle;
+\item Après quoi un affichage annoncera au joueur s'il a gagné ou
+  perdu.
+\item À l'intérieur de la boucle, selon le tour, il sera fait appel à
+  une fonction \C{joueur()} ou bien à une fonction \C{opposant()} (ces
+  fonctions doivent modifier la tablette).
+\end{itemize}
+
+Vous êtes libre du choix de la taille initiale de la tablette.
+
+\subsection{Affichage}
+
+Réaliser une fonction d'affichage de la tablette qui sera appelée au
+début de chaque tour de jeu. Vous pouvez dans un premier temps vous
+contenter d'un affichage numérique de ses dimensions, et par la suite
+améliorer votre programme avec un affichage plus graphique.
+
+\subsection{Les joueurs}
+
+Le joueur étant l'humain entre le clavier et l'écran, il faudra lui
+faire saisir le choix de son coup, en deux temps : couper des colonnes
+ou couper des lignes ? Combien ? À vous de déterminer la manière de
+réaliser cette saisie.
+
+Vous pouvez commencer à tester le fonctionnement de votre programme en
+utilisant la fonction \C{joueur()} également pour l'opposant.
+
+L'opposant jouera au hasard. Pour cela vous pouvez vous aider d'une
+fonction \C{nombre\_aleatoire} qui tire au hasard un nombre entre
+zéro et son argument (un entier positif). Cette fonction utilisera
+\C{rand}. N'oubliez pas d'initialiser
+le générateur de nombres aléatoires dans le \C{main()} ni d'inclure
+les bons fichiers d'en-tête (fonctionnalités supplémentaires).
+
+Tester votre programme. Avez-vous prévu les cas où l'un des deux
+joueurs n'a pas le choix ? Est-ce que les coups invalides sont rendus
+impossibles ? Vous pouvez réutiliser et améliorer des fonctions vues
+précédemment (\C{choix\_utilisateur()}, par exemple).
+
+\section{Améliorations}
+
+\subsection{Tablette aléatoire}
+Dans votre programme la tablette est initialisée au
+départ. Pouvez-vous utiliser une fonction sans argument,
+\C{tablette\_aleatoire} qui renvoie une tablette aléatoire ?
+
+\subsection{L'opposant parfait}
+Pouvez-vous trouver la meilleure manière de jouer (cela dépend de la
+tablette de départ) ? Si oui, faîtes en profiter votre opposant. Vous
+pouvez également le faire se tromper de temps en temps, en introduisant
+pour cela une dose de hasard...
+
+\subsection{Plusieurs tablettes}
+On peut utiliser plusieurs tablettes pour ce jeu : chaque joueur
+choisit sur quelle tablette jouer son tour et le perdant sera celui
+recevant pour son tour toutes les tablettes à la dimension $1\times
+1$.
+
+\begin{correction}
+{
+\footnotesize
+\listinginput{1}{chocolat.c}
+}
+\end{correction}
+
+
+
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "td7"
-%%% End: 
+%%% End:

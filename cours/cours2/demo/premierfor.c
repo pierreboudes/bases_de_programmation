@@ -20,19 +20,19 @@ int main()
 
     for (j = 0; j < n; j = j + 1) /* pour chaque ligne */
     {
-	/* afficher j etoiles */
-	for (i = 0; i < n; i = i + 1)
-	{
-	    if ( i > j)
-	    {
-		printf("*");
-	    }
-	    else
-	    {
-		printf(" ");
-	    }
-	}
-	printf("\n");
+        /* afficher j etoiles */
+        for (i = 0; i < n; i = i + 1)
+        {
+            if ( i > j)
+            {
+                printf("*");
+            }
+            else
+            {
+                printf(" ");
+            }
+        }
+        printf("\n");
     }
 
     /* Valeur fonction */

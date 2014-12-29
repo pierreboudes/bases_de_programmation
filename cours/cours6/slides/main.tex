@@ -58,7 +58,7 @@ int main () {
 \begin{column}[b]{3.7cm}
 
 \begin{lstlisting}[basicstyle=\ttfamily]
-  int a = 3;
+  int a = 5;
   int b = 4;
   int *p = &b;
   a = 3 * a + *p;
@@ -89,7 +89,7 @@ add r1 r3
 ecriture r3 10
 stop
 
-3  # a
+5  # a
 4  # b
 11 # p
 \end{lstlisting}
@@ -105,7 +105,7 @@ erreurs makes pointer form integer without a cast.
 \begin{frame}[fragile]
   \frametitle{Chaînes}
 
-(Gaffe const): pour les chaînes \C{char * s} plutôt que \C{char s[]}.
+Pour les chaînes \C{char * s} plutôt que \C{char s[]}.
 
 \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\small]
 #include <stdio.h>
@@ -118,7 +118,7 @@ int main () {
   char * personne;
   personne = tata;
   printf("%s\n", personne);
-  // personne[5] = '\0'; bus error 10
+  // personne[5] = '\0'; <-- bus error 10
   personne = toto;
 
   printf("%s\n", personne);
@@ -145,10 +145,11 @@ scanf("%d", &age);
 \end{frame}
 
 
-\begin{frame}[fragile,label=current1]
+\begin{frame}[fragile]
   \frametitle{Focus sur le passage de valeurs}
   Les fonctions communiquent \textbf{des valeurs}, pas des noms de
   variables.
+
 \begin{columns}
 \scriptsize
   \begin{column}[t]{3.7cm}
@@ -171,38 +172,67 @@ void permute_valeurs(int a, int b) {
 }\end{lstlisting}
 \vspace{.4cm}
  \end{column}
-\begin{column}[t]{4cm}
-\pause
-\rowcolors{2}{LightSkyBlue}{LightSteelBlue} %\arrayrulecolor{green!75!gray}
-        \setlength{\unitlength}{\tabcolsep}
-      \hspace{-5.5cm} \begin{tabular}[t]{|r|c|c|l|}
-          \multicolumn{4}{l}{\C{main()}}\\ \hline
-          ligne & x & y & Affichage \\ \hline
-          initialisation  & 1 & 2 & \\ \hline
-          6 &   & &\pause \\ \hline
-          \multicolumn{4}{|r|}{
-            \put(1,4){\noindent
-              \begin{tabular}[t]{|r|c|c|c|l|}
-                \multicolumn{5}{|l}{\C{permute\_valeurs(1, 2)}}\\ \hline
-                ligne & a & b & aux & Aff. \\ \hline
-                initialisation  & 1 & 2 & ? & \\ \hline
-                13 &  &  & 1 & \\ \hline
-                14 & 2 &  &  & \\ \hline
-                15 &  &  1  &  & \\ \hline
-                16 &\multicolumn{4}{|>{\columncolor{MediumSpringGreen}}l|}{ne renvoie rien}\\ \hline
-              \end{tabular}
-            }} \\ \hline
-          7  &  &  & \C{x = \pause1 et y = 2} \\ \hline
-          8 &\multicolumn{3}{|l|}{SORTIE AVEC SUCCÈS}\\ \hline
-        \end{tabular}
-  \end{column}
 \end{columns}
 \end{frame}
 
+
+
+\begin{frame}[fragile]
+  \frametitle{Focus sur le passage de valeurs}
+  Les fonctions communiquent \textbf{des valeurs}, pas des noms de
+  variables.
+\begin{columns}
+\scriptsize
+\begin{column}[t]{3.7cm}
+ \begin{lstlisting}[numbers=left,basicstyle=\ttfamily\scriptsize]
+void permute_valeurs(int a,int b);
+
+int main() {
+    int x = 1;
+    int y = 2;
+    permute_valeurs(&x, &y);
+    printf("x = %d et y = %d\n",x,y);
+    return EXIT_SUCCESS;
+}
+
+void permute_valeurs(int *a, int *b) {
+    int aux;
+    aux = *a;
+    *a = *b;
+    *b = aux;
+}\end{lstlisting}
+\vspace{.4cm}
+ \end{column}
+\end{columns}
+\end{frame}
+
+
 \subsection{Passage de tableau en paramètre}
+\begin{frame}
+  \frametitle{Passage de tableaux en paramètre}
+  Lorsqu'on passe un tableau en paramètre d'une fonction le paramètre
+  formel qui le reçoit doit être un pointeur (du bon type).
+\end{frame}
+
+
+
 \subsection{Passage de structures par adresse (efficacité)}
+\begin{frame}[fragile]
+  \frametitle{Passage de structure par adresse}
+  Pour rendre les appels plus rapides on passe souvent juste l'adresse
+  d'une structure en paramètre d'une fonction plutôt que de passer
+  toute la structure. Cela évite la copie de la structure.
+
+  Nouvelle notation (pratique) \verb+->+ : si \verb+fiche+ est un pointeur
+  sur une structure, plutôt que d'écrire \verb+(*fiche).nom+ on écrira \verb+fiche->nom+.
+\end{frame}
+
 \section{Allocation mémoire}
-dynamiquement.
+\begin{frame}
+  \frametitle{Allocation mémoire}
+  Pouquoi vous voudrez apprendre malloc et free.
+\end{frame}
+
 % \subsection{Pour aller plus loin en C}
 % \begin{frame}
 %   \frametitle{Pour aller plus loin\nowrite}
@@ -227,20 +257,20 @@ dynamiquement.
 % \end{frame}
 
 
-\section{Conclusion}
-\begin{frame}[fragile]
-  \frametitle{Conclusion}
-  \begin{itemize}
-\item On évitera de passer des tableaux à des fonctions (pointeur, mémoire), on les
-  emballera avant dans des structures :
-  \begin{lstlisting}
-#define TAILLE_MAX 1024
-typedef struct tableau_s {
-    int taille;  /* maximum TAILLE_MAX */
-    int t[TAILLE_MAX];
-} tableau_t;
-  \end{lstlisting}
-  \end{itemize}
-\end{frame}
+% \section{Conclusion}
+% \begin{frame}[fragile]
+%   \frametitle{Conclusion}
+%   \begin{itemize}
+% \item On évitera de passer des tableaux à des fonctions (pointeur, mémoire), on les
+%   emballera avant dans des structures :
+%   \begin{lstlisting}
+% #define TAILLE_MAX 1024
+% typedef struct tableau_s {
+%     int taille;  /* maximum TAILLE_MAX */
+%     int t[TAILLE_MAX];
+% } tableau_t;
+%   \end{lstlisting}
+%   \end{itemize}
+% \end{frame}
 
 \end{document}
