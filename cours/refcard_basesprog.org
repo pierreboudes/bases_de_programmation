@@ -1,4 +1,4 @@
-#+TITLE: Bases de la programmation
+#+TITLE: Modélisation et robotique
 #+AUTHOR: Pierre Boudes
 #+EMAIL: boudes@univ-paris13.fr
 #+STARTUP: hidestars
@@ -24,16 +24,135 @@
 #+LATEX_HEADER: \hypersetup{backref, colorlinks=true}
 #+LATEX_HEADER: \renewcommand{\maketitle}{}
 
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT latex
 \rowcolors{gray}{lightgray!20}{white}
-\renewcommand{\section}[1]{\medskip {\Large\bf #1}\par}
-\renewcommand{\subsection}[1]{\medskip\noindent{\bf #1}\par}
-#+END_LaTeX
+\renewcommand{\section}[1]{\medskip\noindent{\Large\bf #1}\par}
+%\renewcommand{\subsection}[1]{\medskip\noindent{\bf #1}\par}
+\renewcommand{\subsection}[1]{\smallskip\noindent{\bf #1}\\[-0.55cm]}
+#+END_EXPORT
 
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT latex
 \thispagestyle{empty}
 \begin{multicols}{2}
-#+END_LaTeX
+#+END_EXPORT
+
+
+* Programmation Python
+
+Dans le REPL taper =help(sorted)= pour avoir de l'aide sur la
+fonction =sorted=.
+
+** Instructions de contrôle
+#+ATTR_LATEX: :environment tabularx  :align |p{5.2cm} X| :width 0.999\linewidth
+|-------------------------------------+--------------------------------------------------------------------------------------------------------------------------|
+| <35>                                | <120>                                                                                                                    |
+| Instruction                         | Effet                                                                                                                    |
+|-------------------------------------+--------------------------------------------------------------------------------------------------------------------------|
+| =if  x:= \par\qquad =y=             | évalue =x= et si cette condition est vraie (valeur différente de =False=, =0= et =""=), exécute =y=                      |
+| =elif z:= \par\qquad =v=            | lorsque la condition du =if= ou =elif= juste avant était fausse, et que =z= est vraie exécute =v=                        |
+| =else:= \par\qquad =w=              | lorsque la condition du =if= ou =elif= juste avant était fausse, exécute =w=                                             |
+| =while x:= \par\qquad =y=           | tant que la condition =x= est vraie, exécute =y= (en boucle)                                                             |
+| ~for i in range(n):~ \par\qquad ~x~ | exécute =n= fois =x=, pour $i$, la /variable de boucle/, allant de $0$ à $n - 1$ par pas de $1$                          |
+| ~for i in range(n, m, p):~ \par\qquad ~x~ | exécute =x=, pour $i$ allant de $n$ à $m - 1$ par pas de $p$                                                             |
+| ~for y in ys:~ \par\qquad ~x~       | exécute =x=, pour =y= parcourant tous les éléments de la liste =ys=                                                      |
+| ~for i, y in enumerate(ys):~ \par\qquad ~x~ | exécute =x= pour =y= parcourant les éléments de la liste et =i= prenant conjointement les numéros des éléments parcourus, $0, 1, 2\ldots$ |
+|-------------------------------------+--------------------------------------------------------------------------------------------------------------------------|
+
+** Listes
+#+ATTR_LATEX: :environment tabularx  :align |p{3.3cm} X| :width 0.999\linewidth
+|-------------------------------------+--------------------------------------------------------------------------------------------------------------------------|
+| <35>                                | <120>                                                                                                                    |
+| Instruction                         | Effet                                                                                                                    |
+|-------------------------------------+--------------------------------------------------------------------------------------------------------------------------|
+| =L = [10, 20, 30]=                  | =L= est une liste de trois éléments 10, 20 et 30                                                                         |
+| =enumerate(L)=                      | génère la liste d'éléments de la liste =L= numérotés en formant des paires (numéro, élément)                             |
+| =zip(L, M)=                         | génère une liste de paires d'éléments à partir de la paire de listes =L= et =R=. Si une des deux listes est plus longue, les éléments surnuméraires sont omis |
+| =list(enumerate(L))=                | transforme un générateur de liste (ici =enumerate(L)=) en véritable liste                                                |
+| =L[debut:fin]=                      | tous les éléments de la liste =L= à partir de celui numéroté =debut= jusqu'à celui avant celui numéroté =fin=            |
+| =L[-1]=                             | le dernier élément de la liste                                                                                           |
+| =L[:-1]=                            | tous les éléments de la liste sauf le dernier                                                                            |
+| =sorted(L)=                         | une liste contenant les éléments de la liste =L= ordonnés par ordre croissant                                            |
+|-------------------------------------+--------------------------------------------------------------------------------------------------------------------------|
+
+#+BEGIN_EXPORT latex
+\vfill\columnbreak
+#+END_EXPORT
+
+** Fonctions et procédures
+
+#+ATTR_LATEX: :environment tabularx  :align |X p{7.3cm}| :width 0.999\linewidth
+|------------------------------------------------------------------------------------+-------------------------------------------------------|
+| Déclarer et définir une fonction (en même temps) en nommant ses paramètres formels | ~def nom_fonction(param1, param2):~ \par\qquad /corps/ |
+| L'utiliser, c'est à dire l'appeler avec des paramètres effectifs                   | ~nom_fonction(param_effectif1, param_effectif2)~      |
+| Pour donner sa valeur à la fonction                                                | ~return valeur~                                       |
+| Récupérer la valeur d'un appel                                                     | ~x = nom_fonction(10, "toto")~                        |
+|------------------------------------------------------------------------------------+-------------------------------------------------------|
+On peut utiliser une fonction que l'on a défini dans la définition
+d'une autre fonction. On peut même utiliser une fonction que l'on
+est en train de définir dans la définition de cette fonction. Dans ce
+dernier cas la définition est récursive, elle fait appel à elle même.
+
+#+BEGIN_SRC python
+  def descente(L):
+      if len(L) > 0:
+          print(L[-1])
+          descente(L[:-1])
+
+  >>> descente(["envers", "l'","a","parle","je"])
+#+END_SRC
+
+* Utiliser pythymio2
+Les instructions suivantes sont à utiliser après un =from pythymio2
+import *=. On doit les placer dans une fonction qui nous sert de
+programme pour le robot et dont le nom doit être donnée en paramètre à
+la fonction =runThymioControl=.
+
+#+ATTR_LATEX: :environment tabularx  :align | p{3.2cm} X| :width 0.999\linewidth
+|-----------------------+-------------------------------------------------------------------------------|
+| Instruction           | Effet                                                                         |
+|-----------------------+-------------------------------------------------------------------------------|
+| =yield "sleep 3.14"=  | stopper le programme pendant 3,14 secondes (c'est approximatif !)             |
+| =L = yield "prox"=    | affecte à L les valeurs du capteur de proximité du Thymio                     |
+| =L = yield "buttons"= | affect à L les valeurs (1 appuyé ou 0 pas appuyé) des boutons                 |
+| =av()=                | allumer les deux moteurs à leur maximum (500)                                 |
+| =av(300,-100)=        | allumer le moteur gauche à 300 et le moteur droite à -100 (en arrière de 100) |
+| =tg()=                | équivalent de =av(-500, 500)= donc une rotation à gauche                      |
+| =td()=                | équivalent de =av(500, -500)= donc une rotation à droite                      |
+| =arrete()=            | équivalent de =av(0, 0)= donc stoppe les deux moteurs                         |
+|-----------------------+-------------------------------------------------------------------------------|
+
+#+BEGIN_EXPORT latex
+\vfill
+\hfill
+\parbox{7.2cm}{\small\em Auteur: Pierre Boudes (\href{http://mindsized.org}{mindsized.org})\\
+sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{ouVerte.png}}\\[-1cm]
+\pagebreak
+\thispagestyle{empty}
+#+END_EXPORT
+
+* Questions :noexport:
+
+** REPL it !
+Pour chacune des instructions Python rappelée page précédente donner
+un exemple d'utilisation et le tester dans le REPL.
+
+** Curiosité
+1. Que se passe t'il lorsqu'on veut trier une liste contenant à la fois
+   des entiers et des chaînes de caractère ?
+2. Proposer une fonction (non récursive) qui renverse les éléments
+   d'une liste donnée en paramètre. La tester. Fonctionne t'elle si la
+   liste est vide ?
+3. Trouver trois messages d'erreurs différents de Python.
+4. Trouver trois choses que vous savez sur Python et qui ne sont pas
+   rappelées au recto.
+
+
+** Thymio
+En vous aidant des précédents TP :
+- écrire un programme qui fait avancer Thymio dans la direction d'un
+  objet qui se trouve devant lui.
+- Écrire un programme qui fait dessiner un cercle  Thymio (étalonner).
+- Écrire un programme fait dessiner une spirale à Thymio.
 
 * Emacs
 Installer notre configuration d'Emacs (~.emacs.d~) ou au moins activer
@@ -76,9 +195,14 @@ Ajouter "mon" C-x C-r ?
 
 
 ** Les /vues/
-Emacs permet de partager le cadre de ses fenêtres en plusieurs /tuiles/
-ou /vues/
-sur les fichiers ouverts (fermer une vue ne ferme pas le fichier).
+#+BEGIN_EXPORT latex
+\\[0.5cm]
+\thispagestyle{empty}
+#+END_EXPORT
+Emacs permet de partager le cadre (/frame/) de ses fenêtres en
+plusieurs /tuiles/ ou /vues/ (/windows/) sur les fichiers ouverts
+(/buffer/). Fermer une vue ne ferme pas le fichier et on peut avoir
+plusieurs vues ouvertes sur le même fichier).
 #+ATTR_LATEX: :environment tabularx  :align | p{2.2cm} X| :width 0.999\linewidth
 |-----------+---------------------------------------------------------|
 | Commande  | Effet                                                   |
@@ -91,14 +215,6 @@ sur les fichiers ouverts (fermer une vue ne ferme pas le fichier).
 | =C-x o=   | Passer le curseur dans une autre vue                    |
 | =C-x C-+= | Augmenter la taille de police de la vue (=+=, =-=, =0=) |
 |-----------+---------------------------------------------------------|
-
-#+BEGIN_LaTeX
-\hfill
-\parbox{7.2cm}{\small\em Auteur: Pierre Boudes (\href{http://mindsized.org}{mindsized.org})\\
-sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}\\[-1cm]
-\vfill
-#+END_LaTeX
-
 
 * AMIL
 Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb/]]
@@ -126,11 +242,11 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb
 
 * Programmation Bash
 [[http://mindsized.org/IMG/pdf/cours_magistral_1.pdf][Cours 1]] et [[http://mindsized.org/IMG/pdf/cours_magistral_2.pdf][cours 2]] réalisés par Jean-Vincent Loddo.
-#+ATTR_LATEX: :environment tabularx  :align | p{4.5cm} X| :width 0.999\linewidth
+#+ATTR_LATEX: :environment tabularx  :align | p{4.8cm} X| :width 0.999\linewidth
 |---------------------------------------+-----------------------------------------------------------------------------|
 | Instruction                           | Effet                                                                       |
 |---------------------------------------+-----------------------------------------------------------------------------|
-| =#!/bin/bash=                         | première ligne d'un fichier script                                          |
+| =#!/usr/bin/env bash=                 | première ligne d'un fichier script                                          |
 | =read X=                              | Lit une entrée de l'utilisateur et la place dans =X=                        |
 | ~age=$(wc -l <annees.txt)~            | compte le nombre de lignes du fichier =annees.txt= et le place dans =age=   |
 | =test $age -gt 13=                    | réussit si la valeur de =age= est plus grande que 13, sinon échoue          |
@@ -142,14 +258,12 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb
 
 
 
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT latex
 \end{multicols}
 \newpage
 \thispagestyle{empty}
-\renewcommand{\subsection}[1]{\smallskip\noindent{\bf #1}\\[-0.5cm]}
 \begin{multicols}{2}
-#+END_LaTeX
-
+#+END_EXPORT
 
 * Programmation C
 
@@ -168,18 +282,18 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb
 
 
 ** Instructions impératives
-#+ATTR_LATEX: :environment tabularx  :align | p{2.99cm} X| :width 0.999\linewidth
-|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <30>                           | <180>                                                                                                                                                                                |
-| Instruction                    | Effet                                                                                                                                                                                |
-|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ~int a;~                       | déclare une variable de nom ~a~ et de type entier                                                                                                                                    |
-| ~int b = 3;~                   | déclare une variable ~b~ de type entier et fixe sa valeur à 3                                                                                                                        |
-| =double a = 1.2;=  =char b;=   | déclare deux variables : ~a~ de type nombre à virgule (en double précision) initialisée à $1.2$, et =b= de type caractère.                                                           |
-| ~a = expression;~              | évalue =expression= et affecte sa valeur à ~a~ (variable,…)                                                                                                                          |
-| ~a += expression;~             | évalue =expression= et ajoute sa valeur à ~a~                                                                                                                                        |
-| ~a *= 3;~                      | multiplie ~a~ par ~3~                                                                                                                                                                |
-|--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+#+ATTR_LATEX: :environment tabularx  :align | p{3.2cm} X| :width 0.999\linewidth
+|--------------------------------+------------------------------------------------------------------------------------------------------|
+| <30>                           | <100>                                                                                                |
+| Instruction                    | Effet                                                                                                |
+|--------------------------------+------------------------------------------------------------------------------------------------------|
+| ~int a;~                       | déclare une variable de nom ~a~ et de type entier                                                    |
+| ~int b = 3;~                   | déclare une variable ~b~ de type entier et fixe sa valeur à 3                                        |
+| =double a = 1.2;=  =char b;=   | déclare deux variables : ~a~ de type nombre à virgule (en double précision) initialisée à $1.2$, et =b= de type caractère. |
+| ~a = expression;~              | évalue =expression= et affecte sa valeur à ~a~ (variable,…)                                          |
+| ~a += expression;~             | évalue =expression= et ajoute sa valeur à ~a~                                                        |
+| ~a *= 3;~                      | multiplie ~a~ par ~3~                                                                                |
+|--------------------------------+------------------------------------------------------------------------------------------------------|
 
 ** Structures de données
 #+ATTR_LATEX: :environment tabularx  :align |p{3.5cm} X| :width 0.999\linewidth
@@ -193,14 +307,12 @@ Simulateur en ligne : [[http://mindsized.org/amil/][http://mindsized.org/amilweb
 | ~toto.b += 40;~                           | accès aux /champs/ d'une variable de type struct                              |
 |-------------------------------------------+------------------------------------------------------------------------------------|
 
-
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT latex
 \hfill
 \parbox{7.2cm}{\small\em Auteur: Pierre Boudes (\href{http://mindsized.org}{mindsized.org})\\
-sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{../ouVerte.png}}\\[-1cm]
+sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouverte}, source: \href{https://github.com/pierreboudes/bases_de_programmation/blob/master/cours/refcard_basesprog.org}{fichier org-mode}}~\raisebox{-0.33cm}{\includegraphics[scale=0.13]{ouVerte.png}}\\[-1cm]
 \vfill
-#+END_LaTeX
-
+#+END_EXPORT
 
 ** Expressions booléennes
 #+ATTR_LATEX: :environment tabularx  :align | l X| :width 0.999\linewidth
@@ -241,9 +353,10 @@ sous \href{http://wiki.data.gouv.fr/images/9/9d/Licence_Ouverte.pdf}{licence ouv
 |----------------------------------------------------------------------------------+----------------------------------------------------------------------------------|
 
 
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT latex
 \end{multicols}
-#+END_LaTeX
+#+END_EXPORT
+
 
 ** Fonctions et procédures
 #+ATTR_LATEX: :environment tabularx  :align | p{8.77cm} X| :width 0.999\linewidth
